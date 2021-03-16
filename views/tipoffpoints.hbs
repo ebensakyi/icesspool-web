@@ -1,0 +1,119 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Add Tip Off Point</h6>
+                    <form class="forms-sample" method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="siteName">Site name</label>
+                                    <input type="text" class="form-control" id="siteName" name="siteName"
+                                        autocomplete="off" placeholder="Enter sitename" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="otherNames">Place Id</label>
+                                    <input type="text" class="form-control" id="placeId" name="placeId"
+                                        autocomplete="off" placeholder="Enter place Id (Optional)">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="address" class="form-control" id="address" name="address"
+                                        placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="phone" class="form-control" id="location" name="location"
+                                        placeholder="Location" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="latitude">Latitude</label>
+                                    <input type="number" class="form-control" id="latitude" name="latitude"
+                                        autocomplete="off" placeholder="Enter latitude here" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="number" class="form-control" id="longitude" name="longitude"
+                                        placeholder="Enter longitude here" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button type="button" onclick="saveTipoffPoint()" class="btn btn-primary mr-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">TIPOFF POINTS</h6>
+
+                    <div class="table-responsive">
+                        <table id="table" class="table">
+                            <thead>
+                                <tr>
+                                    <th hidden>Id</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Address</th>
+
+                                    <th>Status</th>
+
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+
+</div>
+
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/js/data-table.js"></script>
+<!-- end custom js for this page -->
+<!-- end custom js for this page -->
+<script src="/js/custom/tipoffpoint-controller.js"></script>
+
+</body>
+
+
+</html>

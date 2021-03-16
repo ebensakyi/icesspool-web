@@ -1,0 +1,190 @@
+{{>header}}
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Withdrawal Requests</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Provider</th>
+                                    <th>Company</th>
+
+                                    <th>Phone</th>
+                                    <th>MoMo Network</th>
+
+                                    <th>Amount Requested</th>
+                                    <th>Request Date</th>
+                                    <th>Balance </th>
+                                    <th>Status</th>
+
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.Provider.id}}</td>
+
+                                    <td>{{this.Provider.User.surname}} {{this.Provider.User.otherNames}}</td>
+                                    <td>{{this.Provider.company}}</td>
+
+                                    <td>{{this.Provider.MomoAccount.momoNumber}}</td>
+                                    <td>{{this.Provider.MomoAccount.MomoNetwork.network}}</td>
+
+                                    <td><strong> GHS {{this.amount}}</strong></td>
+                                    <td>{{this.requestDate}}</td>
+                                    <td><strong>GHS {{this.Provider.ProviderBalance.balance}}</strong> </td>
+                                    <td>{{{isDisbursed this.status}}}</td>
+
+                                    <td>
+
+                                        <button {{{inactivateBtn this.status}}} data-toggle="modal" data-target="#details" type="button"
+                                            class="btn btn-success btn-icon" data-id="{{this.id}}" data-provider_id="{{this.Provider.id}}"
+                                            data-provider="{{this.Provider.User.surname}} {{this.Provider.User.otherNames}}"
+                                            data-company="{{this.Provider.company}}"
+                                            data-phone="{{this.Provider.MomoAccount.momoNumber}}"
+                                            data-network="{{this.Provider.MomoAccount.MomoNetwork.network}}"
+                                            data-amount="{{this.amount}}" data-requestdate="{{this.requestDate}}"
+                                            data-balance="{{this.Provider.ProviderBalance.balance}}">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        {{!-- &nbsp;&nbsp;
+                                        <a href="/scanners/del/{{this.id}}" style="color: red;" data-toggle="tooltip"
+                                            data-placement="top" title="Cancel request">
+                                            <i data-feather="thumbs-down"></i>
+                                        </a> --}}
+
+
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">WITHDRAWAL DETAILS</h6>
+
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="provider_id">Provider ID</label>
+                                    <input type="text" class="form-control" id="provider_id" autocomplete="off"
+                                        placeholder="Provider ID" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="surname">Provider</label>
+                                    <input type="text" class="form-control" id="provider" autocomplete="off"
+                                        placeholder="provider" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" class="form-control" id="company" autocomplete="off"
+                                        placeholder="otherNames" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="phone">Phone number</label>
+                                    <input type="phone" class="form-control" id="phone" placeholder="Phone number"
+                                        disabled>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="network">Network</label>
+                                    <input type="text" class="form-control" id="network" placeholder="Network" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="balance">Balance</label>
+                                    <input type="text" class="form-control" id="balance" autocomplete="off"
+                                        placeholder="Balance" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="amount">Requested amount</label>
+                                    <input type="text" class="form-control" id="amount" autocomplete="off"
+                                        placeholder="Requested amount" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="alert alert-fill-danger" role="alert">
+                            Once request is approved, it cannot be cancelled. Click outside the form to close it.
+                        </div>
+                        <button type="button" id="submit" class="btn btn-primary btn-icon-text">
+                            <i class="btn-icon-prepend" data-feather="send"></i>
+                            Approve request </button>
+                        {{!-- <button class="btn btn-light" id="close">Cancel</button> --}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+
+</div>
+{{!--
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --}}
+
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/js/data-table.js"></script>
+<!-- end custom js for this page -->
+<!-- end custom js for this page -->
+  <script src="/js/custom/loadingoverlay.min.js"></script>
+<script src="/js/custom/withdrawal-controller.js"></script>
+
+</body>
+
+
+</html>

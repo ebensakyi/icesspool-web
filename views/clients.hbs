@@ -1,0 +1,111 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Client List</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample1" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Region</th>
+                                    {{!-- <th>District</th> --}}
+                                    {{!-- <th>Town</th>
+                                    <th>Community</th> --}}
+                                    <th>Registration Date</th>
+                                    <th>Is Activated</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.Client.id}}</td>
+                                    <td>{{this.surname}} {{this.otherNames}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.phoneNumber}}</td>
+                                    <td>{{this.Location.Region.regionName}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    {{!-- <td>{{this.Location.District.districtName}}</td> 
+                                
+                                    <td>{{this.Location.community}}</td> --}}
+
+                                    <td>{{this.activated}}</td>
+                                    <td>
+                                        {{!-- <button data-toggle="modal" data-target="#details" type="button"
+                                            class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top"
+                                            title="View transactions">
+                                            <i data-feather="bar-chart-2"></i>
+                                        </button> --}}
+                                        <a href="/clients/status/?id={{this.id}}&status={{this.activated}}"
+                                            type="button" class="btn btn-success btn-icon" data-toggle="tooltip"
+                                            data-placement="top" title="Change active status">
+                                            <i data-feather="thumbs-up"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{>footer}}
+
+</div>
+</div>
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+<!-- end plugin js for this page -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/data-table.js"></script>
+
+<script src="/js/custom/provider-controller.js"></script>
+
+
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTableExample1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
+</body>
+
+
+</html>

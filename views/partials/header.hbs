@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iCesspool</title>
+    <!-- core:css -->
+    <link rel="stylesheet" href="/vendors/core/core.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- end plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+    {{!--
+    <link rel="stylesheet" href="/vendors/flag-icon-css/css/flag-icon.min.css"> --}}
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <style>
+        .feather-16 {
+            width: 16px;
+            height: 16px;
+        }
+
+        .feather-24 {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feather-64 {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body class="sidebar-dark">
+    <div class="main-wrapper">
+
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="sidebar-brand">
+                    <span>i</span>Cesspool
+                </a>
+                <div class="sidebar-toggler not-active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="sidebar-body">
+                <ul class="nav">
+                    <li class="nav-item nav-category">Main</li>
+                    <li class="nav-item">
+                        <a href="/dashboard" class="nav-link">
+                            <i class="link-icon" data-feather="box"></i>
+                            <span class="link-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">Accounts</li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#accounts" role="button" aria-expanded="false"
+                            aria-controls="accounts">
+                            <i class="link-icon" data-feather="user-check"></i>
+                            <span class="link-title">Service Providers</span>
+                            <i class="link-arrow" data-feather="chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="accounts">
+                            <ul class="nav sub-menu">
+                                <li class="nav-item">
+                                    <a href="providers" class="nav-link">List </a>
+                                </li>
+                                {{!-- <li class="nav-item">
+                                    <a href="existing-providers" class="nav-link">Existing</a>
+                                </li> --}}
+                                <li class="nav-item">
+                                    <a href="momo-accounts" class="nav-link">MoMo Accounts</a>
+                                </li>
+                                <li hidden class="nav-item">
+                                    <a href="deactivated-providers" class="nav-link">Deactivated</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/activation-codes" class="nav-link">
+                            <i class="link-icon" data-feather="unlock"></i>
+                            <span class="link-title">Activation codes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/clients" class="nav-link">
+                            <i class="link-icon" data-feather="users"></i>
+                            <span class="link-title">Our Customers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/scanners" class="nav-link">
+                            <i class="link-icon" data-feather="smile"></i>
+                            <span class="link-title">Scanners</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-category">Offers</li>
+                    <li class="nav-item">
+                        <a href="/transaction" class="nav-link">
+                            <i class="link-icon" data-feather="activity"></i>
+                            <span class="link-title">List</span>
+                        </a>
+                    </li>
+                    {{!-- <li class="nav-item">
+                        <a href="/manual-close-offers" class="nav-link">
+                            <i class="link-icon" data-feather="activity"></i>
+                            <span class="link-title">Manual close offer</span>
+                        </a>
+                    </li> --}}
+                    {{!-- <li class="nav-item">
+                        <a href="/closed-offers" class="nav-link">
+                            <i class="link-icon" data-feather="box"></i>
+                            <span class="link-title">Closed</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cancelled-offers" class="nav-link">
+                            <i class="link-icon" data-feather="x-circle"></i>
+                            <span class="link-title">Cancelled</span>
+                        </a>
+                    </li> --}}
+
+                    <li class="nav-item nav-category">Finances</li>
+                    <li class="nav-item">
+                        <a href="/withdrawal-requests" class="nav-link">
+                            <i class="link-icon" data-feather="hash"></i>
+                            <span class="link-title">Withdrawal Requests</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/disbursement" class="nav-link">
+                            <i class="link-icon" data-feather="shuffle"></i>
+                            <span class="link-title">Disbursements</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/provider-wallet" class="nav-link">
+                            <i class="link-icon" data-feather="trending-down"></i>
+                            <span class="link-title">Provider Balance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/icesspool-wallet" class="nav-link">
+                            <i class="link-icon" data-feather="trending-down"></i>
+                            <span class="link-title">iCesspool Balance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/provider-earnings" class="nav-link">
+                            <i class="link-icon" data-feather="dollar-sign"></i>
+                            <span class="link-title">Provider Earnings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/icesspool-earnings" class="nav-link">
+                            <i class="link-icon" data-feather="dollar-sign"></i>
+                            <span class="link-title">iCesspool Earnings</span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-item nav-category">System settings</li>
+                    <li class="nav-item">
+                        <a href="/discount" class="nav-link">
+                            <i class="link-icon" data-feather="percent"></i>
+                            <span class="link-title">Discount</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/commission" class="nav-link">
+                            <i class="link-icon" data-feather="percent"></i>
+                            <span class="link-title">Commission</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/tipoffpoints" class="nav-link">
+                            <i class="link-icon" data-feather="map-pin"></i>
+                            <span class="link-title">Tipoff</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pricing" class="nav-link">
+                            <i class="link-icon" data-feather="filter"></i>
+                            <span class="link-title">Pricing</span>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">Profile settings</li>
+                    <li class="nav-item">
+                        <a href="/profile" class="nav-link">
+                            <i class="link-icon" data-feather="percent"></i>
+                            <span class="link-title">Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="settings-sidebar">
+            <div class="sidebar-body">
+                <a href="#" class="settings-sidebar-toggler">
+                    <i data-feather="settings"></i>
+                </a>
+                <h6 class="text-muted">Sidebar:</h6>
+                <div class="form-group border-bottom">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarLight"
+                                value="sidebar-light" checked>
+                            Light
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarDark"
+                                value="sidebar-dark">
+                            Dark
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+        <!-- partial -->
+
+        <div class="page-wrapper">
+
+            <!-- partial:../../partials/_navbar.html -->
+            <nav class="navbar">
+                <a href="#" class="sidebar-toggler">
+                    <i data-feather="menu"></i>
+                </a>
+                <div class="navbar-content">
+
+                    <ul class="navbar-nav">
+
+                        {{!-- <li class="nav-item dropdown nav-apps">
+                            <a class="nav-link dropdown-toggle" href="#" id="appsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="grid"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="appsDropdown">
+                                <div class="dropdown-header d-flex align-items-center justify-content-between">
+                                    <p class="mb-0 font-weight-medium">Web Apps</p>
+                                    <a href="javascript:;" class="text-muted">Edit</a>
+                                </div>
+                                <div class="dropdown-body">
+                                    <div class="d-flex align-items-center apps">
+                                        <a href="../../pages/apps/chat.html"><i data-feather="message-square"
+                                                class="icon-lg"></i>
+                                            <p>Chat</p>
+                                        </a>
+                                        <a href="../../pages/apps/calendar.html"><i data-feather="calendar"
+                                                class="icon-lg"></i>
+                                            <p>Calendar</p>
+                                        </a>
+                                        <a href="../../pages/email/inbox.html"><i data-feather="mail"
+                                                class="icon-lg"></i>
+                                            <p>Email</p>
+                                        </a>
+                                        <a href="../../pages/general/profile.html"><i data-feather="instagram"
+                                                class="icon-lg"></i>
+                                            <p>Profile</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="dropdown-footer d-flex align-items-center justify-content-center">
+                                    <a href="javascript:;">View all</a>
+                                </div>
+                            </div>
+                        </li> --}}
+                        {{!-- <li class="nav-item dropdown nav-messages">
+                            <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="mail"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="messageDropdown">
+                                <div class="dropdown-header d-flex align-items-center justify-content-between">
+                                    <p class="mb-0 font-weight-medium">9 New Messages</p>
+                                    <a href="javascript:;" class="text-muted">Clear all</a>
+                                </div>
+                                <div class="dropdown-body">
+                                    <a href="javascript:;" class="dropdown-item">
+                                        <div class="figure">
+                                            <img src="../../../assets/images/faces/face2.jpg" alt="userr">
+                                        </div>
+                                        <div class="content">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p>Leonardo Payne</p>
+                                                <p class="sub-text text-muted">2 min ago</p>
+                                            </div>
+                                            <p class="sub-text text-muted">Project status</p>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="dropdown-item">
+                                        <div class="figure">
+                                            <img src="../../../assets/images/faces/face3.jpg" alt="userr">
+                                        </div>
+                                        <div class="content">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p>Carl Henson</p>
+                                                <p class="sub-text text-muted">30 min ago</p>
+                                            </div>
+                                            <p class="sub-text text-muted">Client meeting</p>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="dropdown-item">
+                                        <div class="figure">
+                                            <img src="../../../assets/images/faces/face4.jpg" alt="userr">
+                                        </div>
+                                        <div class="content">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p>Jensen Combs</p>
+                                                <p class="sub-text text-muted">1 hrs ago</p>
+                                            </div>
+                                            <p class="sub-text text-muted">Project updates</p>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="dropdown-item">
+                                        <div class="figure">
+                                            <img src="../../../assets/images/faces/face5.jpg" alt="userr">
+                                        </div>
+                                        <div class="content">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p>Amiah Burton</p>
+                                                <p class="sub-text text-muted">2 hrs ago</p>
+                                            </div>
+                                            <p class="sub-text text-muted">Project deadline</p>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="dropdown-item">
+                                        <div class="figure">
+                                            <img src="../../../assets/images/faces/face6.jpg" alt="userr">
+                                        </div>
+                                        <div class="content">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p>Yaretzi Mayo</p>
+                                                <p class="sub-text text-muted">5 hr ago</p>
+                                            </div>
+                                            <p class="sub-text text-muted">New record</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer d-flex align-items-center justify-content-center">
+                                    <a href="javascript:;">View all</a>
+                                </div>
+                            </div>
+                        </li>
+                        --}}
+                        <li class="nav-item dropdown nav-profile">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="link-icon feather-64" style="color: rgb(184, 3, 3);" data-feather="unlock"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <div class="dropdown-header d-flex flex-column align-items-center">
+                                    {{!-- <div class="figure mb-3">
+                                        <img src="/images/faces/face1.jpg" alt="">
+                                    </div> --}}
+                                    <div class="info text-center">
+                                        <p class="name font-weight-bold mb-0">{{user.surname}} {{user.otherNames}}</p>
+                                        <p class="email text-muted mb-3">{{user.email}}</p>
+                                        <p class="email text-muted mb-3">{{user.phoneNumber}}</p>
+
+                                    </div>
+                                </div>
+                                <div class="dropdown-body">
+                                    <ul class="profile-nav p-0 pt-3">
+                                        {{!-- <li class="nav-item">
+                                            <a href="../../pages/general/profile.html" class="nav-link">
+                                                <i data-feather="user"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </li> --}}
+                                        <li class="nav-item">
+                                            <a href="/profile" class="nav-link">
+                                                <i data-feather="edit"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="logout" class="nav-link">
+                                                <i data-feather="log-out"></i>
+                                                <span>Log Out</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- partial -->

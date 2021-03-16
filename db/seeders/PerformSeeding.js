@@ -1,0 +1,36 @@
+const SeedAxles = require('./SeedAxles')
+const SeedCommission = require('./SeedCommission')
+const SeedDistricts = require('./SeedDistricts')
+const SeedRegions = require('./SeedRegions')
+const SeedStatus = require('./SeedStatus')
+const SeedTipoffPoints = require('./SeedTipoffPoints')
+const SeedUserTypes = require('./SeedUserTypes')
+const SeedPricing = require('./SeedPricing')
+const SeedScanners = require('./SeedScanners')
+const SeedIcesspoolBalance = require('./SeedIcesspoolBal')
+const SeedUsers = require('./SeedUsers')
+const SeedMomoNetworks = require('./SeedMomoNetworks')
+const SeedLicenseClasses = require('./SeedLicenseClasses')
+const SeedDiscount = require('./SeedDiscount')
+
+
+module.exports.start = (app) => {
+    app.get('/perform-seeding', (req, res) => {
+        // SeedAxles.seedAxle()
+        // SeedCommission.seedCommission()
+        // SeedDistricts.seedDistrict()
+        // SeedRegions.seedRegion()
+        // SeedStatus.seedStatus()
+        // SeedTipoffPoints.seedTipoffPoint()
+        // SeedUserTypes.seedUserType()
+        // SeedPricing.seedPricingModel()
+        // SeedScanners.seedScannerUser()
+        // SeedIcesspoolBalance.seedBalance()
+        // SeedUsers.seedUser()
+        // SeedMomoNetworks.seedMomoNetwork()
+        // SeedLicenseClasses.seedLicenseClasses()
+        SeedDiscount.perform()
+        return res.send('Seeding done')
+    })
+
+}

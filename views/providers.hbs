@@ -1,0 +1,397 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Provider List</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample1" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Rating</th>
+                                    <th>Registration Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.Provider.id}}</td>
+                                    <td>{{this.surname}} {{this.otherNames}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.phoneNumber}}</td>
+                                    <td>{{this.Provider.ProviderRating.rating}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>{{{isActive this.activated}}}</td>
+                                    <td><button data-toggle="modal" data-target="#details" type="button"
+                                            class="btn btn-primary btn-icon" data-idd="{{this.id}}"
+                                            data-toggle="tooltip" data-placement="top" title="Edit account">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <a href="/providers/status/?id={{this.id}}&status={{this.activated}}"
+                                            class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top"
+                                            title="Activate / Inactivate account">
+                                            <i style="align-items: center;" class="mdi mdi-shield-outline"></i>
+                                        </a>
+
+                                        <a href="/providers/disable/?id={{this.id}}" type="button"
+                                            class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top"
+                                            title="Suspend account">
+                                            <i data-feather="log-out"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Service Provider Registration Form</h6>
+
+                    <form method="POST">
+                        <h4 class="card-title mt-5">Personal info</h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="providerId">Provider ID</label>
+                                    <input type="text" class="form-control" id="providerId" placeholder="providerId"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" hidden>
+                                <div class="form-group">
+                                    <label for="idd">ID</label>
+                                    <input type="text" class="form-control" id="idd" placeholder="id" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="surname">Surname</label>
+                                    <input type="text" class="form-control" id="surname" autocomplete="off"
+                                        placeholder="Surname" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="otherNames">Other names</label>
+                                    <input type="text" class="form-control" id="otherNames" autocomplete="off"
+                                        placeholder="otherNames" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone number</label>
+                                    <input type="phone" class="form-control" id="phoneNumber" placeholder="Phone number"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" hidden>
+                                <div class="form-group">
+                                    <label for="passportPicture">Passport picture</label>
+                                    <input type="file" class="form-control" id="passportPicture" autocomplete="off"
+                                        placeholder="Passport picture">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="card-title mt-5">Location</h4>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="region">Region <span style="color: red;">*</span></label>
+                                    <select class="form-control" id="region" required>
+                                        <option>Select region</option>
+                                        {{#each regions}}
+                                        <option value="{{this.id}}">{{this.regionName}}</option>
+                                        {{/each}}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="district">District<span style="color: red;">*</span></label>
+                                    <select class="form-control" id="district" required>
+                                        <option>Select district</option>
+                                        {{#each districts}}
+                                        <option value="{{this.id}}">{{this.districtName}}</option>
+                                        {{/each}}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="community">Community</label>
+                                    <input type="text" class="form-control" id="community" autocomplete="off"
+                                        placeholder="Community">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="card-title mt-5">Company</h4>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="companyName">Name of company</label>
+                                    <input type="text" class="form-control" id="companyName" autocomplete="off"
+                                        placeholder="Name of company">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="officeLocation">Office location</label>
+                                    <input type="text" class="form-control" id="officeLocation" autocomplete="off"
+                                        placeholder="Office location(District, Community)">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="ghanaPostGps">Ghana Post GPS</label>
+                                    <input type="text" class="form-control" id="ghanaPostGps" autocomplete="off"
+                                        placeholder="Ghana Post GPS">
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="card-title mt-5">MoMo Account</h4>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="momoNumber">MoMo Number(Eg. 0544444444)</label>
+                                    <input type="text" class="form-control" id="momoNumber" autocomplete="off"
+                                        placeholder="Enter MoMo number" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="momoNetwork">MoMo Network</label>
+                                    <select class="form-control" id="momoNetwork" required>
+                                        <option>Select network</option>
+                                        {{#each momo}}
+                                        <option value="{{this.id}}">{{this.network}}</option>
+                                        {{/each}}
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <h4 class="card-title mt-5">License info</h4>
+                        <div class="row">
+
+
+
+                            <div class="col-sm-3" hidden>
+                                <div class="form-group">
+                                    <label for="driverLicense">Driver's license image</label>
+                                    <input type="file" class="form-control" id="driverLicense" autocomplete="off"
+                                        placeholder="Upload driver's license">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="licenseNumber">License number</label>
+                                    <input type="text" class="form-control" id="licenseNumber" autocomplete="off"
+                                        placeholder="License number" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="licenseClassification">License classification <span
+                                            style="color: red;">*</span></label>
+
+                                    <select class="form-control" id="licenseClassification">
+                                        <option>Select License classification</option>
+                                        {{#each licenseClasses}}
+                                        <option value="{{this.id}}">{{this.l_class}}</option>
+                                        {{/each}}
+
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="card-title mt-5">Vehicle info</h4>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="vehicleNumber">Vehicle number</label>
+                                    <input type="text" class="form-control" id="vehicleNumber" autocomplete="off"
+                                        placeholder="Vehicle number" required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="axleClassification">Axle classification<span
+                                            style="color: red;">*</span></label>
+                                    <select class="form-control" id="axleClassification" required>
+                                        <option>Select axle classification</option>
+                                        <option value="1">Single axle</option>
+                                        <option value="2">Medium axle</option>
+                                        <option value="3">Double axle</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="tankCapacity">Tank capacity</label>
+                                    <input type="number" class="form-control" id="tankCapacity" autocomplete="off"
+                                        placeholder="Tank capacity" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="insuranceNumber">Insurance number</label>
+                                    <input type="text" class="form-control" id="insuranceNumber" autocomplete="off"
+                                        placeholder="Insurance number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="insuranceExpiry">Insurance expiry</label>
+                                    <input type="date" class="form-control" id="insuranceExpiry" autocomplete="off"
+                                        placeholder="Insurance expiry">
+                                </div>
+                            </div>
+
+                            {{!-- <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="roadWorthy">Road worthy certificate</label>
+                                    <select class="form-control" id="roadWorthy">
+                                        <option>Select status</option>
+                                        <option>Renewed</option>
+                                        <option>Not renewed</option>
+
+                                    </select>
+                                </div>
+                            </div> --}}
+
+                            {{!-- <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="roadWorthyExpiryDate">Road worthy expiry date</label>
+                                    <input type="date" class="form-control" id="roadWorthyExpiryDate" autocomplete="off"
+                                        placeholder="Road worthy expiry date">
+                                </div>
+                            </div> --}}
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="vehicleOwnerName">Name of vehicle owner</label>
+                                    <input type="text" class="form-control" id="vehicleOwnerName" autocomplete="off"
+                                        placeholder="Name of vehicle owner" required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="vehicleOwnerPhoneNumber">Contact of vehicle owner</label>
+                                    <input type="tel" class="form-control" id="vehicleOwnerPhoneNumber"
+                                        autocomplete="off" placeholder="Contact of vehicle owner" required>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- <div class="form-check form-check-flat form-check-primary">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                Remember me
+                            </label>
+                        </div> --}}
+                        <button class="btn btn-primary mr-2" id="submit">Submit</button>
+                        <button class="btn btn-light" id="close">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+
+</div>
+</div>
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+<!-- end plugin js for this page -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/data-table.js"></script>
+<script src="/js/custom/loadingoverlay.min.js"></script>
+
+<script src="/js/custom/provider-controller.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTableExample1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
+</body>
+
+
+</html>

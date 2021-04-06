@@ -237,7 +237,7 @@ exports.inactivateCloseTxBtn = (hbs) => {
 
 exports.statusColors = (hbs) => {
   hbs.registerHelper("statusColors", function (value) {
-    if (value == 1) {
+    if (value == 1 || value == 6) {
       return '<span class="badge badge-primary">Offer made</span>';
     } else if (value == 2) {
       return '<span class="badge badge-warning">Offer Accepted</span>';

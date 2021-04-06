@@ -16,7 +16,6 @@ initiatePayment = async (req, res) => {
     const payment = await Payment.findOne({
       where: { transactionId: transaction.id },
     });
-   
 
     if (!payment) {
       await Payment.create({
@@ -81,6 +80,18 @@ completePayment = async (req, res) => {
         `Customer has made payment to transaction number ${transactionId}. Please use the route button to move to location immediately.\nThank you.`
       );
 
+      let f = await Transaction.findOne({
+        where: { id: transactionId },
+        include: [{ model: Provider, include: [{ model: User }] }],
+      });
+      let fcms = [f.Provider.User.fcm];
+
+      await Helper.sendFCMNotification(
+        fcms,
+        "Payment made",
+        "Customer has made payment. Please move now!"
+      );
+
       await db
         .collection(process.env.TRANSACTION_STORE)
         .doc(transactionId)
@@ -109,11 +120,15 @@ completePayment = async (req, res) => {
           return await res.redirect("/payment-success");
         });
     } else {
-      return await res.redirect("/payment-failed?code=" + code + "&reason=" + reason);
+      return await res.redirect(
+        "/payment-failed?code=" + code + "&reason=" + reason
+      );
     }
   } catch (error) {
     console.log("ERRROR>>>>>", error);
-    return  await res.redirect("/payment-failed?code=" + code + "&reason=" + reason);
+    return await res.redirect(
+      "/payment-failed?code=" + code + "&reason=" + reason
+    );
   }
 };
 

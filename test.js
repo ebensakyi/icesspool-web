@@ -1,4 +1,4 @@
-applyDiscount =  (
+applyDiscount = (
   cost,
   numberOfTrips,
   trip1Discount,
@@ -40,9 +40,24 @@ applyDiscount =  (
   }
 };
 
-let discountedCost =  applyDiscount(350, 8, 0.0, 0.05, 0.08, 0.1, 0.12);
+let discountedCost = applyDiscount(350, 8, 0.0, 0.05, 0.08, 0.1, 0.12);
 console.log(Math.ceil(discountedCost));
 
 const Helper = require("./utils/Helper");
 
- Helper.sendFCMNotification( ["cE7tqtzLSB-22OL2hzoNcO:APA91bGnDhI2tgKWrSPRgJGKbNPbGsqcRFATLFQJ6sunu7Je_JiasoFfSNlJiXuxPvKqztXk3Kw_KNyRd3owxDVeaLnQS8HU6q0wYuTQkWcSUG-EOESiueO5WK2BWJd4mgrKtmWVAq_z"], "Hmmm1", "Hmmmm2");
+//  Helper.sendFCMNotification( ["cE7tqtzLSB-22OL2hzoNcO:APA91bGnDhI2tgKWrSPRgJGKbNPbGsqcRFATLFQJ6sunu7Je_JiasoFfSNlJiXuxPvKqztXk3Kw_KNyRd3owxDVeaLnQS8HU6q0wYuTQkWcSUG-EOESiueO5WK2BWJd4mgrKtmWVAq_z"], "Hmmm1", "Hmmmm2");
+
+const { Payment } = require("./db/models");
+const { Transaction } = require("./db/models");
+const { Provider } = require("./db/models");
+const { User } = require("./db/models");
+
+const x = async () => {
+  let f = await Transaction.findOne({
+    where: { id: 250221911345 },
+    include: [{ model: Provider, include: [{ model: User }] }],
+  });
+  console.log("F ", JSON.stringify([f.Provider.User.fcm]));
+};
+
+x();

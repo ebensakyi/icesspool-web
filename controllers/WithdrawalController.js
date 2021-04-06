@@ -42,7 +42,7 @@ exports.createWithdrawal = async (req, res) => {
     if (x)
       await Helper.sendSMS(
         "+233550216288",
-        "A withdrawal request has been made.Please attend to it"
+        "A withdrawal request has been made. Please attend to it"
       );
     return res
       .status(200)
@@ -83,6 +83,9 @@ exports.getWithdrawalRequests = async (req, res) => {
     await Helper.isLogin(req, res);
     const withdrawals = await Withdrawal.findAll({
       where: { deleted: 0 },
+      order: [
+        ['createdAt', 'DESC'],
+      ],    
       include: [
         {
           model: Provider,
@@ -109,6 +112,9 @@ exports.getDisbursements = async (req, res) => {
     await Helper.isLogin(req, res);
     const disbursements = await Withdrawal.findAll({
       where: { deleted: 0, status: 1 },
+      order: [
+        ['createdAt', 'DESC'],
+      ],    
       include: [
         { model: User },
         {

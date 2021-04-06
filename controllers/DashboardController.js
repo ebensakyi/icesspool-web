@@ -33,13 +33,13 @@ exports.getDashboardData = async (req, res) => {
     where: { deleted: 0 },
   });
   let offerMadeCount = await Transaction.count({
-    where: { currentStatus: 3, deleted: 0 },
+    where: { currentStatus: 1, deleted: 0 },
   });
   let offerInplaceCount = await Transaction.count({
     where: { currentStatus: 3, deleted: 0 },
   });
   let offerClosedCount = await Transaction.count({
-    where: { currentStatus: 3, deleted: 0 },
+    where: { currentStatus: 4, deleted: 0 },
   });
 
   res.send({

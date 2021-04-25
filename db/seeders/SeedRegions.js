@@ -1,0 +1,20 @@
+const { Region } = require('../models')
+
+exports.seedRegion = async () => {
+    await Region.create({ id: 1, regionName: 'Greater Accra', abbrv: 'GAR' })
+    await Region.create({ id: 2, regionName: 'Ashanti', abbrv: 'ASR' })
+    await Region.create({ id: 3, regionName: 'Eastern', abbrv: 'ESR' })
+    await Region.create({ id: 4, regionName: 'Western', abbrv: 'WSR' })
+    await Region.create({ id: 5, regionName: 'Central', abbrv: 'CTR' })
+    await Region.create({ id: 6, regionName: 'Ahafo', abbrv: 'AHR' })
+    await Region.create({ id: 7, regionName: 'Bono', abbrv: 'BNR' })
+    await Region.create({ id: 8, regionName: 'Bono East', abbrv: 'BER' })
+    await Region.create({ id: 9, regionName: 'Northern', abbrv: 'NTR' })
+    await Region.create({ id: 10, regionName: 'North East', abbrv: 'NER' })
+    await Region.create({ id: 11, regionName: 'Savannah', abbrv: 'SVR' })
+    await Region.create({ id: 12, regionName: 'Upper East', abbrv: 'UER' })
+    await Region.create({ id: 13, regionName: 'Upper West', abbrv: 'UWR' })
+    await Region.create({ id: 14, regionName: 'Volta', abbrv: 'VTR' })
+    await Region.create({ id: 15, regionName: 'Oti', abbrv: 'OTR' })
+    await Region.create({ id: 16, regionName: 'Western North', abbrv: 'WNR' })
+}

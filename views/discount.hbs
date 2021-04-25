@@ -1,0 +1,135 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Update Discount Parameters</h6>
+                    <form class="forms-sample" method="POST">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="trip1Discount">Trip 1 discount</label>
+                                    <input class="form-control" id="trip1Discount" name="trip1Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 1 discount" value="{{data.trip1}}" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="trip2Discount">Trip 2 discount</label>
+                                    <input class="form-control" id="trip2Discount" name="trip2Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 2 discount" value="{{data.trip2}}"  required>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="trip3Discount">Trip 3 discount</label>
+                                    <input  class="form-control" id="trip3Discount" name="trip3Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 3 discount" value="{{data.trip3}}"  required>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="trip4Discount">Trip 4 discount</label>
+                                    <input  class="form-control" id="trip4Discount" name="trip4Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 4 discount" value="{{data.trip4}}"  required>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="trip5">Trip 5 discount</label>
+                                    <input  class="form-control" id="trip5" name="trip5Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 5 discount" value="{{data.trip5}}"  required>
+                                </div>
+                            </div>
+                             <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="beyond5Discount">Beyond 5 trips discount</label>
+                                    <input class="form-control" id="trip5" name="beyond5Discount" maxlength="4"
+                                        autocomplete="off" placeholder="Enter trip 5 discount" value="{{data.beyond5}}"  required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr-2">Update</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Discounts</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Trip 1</th>
+                                    <th>Trip 2</th>
+                                    <th>Trip 3</th>
+                                    <th>Trip 4</th>
+                                    <th>Trip 5 and beyond</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.id}}</td>
+                                    <td>{{this.fuelDistanceConst}}</td>
+                                    <td>{{this.insurance}}</td>
+                                    <td>{{this.repairCost}}</td>
+                                    <td>{{this.roadWorthy}}</td>
+                                    <td>{{this.unitFuelCost}}</td>
+
+
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+</div>
+{{>footer}}
+
+</div>
+
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+	<script src="/vendors/jquery-validation/jquery.validate.min.js"></script>
+
+	<script src="/vendors/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+	<script src="/vendors/inputmask/jquery.inputmask.min.js"></script>
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/js/data-table.js"></script>
+<!-- end custom js for this page -->
+<!-- end custom js for this page -->
+
+</body>
+
+
+</html>

@@ -1,0 +1,117 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Send SMS</h6>
+                    <form class="forms-sample" method="POST">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="commission">Select group</label>
+                                    <select name="userGroup">
+                                        <option>Select</option>
+
+                                        <option value="3">Clients</option>
+                                        <option value="2">Service providers</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="commission">Enter message</label>
+                                    <textarea type="text" class="form-control" id="message" name="message" autocomplete="off" placeholder="Enter message" required="required"></textarea>
+                                    <small style="color: brown;">If you want to address the message with user's surname, start messasge with $</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <br>
+                                        <button type="submit" id="saveCommission" class="btn btn-primary mr-2">Send message</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Client List</h6>
+
+                        <div class="table-responsive">
+                            <table id="dataTableExample1" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th>Type</th>
+                                        <th>To</th>
+                                        <th>Sent by</th>
+                                        <th>Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each data}}
+                                        <tr>
+
+                                            <td>{{this.message}}</td>
+                                            <td>{{this.type}}</td>
+                                            <td>{{this.to}}</td>
+                                            <td>{{this.User.otherNames}} {{this.User.surname}}</td>
+                                            <td>{{this.createdAt}}</td>
+
+                                            
+                                        </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{>footer}}
+</div>
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<script src="/vendors/chartjs/Chart.min.js"></script>
+<script src="/vendors/jquery.flot/jquery.flot.js"></script>
+<script src="/vendors/jquery.flot/jquery.flot.resize.js"></script>
+<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/vendors/apexcharts/apexcharts.min.js"></script>
+<script src="/vendors/progressbar.js/progressbar.min.js"></script>
+
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+
+<script src="/js/data-table.js"></script>
+<!-- custom js for this page -->
+<script src="/js/dashboard.js"></script>
+<script src="/js/datepicker.js"></script>
+<!-- end custom js for this page -->
+
+<script>
+  feather.replace()
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+{{>header}}
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">TRANSACTIONS</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample1" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Statuses</th>
+
+
+                                    <th>Provider</th>
+                                    <th>Client</th>
+                                    <th>Unit Cost</th>
+                                                                        <th>Actual Total Cost</th>
+                                    <th>Discounted Total Cost</th>
+                                    <th># of trips</th>
+
+                                    <th>District</th>
+                                    <th>Community</th>
+                                    <th>Location</th>
+
+                                    <th>Axle</th>
+                                    <th>Status</th>
+
+                                    <th>Offer date</th>
+
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.id}}</td>
+                                    <td><button data-toggle="modal" data-target="#tx-statuses" type="button"
+                                            class="btn btn-primary btn-icon" data-id="{{this.id}}">
+                                            <i data-feather="more-vertical"></i>
+                                        </button></td>
+                                    <td><a href="/transaction/provider/{{this.providerId}}" data-toggle="modal"
+                                            data-id="{{this.providerId}}"
+                                            data-target="#provider-details">{{this.providerId}}</a> <br> {{this.Provider.User.surname}} {{this.Provider.User.otherNames}} <br> {{this.Provider.User.phoneNumber}} 
+                                    </td>
+                                    <td><a href="/transaction/client/{{this.clientId}}" data-toggle="modal"
+                                            data-id="{{this.clientId}}"
+                                            data-target="#client-details">{{this.clientId}}</a> <br><br> {{this.Client.User.surname}}  {{this.Client.User.otherNames}}<br> {{this.Client.User.phoneNumber}}<br>  </td>
+                                    <td>GHS {{this.unitCost}}</td>
+                                                                        <td>GHS {{this.actualTotalCost}}</td>
+                                    <td>GHS {{this.discountedTotalCost}}</td>
+                                    <td>{{this.trips}}</td>
+
+                                    <td>{{this.District.districtName}}</td>
+                                    <td>{{this.community}}</td>
+                                    <td>{{this.location}}</td>
+                                    <td>{{this.AxleClassification.axleClass}}</td>
+                                    <td>{{{statusColors this.currentStatus}}}</td>
+                                    <td>{{this.createdAt}}</td>
+
+                                    {{!-- <td>{{this.activated}}</td> --}}
+                                    <td>
+                                        <button {{{inactivateCloseTxBtn this.currentStatus}}} data-toggle="modal"
+                                            data-target="#tx-details" type="button" class="btn btn-success btn-icon"
+                                            data-id="{{this.id}}" data-provider="{{this.providerId}}"
+                                            data-client="{{this.clientId}}"
+                                            data-district="{{this.District.districtName}}"
+                                            data-community="{{this.community}}" data-location="{{this.location}}"
+                                            data-axle="{{this.axle}}" data-trips="{{this.trips}}"
+                                            data-status="{{this.Status.state}}">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tx-statuses" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">STATUSUES</h6>
+                    <div class="table-responsive">
+                        <table id="statusTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th hidden>Id</th>
+                                    <th>Status</th>
+
+
+                                    <th>Date</th>
+                                    <th>Time</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="provider-details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">DETAILS</h6>
+
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="surname">Surname</label>
+                                    <input type="text" class="form-control" id="surname" autocomplete="off"
+                                        placeholder="Surname" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="otherNames">Other names</label>
+                                    <input type="text" class="form-control" id="otherNames" autocomplete="off"
+                                        placeholder="otherNames" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone number</label>
+                                    <input type="phone" class="form-control" id="phoneNumber" placeholder="Phone number"
+                                        disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="companyName">Name of company</label>
+                                    <input type="text" class="form-control" id="companyName" autocomplete="off"
+                                        placeholder="Name of company" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="officeLocation">Office location</label>
+                                    <input type="text" class="form-control" id="officeLocation" autocomplete="off"
+                                        placeholder="Office location(District, Community)" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="ghanaPostGps">Ghana Post GPS</label>
+                                    <input type="text" class="form-control" id="ghanaPostGps" autocomplete="off"
+                                        placeholder="Ghana Post GPS" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="client-details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">DETAILS</h6>
+
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="surname">Surname</label>
+                                    <input type="text" class="form-control" id="surname1" autocomplete="off"
+                                        placeholder="Surname" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="otherNames">Other names</label>
+                                    <input type="text" class="form-control" id="otherNames1" autocomplete="off"
+                                        placeholder="otherNames" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email1" placeholder="Email" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone number</label>
+                                    <input type="phone" class="form-control" id="phoneNumber1"
+                                        placeholder="Phone number" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="tx-details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">DETAILS</h6>
+
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="providerId">Provider ID</label>
+                                    <input type="text" class="form-control" id="providerId" autocomplete="off"
+                                        placeholder="Provider Id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="clientId">Client Id</label>
+                                    <input type="text" class="form-control" id="clientId" autocomplete="off"
+                                        placeholder="clientId" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <input type="text" class="form-control" id="district" placeholder="District"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="community">Community</label>
+                                    <input type="text" class="form-control" id="community" placeholder="Community"
+                                        disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" class="form-control" id="location" autocomplete="off"
+                                        placeholder="Location" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="axle">Axle</label>
+                                    <input type="text" class="form-control" id="axle" autocomplete="off"
+                                        placeholder="Axle" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="trips">Trips</label>
+                                    <input type="text" class="form-control" id="trips" placeholder="Trips" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="currentStatus">Current Status</label>
+                                    <input type="text" class="form-control" id="currentStatus"
+                                        placeholder="Current Status" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="alert alert-fill-danger" role="alert">
+                            Once offer is closed, it cannot be reversed. Click outside the form to close it.
+                        </div>
+                        <button {{{inactivateBtn }}} class="btn btn-danger mr-2" id="close-tx">Close
+                            Transaction</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+
+</div>
+{{!--
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --}}
+
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+
+
+
+
+
+
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/js/data-table.js"></script>
+<!-- end custom js for this page -->
+<!-- end custom js for this page -->
+<script src="/js/custom/loadingoverlay.min.js"></script>
+
+<script src="/js/custom/transaction-controller.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('#dataTableExample1').DataTable( {
+    "ordering": false,
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+} );
+</script>
+</body>
+
+
+</html>

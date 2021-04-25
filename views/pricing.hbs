@@ -1,0 +1,175 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Update Pricing Parameters</h6>
+                    <form class="forms-sample" method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fuel">Fuel</label>
+                                    <input type="text" class="form-control" id="fuel" name="fuel" autocomplete="off"
+                                        placeholder="Enter fuel" required>
+                                </div>
+                            </div>
+                            {{!-- <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="insurance">Insurance</label>
+                                    <input type="text" class="form-control" id="insurance" name="insurance" value="{{data.insurance}}"
+                                        autocomplete="off" placeholder="Enter other name(s)" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="workingDays">Working days</label>
+                                    <input type="number" class="form-control" id="workingDays" name="workingDays"
+                                        placeholder="Working days">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="repairCost">Repair cost</label>
+                                    <input type="number" class="form-control" id="repairCost" name="repairCost"
+                                        placeholder="Repair cost" required>
+                                </div>
+                            </div> --}}
+                        </div>
+                        {{!-- <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="username">Pump Annual Depreciation</label>
+                                    <input type="number" class="form-control" id="pumpAnnualDepreciation"
+                                        name="pumpAnnualDepreciation" autocomplete="off"
+                                        placeholder="Enter Pump Annual Depreciation" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="profitPercentage">Enter profit percentage</label>
+                                    <input type="number" class="form-control" id="profitPercentage"
+                                        name="profitPercentage" placeholder="Enter profit percentage" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="annualAdminCost">Annual Admin Cost</label>
+                                    <input type="number" class="form-control" id="annualAdminCost"
+                                        name="annualAdminCost" placeholder="Annual Admin Cost" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="annualOverheadCost">Annual Overhead Cost</label>
+                                    <input type="number" class="form-control" id="annualOverheadCost"
+                                        name="annualOverheadCost" placeholder="Annual Admin Cost" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="annualToolsCost">Annual Tools Cost</label>
+                                    <input type="number" class="form-control" id="annualToolsCost"
+                                        name="annualToolsCost" autocomplete="off" placeholder="Enter annual tools cost"
+                                        required>
+                                </div>
+                            </div>
+
+                        </div> --}}
+                        <button type="submit" class="btn btn-primary mr-2">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Pricing</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Axle</th>
+                                    <th>Fuel distance</th>
+                                    <th>Insurance</th>
+                                    <th>Repair cost</th>
+                                    <th>Road worthy</th>
+                                    <th>Unit Fuel Cost</th>
+                                    <th>Working Days</th>
+                                    <th>Truck Depreciation</th>
+                                    <th>Annual Admin Cost</th>
+                                    <th>Annual Overhead Cost</th>
+                                    <th>Annual Tools Cost</th>
+                                    <th>Profit Percentage</th>
+                                    <th>Pump Annual Depreciation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.id}}</td>
+                                    <td>{{this.AxleClassification.axleClass}}</td>
+                                    <td>{{this.fuelDistanceConst}}</td>
+                                    <td>{{this.insurance}}</td>
+                                    <td>{{this.repairCost}}</td>
+                                    <td>{{this.roadWorthy}}</td>
+                                    <td>{{this.unitFuelCost}}</td>
+                                    <td>{{this.workingDays}}</td>
+                                    <td>{{this.truckDepreciation}}</td>
+                                    <td>{{this.annualAdminCost}}</td>
+                                    <td>{{this.annualOverheadCost}}</td>
+                                    <td>{{this.annualToolsCost}}</td>
+                                    <td>{{this.profitPercentage}}</td>
+                                    <td>{{this.pumpAnnualDepreciation}}</td>
+
+                                   
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+
+</div>
+
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/js/data-table.js"></script>
+<!-- end custom js for this page -->
+<!-- end custom js for this page -->
+<script src="/js/custom/scanners-controller.js"></script>
+
+</body>
+
+
+</html>

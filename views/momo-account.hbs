@@ -1,0 +1,69 @@
+{{>header}}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">MoMo Account List</h6>
+
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>MoMo Number</th>
+                                    <th>MoMo Network</th>
+                                    {{!-- <th>Status</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+
+                                    <td>{{this.providerId}}</td>
+                                    <td>{{this.Provider.User.surname}} {{this.Provider.User.otherNames}}</td>
+                                    <td>{{this.momoNumber}}</td>
+                                    <td>{{this.MomoNetwork.network}}</td>
+                                    {{!-- <td>{{this.activated}}</td> --}}
+                                  
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+
+</div>
+</div>
+
+<!-- core:js -->
+<script src="/vendors/core/core.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<!-- plugin js for this page -->
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+<!-- end plugin js for this page -->
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/js/template.js"></script>
+<script src="/assets/js/data-table.js"></script>
+
+</body>
+
+
+</html>

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const bcrypt = require('bcrypt')
+    const bcrypt = require('bcryptjs')
     const User = sequelize.define('User', {
         id: {
             primaryKey: true,

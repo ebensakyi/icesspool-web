@@ -65,6 +65,7 @@ exports.offerMade = async (req, res) => {
       trip5Discount
     );
 
+    console.log("NEW TRANSATION ",req.body);
     const tx = await Transaction.create({
       id: req.body.transactionId,
       axle: req.body.axle,
@@ -110,10 +111,14 @@ exports.offerMade = async (req, res) => {
       include: [{ model: User }],
     });
 
-    let fcms = await getFcmsArr(v)
-   await Helper.sendFCMNotification(fcms,"New offer","There is a new iCesspool offer waiting for you!")
-    console.table(fcms);
-    console.log(fcms);
+    let fcms = await getFcmsArr(v);
+    await Helper.sendFCMNotification(
+      fcms,
+      "New offer",
+      "There is a new iCesspool offer waiting for you!"
+    );
+    // console.table(fcms);
+    // console.log(fcms);
 
     res.status(200).send({
       statusCode: 1,
@@ -121,7 +126,7 @@ exports.offerMade = async (req, res) => {
       data: transaction,
     });
   } catch (error) {
-    console.log(error);
+    console.error(">>>>>>>>T<<<<<<<<",error);
     return res.status(400).send({ statusCode: 0, message: error });
   }
 };
@@ -239,6 +244,25 @@ exports.offerCancelledByProvider = async (req, res) => {
       await Helper.sendSMS(
         phoneNumber,
         "We are sorry to inform you that your provider cancelled the request for some reason.\nYour request would immediately be attended to by the next available Operator soon.\nThank you."
+      );
+
+      
+
+      let axle = await transaction.axle;
+      let v = await Vehicle.findAll({
+        where: {
+          axleClassificationId: {
+            [Op.gte]: axle,
+          },
+        },
+        include: [{ model: User }],
+      });
+
+      let fcms = await getFcmsArr(v);
+      await Helper.sendFCMNotification(
+        fcms,
+        "New offer",
+        "There is a new iCesspool offer waiting for you!"
       );
     }
 
@@ -413,7 +437,6 @@ exports.getTransactionStatuses = async (req, res) => {
     where: { transactionId: req.params.id },
     include: [{ model: Status }],
   });
-  console.log(statuses);
   return res.status(200).send({ statusCode: 1, data: statuses });
 };
 

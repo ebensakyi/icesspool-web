@@ -1,5 +1,5 @@
 module.exports.route = (app) => {
-  var bcrypt = require("bcrypt");
+  var bcrypt = require("bcryptjs");
   const firebase = require("../config/firebaseConfig");
   const db = firebase.firestore();
   const saltRounds = 10;

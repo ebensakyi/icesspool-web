@@ -55,7 +55,7 @@ $("#tx-statuses").on("show.bs.modal", function(e) {
             console.log(response);
 
             const data = response.data;
-
+            $("#statusTable tr").remove();
             for (let i = 0; i < data.length; i++) {
                 addToTableFunction(
                     data[i].id,
@@ -65,13 +65,7 @@ $("#tx-statuses").on("show.bs.modal", function(e) {
                 );
             }
             // $.LoadingOverlay("hide");
-            // $("#surname").val(response.data.User.surname);
-            // $("#otherNames").val(response.data.User.otherNames);
-            // $("#phoneNumber").val(response.data.User.phoneNumber);
-            // $("#email").val(response.data.User.email);
-            // $("#companyName").val(response.data.company);
-            // $("#officeLocation").val(response.data.officeLocation);
-            // $("#ghanaPostGps").val(response.data.ghanaPostGPS);
+        
         },
         error: function(e) {
             console.log("Error ", e);
@@ -122,7 +116,7 @@ $("#tx-details").on("show.bs.modal", function(e) {
 });
 
 function addToTableFunction(id, status, date, time) {
-    $("#statusTable tr").remove();
+   // $("#statusTable tr").remove();
 
     $("#statusTable")
         .find("tbody")

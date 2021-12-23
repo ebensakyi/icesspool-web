@@ -21,7 +21,7 @@ const client = redis.createClient();
 
 process.env.NODE_ENV = "production";
 
-app.use(logger("dev"));
+//app.use(logger("dev"));
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
@@ -122,8 +122,12 @@ disbursed.isDisbursed(hbs);
 const inactivate = require("./utils/Helper");
 inactivate.inactivateBtn(hbs);
 
+
 const inactivateCloseTx = require("./utils/Helper");
 inactivateCloseTx.inactivateCloseTxBtn(hbs);
+
+const inactivatePushTx = require("./utils/Helper");
+inactivatePushTx.inactivatePushTxBtn(hbs);
 
 const statusColors = require("./utils/Helper");
 statusColors.statusColors(hbs);
@@ -152,7 +156,7 @@ routes.ScannerUserRoutes(app);
 routes.WebOffersRoutes(app);
 routes.DiscountRoutes(app);
 routes.FcmRoutes(app)
-
+routes.MessagingRoutes(app)
 app.get("*", (req, res) =>
     // res.status(200).send({
     //   message: "Welcome to the beginning of nothingness." ,

@@ -21,6 +21,7 @@ const PrivacyTermsRoutes = require('./PrivacyTermsRoutes')
 const DiscountRoutes = require('./DiscountRoutes')
 
 const FcmRoutes = require('./FcmRoutes')
+const MessagingRoutes = require('./MessagingRoutes')
 
 module.exports = {
     UserRoutes,
@@ -46,6 +47,6 @@ module.exports = {
     RatingRoutes,
     PrivacyTermsRoutes,
     DiscountRoutes,
-    FcmRoutes
-    
+    FcmRoutes,
+    MessagingRoutes
 };

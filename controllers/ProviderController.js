@@ -18,6 +18,9 @@ exports.newProviderPage = async (req, res) => {
   try {
     await Helper.isLogin(req, res);
     const users = await User.findAll({
+      order: [
+        ['createdAt', 'DESC'],
+      ],    
       where: {
         userTypeId: 2,
       },

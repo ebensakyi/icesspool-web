@@ -5,7 +5,7 @@ const { _2fa } = require("../db/models");
 
 const helper = require("../utils/Helper");
 const gen = require("../utils/Generators");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 exports.mobileLogin = async (req, res) => {
   try {

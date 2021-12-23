@@ -54,7 +54,7 @@ exports.sendSMS1 = async (phoneNumber, content) => {
     json: true,
   };
 
-  return await request(options);
+  return  request(options);
 };
 
 exports.sendEmail = async (to, subject, message) => {
@@ -118,6 +118,7 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
 };
 
 exports.initiateTellerPayment = async (paymentId, amount) => {
+
   const options = {
     method: "POST",
     url: process.env.TELLER_URL,
@@ -141,6 +142,8 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
 
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
+     
+
       if (error) return reject(error);
       return resolve(body);
     });
@@ -235,9 +238,17 @@ exports.inactivateCloseTxBtn = (hbs) => {
   });
 };
 
+
+exports.inactivatePushTxBtn = (hbs) => {
+  hbs.registerHelper("inactivatePushTxBtn", function (value) {
+    if (value != 2) {
+      return "disabled";
+    }
+  });
+};
 exports.statusColors = (hbs) => {
   hbs.registerHelper("statusColors", function (value) {
-    if (value == 1) {
+    if (value == 1 || value == 6) {
       return '<span class="badge badge-primary">Offer made</span>';
     } else if (value == 2) {
       return '<span class="badge badge-warning">Offer Accepted</span>';

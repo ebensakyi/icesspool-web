@@ -37,7 +37,7 @@ exports.deleteTransaction = async (req, res) => {
   try {
     let transactionId = req.body.transactionId;
 
-    let trx = await Transaction.update(
+    await Transaction.update(
       { deleted: 1 },
       { where: { id: transactionId } }
     );

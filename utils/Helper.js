@@ -54,7 +54,11 @@ exports.sendSMS1 = async (phoneNumber, content) => {
     json: true,
   };
 
+<<<<<<< HEAD
   return  request(options);
+=======
+  return await request(options);
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
 };
 
 exports.sendEmail = async (to, subject, message) => {
@@ -118,7 +122,10 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
 };
 
 exports.initiateTellerPayment = async (paymentId, amount) => {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
   const options = {
     method: "POST",
     url: process.env.TELLER_URL,
@@ -142,8 +149,11 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
 
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
+<<<<<<< HEAD
      
 
+=======
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
       if (error) return reject(error);
       return resolve(body);
     });
@@ -238,6 +248,7 @@ exports.inactivateCloseTxBtn = (hbs) => {
   });
 };
 
+<<<<<<< HEAD
 
 exports.inactivatePushTxBtn = (hbs) => {
   hbs.registerHelper("inactivatePushTxBtn", function (value) {
@@ -246,6 +257,8 @@ exports.inactivatePushTxBtn = (hbs) => {
     }
   });
 };
+=======
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
 exports.statusColors = (hbs) => {
   hbs.registerHelper("statusColors", function (value) {
     if (value == 1 || value == 6) {

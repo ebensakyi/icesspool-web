@@ -5,7 +5,11 @@ const { _2fa } = require("../db/models");
 
 const helper = require("../utils/Helper");
 const gen = require("../utils/Generators");
+<<<<<<< HEAD
 const bcrypt = require("bcryptjs");
+=======
+const bcrypt = require("bcrypt");
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
 
 exports.mobileLogin = async (req, res) => {
   try {
@@ -170,12 +174,18 @@ exports.changeWebPassword = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+<<<<<<< HEAD
     // console.log("User1 ",req.body);
 
     const user = await User.findOne({
       where: { email: req.body.email, userTypeId: 1, deleted: 0 },
     });
    // console.log("User ",user);
+=======
+    const user = await User.findOne({
+      where: { email: req.body.email, userTypeId: 1, deleted: 0 },
+    });
+>>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
 
     if (user != null) {
       const valid = await user.validPassword(req.body.password);

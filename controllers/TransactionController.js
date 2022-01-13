@@ -48,6 +48,7 @@ exports.deleteTransaction = async (req, res) => {
 
     res.status(200).send({ statusCode: 1, message: "Deleted" });
   } catch (error) {
+    console.log(error);
     res.status(400).send({ statusCode: 0, message: error });
   }
 };

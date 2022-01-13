@@ -54,7 +54,7 @@ exports.sendSMS1 = async (phoneNumber, content) => {
     json: true,
   };
 
-  return  request(options);
+  return request(options);
 };
 
 exports.sendEmail = async (to, subject, message) => {
@@ -141,8 +141,6 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
 
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
-     
-
       if (error) return reject(error);
       return resolve(body);
     });
@@ -237,10 +235,17 @@ exports.inactivateCloseTxBtn = (hbs) => {
   });
 };
 
-
 exports.inactivatePushTxBtn = (hbs) => {
   hbs.registerHelper("inactivatePushTxBtn", function (value) {
     if (value != 2) {
+      return "disabled";
+    }
+  });
+};
+
+exports.inactivateDeleteTxBtn = (hbs) => {
+  hbs.registerHelper("inactivateDeleteTxBtn", function (value) {
+    if (value == 3 || value == 4) {
       return "disabled";
     }
   });

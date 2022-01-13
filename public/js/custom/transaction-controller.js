@@ -160,7 +160,7 @@ $("#push-tx-details").on("show.bs.modal", function(e) {
 });
 
 
-$("#push-tx-details").on("show.bs.modal", function(e) {
+$("#delete-tx").on("show.bs.modal", function(e) {
 
     const id = $(e.relatedTarget).data("id");
     const providerId = $(e.relatedTarget).data("provider");
@@ -173,22 +173,22 @@ $("#push-tx-details").on("show.bs.modal", function(e) {
     const status = $(e.relatedTarget).data("status");
 
    
-    $("#__providerId").val(providerId);
-    $("#__clientId").val(clientId);
-    $("#__district").val(district);
-    $("#__community").val(community);
-    $("#__location").val(location);
-    $("#__axle").val(axle);
-    $("#__trips").val(trips);
-    $("#__currentStatus").val(status);
-    $("#__id").val(id);
+    $("#providerId_").val(providerId);
+    $("#clientId_").val(clientId);
+    $("#district_").val(district);
+    $("#community_").val(community);
+    $("#location_").val(location);
+    $("#axle_").val(axle);
+    $("#trips_").val(trips);
+    $("#currentStatus_").val(status);
+    $("#id_").val(id);
 
     $("#delete-tx").click(function(e) {
         e.preventDefault();
         $.LoadingOverlay("show");
 
         $.ajax({
-            url: "/payment-manual-push-tx",
+            url: "/transaction/delete",
             method: "POST",
             data: { transactionId: id, providerId: providerId, txStatusCode: 4 },
             success: function(response) {

@@ -93,8 +93,8 @@
   <script src="/vendors/feather-icons/feather.min.js"></script>
   <script src="/js/template.js"></script>
 
-  {{!--
-  <script src="/js/custom/toast-master/js/jquery.toast.js"></script> --}}
+
+  <script src="/js/custom/toast-master/js/jquery.toast.js"></script> 
 
   <script src="/js/custom/loadingoverlay.min.js"></script>
 
@@ -122,7 +122,6 @@
             } else {
 
               $.LoadingOverlay("show");
-              console.log($(this).serialize())
               $.ajax({
                 type: "POST",
                 url: '/login',
@@ -140,7 +139,6 @@
                     const title = 'Wrong credentials'
 
                     showWarningToast(title, message)
-                    console.log("Error ", response)
                   }
 
                 },

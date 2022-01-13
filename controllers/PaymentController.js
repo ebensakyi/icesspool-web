@@ -55,6 +55,76 @@ completePaymentWebhooks = async (req, res) => {
   res.send({ status: "Success", msg: "Message received", body: req.body });
 };
 
+manualCompletePayment = async (req, res) => {
+  try {
+  //  console.log(req.body);
+// const payment = await Payment.findOne({
+//   where: { paymentId: paymentId },
+// });
+
+let transactionId = req.body.transactionId
+const transaction = await Transaction.findOne({
+  where: { id:transactionId },
+});
+
+const provider = await Provider.findOne({
+  where: { id: transaction.providerId },
+});
+
+const user = await User.findOne({
+  where: { id: provider.userId },
+});
+
+const phoneNumber = await user.phoneNumber;
+
+await Helper.sendSMS(
+  phoneNumber,
+  `Customer has made payment to transaction number ${transactionId}. Please use the route button to move to location immediately.\nThank you.`
+);
+
+let f = await Transaction.findOne({
+  where: { id: transactionId },
+  include: [{ model: Provider, include: [{ model: User }] }],
+});
+let fcms = [user.fcm];
+
+await Helper.sendFCMNotification(
+  fcms,
+  "Payment made",
+  "Customer has made payment. Please move now!"
+);
+
+await db
+  .collection(process.env.TRANSACTION_STORE)
+  .doc(transactionId)
+  .update({
+    txStatusCode: 3,
+    paymentStatus: 1,
+    paymentTime: Helper.getDate() + " at " + Helper.getTime(),
+  });
+// .then(async () => {
+// UPDATE DATABASE /////////
+
+await Transaction.update(
+  { currentStatus: 3, paymentStatus: 1 },
+  { where: { id: transactionId } }
+);
+const transaction1 = await Transaction.findOne({
+  where: { id: transactionId },
+});
+await TransactionStatus.create({
+  transactionId: transaction1.id,
+  status: 3,
+  date: Helper.getDate(),
+  time: Helper.getTime(),
+});
+
+return await res.redirect("/payment-success");
+  } catch (error) {
+    console.log("ERROR",error);
+  }
+
+}
 completePayment = async (req, res) => {
   const status = req.query.status;
   const code = req.query.code;
@@ -175,4 +245,5 @@ module.exports = {
   paymentSuccess,
   paymentFailed,
   completePaymentWebhooks,
+  manualCompletePayment
 };

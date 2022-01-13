@@ -33,6 +33,24 @@ exports.getAllClientTransactions = async (req, res) => {
   }
 };
 
+exports.deleteTransaction = async (req, res) => {
+  try {
+    let transactionId = req.body.transactionId;
+
+    let trx = await Transaction.update(
+      { deleted: 1 },
+      { where: { id: transactionId } }
+    );
+    await db
+      .collection(process.env.TRANSACTION_STORE)
+      .doc(transactionId)
+      .delete();
+
+    res.status(200).send({ statusCode: 1, message: "Deleted" });
+  } catch (error) {
+    res.status(400).send({ statusCode: 0, message: error });
+  }
+};
 exports.offerMade = async (req, res) => {
   try {
     const count = await Helper.checkDuplicates(Transaction, {
@@ -65,7 +83,6 @@ exports.offerMade = async (req, res) => {
       trip5Discount
     );
 
-    console.log("NEW TRANSATION ",req.body);
     const tx = await Transaction.create({
       id: req.body.transactionId,
       axle: req.body.axle,
@@ -126,7 +143,7 @@ exports.offerMade = async (req, res) => {
       data: transaction,
     });
   } catch (error) {
-    console.error(">>>>>>>>T<<<<<<<<",error);
+    console.error(">>>>>>>>T<<<<<<<<", error);
     return res.status(400).send({ statusCode: 0, message: error });
   }
 };
@@ -245,8 +262,6 @@ exports.offerCancelledByProvider = async (req, res) => {
         phoneNumber,
         "We are sorry to inform you that your provider cancelled the request for some reason.\nYour request would immediately be attended to by the next available Operator soon.\nThank you."
       );
-
-      
 
       let axle = await transaction.axle;
       let v = await Vehicle.findAll({

@@ -7,5 +7,6 @@ module.exports = (app) => {
 
     app.get('/payment-success', PaymentController.paymentSuccess);
     app.get('/payment-failed', PaymentController.paymentFailed);
+    app.post("/payment-manual-push-tx", PaymentController.manualCompletePayment);
 
 };

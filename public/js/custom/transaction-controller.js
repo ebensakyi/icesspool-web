@@ -115,6 +115,93 @@ $("#tx-details").on("show.bs.modal", function(e) {
     });
 });
 
+
+$("#push-tx-details").on("show.bs.modal", function(e) {
+
+    const id = $(e.relatedTarget).data("id");
+    const providerId = $(e.relatedTarget).data("provider");
+    const clientId = $(e.relatedTarget).data("client");
+    const district = $(e.relatedTarget).data("district");
+    const community = $(e.relatedTarget).data("community");
+    const location = $(e.relatedTarget).data("location");
+    const axle = $(e.relatedTarget).data("axle");
+    const trips = $(e.relatedTarget).data("trips");
+    const status = $(e.relatedTarget).data("status");
+
+   
+    $("#_providerId").val(providerId);
+    $("#_clientId").val(clientId);
+    $("#_district").val(district);
+    $("#_community").val(community);
+    $("#_location").val(location);
+    $("#_axle").val(axle);
+    $("#_trips").val(trips);
+    $("#_currentStatus").val(status);
+    $("#_id").val(id);
+
+    $("#push-tx").click(function(e) {
+        e.preventDefault();
+        $.LoadingOverlay("show");
+
+        $.ajax({
+            url: "/payment-manual-push-tx",
+            method: "POST",
+            data: { transactionId: id, providerId: providerId, txStatusCode: 4 },
+            success: function(response) {
+                window.location.replace("/transaction");
+                $.LoadingOverlay("hide");
+            },
+            error: function(e) {
+                //console.log("Error ", e);
+                $.LoadingOverlay("hide");
+            },
+        });
+    });
+});
+
+
+$("#push-tx-details").on("show.bs.modal", function(e) {
+
+    const id = $(e.relatedTarget).data("id");
+    const providerId = $(e.relatedTarget).data("provider");
+    const clientId = $(e.relatedTarget).data("client");
+    const district = $(e.relatedTarget).data("district");
+    const community = $(e.relatedTarget).data("community");
+    const location = $(e.relatedTarget).data("location");
+    const axle = $(e.relatedTarget).data("axle");
+    const trips = $(e.relatedTarget).data("trips");
+    const status = $(e.relatedTarget).data("status");
+
+   
+    $("#__providerId").val(providerId);
+    $("#__clientId").val(clientId);
+    $("#__district").val(district);
+    $("#__community").val(community);
+    $("#__location").val(location);
+    $("#__axle").val(axle);
+    $("#__trips").val(trips);
+    $("#__currentStatus").val(status);
+    $("#__id").val(id);
+
+    $("#delete-tx").click(function(e) {
+        e.preventDefault();
+        $.LoadingOverlay("show");
+
+        $.ajax({
+            url: "/payment-manual-push-tx",
+            method: "POST",
+            data: { transactionId: id, providerId: providerId, txStatusCode: 4 },
+            success: function(response) {
+                window.location.replace("/transaction");
+                $.LoadingOverlay("hide");
+            },
+            error: function(e) {
+                //console.log("Error ", e);
+                $.LoadingOverlay("hide");
+            },
+        });
+    });
+});
 function addToTableFunction(id, status, date, time) {
    // $("#statusTable tr").remove();
 

@@ -41,4 +41,6 @@ module.exports = (app) => {
     TransactionController.getTransactionStatuses
   );
   app.post("/transaction/manual-close", TransactionController.closeTransaction);
+  app.post("/transaction/delete", TransactionController.deleteTransaction);
+
 };

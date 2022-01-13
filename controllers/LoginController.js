@@ -170,9 +170,12 @@ exports.changeWebPassword = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    // console.log("User1 ",req.body);
+
     const user = await User.findOne({
       where: { email: req.body.email, userTypeId: 1, deleted: 0 },
     });
+   // console.log("User ",user);
 
     if (user != null) {
       const valid = await user.validPassword(req.body.password);

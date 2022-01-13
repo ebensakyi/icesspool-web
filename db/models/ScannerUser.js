@@ -1,9 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-<<<<<<< HEAD
     const bcrypt = require('bcryptjs')
-=======
-    const bcrypt = require('bcrypt')
->>>>>>> 8839d75a1725fc9b4c9ac9a0ed4e043babd22170
     const ScannerUser = sequelize.define('ScannerUser', {
         id: {
             primaryKey: true,

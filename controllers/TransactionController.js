@@ -36,15 +36,20 @@ exports.getAllClientTransactions = async (req, res) => {
 exports.deleteTransaction = async (req, res) => {
   try {
     let transactionId = req.body.transactionId;
+    let cancelReason = req.body.cancelReason;
 
-    await Transaction.update(
-      { deleted: 1 },
-      { where: { id: transactionId } }
-    );
-    await db
-      .collection(process.env.TRANSACTION_STORE)
-      .doc(transactionId)
-      .delete();
+    console.log("cancelReason",cancelReason);
+
+    // await Transaction.update(
+    //   { deleted: 1 },
+    //   { where: { id: transactionId } }
+    // );
+    // await db
+    //   .collection(process.env.TRANSACTION_STORE)
+    //   .doc(transactionId)
+    //   .delete();
+
+     // if(cancelReason!="")//send message to user
 
     res.status(200).send({ statusCode: 1, message: "Deleted" });
   } catch (error) {

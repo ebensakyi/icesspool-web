@@ -36,18 +36,25 @@ exports.getAllClientTransactions = async (req, res) => {
 exports.deleteTransaction = async (req, res) => {
   try {
     let transactionId = req.body.transactionId;
-
+    let clientPhoneNumber = req.body.cphone;
     let trx = await Transaction.update(
       { deleted: 1 },
       { where: { id: transactionId } }
     );
+
     await db
       .collection(process.env.TRANSACTION_STORE)
       .doc(transactionId)
       .delete();
+     
+    await Helper.sendSMS(
+      clientPhoneNumber,
+      "Sorry iCesspool has cancelled your Request. This can be due to non-payment or inactivity. Please check our Terms of Service / Call 0501411644. You can place another request from your premise at anytime. iCesspool: Conveniency to You."
+    );
 
     res.status(200).send({ statusCode: 1, message: "Deleted" });
   } catch (error) {
+    console.log(error);
     res.status(400).send({ statusCode: 0, message: error });
   }
 };

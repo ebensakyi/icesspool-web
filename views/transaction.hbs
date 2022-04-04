@@ -33,7 +33,7 @@
                                     <th>Offer date</th>
                                     <th>Push</th>
 
-                                    <th>Delete</th>
+                                    <th>Cancel</th>
                                     <th>Close</th>
                                 </tr>
                             </thead>
@@ -100,8 +100,9 @@
 
                                     </td>
                                     <td>
-                                        <button {{{ inactivatePushTxBtn this.currentStatus }}} data-toggle="modal"
+                                        <button {{{ inactivateDeleteTxBtn this.currentStatus }}} data-toggle="modal"
                                             data-target="#delete-tx" type="button" class="btn btn-danger btn-icon"
+                                             data-cphone="{{ this.Client.User.phoneNumber }}"
                                             data-id="{{ this.id }}" data-provider="{{ this.providerId }}"
                                             data-client="{{ this.clientId }}"
                                             data-district="{{ this.District.districtName }}"
@@ -386,21 +387,21 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="providerId">Provider ID</label>
-                                    <input type="text" class="form-control" id="__providerId" autocomplete="off"
+                                    <input type="text" class="form-control" id="providerId_" autocomplete="off"
                                         placeholder="Provider Id" disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="clientId">Client Id</label>
-                                    <input type="text" class="form-control" id="__clientId" autocomplete="off"
+                                    <input type="text" class="form-control" id="clientId_" autocomplete="off"
                                         placeholder="clientId" disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="district">District</label>
-                                    <input type="text" class="form-control" id="__district" placeholder="District"
+                                    <input type="text" class="form-control" id="district_" placeholder="District"
                                         disabled>
                                 </div>
                             </div>
@@ -408,7 +409,7 @@
 
                                 <div class="form-group">
                                     <label for="community">Community</label>
-                                    <input type="text" class="form-control" id="__community" placeholder="Community"
+                                    <input type="text" class="form-control" id="community_" placeholder="Community"
                                         disabled>
                                 </div>
                             </div>
@@ -418,28 +419,28 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="location">Location</label>
-                                    <input type="text" class="form-control" id="__location" autocomplete="off"
+                                    <input type="text" class="form-control" id="location_" autocomplete="off"
                                         placeholder="Location" disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="axle">Axle</label>
-                                    <input type="text" class="form-control" id="__axle" autocomplete="off"
+                                    <input type="text" class="form-control" id="axle_" autocomplete="off"
                                         placeholder="Axle" disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="trips">Trips</label>
-                                    <input type="text" class="form-control" id="__trips" placeholder="Trips" disabled>
+                                    <input type="text" class="form-control" id="trips_" placeholder="Trips" disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
 
                                 <div class="form-group">
                                     <label for="currentStatus">Current Status</label>
-                                    <input type="text" class="form-control" id="__currentStatus"
+                                    <input type="text" class="form-control" id="currentStatus_"
                                         placeholder="Current Status" disabled>
                                 </div>
                             </div>

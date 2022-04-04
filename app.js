@@ -129,6 +129,9 @@ inactivateCloseTx.inactivateCloseTxBtn(hbs);
 const inactivatePushTx = require("./utils/Helper");
 inactivatePushTx.inactivatePushTxBtn(hbs);
 
+const inactivateDeleteTx = require("./utils/Helper");
+inactivateDeleteTx.inactivateDeleteTxBtn(hbs);
+
 const statusColors = require("./utils/Helper");
 statusColors.statusColors(hbs);
 

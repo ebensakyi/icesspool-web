@@ -193,11 +193,12 @@ exports.login = async (req, res) => {
           email: user.email,
         });
 
-        await helper.sendSMS(
+        let response = await helper.sendSMS(
           user.phoneNumber,
-          "ICESSPOOL PIN CODE",
           `Your pin code is ${pin.pin}`
         );
+
+        console.log(response);
         // await helper.sendEmail(
         //   user.email,
         //   "ICESSPOOL PIN CODE",

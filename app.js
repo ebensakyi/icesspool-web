@@ -160,6 +160,7 @@ routes.WebOffersRoutes(app);
 routes.DiscountRoutes(app);
 routes.FcmRoutes(app)
 routes.MessagingRoutes(app)
+routes.MakeRequestRoutes(app)
 app.get("*", (req, res) =>
     // res.status(200).send({
     //   message: "Welcome to the beginning of nothingness." ,

@@ -192,11 +192,17 @@ exports.login = async (req, res) => {
           pin: gen.generateActivationCode(6),
           email: user.email,
         });
-        await helper.sendEmail(
-          user.email,
+
+        await helper.sendSMS(
+          user.phoneNumber,
           "ICESSPOOL PIN CODE",
           `Your pin code is ${pin.pin}`
         );
+        // await helper.sendEmail(
+        //   user.email,
+        //   "ICESSPOOL PIN CODE",
+        //   `Your pin code is ${pin.pin}`
+        // );
 
         return res
           .status(200)

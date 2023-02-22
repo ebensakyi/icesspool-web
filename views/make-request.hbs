@@ -56,14 +56,14 @@
                             </div>
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="username">Enter latitude:</label>
-                                    <input type="text" class="form-control" id="username" name="lat"
+                                    <label for="lat">Enter latitude:</label>
+                                    <input type="text" class="form-control" id="lat" name="lat"
                                         autocomplete="off" placeholder="Enter lat" required>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="tipoffPoint">Tip off points</label>
+                                    <label for="tipoffPoint">Select truck</label>
                                     <select class="form-control" id="tipoffPoint" name="tipoffPoint" required>
                                         <option>Select tip off point</option>
                                         {{#each tipOffs}}
@@ -76,28 +76,8 @@
 
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="username">User name</label>
-                                    <input type="text" class="form-control" id="username" name="username"
-                                        autocomplete="off" placeholder="Enter username without spaces" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="password">Enter password</label>
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Password(At least 4 characters)" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-
-                                <div class="form-group">
-                                    <label for="repeatPassword">Repeat password</label>
-                                    <input type="password" class="form-control" id="repeatPassword"
-                                        name="repeatPassword" placeholder="Repeat password here" required>
-                                </div>
-                            </div>
+                          
+                          
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     </form>

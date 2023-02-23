@@ -93,7 +93,8 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
     method: "POST",
     url: DISTANCE_MATRIX_API_URL,
     qs: {
-      units: "imperial",
+      travelMode: "DRIVING",
+      unitSystem: "METRIC",
       origins: tipOffPoints.toString().replace("|,", "|"),
       destinations: `${userLat},${userLng}`,
       key: DISTANCE_MATRIX_API_KEY,
@@ -104,13 +105,19 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
     request(options, (error, response, body) => {
       if (error) return reject(error);
       const data = JSON.parse(body);
+ console.log(JSON.stringify(data));
+
       let distances = [];
       data.rows.map((d) => {
         let e = d.elements;
+        if (e[0].status != "OK") {
+          return
+        }
         e.map((f) => {
-          distances.push(f.distance.text.replace("mi", "") * 1.609);
+          distances.push(f.distance.value / 1000);
         });
       });
+          console.log(distances);
 
       return resolve(Math.min.apply(null, distances));
     });

@@ -4,7 +4,6 @@ $("#save").click(function (e) {
     let currentPassword = $("#currentPassword").val();
     let repeatPassword = $("#repeatPassword").val();
 
-    console.log("COM ", currentPassword, newPassword)
     if (newPassword === repeatPassword) {
         $.LoadingOverlay("show");
 

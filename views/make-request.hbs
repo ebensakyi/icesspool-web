@@ -61,11 +61,20 @@
                                         autocomplete="off" placeholder="Enter lat" required>
                                 </div>
                             </div>
+
+                             <div class="col-sm-3">
+                                <div class="form-group">
+                                                                        <label for="lat">Get</label><br>
+
+                                                          <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
+
+                                </div>
+                            </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="tipoffPoint">Select truck</label>
                                     <select class="form-control" id="tipoffPoint" name="tipoffPoint" required>
-                                        <option>Select tip off point</option>
+                                        <option>Select truck</option>
                                         {{#each tipOffs}}
                                         <option value="{{this.id}}">{{this.siteName}} <br>{{this.location}}
                                             <br>{{this.address}}
@@ -156,7 +165,7 @@
 <script src="/js/data-table.js"></script>
 <!-- end custom js for this page -->
 <!-- end custom js for this page -->
-<script src="/js/custom/scanners-controller.js"></script>
+<script src="/js/custom/make-request-controller.js"></script>
 
 </body>
 

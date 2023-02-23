@@ -43,7 +43,6 @@ function saveTipoffPoint() {
         longitude: longitude,
     };
 
-    console.log("...........", formData)
     $.ajax({
         url: '/tipoffpoints',
         method: 'POST',

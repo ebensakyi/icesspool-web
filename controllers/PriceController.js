@@ -78,7 +78,6 @@ buildTipOffPoints = async () => {
 
 exports.calculatePricing = async (req, res) => {
   try {
- 
     let tipPoints = await buildTipOffPoints();
     const distance = await Helper.getDistance(
       tipPoints,
@@ -189,10 +188,36 @@ exports.calculatePricing = async (req, res) => {
     // const mediumCost = Number((mediumUnitCost * distance1).toFixed(0))
     // const doubleCost = Number((doubleUnitCost * distance1).toFixed(0))
 
-    const costs = { singleCost, mediumCost, doubleCost };
+    const costs = [
+      { name: "Mini", cost: singleCost },
+      { name: "Small", cost: mediumCost },
+      { name: "Single", cost: doubleCost },
+    ];
+
+    // const costs = [
+    //   {
+    //     id: 1,
+    //     name: toiletPricingModel[0].TruckClassification.name,
+    //     cost: Number(miniCost),
+    //     volume: miniTankVolume.toString(),
+    //   },
+    //   {
+    //     id: 2,
+    //     name: toiletPricingModel[1].TruckClassification.name,
+    //     cost: Number(smallCost),
+    //     volume: smallTankVolume.toString(),
+    //   },
+    //   {
+    //     id: 3,
+    //     name: toiletPricingModel[2].TruckClassification.name,
+    //     cost: Number(singleCost),
+    //     volume: singleTankVolume.toString(),
+    //   },
+    // ];
+
     // console.log(singleTotalAnnualCost / singleAnnualSludgeVolume, mediumTotalAnnualCost, doubleTotalAnnualCost)
 
-  console.log(costs);
+    console.log(costs);
 
     ///Calculate distance from user to tipoff points
 

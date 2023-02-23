@@ -11,7 +11,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         clientId: {
             type: Sequelize.STRING,
-            allowNull: false,
         },
         unitCost: {
             type: Sequelize.DECIMAL(10, 2),
@@ -68,6 +67,18 @@ module.exports = (sequelize, Sequelize) => {
         },
         toiletType: {
             type: Sequelize.STRING,
+        },
+        requestSource: {
+            type: Sequelize.INTEGER,
+
+            defaultValue: 1
+
+        },
+
+        fullName: {
+            type: Sequelize.STRING,
+
+
         },
         deleted: {
             type: Sequelize.INTEGER,

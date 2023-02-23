@@ -10,164 +10,150 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="fullname">Full Name / Company</label>
-                                    <input type="text" class="form-control" id="fullname" name="fullname"
-                                        autocomplete="off" placeholder="Enter full name" required>
+                                    <label for="clientName">Full Name / Company</label>
+                                    <input type="text" class="form-control" id="clientName" name="clientName" autocomplete="off" placeholder="Enter client name" required></div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone" name="phone"
-                                        autocomplete="off" placeholder="Enter phone number" required>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" autocomplete="off" placeholder="Enter phone number" required></div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="email">Community</label>
+                                            <input type="text" class="form-control" id="community" name="community" placeholder="Community"></div>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            <div class="form-group">
+                                                <label for="toiletType">Select toilet type</label>
+                                                <select class="form-control" id="toiletType" name="toiletType" required>
+                                                    <option>Select type of toilet</option>
+                                                        <option value="Flush to septic tank">Flush to septic tank</option>
+                                                         <option value="VIP">VIP</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label for="lat">Enter latitude:</label>
+                                                        <input type="text" class="form-control" id="lat" name="lat" autocomplete="off" placeholder="Enter lat" required></div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="lng">Enter longitude:</label>
+                                                            <input type="text" class="form-control" id="lng" name="lng" autocomplete="off" placeholder="Enter lng " required></div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="lat">Get</label>
+                                                                <br>
+
+                                                                    <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label for="pricing">Select truck</label>
+                                                                    <select class="form-control" id="pricing" name="pricing" required>
+                                                                        {{!-- <option>Select truck</option>
+                                                                        {{#each tipOffs}}
+                                                                            <option value="{{ this.id }}">{{ this.siteName }}
+                                                                                <br>{{ this.location }}
+                                                                                    <br>{{ this.address }}
+                                                                                    </option>
+                                                                                {{/each}} --}}
+
+                                                                            </select>
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 grid-margin stretch-card">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">Transactions</h6>
+
+                                                            <div class="table-responsive">
+                                                                <table id="dataTableExample" class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Id</th>
+                                                                            <th>Name</th>
+                                                                            <th>Tip Off Point</th>
+                                                                            <th>Phone</th>
+                                                                            <th>Address</th>
+                                                                            <th>Location</th>
+
+                                                                            <th>Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    {{!-- <tbody>
+                                                                        {{#each data}}
+                                                                            <tr>
+
+                                                                                <td>{{ this.id }}</td>
+                                                                                <td>{{ this.User.surname }}
+                                                                                    {{ this.User.otherNames }}</td>
+                                                                                <td>{{ this.TipoffPoint.siteName }}</td>
+                                                                                <td>{{ this.User.phoneNumber }}</td>
+
+                                                                                <td>{{ this.TipoffPoint.address }}</td>
+                                                                                <td>{{ this.TipoffPoint.location }}</td>
+                                                                               
+                                                                            <td>
+                                                                                <a href="/scanners/del/{{ this.id }}" style="color: red;" class="btn btn- btn-icon" data-toggle="tooltip" data-placement="top" title="Delete account">
+                                                                                    <i data-feather="delete"></i>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {{/each}}
+                                                                </tbody> --}}
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{>footer}}
+
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="email">Community</label>
-                                    <input type="text" class="form-control" id="community" name="community"
-                                        placeholder="Community">
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-
-                                <div class="form-group">
-                                    <label for="toiletType">Select toilet type</label>
-                                     <select class="form-control" id="tipoffPoint" name="tipoffPoint" required>
-                                        <option>Select type of toilet</option>
-                                        {{#each tipOffs}}
-                                        <option value="{{this.id}}">{{this.siteName}} <br>{{this.location}}
-                                            <br>{{this.address}}
-                                        </option>
-                                        {{/each}}
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                              <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="lng">Enter longitude:</label>
-                                    <input type="text" class="form-control" id="lng" name="lng"
-                                        autocomplete="off" placeholder="Enter lng " required>
-                                </div>
-                            </div>
-                              <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="lat">Enter latitude:</label>
-                                    <input type="text" class="form-control" id="lat" name="lat"
-                                        autocomplete="off" placeholder="Enter lat" required>
-                                </div>
-                            </div>
-
-                             <div class="col-sm-3">
-                                <div class="form-group">
-                                                                        <label for="lat">Get</label><br>
-
-                                                          <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
-
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="tipoffPoint">Select truck</label>
-                                    <select class="form-control" id="tipoffPoint" name="tipoffPoint" required>
-                                        <option>Select truck</option>
-                                        {{#each tipOffs}}
-                                        <option value="{{this.id}}">{{this.siteName}} <br>{{this.location}}
-                                            <br>{{this.address}}
-                                        </option>
-                                        {{/each}}
-
-                                    </select>
-
-                                </div>
-                            </div>
-                          
-                          
-                        </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Scanner List</h6>
-
-                    <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Tip Off Point</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Location</th>
-                                    {{!-- <th>Is Active</th> --}}
-
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each data}}
-                                <tr>
-
-                                    <td>{{this.id}}</td>
-                                    <td>{{this.User.surname}} {{this.User.otherNames}}</td>
-                                    <td>{{this.TipoffPoint.siteName}}</td>
-                                    <td>{{this.User.phoneNumber}}</td>
-
-                                    <td>{{this.TipoffPoint.address}}</td>
-                                    <td>{{this.TipoffPoint.location}}</td>
-                                    {{!-- <td>{{this.activated}}</td> --}}
-                                    <td>
-                                        <a href="/scanners/del/{{this.id}}" style="color: red;"
-                                            class="btn btn- btn-icon" data-toggle="tooltip" data-placement="top"
-                                            title="Delete account">
-                                            <i data-feather="delete"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{>footer}}
-
-</div>
 
 
-<!-- core:js -->
-<script src="/vendors/core/core.js"></script>
-<!-- endinject -->
+                                <!-- core:js -->
+                                <script src="/vendors/core/core.js"></script>
+                                <!-- endinject -->
 
-<!-- plugin js for this page -->
-<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<!-- end plugin js for this page -->
-<!-- inject:js -->
-<script src="/vendors/feather-icons/feather.min.js"></script>
-<script src="/js/template.js"></script>
-<!-- endinject -->
-<!-- custom js for this page -->
-<script src="/js/data-table.js"></script>
-<!-- end custom js for this page -->
-<!-- end custom js for this page -->
-<script src="/js/custom/make-request-controller.js"></script>
+                                <!-- plugin js for this page -->
+                                <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+                                <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+                                <!-- end plugin js for this page -->
+                                <!-- inject:js -->
+                                <script src="/vendors/feather-icons/feather.min.js"></script>
+                                <script src="/js/template.js"></script>
+                                <!-- endinject -->
+                                <!-- custom js for this page -->
+                                <script src="/js/data-table.js"></script>
+                                <!-- end custom js for this page -->
+                                <!-- end custom js for this page -->
+                                <script src="/js/custom/make-request-controller.js"></script>
 
-</body>
+                            </body>
 
 
-</html>
+                        </html>

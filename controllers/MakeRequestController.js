@@ -1,11 +1,9 @@
-
 const { User } = require("../db/models");
 
 const { ScannerUser } = require("../db/models");
 const { TipoffPoint } = require("../db/models");
+const { Transaction } = require("../db/models");
 const Helper = require("../utils/Helper");
-
-
 
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
@@ -21,6 +19,39 @@ exports.makeRequestPage = async (req, res) => {
   res.render("make-request", {
     data: users,
     tipOffs: tipOffs,
+    user: req.session.user,
+  });
+};
+
+exports.makeRequest = async (req, res) => {
+  await Helper.isLogin(req, res);
+
+  console.log(req.body);
+
+  await Transaction.create({
+    id: Helper.generateTransactionCode(),
+    lat: Number(req.body.lat),
+    lng: Number(req.body.lng),
+    community: req.body.community,
+    clientName: req.body.clientName,
+    currentStatus:1,
+    unitCost: Number(req.body.unitCost),
+    trips:1,
+    axle:1,
+    phoneNumber: req.body.phoneNumber,
+    gpsAccuracy: 5,
+  });
+
+  const transactions = await Transaction.findAll({
+    where: {
+      deleted: 0,
+    },
+  });
+  // const tipOffs = await TipoffPoint.findAll({ where: { deleted: 0 } });
+  // //res.send(tipOffs)
+  res.render("make-request", {
+    data: transactions,
+    // tipOffs: tipOffs,
     user: req.session.user,
   });
 };

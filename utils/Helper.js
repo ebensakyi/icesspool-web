@@ -105,19 +105,19 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
     request(options, (error, response, body) => {
       if (error) return reject(error);
       const data = JSON.parse(body);
- console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
 
       let distances = [];
       data.rows.map((d) => {
         let e = d.elements;
         if (e[0].status != "OK") {
-          return
+          return;
         }
         e.map((f) => {
           distances.push(f.distance.value / 1000);
         });
       });
-          console.log(distances);
+      console.log(distances);
 
       return resolve(Math.min.apply(null, distances));
     });
@@ -189,6 +189,39 @@ exports.getDate = () => {
 
   return dateString;
 };
+
+exports.generateTransactionCode = () => {
+  const currentDate = new Date();
+
+  let day = currentDate.getDate();
+  let month = currentDate.getMonth(); //Be careful! January is 0 not 1
+  let year = currentDate.getFullYear();
+
+  if (date < 10) {
+    date = "0" + date;
+  }
+  month = month + 1;
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  let code = year + "" + month + "" + day + "" + makeid(6);
+
+  return code
+};
+
+function makeid(length) {
+  let result = "";
+  const characters =
+    "0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
 
 exports.getTime = () => {
   return new Date().toTimeString().split(" ")[0];

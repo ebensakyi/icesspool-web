@@ -205,7 +205,7 @@ exports.generateTransactionCode = () => {
     month = "0" + month;
   }
 
-  let code = year + "" + month + "" + day + "" + makeid(6);
+  let code = year + "" + month + "" + day + "" + makeid(4);
 
   return code
 };

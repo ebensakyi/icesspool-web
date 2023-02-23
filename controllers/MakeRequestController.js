@@ -7,18 +7,15 @@ const Helper = require("../utils/Helper");
 
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
-
-  const users = await ScannerUser.findAll({
+  const transactions = await Transaction.findAll({
     where: {
       deleted: 0,
+      requestSource:2
     },
-    include: [{ model: User }, { model: TipoffPoint }],
   });
-  const tipOffs = await TipoffPoint.findAll({ where: { deleted: 0 } });
   //res.send(tipOffs)
   res.render("make-request", {
-    data: users,
-    tipOffs: tipOffs,
+    data: transactions,
     user: req.session.user,
   });
 };
@@ -33,9 +30,12 @@ exports.makeRequest = async (req, res) => {
     lat: Number(req.body.lat),
     lng: Number(req.body.lng),
     community: req.body.community,
-    clientName: req.body.clientName,
+    customerName: req.body.clientName,
     currentStatus:1,
-    unitCost: Number(req.body.unitCost),
+    unitCost: Number(req.body.pricing),
+    actualTotalCost:  Number(req.body.pricing),
+    discountedTotalCost: Number(req.body.pricing),
+    requestSource: 2,
     trips:1,
     axle:1,
     phoneNumber: req.body.phoneNumber,
@@ -45,6 +45,7 @@ exports.makeRequest = async (req, res) => {
   const transactions = await Transaction.findAll({
     where: {
       deleted: 0,
+      requestSource:2
     },
   });
   // const tipOffs = await TipoffPoint.findAll({ where: { deleted: 0 } });

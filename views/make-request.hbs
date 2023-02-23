@@ -10,8 +10,8 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="clientName">Full Name / Company</label>
-                                    <input type="text" class="form-control" id="clientName" name="clientName" autocomplete="off" placeholder="Enter client name" required></div>
+                                    <label for="clientName">Customer Name</label>
+                                    <input type="text" class="form-control" id="clientName" name="clientName" autocomplete="off" placeholder="Enter customer name" required></div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
@@ -94,26 +94,23 @@
                                                                         <tr>
                                                                             <th>Id</th>
                                                                             <th>Name</th>
-                                                                            <th>Tip Off Point</th>
+                                                                          
                                                                             <th>Phone</th>
-                                                                            <th>Address</th>
-                                                                            <th>Location</th>
+                                                                            <th>Community</th>
 
                                                                             <th>Actions</th>
                                                                         </tr>
                                                                     </thead>
-                                                                    {{!-- <tbody>
+                                                                 <tbody>
                                                                         {{#each data}}
                                                                             <tr>
 
                                                                                 <td>{{ this.id }}</td>
-                                                                                <td>{{ this.User.surname }}
-                                                                                    {{ this.User.otherNames }}</td>
-                                                                                <td>{{ this.TipoffPoint.siteName }}</td>
-                                                                                <td>{{ this.User.phoneNumber }}</td>
+                                                                                <td>{{ this.customerName }}
+                                                                                
+                                                                                <td>{{ this.phoneNumber }}</td>
 
-                                                                                <td>{{ this.TipoffPoint.address }}</td>
-                                                                                <td>{{ this.TipoffPoint.location }}</td>
+                                                                                <td>{{ this.community }}</td>
                                                                                
                                                                             <td>
                                                                                 <a href="/scanners/del/{{ this.id }}" style="color: red;" class="btn btn- btn-icon" data-toggle="tooltip" data-placement="top" title="Delete account">
@@ -122,7 +119,7 @@
                                                                             </td>
                                                                         </tr>
                                                                     {{/each}}
-                                                                </tbody> --}}
+                                                                </tbody> 
                                                             </table>
                                                         </div>
                                                     </div>

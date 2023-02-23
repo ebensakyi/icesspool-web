@@ -24,18 +24,12 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DECIMAL(10, 2),
             allowNull: false,
         },
-        districtId: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
+      
         community: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        location: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
+       
         gpsAccuracy: {
             type: Sequelize.DECIMAL(10, 2),
         },
@@ -75,7 +69,7 @@ module.exports = (sequelize, Sequelize) => {
 
         },
 
-        fullName: {
+        customerName: {
             type: Sequelize.STRING,
 
 
@@ -101,7 +95,6 @@ module.exports = (sequelize, Sequelize) => {
         Transaction.hasOne(models.Payment);
         Transaction.belongsTo(models.AxleClassification,{ foreignKey: 'axle' });
 
-        Transaction.belongsTo(models.District);
         Transaction.belongsTo(models.Status, { foreignKey: 'currentStatus' });
 
     };

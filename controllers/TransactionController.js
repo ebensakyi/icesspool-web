@@ -38,7 +38,7 @@ exports.deleteTransaction = async (req, res) => {
     let transactionId = req.body.transactionId;
     let cancelReason = req.body.cancelReason;
 
-    console.log("cancelReason",cancelReason);
+    console.log("cancelReason", cancelReason);
 
     // await Transaction.update(
     //   { deleted: 1 },
@@ -49,7 +49,7 @@ exports.deleteTransaction = async (req, res) => {
     //   .doc(transactionId)
     //   .delete();
 
-     // if(cancelReason!="")//send message to user
+    // if(cancelReason!="")//send message to user
 
     res.status(200).send({ statusCode: 1, message: "Deleted" });
   } catch (error) {
@@ -93,13 +93,12 @@ exports.offerMade = async (req, res) => {
       id: req.body.transactionId,
       axle: req.body.axle,
       unitCost: req.body.unitCost,
+      customerName: req.body.customerName,
       actualTotalCost: req.body.actualTotalCost,
       discountedTotalCost: discountedCost,
       clientId: req.body.clientId,
       requestType: req.body.requestType,
       offerMadeTime: req.body.offerMadeTime,
-      location: req.body.location,
-      districtId: districtId,
       community: req.body.community,
       toiletType: req.body.toiletType,
       trips: req.body.tripsNumber,

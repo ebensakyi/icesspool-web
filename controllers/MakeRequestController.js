@@ -3,7 +3,14 @@ const { User } = require("../db/models");
 const { ScannerUser } = require("../db/models");
 const { TipoffPoint } = require("../db/models");
 const { Transaction } = require("../db/models");
+const { TransactionStatus } = require("../db/models");
+const { Vehicle } = require("../db/models");
+const Sequelize = require("sequelize");
+
+const Op = Sequelize.Op;
+
 const Helper = require("../utils/Helper");
+
 
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
@@ -24,20 +31,39 @@ exports.makeRequest = async (req, res) => {
   await Helper.isLogin(req, res);
 
   console.log(req.body);
+  let  axle  =  req.body.pricing.split('$')[0];
+  let  cost  =  req.body.pricing.split('$')[1];
 
-  await Transaction.create({
+  console.log({
     id: Helper.generateTransactionCode(),
     lat: Number(req.body.lat),
     lng: Number(req.body.lng),
     community: req.body.community,
     customerName: req.body.clientName,
     currentStatus:1,
-    unitCost: Number(req.body.pricing),
-    actualTotalCost:  Number(req.body.pricing),
-    discountedTotalCost: Number(req.body.pricing),
+    unitCost:  Number(cost),
+    actualTotalCost:    Number(cost),
+    discountedTotalCost:  Number(cost),
     requestSource: 2,
     trips:1,
-    axle:1,
+    axle:Number(axle),
+    phoneNumber: req.body.phoneNumber,
+    gpsAccuracy: 5,
+  });
+
+ let tx  = await Transaction.create({
+    id: Helper.generateTransactionCode(),
+    lat: Number(req.body.lat),
+    lng: Number(req.body.lng),
+    community: req.body.community,
+    customerName: req.body.clientName,
+    currentStatus:1,
+    unitCost:  Number(cost),
+    actualTotalCost:    Number(cost),
+    discountedTotalCost:  Number(cost),
+    requestSource: 2,
+    trips:1,
+    axle:Number(axle),
     phoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });
@@ -48,6 +74,48 @@ exports.makeRequest = async (req, res) => {
       requestSource:2
     },
   });
+
+
+  await TransactionStatus.create({
+    transactionId: tx.id,
+    status: tx.currentStatus,
+    date: Helper.getDate(),
+    time: Helper.getTime(),
+  });
+  // const transaction = await Transaction.findOne({
+  //   where: { id: tx.id },
+  //   include: [
+  //     { model: Client, include: [{ model: User }] },
+  //     { model: District },
+  //     { model: AxleClassification },
+  //   ],
+  // });
+
+  //send FCM Notification to all appropriate Operators
+
+  let v = await Vehicle.findAll({
+    where: {
+      axleClassificationId: {
+        [Op.gte]: Number(axle),
+      },
+    },
+    include: [{ model: User }],
+  });
+
+  let fcms = await getFcmsArr(v);
+  await Helper.sendFCMNotification(
+    fcms,
+    "New offer",
+    "There is a new iCesspool offer waiting for you!"
+  );
+  // console.table(fcms);
+  // console.log(fcms);
+
+  // res.status(200).send({
+  //   statusCode: 1,
+  //   message: "Transaction created",
+  //   data: transaction,
+  // });
   // const tipOffs = await TipoffPoint.findAll({ where: { deleted: 0 } });
   // //res.send(tipOffs)
   res.render("make-request", {

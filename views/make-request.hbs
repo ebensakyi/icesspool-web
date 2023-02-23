@@ -97,7 +97,7 @@
                                                                           
                                                                             <th>Phone</th>
                                                                             <th>Community</th>
-
+                                                                            <th>Current Status</th>
                                                                             <th>Actions</th>
                                                                         </tr>
                                                                     </thead>
@@ -111,11 +111,11 @@
                                                                                 <td>{{ this.phoneNumber }}</td>
 
                                                                                 <td>{{ this.community }}</td>
-                                                                               
+                                                                                  <td>{{ this.currentStatus }}</td>
                                                                             <td>
-                                                                                <a href="/scanners/del/{{ this.id }}" style="color: red;" class="btn btn- btn-icon" data-toggle="tooltip" data-placement="top" title="Delete account">
-                                                                                    <i data-feather="delete"></i>
-                                                                                </a>
+                                                                                                                                                <button type="submit" class="btn btn-primary mr-2">Make Payment</button>
+
+                                                                           
                                                                             </td>
                                                                         </tr>
                                                                     {{/each}}

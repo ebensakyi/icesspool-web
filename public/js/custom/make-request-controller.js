@@ -23,8 +23,8 @@ $("#get-pricing").click(function (e) {
 
       response.data.forEach((option) => {
         const optionElement = document.createElement("option");
-        optionElement.value = option.cost;
-        optionElement.text = option.name + " - GHS " + option.cost;
+        optionElement.value =option.id  +"$"+  option.cost ;
+        optionElement.text = option.name+" - GHS " + option.cost;
         select.appendChild(optionElement);
       });
     },

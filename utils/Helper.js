@@ -205,15 +205,14 @@ exports.generateTransactionCode = () => {
     month = "0" + month;
   }
 
-  let code = year + "" + month + "" + day + "" + makeid(4);
+  let code = day + "" + month + "" + year + "" + makeid(4);
 
-  return code
+  return code;
 };
 
 function makeid(length) {
   let result = "";
-  const characters =
-    "0123456789";
+  const characters = "0123456789";
   const charactersLength = characters.length;
   let counter = 0;
   while (counter < length) {

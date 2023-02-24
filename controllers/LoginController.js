@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs");
 
 exports.mobileLogin = async (req, res) => {
   try {
+    console.log("mobileLogin");
     const user = await User.findOne({
       where: { phoneNumber: req.body.phoneNumber, deleted: 0 },
     });

@@ -203,11 +203,16 @@ completePayment = async (req, res) => {
       return await res.redirect("/payment-success");
       // });
     } else {
+      console.log(req.query);
+
+      console.log(code);
       return await res.redirect(
         "/payment-failed?code=" + code + "&reason=" + reason
       );
     }
   } catch (error) {
+
+    console.log(error);
     return await res.redirect(
       "/payment-failed?code=" + code + "&reason=" + reason
     );

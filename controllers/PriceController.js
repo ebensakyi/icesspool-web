@@ -189,7 +189,8 @@ exports.calculatePricing = async (req, res) => {
     // const doubleCost = Number((doubleUnitCost * distance1).toFixed(0))
 
     const costs = [
-      {id:1, name: "Mini", cost: singleCost },
+
+    {id:1, name: "Mini", cost: singleCost },
       {id:2, name: "Small", cost: mediumCost },
       {id:3, name: "Single", cost: doubleCost },
     ];

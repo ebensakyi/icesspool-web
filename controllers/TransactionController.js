@@ -2,7 +2,6 @@ const { Transaction } = require("../db/models/");
 const { TransactionStatus } = require("../db/models/");
 const { Client } = require("../db/models/");
 const { Provider } = require("../db/models/");
-const { District } = require("../db/models/");
 const { Status } = require("../db/models/");
 const { Closure } = require("../db/models/");
 const { AxleClassification } = require("../db/models/");
@@ -67,10 +66,10 @@ exports.offerMade = async (req, res) => {
         .status(200)
         .send({ statusCode: 2, message: "Transaction already created" });
 
-    const district = await District.findOne({
-      where: { districtName: req.body.district },
-    });
-    const districtId = district.id;
+    // const district = await District.findOne({
+    //   where: { districtName: req.body.district },
+    // });
+    // const districtId = district.id;
 
     let discounts = await Discount.findOne({ where: { deleted: 0 } });
     let trip1Discount = discounts.trip1;
@@ -117,7 +116,6 @@ exports.offerMade = async (req, res) => {
       where: { id: tx.id },
       include: [
         { model: Client, include: [{ model: User }] },
-        { model: District },
         { model: AxleClassification },
       ],
     });
@@ -410,7 +408,7 @@ exports.getTransactions = async (req, res) => {
     const tx = await Transaction.findAll({
       where: { deleted: 0 },
       include: [
-        { model: District },
+        // { model: District },
         { model: Status },
         { model: TransactionStatus },
         { model: Client, include: [{ model: User }] },

@@ -36,7 +36,6 @@ exports.createProvider = async (req, res) => {
     const user = await User.create({
       surname: req.body.surname,
       otherNames: req.body.otherNames,
-      email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       fcm: req.body.fcm,
       password: req.body.password,
@@ -87,7 +86,6 @@ exports.createClient = async (req, res) => {
     const user = await User.create({
       surname: req.body.surname,
       otherNames: req.body.otherNames,
-      email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       fcm: req.body.fcm,
       password: req.body.password,
@@ -187,7 +185,6 @@ exports.updateClient = async (req, res) => {
     {
       surname: req.body.surname || client.surname,
       otherNames: req.body.otherNames || client.otherNames,
-      email: req.body.email || client.email,
     },
     { where: { id: client.userId } }
   );

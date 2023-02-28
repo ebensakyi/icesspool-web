@@ -373,7 +373,6 @@ exports.updateProvider = async (req, res) => {
     // });
 
     //let momoNumber = await req.body.momoNumber;
-   console.log("momoNumber ", req.body.momoNumber);
     // console.log("req.body.momoNumber ", req.body);
 
     await MomoAccount.update(

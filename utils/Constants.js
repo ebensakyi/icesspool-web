@@ -1,3 +1,3 @@
 module.exports = {
-    regions: ['', 'GAR', 'ASR', 'ESR', 'WSR', 'CTR', 'AHR', 'BNR', 'BER', 'NTR', 'NER', 'SVR', 'UER', 'UWR', 'VTR', 'OTR', 'WNR']
+    regions: ['', 'GAR', 'NTR', 'ASR', 'ESR', 'WSR', 'CTR', 'AHR', 'BNR', 'BER', 'NER', 'SVR', 'UER', 'UWR', 'VTR', 'OTR', 'WNR']
 }

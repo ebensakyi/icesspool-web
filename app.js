@@ -93,6 +93,10 @@ hbs.registerHelper("compare", function(lvalue, rvalue, options) {
         return options.inverse(this);
     }
 });
+var moment = require('moment');
+var Handlebars = require("handlebars");
+var MomentHandler = require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
 
 app.use(
     session({
@@ -132,6 +136,10 @@ inactivatePushTx.inactivatePushTxBtn(hbs);
 
 const inactivatePayBtn = require("./utils/Helper");
 inactivatePayBtn.inactivatePayBtn(hbs);
+
+
+const formatDate = require("./utils/Helper");
+formatDate.formatDate(hbs);
 
 const inactivateDeleteTx = require("./utils/Helper");
 inactivateDeleteTx.inactivateDeleteTxBtn(hbs);

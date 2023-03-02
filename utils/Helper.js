@@ -1,6 +1,7 @@
 const regions = require("./Constants").regions;
 const id = require("./Generators").generateId;
 const date = require("./Generators").getDate;
+var moment = require('moment');
 const request = require("request");
 require("dotenv").config();
 
@@ -287,6 +288,14 @@ exports.inactivatePayBtn = (hbs) => {
     if (value != 2) {
       return "disabled";
     }
+  });
+};
+
+exports.formatDate = (hbs) => {
+  hbs.registerHelper("formatDate", function (value) {
+  
+      return moment(value).format(" Do MMM YYYY, h:mm:ss a")
+  
   });
 };
 

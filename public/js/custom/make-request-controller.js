@@ -39,7 +39,7 @@ $("#get-pricing").click(function (e) {
   // }
 });
 
-// $("#send-request").click(function (e) {
+// $("#make-payment").click(function (e) {
 //   e.preventDefault();
 
 //   let fullName = $("#fullName").val();
@@ -76,3 +76,62 @@ $("#get-pricing").click(function (e) {
 
 //   // }
 // });
+
+
+$("#make-payment").on("show.bs.modal", function (e) {
+  const id = $(e.relatedTarget).data("id");
+  const providerId = $(e.relatedTarget).data("provider");
+  const clientId = $(e.relatedTarget).data("client");
+
+
+ 
+  const community = $(e.relatedTarget).data("community_");
+  const axle = $(e.relatedTarget).data("axle");
+  const trips = $(e.relatedTarget).data("trips");
+  const status = $(e.relatedTarget).data("status");
+  const customerName = $(e.relatedTarget).data("customername");
+  const discountedTotalCost = $(e.relatedTarget).data("discountedtotalcost");
+  const customerPhoneNumber = $(e.relatedTarget).data("customerphonenumber");
+
+  
+
+  console.log("discountedtotalCost ",discountedTotalCost);
+  console.log("customerName ",customerName);
+  console.log("customerName ",customerName);
+  console.log("customerName ",customerName);
+  console.log("customerName ",customerName);
+
+
+  $("#providerId").val(providerId);
+  $("#clientId").val(clientId);
+  $("#community_").val(community);
+  $("#axle").val(axle);
+  $("#trips").val(trips);
+  $("#currentStatus").val(status);
+  $("#id").val(id);
+  $("#customerName").val(customerName);
+  $("#discountedTotalCost").val("GHS "+discountedTotalCost);
+  $("#customerName").val(customerName);
+  $("#customerPhoneNumber").val(customerPhoneNumber);
+
+  
+
+  $("#make-payment-btn").click(function (e) {
+    e.preventDefault();
+    $.LoadingOverlay("show");
+
+    $.ajax({
+      url: "/api/v1/initiate-teller-payment",
+      method: "POST",
+      data: { transactionId: id, providerId: providerId, txStatusCode: 4 },
+      success: function (response) {
+       // window.location.replace("/transaction");
+        $.LoadingOverlay("hide");
+      },
+      error: function (e) {
+        //console.log("Error ", e);
+        $.LoadingOverlay("hide");
+      },
+    });
+  });
+});

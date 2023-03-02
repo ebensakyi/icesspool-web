@@ -97,6 +97,10 @@
                                                                           
                                                                             <th>Phone</th>
                                                                             <th>Community</th>
+                                                                                                                                                       
+                                                                             <th>Amount</th>
+                                                                            <th>Date</th>
+
                                                                             <th>Current Status</th>
                                                                             <th>Actions</th>
                                                                         </tr>
@@ -108,15 +112,30 @@
                                                                                 <td>{{ this.id }}</td>
                                                                                 <td>{{ this.customerName }}
                                                                                 
-                                                                                <td>{{ this.phoneNumber }}</td>
+                                                                                <td>{{ this.customerPhoneNumber }}</td>
 
                                                                                 <td>{{ this.community }}</td>
+                                                                                <td>GHS {{ this.discountedTotalCost }}</td>
+                                                                                <td>{{{ formatDate this.createdAt }}} </td>
+
                                                                                   <td>{{ this.currentStatus }}</td>
                                                                          
                                                                              <td>
                                                                             <button {{{ inactivatePayBtn this.currentStatus }}} 
+
+                                                                            data-toggle="modal"
+                                                                                data-target="#make-payment" type="button" 
+                                                                                data-customerName="{{ this.customerName }}"
+                                                                                data-discountedTotalCost="{{ this.discountedTotalCost }}"
+
+                                                                                data-customerphonenumber="{{ this.customerPhoneNumber }}"
+                                                                                data-id="{{ this.id }}" data-provider="{{ this.providerId }}"
+                                                                                data-client="{{ this.clientId }}"
+                                                                                data-community="{{ this.community }}" 
                                                                                 type="button"
-                                                                                class="btn btn-warning" >
+                                                                                class="btn btn-warning"
+                                                                                id={{this.id}}
+                                                                                 >
                                                                               
                                                                                 Make Payment
                                                                             </button>
@@ -131,6 +150,128 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <div id="make-payment" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">DETAILS</h6>
+
+                    <form method="POST">
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="id">Tx ID</label>
+                                    <input type="text" class="form-control" id="id" autocomplete="off"
+                                        placeholder="Transaction ID" disabled>
+                                </div>
+                            </div>
+                             <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="customerName">Customer Name</label>
+                                    <input type="text" class="form-control" id="customerName" autocomplete="off"
+                                        placeholder="Customer Name" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="customerPhoneNumber">Phone Number</label>
+                                    <input type="text" class="form-control" id="customerPhoneNumber" autocomplete="off"
+                                        placeholder="Customer Phone Number" disabled>
+                                </div>
+                            </div>
+                           
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="discountedTotalCost">Total Cost</label>
+                                    <input type="text" class="form-control" id="discountedTotalCost" placeholder="Total Cost"
+                                        disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="providerId">Provider ID</label>
+                                    <input type="text" class="form-control" id="providerId" autocomplete="off"
+                                        placeholder="Provider Id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="clientId">Client Id</label>
+                                    <input type="text" class="form-control" id="clientId" autocomplete="off"
+                                        placeholder="clientId" disabled>
+                                </div>
+                            </div>
+                           
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="community_">Community</label>
+                                    <input type="text" class="form-control" id="community_" placeholder="Community"
+                                        disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                           
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="axle">Axle</label>
+                                    <input type="text" class="form-control" id="axle" autocomplete="off"
+                                        placeholder="Axle" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="trips">Trips</label>
+                                    <input type="text" class="form-control" id="trips" placeholder="Trips" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="currentStatus">Current Status</label>
+                                    <input type="text" class="form-control" id="currentStatus"
+                                        placeholder="Current Status" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                  <button 
+
+                                                                           
+                                                                                type="button"
+                                                                                class="btn btn-success"
+                                                                                id="make-payment-btn"
+                                                                                 >
+                                                                              
+                                                                                Make Payment
+                                                                            </button>
+                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                                     </div>
                                     {{>footer}}
 
@@ -140,6 +281,7 @@
                                 <!-- core:js -->
                                 <script src="/vendors/core/core.js"></script>
                                 <!-- endinject -->
+                                <script src="/js/custom/loadingoverlay.min.js"></script>
 
                                 <!-- plugin js for this page -->
                                 <script src="/vendors/datatables.net/jquery.dataTables.js"></script>

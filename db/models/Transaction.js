@@ -74,6 +74,11 @@ module.exports = (sequelize, Sequelize) => {
 
 
         },
+        customerPhoneNumber: {
+            type: Sequelize.STRING,
+
+
+        },
         deleted: {
             type: Sequelize.INTEGER,
             defaultValue: 0

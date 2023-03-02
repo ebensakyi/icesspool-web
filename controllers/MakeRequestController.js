@@ -13,6 +13,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 const Helper = require("../utils/Helper");
+const { JSON } = require("sequelize");
 
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
@@ -30,7 +31,8 @@ exports.makeRequestPage = async (req, res) => {
 };
 
 exports.makeRequest = async (req, res) => {
-  await Helper.isLogin(req, res);
+  try {
+     await Helper.isLogin(req, res);
 
   console.log(req.body);
   let axle = req.body.pricing.split("$")[0];
@@ -66,9 +68,11 @@ exports.makeRequest = async (req, res) => {
     requestSource: 2,
     trips: 1,
     axle: Number(axle),
-    phoneNumber: req.body.phoneNumber,
+    customerPhoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });
+
+  console.log(tx);
 
   const transactions = await Transaction.findAll({
     where: {
@@ -112,30 +116,37 @@ exports.makeRequest = async (req, res) => {
   // console.table(fcms);
   // console.log(fcms);
 
+  let  date = await  Helper.getDate();
+  let  time = await  Helper.getTime();
+
+  let transaction =  {
+    clientId: "NTR"+tx.customerPhoneNumber,
+    txStatusCode: 1,
+    requestType: 1,
+    offerMadeTime: date + " at " +time,
+    customerName: tx.customerName,
+    customerPhone: tx.customerPhoneNumber,
+    customerEmail: "",
+    gpsAccuracy: 0,
+    community: tx.community,
+    axle: axle,
+    axleName: "",
+    tripsNumber: 1,
+    lat: tx.lat,
+    lng: tx.lng,
+
+    unitCost: tx.unitCost,
+    actualTotalCost: tx.actualTotalCost,
+    discountedTotalCost: tx.discountedTotalCost,
+    createdDate: date + " at " + time,
+    deleted: false,
+  }
+
+  console.log(transaction);
   await db
     .collection(process.env.TRANSACTION_STORE)
     .doc(tx.id)
-    .set({
-      txStatusCode: 1,
-      requestType: 1,
-      offerMadeTime: Helper.getDate() + " at " + Helper.getTime(),
-      customerName: tx.customerName,
-      customerPhone: tx.phoneNumber,
-      customerEmail: "",
-      gpsAccuracy: 0,
-      community: tx.community,
-      axle: axle,
-      axleName: "",
-      tripsNumber: 1,
-      lat: tx.lat,
-      lng: tx.lng,
-
-      unitCost: tx.unitCost,
-      actualTotalCost: tx.actualTotalCost,
-      discountedTotalCost: tx.discountedTotalCost,
-      createdDate: Helper.getDate() + " at " + Helper.getTime(),
-      deleted: false,
-    });
+    .set(transaction);
 
   // await db
   // .collection(process.env.TRANSACTION_STORE)
@@ -163,6 +174,10 @@ exports.makeRequest = async (req, res) => {
     // tipOffs: tipOffs,
     user: req.session.user,
   });
+  } catch (error) {
+    console.log(error);
+  }
+ 
 };
 
 // exports.createScannerUser = async (req, res) => {

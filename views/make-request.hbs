@@ -112,11 +112,16 @@
 
                                                                                 <td>{{ this.community }}</td>
                                                                                   <td>{{ this.currentStatus }}</td>
-                                                                            <td>
-                                                                                                                                                <button type="submit" class="btn btn-primary mr-2">Make Payment</button>
+                                                                         
+                                                                             <td>
+                                                                            <button {{{ inactivatePayBtn this.currentStatus }}} 
+                                                                                type="button"
+                                                                                class="btn btn-warning" >
+                                                                              
+                                                                                Make Payment
+                                                                            </button>
 
-                                                                           
-                                                                            </td>
+                                    </td>
                                                                         </tr>
                                                                     {{/each}}
                                                                 </tbody> 

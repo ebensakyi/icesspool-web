@@ -282,6 +282,14 @@ exports.inactivatePushTxBtn = (hbs) => {
   });
 };
 
+exports.inactivatePayBtn = (hbs) => {
+  hbs.registerHelper("inactivatePayBtn", function (value) {
+    if (value != 2) {
+      return "disabled";
+    }
+  });
+};
+
 exports.inactivateDeleteTxBtn = (hbs) => {
   hbs.registerHelper("inactivateDeleteTxBtn", function (value) {
     if (value == 3 || value == 4) {

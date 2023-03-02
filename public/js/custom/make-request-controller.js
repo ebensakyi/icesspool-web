@@ -114,24 +114,30 @@ $("#make-payment").on("show.bs.modal", function (e) {
   $("#customerName").val(customerName);
   $("#customerPhoneNumber").val(customerPhoneNumber);
 
-  
-
+ var part1 = Math.floor(100000 + Math.random() * 900000);
+ var part2 = Math.floor(100000 + Math.random() * 900000);
+let paymentId= part1+""+part2
   $("#make-payment-btn").click(function (e) {
     e.preventDefault();
     $.LoadingOverlay("show");
 
     $.ajax({
-      url: "/api/v1/initiate-teller-payment",
-      method: "POST",
-      data: { transactionId: id, providerId: providerId, txStatusCode: 4 },
-      success: function (response) {
+      url: `/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}`,
+      // method: "GET",
+      // data: { txId: id, paymentId: part1+""+part2 },
+    success: function (response) {
+        console.log(response);
        // window.location.replace("/transaction");
         $.LoadingOverlay("hide");
       },
       error: function (e) {
-        //console.log("Error ", e);
+       console.log("Error ", e);
         $.LoadingOverlay("hide");
       },
     });
+
+    // $.get(`/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}`, function(data, status){
+    //   alert("Data: " + data + "\nStatus: " + status);
+    // });
   });
 });

@@ -23,8 +23,8 @@ $("#get-pricing").click(function (e) {
 
       response.data.forEach((option) => {
         const optionElement = document.createElement("option");
-        optionElement.value =option.id  +"$"+  option.cost ;
-        optionElement.text = option.name+" - GHS " + option.cost;
+        optionElement.value = option.id + "$" + option.cost;
+        optionElement.text = option.name + " - GHS " + option.cost;
         select.appendChild(optionElement);
       });
     },
@@ -64,7 +64,6 @@ $("#get-pricing").click(function (e) {
 //       console.log(response);
 //       // $.LoadingOverlay("hide");
 
-     
 //     },
 //     error: function (e) {
 //       console.log("Error ", e);
@@ -77,14 +76,11 @@ $("#get-pricing").click(function (e) {
 //   // }
 // });
 
-
 $("#make-payment").on("show.bs.modal", function (e) {
   const id = $(e.relatedTarget).data("id");
   const providerId = $(e.relatedTarget).data("provider");
   const clientId = $(e.relatedTarget).data("client");
 
-
- 
   const community = $(e.relatedTarget).data("community_");
   const axle = $(e.relatedTarget).data("axle");
   const trips = $(e.relatedTarget).data("trips");
@@ -93,14 +89,11 @@ $("#make-payment").on("show.bs.modal", function (e) {
   const discountedTotalCost = $(e.relatedTarget).data("discountedtotalcost");
   const customerPhoneNumber = $(e.relatedTarget).data("customerphonenumber");
 
-  
-
-  console.log("discountedtotalCost ",discountedTotalCost);
-  console.log("customerName ",customerName);
-  console.log("customerName ",customerName);
-  console.log("customerName ",customerName);
-  console.log("customerName ",customerName);
-
+  console.log("discountedtotalCost ", discountedTotalCost);
+  console.log("customerName ", customerName);
+  console.log("customerName ", customerName);
+  console.log("customerName ", customerName);
+  console.log("customerName ", customerName);
 
   $("#providerId").val(providerId);
   $("#clientId").val(clientId);
@@ -110,28 +103,28 @@ $("#make-payment").on("show.bs.modal", function (e) {
   $("#currentStatus").val(status);
   $("#id").val(id);
   $("#customerName").val(customerName);
-  $("#discountedTotalCost").val("GHS "+discountedTotalCost);
+  $("#discountedTotalCost").val("GHS " + discountedTotalCost);
   $("#customerName").val(customerName);
   $("#customerPhoneNumber").val(customerPhoneNumber);
 
- var part1 = Math.floor(100000 + Math.random() * 900000);
- var part2 = Math.floor(100000 + Math.random() * 900000);
-let paymentId= part1+""+part2
+  var part1 = Math.floor(100000 + Math.random() * 900000);
+  var part2 = Math.floor(100000 + Math.random() * 900000);
+  let paymentId = part1 + "" + part2;
   $("#make-payment-btn").click(function (e) {
     e.preventDefault();
     $.LoadingOverlay("show");
 
     $.ajax({
-      url: `/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}`,
+      url: `/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}&amount=${discountedTotalCost.trim()})`,
       // method: "GET",
       // data: { txId: id, paymentId: part1+""+part2 },
-    success: function (response) {
+      success: function (response) {
         console.log(response);
-       // window.location.replace("/transaction");
+        // window.location.replace("/transaction");
         $.LoadingOverlay("hide");
       },
       error: function (e) {
-       console.log("Error ", e);
+        console.log("Error ", e);
         $.LoadingOverlay("hide");
       },
     });

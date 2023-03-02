@@ -9,6 +9,7 @@ const firebase = require("../utils/FirebaseConfig");
 const db = firebase.firestore();
 
 initiatePayment = async (req, res) => {
+
   try {
     const paymentId = req.query.paymentId;
     const transaction = await Transaction.findOne({
@@ -17,6 +18,8 @@ initiatePayment = async (req, res) => {
     const payment = await Payment.findOne({
       where: { transactionId: transaction.id },
     });
+
+    console.log(payment);
 
     if (!payment) {
       await Payment.create({
@@ -35,10 +38,11 @@ initiatePayment = async (req, res) => {
         { where: { transactionId: payment.transactionId } }
       );
       const amount = await Helper.amountConverter(req.query.amount);
+      console.log("amount===================>",amount);
 
       const initiated = await Helper.initiateTellerPayment(
         req.query.paymentId,
-        amount
+        amount+""
       );
 
       return res
@@ -46,6 +50,7 @@ initiatePayment = async (req, res) => {
         .send({ statusCode: 1, message: "Payment initiated", data: initiated });
     }
   } catch (error) {
+    console.log(error);
     return res.status(400).send({ statusCode: 0, message: error });
   }
 };

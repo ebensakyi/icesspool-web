@@ -1,4 +1,7 @@
 const { User } = require("../db/models");
+const firebase = require("../db/config/firebaseConfig");
+
+const db = firebase.firestore();
 
 const { ScannerUser } = require("../db/models");
 const { TipoffPoint } = require("../db/models");
@@ -11,13 +14,12 @@ const Op = Sequelize.Op;
 
 const Helper = require("../utils/Helper");
 
-
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
   const transactions = await Transaction.findAll({
     where: {
       deleted: 0,
-      requestSource:2
+      requestSource: 2,
     },
   });
   //res.send(tipOffs)
@@ -31,39 +33,39 @@ exports.makeRequest = async (req, res) => {
   await Helper.isLogin(req, res);
 
   console.log(req.body);
-  let  axle  =  req.body.pricing.split('$')[0];
-  let  cost  =  req.body.pricing.split('$')[1];
+  let axle = req.body.pricing.split("$")[0];
+  let cost = req.body.pricing.split("$")[1];
 
-  console.log({
+  // console.log({
+  //   id: Helper.generateTransactionCode(),
+  //   lat: Number(req.body.lat),
+  //   lng: Number(req.body.lng),
+  //   community: req.body.community,
+  //   customerName: req.body.clientName,
+  //   currentStatus:1,
+  //   unitCost:  Number(cost),
+  //   actualTotalCost:    Number(cost),
+  //   discountedTotalCost:  Number(cost),
+  //   requestSource: 2,
+  //   trips:1,
+  //   axle:Number(axle),
+  //   phoneNumber: req.body.phoneNumber,
+  //   gpsAccuracy: 5,
+  // });
+
+  let tx = await Transaction.create({
     id: Helper.generateTransactionCode(),
     lat: Number(req.body.lat),
     lng: Number(req.body.lng),
     community: req.body.community,
     customerName: req.body.clientName,
-    currentStatus:1,
-    unitCost:  Number(cost),
-    actualTotalCost:    Number(cost),
-    discountedTotalCost:  Number(cost),
+    currentStatus: 1,
+    unitCost: Number(cost),
+    actualTotalCost: Number(cost),
+    discountedTotalCost: Number(cost),
     requestSource: 2,
-    trips:1,
-    axle:Number(axle),
-    phoneNumber: req.body.phoneNumber,
-    gpsAccuracy: 5,
-  });
-
- let tx  = await Transaction.create({
-    id: Helper.generateTransactionCode(),
-    lat: Number(req.body.lat),
-    lng: Number(req.body.lng),
-    community: req.body.community,
-    customerName: req.body.clientName,
-    currentStatus:1,
-    unitCost:  Number(cost),
-    actualTotalCost:    Number(cost),
-    discountedTotalCost:  Number(cost),
-    requestSource: 2,
-    trips:1,
-    axle:Number(axle),
+    trips: 1,
+    axle: Number(axle),
     phoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });
@@ -71,10 +73,9 @@ exports.makeRequest = async (req, res) => {
   const transactions = await Transaction.findAll({
     where: {
       deleted: 0,
-      requestSource:2
+      requestSource: 2,
     },
   });
-
 
   await TransactionStatus.create({
     transactionId: tx.id,
@@ -110,6 +111,45 @@ exports.makeRequest = async (req, res) => {
   );
   // console.table(fcms);
   // console.log(fcms);
+
+  await db
+    .collection(process.env.TRANSACTION_STORE)
+    .doc(tx.id)
+    .set({
+      txStatusCode: 1,
+      requestType: 1,
+      offerMadeTime: Helper.getDate() + " at " + Helper.getTime(),
+      customerName: tx.customerName,
+      customerPhone: tx.phoneNumber,
+      customerEmail: "",
+      gpsAccuracy: 0,
+      community: tx.community,
+      axle: axle,
+      axleName: "",
+      tripsNumber: 1,
+      lat: tx.lat,
+      lng: tx.lng,
+
+      unitCost: tx.unitCost,
+      actualTotalCost: tx.actualTotalCost,
+      discountedTotalCost: tx.discountedTotalCost,
+      createdDate: Helper.getDate() + " at " + Helper.getTime(),
+      deleted: false,
+    });
+
+  // await db
+  // .collection(process.env.TRANSACTION_STORE)
+  // .doc(transaction.id)
+  // .update({
+  //   txStatusCode: 4,
+  //   offerClosedTime: Helper.getDate() + " at " + Helper.getTime(),
+  // })
+  // .then(function (data) {
+  //   console.log("Data ", data);
+  // })
+  // .catch((error) => {
+  //   console.log("error ", error);
+  // });
 
   // res.status(200).send({
   //   statusCode: 1,

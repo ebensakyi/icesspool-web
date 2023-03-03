@@ -66,13 +66,13 @@ exports.makeRequest = async (req, res) => {
     actualTotalCost: Number(cost),
     discountedTotalCost: Number(cost),
     requestSource: 2,
+    toiletType: req.body.toiletType,
     trips: 1,
     axle: Number(axle),
     customerPhoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });
 
-  console.log(tx);
 
   const transactions = await Transaction.findAll({
     where: {
@@ -129,11 +129,12 @@ exports.makeRequest = async (req, res) => {
     customerEmail: "",
     gpsAccuracy: 0,
     community: tx.community,
-    axle: axle,
+    axle: Number(axle),
     axleName: "",
     tripsNumber: 1,
     lat: tx.lat,
     lng: tx.lng,
+    toiletType: req.body.toiletType,
 
     unitCost: tx.unitCost,
     actualTotalCost: tx.actualTotalCost,

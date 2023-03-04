@@ -25,7 +25,6 @@
 
                                     <th>District</th>
                                     <th>Community</th>
-                                    <th>Location</th>
 
                                     <th>Axle</th>
                                     <th>Status</th>
@@ -80,7 +79,6 @@
 
                                     <td>{{ this.District.districtName }}</td>
                                     <td>{{ this.community }}</td>
-                                    <td>{{ this.location }}</td>
                                     <td>{{ this.AxleClassification.axleClass }}</td>
                                     <td>{{{ statusColors this.currentStatus }}}</td>
                                     <td>{{ this.createdAt }}</td>
@@ -283,6 +281,91 @@
                             </div>
 
                         </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="push-tx-details" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">DETAILS</h6>
+
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="providerId">Provider ID</label>
+                                    <input type="text" class="form-control" id="_providerId" autocomplete="off"
+                                        placeholder="Provider Id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="clientId">Client Id</label>
+                                    <input type="text" class="form-control" id="_clientId" autocomplete="off"
+                                        placeholder="clientId" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <input type="text" class="form-control" id="_district" placeholder="District"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="community">Community</label>
+                                    <input type="text" class="form-control" id="_community" placeholder="Community"
+                                        disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" class="form-control" id="_location" autocomplete="off"
+                                        placeholder="Location" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="axle">Axle</label>
+                                    <input type="text" class="form-control" id="_axle" autocomplete="off"
+                                        placeholder="Axle" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="trips">Trips</label>
+                                    <input type="text" class="form-control" id="_trips" placeholder="Trips" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="currentStatus">Current Status</label>
+                                    <input type="text" class="form-control" id="_currentStatus"
+                                        placeholder="Current Status" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="alert alert-fill-danger" role="alert">
+                            Once offer is pushed as paid, it cannot be reversed. Verify before pushing or click outside
+                            the form to dismiss.
+                        </div>
+                        <button {{{ inactivateBtn }}} class="btn btn-success mr-2" id="push-tx">Mark
+                            Transaction As Payment</button>
 
                     </form>
                 </div>

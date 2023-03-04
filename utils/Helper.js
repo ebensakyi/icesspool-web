@@ -126,6 +126,8 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
 };
 
 exports.initiateTellerPayment = async (paymentId, amount) => {
+  console.log("AMT ",amount);
+
   const options = {
     method: "POST",
     url: process.env.TELLER_URL,
@@ -138,8 +140,8 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
     body: {
       merchant_id: process.env.MERCHANT_ID,
       transaction_id: paymentId,
-      desc: "Payment for iCesspool desludging",
-      amount: amount,
+      desc: "Payment for iCesspool",
+      amount: "000000000010",
       //redirect_url: "http://192.168.8.116:3000/api/v1/complete-payment",
       redirect_url: process.env.REDIRECT_URL,
       email: "info@icesspool.net",
@@ -147,8 +149,11 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
     json: true,
   };
 
+  console.log(options);
+
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
+
       if (error) return reject(error);
       return resolve(body);
     });
@@ -174,6 +179,7 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
 // };
 
 exports.amountConverter = async (amt) => {
+  console.log("amountConverter ",amt);
   if (amt.includes(".")) {
     let amtPart1 = amt.split(".")[0];
     let amtPart2 = amt.split(".")[1];
@@ -190,7 +196,6 @@ exports.amountConverter = async (amt) => {
 
   let  amount = part1 + "" + part2;
 
-    console.log("amount2------> ", amount);
 
     return amount;
   } else {
@@ -207,7 +212,6 @@ exports.amountConverter = async (amt) => {
       amount = "00000" + amt + "00";
     }
 
-    console.log("amount1------> ", amount);
     return amount;
   }
 

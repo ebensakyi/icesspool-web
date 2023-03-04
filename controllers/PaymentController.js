@@ -10,6 +10,7 @@ const db = firebase.firestore();
 
 initiatePayment = async (req, res) => {
 
+
   try {
     const paymentId = req.query.paymentId;
     const transaction = await Transaction.findOne({
@@ -19,7 +20,6 @@ initiatePayment = async (req, res) => {
       where: { transactionId: transaction.id },
     });
 
-    console.log(payment);
 
     if (!payment) {
       await Payment.create({
@@ -38,7 +38,6 @@ initiatePayment = async (req, res) => {
         { where: { transactionId: payment.transactionId } }
       );
       const amount = await Helper.amountConverter(req.query.amount);
-      console.log("amount===================>",amount);
 
       const initiated = await Helper.initiateTellerPayment(
         req.query.paymentId,

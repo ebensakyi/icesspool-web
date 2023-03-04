@@ -114,13 +114,16 @@ $("#make-payment").on("show.bs.modal", function (e) {
     e.preventDefault();
     $.LoadingOverlay("show");
 
+    let url =  `/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}&amount=${discountedTotalCost.trim()}`
+
+    console.log(url);
+
     $.ajax({
-      url: `/api/v1/initiate-teller-payment?txId=${id}&paymentId=${paymentId}&amount=${discountedTotalCost.trim()})`,
+      url,
       // method: "GET",
       // data: { txId: id, paymentId: part1+""+part2 },
       success: function (response) {
-        console.log(response);
-        // window.location.replace("/transaction");
+      window.location.replace(response.data.checkout_url, '_blank');
         $.LoadingOverlay("hide");
       },
       error: function (e) {

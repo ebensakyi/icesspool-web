@@ -93,6 +93,7 @@ exports.offerMade = async (req, res) => {
       axle: req.body.axle,
       unitCost: req.body.unitCost,
       customerName: req.body.customerName,
+      customerPhoneNumber: req.body.customerPhone,
       actualTotalCost: req.body.actualTotalCost,
       discountedTotalCost: discountedCost,
       clientId: req.body.clientId,
@@ -238,6 +239,8 @@ exports.offerCancelledByCustomer = async (req, res) => {
 
 exports.offerCancelledByProvider = async (req, res) => {
   try {
+
+    console.log("offerCancelledByProviderofferCancelledByProviderofferCancelledByProvider");
     let currentStatus = req.body.txStatusCode;
 
     await Transaction.update(
@@ -258,7 +261,7 @@ exports.offerCancelledByProvider = async (req, res) => {
       date: Helper.getDate(),
       time: Helper.getTime(),
     });
-    const phoneNumber = transaction.Client.User.phoneNumber;
+    const phoneNumber =  transaction.customerPhoneNumber;
 
     if (currentStatus == 6) {
       await Helper.sendSMS(

@@ -101,7 +101,7 @@ exports.getTransactions = async (req, res) => {
     const transactions = await Transaction.findAll({
       where: {
         clientId: req.query.clientId,
-        [Op.or]: [{ currentStatus: 4 }, { currentStatus: 5 }],
+        //[Op.or]: [{ currentStatus: 4 }, { currentStatus: 5 }],
       },
       include: [
         {
@@ -112,6 +112,7 @@ exports.getTransactions = async (req, res) => {
       ],
     });
 
+    console.log("TX ",transactions);
     if (!transactions)
       return res
         .status(400)

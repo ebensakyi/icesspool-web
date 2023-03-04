@@ -109,10 +109,11 @@ exports.getTransactions = async (req, res) => {
           include: [{ model: Status }],
         },
         { model: Provider, include: [{ model: User }] },
+        { model: Status },
       ],
     });
 
-    console.log("TX ",transactions);
+    console.log("TX ", transactions);
     if (!transactions)
       return res
         .status(400)

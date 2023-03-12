@@ -38,23 +38,13 @@ exports.makeRequest = async (req, res) => {
   let axle = req.body.pricing.split("$")[0];
   let cost = req.body.pricing.split("$")[1];
 
-  // console.log({
-  //   id: Helper.generateTransactionCode(),
-  //   lat: Number(req.body.lat),
-  //   lng: Number(req.body.lng),
-  //   community: req.body.community,
-  //   customerName: req.body.clientName,
-  //   currentStatus:1,
-  //   unitCost:  Number(cost),
-  //   actualTotalCost:    Number(cost),
-  //   discountedTotalCost:  Number(cost),
-  //   requestSource: 2,
-  //   trips:1,
-  //   axle:Number(axle),
-  //   phoneNumber: req.body.phoneNumber,
-  //   gpsAccuracy: 5,
-  // });
 
+let axleName=  Number(axle)==1 ? "Mini"
+  : Number(axle)==2 ? "Small"
+  : Number(axle)==3 ? "Single"
+  : "";
+
+  console.log( "axleName $axleName",axleName);
 
   let tx = await Transaction.create({
     id: Helper.generateTransactionCode(),
@@ -70,7 +60,7 @@ exports.makeRequest = async (req, res) => {
     toiletType: req.body.toiletType,
     trips: 1,
     axle: Number(axle),
-    axleName: req.body.axleName,
+    axleName:axleName,
     customerPhoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });
@@ -89,16 +79,7 @@ exports.makeRequest = async (req, res) => {
     date: Helper.getDate(),
     time: Helper.getTime(),
   });
-  // const transaction = await Transaction.findOne({
-  //   where: { id: tx.id },
-  //   include: [
-  //     { model: Client, include: [{ model: User }] },
-  //     { model: District },
-  //     { model: AxleClassification },
-  //   ],
-  // });
 
-  //send FCM Notification to all appropriate Operators
 
   let v = await Vehicle.findAll({
     where: {
@@ -145,33 +126,12 @@ exports.makeRequest = async (req, res) => {
     deleted: false,
   }
 
-  console.log(transaction);
   await db
     .collection(process.env.TRANSACTION_STORE)
     .doc(tx.id)
     .set(transaction);
 
-  // await db
-  // .collection(process.env.TRANSACTION_STORE)
-  // .doc(transaction.id)
-  // .update({
-  //   txStatusCode: 4,
-  //   offerClosedTime: Helper.getDate() + " at " + Helper.getTime(),
-  // })
-  // .then(function (data) {
-  //   console.log("Data ", data);
-  // })
-  // .catch((error) => {
-  //   console.log("error ", error);
-  // });
-
-  // res.status(200).send({
-  //   statusCode: 1,
-  //   message: "Transaction created",
-  //   data: transaction,
-  // });
-  // const tipOffs = await TipoffPoint.findAll({ where: { deleted: 0 } });
-  // //res.send(tipOffs)
+ 
   res.render("make-request", {
     data: transactions,
     // tipOffs: tipOffs,

@@ -33,8 +33,7 @@ exports.makeRequestPage = async (req, res) => {
 exports.makeRequest = async (req, res) => {
   try {
     await Helper.isLogin(req, res);
-
-    console.log(req.body);
+    let transactions;
     let axle = req.body.pricing.split("$")[0];
     let cost = req.body.pricing.split("$")[1];
 
@@ -64,7 +63,6 @@ exports.makeRequest = async (req, res) => {
     if (txCount != 0) {
       return  res.render("make-request", {
         data: transactions,
-        // tipOffs: tipOffs,
         user: req.session.user,
       });
     }
@@ -87,7 +85,7 @@ exports.makeRequest = async (req, res) => {
       gpsAccuracy: 5,
     });
 
-    const transactions = await Transaction.findAll({
+     transactions = await Transaction.findAll({
       where: {
         deleted: 0,
         requestSource: 2,

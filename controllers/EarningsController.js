@@ -3,6 +3,8 @@ const { IcesspoolEarning } = require("../db/models/");
 const { IcesspoolBalance } = require("../db/models")
 const { Provider } = require("../db/models/");
 const { ProviderEarning } = require("../db/models/");
+const { TamaleBalance } = require("../db/models");
+const { TamaleEarning } = require("../db/models");
 
 const { User } = require("../db/models/");
 const Sequelize = require("sequelize");
@@ -46,7 +48,6 @@ exports.getIcesspoolBalance = async (req, res) => {
       where: { deleted:0 },
       
     })
-    console.log(bal)
      
     res.render("icesspool-wallet", {
       data: bal,

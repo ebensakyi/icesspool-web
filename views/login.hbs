@@ -41,6 +41,9 @@
                     <a href="#" class="noble-ui-logo d-block mb-2"><span>i</span>Cesspool</a>
                     <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
                     <form class="needs-validation" novalidate method="POST" id="loginForm">
+                       <div class="form-group">
+                        <p id="errorMsg" style="color:red;display:none">Wrong username or password. Please try again</p>
+                       </div>
 
                       <div class="form-group">
                         <label for="email">Email address</label>
@@ -130,15 +133,19 @@
                 success: function (response) {
                   $.LoadingOverlay("hide");
 
-                  console.log(response)
-                  const statusCode = response.statusCode
+                  const statusCode = response.statusCode   
+                                 console.log(statusCode)
+
                   if (statusCode == 1) {
+                    document.getElementById("errorMsg").style.display = "none";
+
                     location.replace("/2fa");
                   } else {
                     const message = `Please check your user credentials`
                     const title = 'Wrong credentials'
 
-                    showWarningToast(title, message)
+                                       document.getElementById("errorMsg").style.display = "block";
+
                   }
 
                 },

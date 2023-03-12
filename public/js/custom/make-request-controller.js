@@ -123,6 +123,7 @@ $("#make-payment").on("show.bs.modal", function (e) {
       // method: "GET",
       // data: { txId: id, paymentId: part1+""+part2 },
       success: function (response) {
+        console.log(response.data.checkout_url);
       window.location.replace(response.data.checkout_url, '_blank');
         $.LoadingOverlay("hide");
       },

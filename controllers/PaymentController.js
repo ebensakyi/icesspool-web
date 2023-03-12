@@ -41,9 +41,10 @@ initiatePayment = async (req, res) => {
 
       const initiated = await Helper.initiateTellerPayment(
         req.query.paymentId,
-        amount+""
+        amount
       );
 
+      console.log(initiated);
       return res
         .status(200)
         .send({ statusCode: 1, message: "Payment initiated", data: initiated });

@@ -55,6 +55,7 @@ exports.makeRequest = async (req, res) => {
   //   gpsAccuracy: 5,
   // });
 
+
   let tx = await Transaction.create({
     id: Helper.generateTransactionCode(),
     lat: Number(req.body.lat),
@@ -69,6 +70,7 @@ exports.makeRequest = async (req, res) => {
     toiletType: req.body.toiletType,
     trips: 1,
     axle: Number(axle),
+    axleName: req.body.axleName,
     customerPhoneNumber: req.body.phoneNumber,
     gpsAccuracy: 5,
   });

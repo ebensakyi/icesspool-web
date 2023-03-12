@@ -32,115 +32,133 @@ exports.makeRequestPage = async (req, res) => {
 
 exports.makeRequest = async (req, res) => {
   try {
-     await Helper.isLogin(req, res);
+    await Helper.isLogin(req, res);
 
-  console.log(req.body);
-  let axle = req.body.pricing.split("$")[0];
-  let cost = req.body.pricing.split("$")[1];
+    console.log(req.body);
+    let axle = req.body.pricing.split("$")[0];
+    let cost = req.body.pricing.split("$")[1];
 
-
-let axleName=  Number(axle)==1 ? "Mini"
-  : Number(axle)==2 ? "Small"
-  : Number(axle)==3 ? "Single"
-  : "";
-
-  console.log( "axleName $axleName",axleName);
-
-  let tx = await Transaction.create({
-    id: Helper.generateTransactionCode(),
-    lat: Number(req.body.lat),
-    lng: Number(req.body.lng),
-    community: req.body.community,
-    customerName: req.body.clientName,
-    currentStatus: 1,
-    unitCost: Number(cost),
-    actualTotalCost: Number(cost),
-    discountedTotalCost: Number(cost),
-    requestSource: 2,
-    toiletType: req.body.toiletType,
-    trips: 1,
-    axle: Number(axle),
-    axleName:axleName,
-    customerPhoneNumber: req.body.phoneNumber,
-    gpsAccuracy: 5,
-  });
+    let axleName =
+      Number(axle) == 1
+        ? "Mini"
+        : Number(axle) == 2
+        ? "Small"
+        : Number(axle) == 3
+        ? "Single"
+        : "";
 
 
-  const transactions = await Transaction.findAll({
-    where: {
-      deleted: 0,
-      requestSource: 2,
-    },
-  });
-
-  await TransactionStatus.create({
-    transactionId: tx.id,
-    status: tx.currentStatus,
-    date: Helper.getDate(),
-    time: Helper.getTime(),
-  });
-
-
-  let v = await Vehicle.findAll({
-    where: {
-      axleClassificationId: {
-        [Op.gte]: Number(axle),
+    let txCount = await Transaction.count({
+      where: {
+        community: req.body.community,
+        lat: Number(req.body.lat),
+        lng: Number(req.body.lng),
+        customerName: req.body.clientName,
+        customerPhoneNumber: req.body.phoneNumber,
+        unitCost: Number(cost),
+        actualTotalCost: Number(cost),
+        discountedTotalCost: Number(cost),
       },
-    },
-    include: [{ model: User }],
-  });
+    });
 
-  let fcms = await getFcmsArr(v);
-  await Helper.sendFCMNotification(
-    fcms,
-    "New offer",
-    "There is a new iCesspool offer waiting for you!"
-  );
-  // console.table(fcms);
-  // console.log(fcms);
+    if (txCount != 0) {
+      return  res.render("make-request", {
+        data: transactions,
+        // tipOffs: tipOffs,
+        user: req.session.user,
+      });
+    }
+    let tx = await Transaction.create({
+      id: Helper.generateTransactionCode(),
+      lat: Number(req.body.lat),
+      lng: Number(req.body.lng),
+      community: req.body.community,
+      customerName: req.body.clientName,
+      currentStatus: 1,
+      unitCost: Number(cost),
+      actualTotalCost: Number(cost),
+      discountedTotalCost: Number(cost),
+      requestSource: 2,
+      toiletType: req.body.toiletType,
+      trips: 1,
+      axle: Number(axle),
+      axleName: axleName,
+      customerPhoneNumber: req.body.phoneNumber,
+      gpsAccuracy: 5,
+    });
 
-  let  date = await  Helper.getDate();
-  let  time = await  Helper.getTime();
+    const transactions = await Transaction.findAll({
+      where: {
+        deleted: 0,
+        requestSource: 2,
+      },
+    });
 
-  let transaction =  {
-    clientId: "NTR"+tx.customerPhoneNumber,
-    txStatusCode: 1,
-    requestType: 1,
-    offerMadeTime: date + " at " +time,
-    customerName: tx.customerName,
-    customerPhone: tx.customerPhoneNumber,
-    customerEmail: "",
-    gpsAccuracy: 0,
-    community: tx.community,
-    axle: Number(axle),
-    axleName: "",
-    tripsNumber: 1,
-    lat: tx.lat,
-    lng: tx.lng,
-    toiletType: req.body.toiletType,
+    await TransactionStatus.create({
+      transactionId: tx.id,
+      status: tx.currentStatus,
+      date: Helper.getDate(),
+      time: Helper.getTime(),
+    });
 
-    unitCost: tx.unitCost,
-    actualTotalCost: tx.actualTotalCost,
-    discountedTotalCost: tx.discountedTotalCost,
-    createdDate: date + " at " + time,
-    deleted: false,
-  }
+    let v = await Vehicle.findAll({
+      where: {
+        axleClassificationId: {
+          [Op.gte]: Number(axle),
+        },
+      },
+      include: [{ model: User }],
+    });
 
-  await db
-    .collection(process.env.TRANSACTION_STORE)
-    .doc(tx.id)
-    .set(transaction);
+    let fcms = await getFcmsArr(v);
+    await Helper.sendFCMNotification(
+      fcms,
+      "New offer",
+      "There is a new iCesspool offer waiting for you!"
+    );
+    // console.table(fcms);
+    // console.log(fcms);
 
- 
-  res.render("make-request", {
-    data: transactions,
-    // tipOffs: tipOffs,
-    user: req.session.user,
-  });
+    let date = await Helper.getDate();
+    let time = await Helper.getTime();
+
+    let transaction = {
+      clientId: "NTR" + tx.customerPhoneNumber,
+      txStatusCode: 1,
+      requestType: 1,
+      offerMadeTime: date + " at " + time,
+      customerName: tx.customerName,
+      customerPhone: tx.customerPhoneNumber,
+      customerEmail: "",
+      gpsAccuracy: 0,
+      community: tx.community,
+      axle: Number(axle),
+      axleName: axleName,
+      tripsNumber: 1,
+      lat: tx.lat,
+      lng: tx.lng,
+      toiletType: req.body.toiletType,
+
+      unitCost: tx.unitCost,
+      actualTotalCost: tx.actualTotalCost,
+      discountedTotalCost: tx.discountedTotalCost,
+      createdDate: date + " at " + time,
+      deleted: false,
+    };
+
+    await db
+      .collection(process.env.TRANSACTION_STORE)
+      .doc(tx.id)
+      .set(transaction);
+
+    res.render("make-request", {
+      data: transactions,
+      // tipOffs: tipOffs,
+      user: req.session.user,
+    });
   } catch (error) {
     console.log(error);
   }
- 
 };
 
 // exports.createScannerUser = async (req, res) => {

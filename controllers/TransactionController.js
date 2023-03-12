@@ -239,8 +239,9 @@ exports.offerCancelledByCustomer = async (req, res) => {
 
 exports.offerCancelledByProvider = async (req, res) => {
   try {
-
-    console.log("offerCancelledByProviderofferCancelledByProviderofferCancelledByProvider");
+    console.log(
+      "offerCancelledByProviderofferCancelledByProviderofferCancelledByProvider"
+    );
     let currentStatus = req.body.txStatusCode;
 
     await Transaction.update(
@@ -261,7 +262,7 @@ exports.offerCancelledByProvider = async (req, res) => {
       date: Helper.getDate(),
       time: Helper.getTime(),
     });
-    const phoneNumber =  transaction.customerPhoneNumber;
+    const phoneNumber = transaction.customerPhoneNumber;
 
     if (currentStatus == 6) {
       await Helper.sendSMS(
@@ -338,9 +339,12 @@ exports.closeTransaction = async (req, res) => {
     });
     const commission = Number(theCommission.commission);
     const transactionAmount = parseInt(transaction.discountedTotalCost);
-    const icesspoolAmount = transactionAmount * commission;
+    // const icesspoolAmount = transactionAmount * commission;
+    const icesspoolAmount = transactionAmount * 0.08;
 
-    const providerAmount = transactionAmount - icesspoolAmount;
+    const tamaleAmount = transactionAmount * 0.05;
+
+    const providerAmount = transactionAmount - (icesspoolAmount + tamaleAmount);
 
     const tx = await TransactionStatus.create({
       transactionId: transaction.id,
@@ -362,6 +366,12 @@ exports.closeTransaction = async (req, res) => {
     await IcesspoolEarning.create({
       transactionId: req.body.transactionId,
       amount: icesspoolAmount,
+      completionDate: date,
+    });
+
+    await IcesspoolEarning.create({
+      transactionId: req.body.transactionId,
+      amount: tamaleAmount,
       completionDate: date,
     });
 

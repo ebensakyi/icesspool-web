@@ -59,6 +59,28 @@ exports.getIcesspoolBalance = async (req, res) => {
 
 };
 
+
+
+exports.getTamaleBalance = async (req, res) => {
+  await Helper.isLogin(req, res);
+  try {
+   const bal = await TamaleBalance.findOne({
+      where: { deleted:0 },
+      
+    })
+     
+    res.render("tamale-wallet", {
+      data: bal,
+      user: req.session.user,
+    });
+  } catch (error) {
+    console.log(error);
+
+  }
+
+};
+
+
 exports.getProviderEarnings = async (req, res) => {
   try {
     await Helper.isLogin(req, res);
@@ -97,6 +119,31 @@ exports.getIcesspoolEarnings = async (req, res) => {
 
     //return res.send(transactions);
     res.render("icesspool-earnings", {
+      data: transactions,
+      user: req.session.user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+exports.getTamaleEarnings = async (req, res) => {
+  try {
+    await Helper.isLogin(req, res);
+
+    const transactions = await TamaleEarning.findAll({
+      //where: { [Op.or]: [{ currentStatus: 4 }, { currentStatus: 5 }] },
+      include: [
+        {
+          model: Transaction,
+          include: [{ model: Provider, include: [{ model: User }] }],
+        },
+      ],
+    });
+
+    //return res.send(transactions);
+    res.render("tamale-earnings", {
       data: transactions,
       user: req.session.user,
     });

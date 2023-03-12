@@ -6,4 +6,7 @@ module.exports = (app) => {
   app.get("/icesspool-earnings", EarningsController.getIcesspoolEarnings);
   app.get('/icesspool-wallet', EarningsController.getIcesspoolBalance)
 
+  app.get("/tamale-earnings", EarningsController.getIcesspoolEarnings);
+  app.get('/tamale-wallet', EarningsController.getIcesspoolBalance)
+
 };

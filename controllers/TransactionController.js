@@ -350,7 +350,7 @@ exports.closeTransaction = async (req, res) => {
 
     const tamaleAmount = transactionAmount * 0.05;
 
-    const providerAmount = transactionAmount - (icesspoolAmount + tamaleAmount);
+    const providerAmount = transactionAmount - (icesspoolAmount + tamaleAmount+ tellerAmount);
 
    
 

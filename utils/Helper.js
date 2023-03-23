@@ -68,7 +68,7 @@ exports.sendEmail = async (to, subject, message) => {
     secure: true,
     auth: {
       user: "icesspoolgh@gmail.com",
-      pass: "1C355p00L@2318",
+      pass: "bkimzmrdjckrotxw",
     },
   });
 
@@ -126,7 +126,6 @@ exports.getDistance = async (tipOffPoints, userLat, userLng) => {
 };
 
 exports.initiateTellerPayment = async (paymentId, amount) => {
-  console.log("AMT ",amount);
 
   const options = {
     method: "POST",
@@ -141,7 +140,7 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
       merchant_id: process.env.MERCHANT_ID,
       transaction_id: paymentId,
       desc: "Payment for iCesspool",
-      amount: "000000000010",
+      amount: amount,
       //redirect_url: "http://192.168.8.116:3000/api/v1/complete-payment",
       redirect_url: process.env.REDIRECT_URL,
       email: "info@icesspool.net",
@@ -149,7 +148,6 @@ exports.initiateTellerPayment = async (paymentId, amount) => {
     json: true,
   };
 
-  console.log(options);
 
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {

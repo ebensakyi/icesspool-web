@@ -13,7 +13,6 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 const Helper = require("../utils/Helper");
-const { JSON } = require("sequelize");
 
 exports.makeRequestPage = async (req, res) => {
   await Helper.isLogin(req, res);
@@ -72,6 +71,7 @@ exports.makeRequest = async (req, res) => {
       lng: Number(req.body.lng),
       community: req.body.community,
       customerName: req.body.clientName,
+      clientId:"BACKEND-"+req.body.phoneNumber,
       currentStatus: 1,
       unitCost: Number(cost),
       actualTotalCost: Number(cost),

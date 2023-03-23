@@ -16,7 +16,6 @@ $("#get-pricing").click(function (e) {
     method: "POST",
     data: { userX, userY },
     success: function (response) {
-      console.log(response);
       // $.LoadingOverlay("hide");
 
       const select = document.getElementById("pricing");
@@ -81,7 +80,7 @@ $("#make-payment").on("show.bs.modal", function (e) {
   const providerId = $(e.relatedTarget).data("provider");
   const clientId = $(e.relatedTarget).data("client");
 
-  const community = $(e.relatedTarget).data("community_");
+  const community = $(e.relatedTarget).data("community");
   const axle = $(e.relatedTarget).data("axle");
   const trips = $(e.relatedTarget).data("trips");
   const status = $(e.relatedTarget).data("status");
@@ -97,7 +96,7 @@ $("#make-payment").on("show.bs.modal", function (e) {
 
   $("#providerId").val(providerId);
   $("#clientId").val(clientId);
-  $("#community_").val(community);
+  $("#communityName").val(community);
   $("#axle").val(axle);
   $("#trips").val(trips);
   $("#currentStatus").val(status);
@@ -138,3 +137,36 @@ $("#make-payment").on("show.bs.modal", function (e) {
     // });
   });
 });
+$("#toiletTypeDiv").hide();
+$("#waterTypeDiv").hide();
+
+$("#serviceType").change(function (e) {
+  console.log(e.target.value);
+
+  let serviceType = e.target.value;
+  if(serviceType=="1"){
+    $("#waterTypeDiv").hide();
+    $("#toiletTypeDiv").show();
+
+  }else if(serviceType=="2"){
+      $("#toiletTypeDiv").hide();
+      $("#waterTypeDiv").show();
+
+  }else{
+    $("#toiletTypeDiv").hide();
+    $("#waterTypeDiv").hide();
+  }
+ 
+   if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+})
+
+{/* <script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+ 
+}
+</script> */}

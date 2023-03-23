@@ -1,158 +1,157 @@
-{{>header}}
+{{>header }}
 
 <div class="page-content">
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Make Request</h6>
-                    <form class="forms-sample" method="POST">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="clientName">Customer Name</label>
-                                    <input type="text" class="form-control" id="clientName" name="clientName" autocomplete="off" placeholder="Enter customer name" required></div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="phoneNumber">Phone Number</label>
-                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" autocomplete="off" placeholder="Enter phone number" required></div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="email">Community</label>
-                                            <input type="text" class="form-control" id="community" name="community" placeholder="Community" required></div>
-                                        </div>
-                                        <div class="col-sm-3">
 
-                                            <div class="form-group">
-                                                <label for="toiletType">Select toilet type</label>
-                                                <select class="form-control" id="toiletType" name="toiletType" required>
-                                                    <option>Select type of toilet</option>
-                                                        <option value="Toilet Truck Service">Toilet Truck Service</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Make Request</h6>
+            <form class="forms-sample" method="POST">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="clientName">Customer Name</label>
+                            <input type="text" class="form-control" id="clientName" name="clientName" autocomplete="off" placeholder="Enter customer name" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" autocomplete="off" placeholder="Enter phone number" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="email">Community</label>
+                            <input type="text" class="form-control" id="community" name="community" placeholder="Community" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="serviceType">Select service type</label>
+                            <select class="form-control" id="serviceType" name="serviceType" required>
+                                <option value="">Select</option>
+                                <option value="1">Toilet</option>
+                                <option value="2">Water</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="col-sm-3" id="toiletTypeDiv">
+                        <div class="form-group">
+                            <label for="toiletType">Select toilet type</label>
+                            <select class="form-control" id="toiletType" name="toiletType" required>
+                                <option>Select type of toilet</option>
+                                <option value="Toilet Truck Service">Toilet Truck Service</option>
+                            </select>
+                        </div>
+                    </div>
+                      <div class="col-sm-3" id="waterTypeDiv">
+                        <div class="form-group">
+                            <label for="waterType">Select water service type</label>
+                            <select class="form-control" id="waterType" name="waterType" disabled>
+                                <option>Select type of water</option>
+                                <option value="Treated Water">Treated Water</option>
+                               <option value="Untreated Water">Untreated Water</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                   
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="lat">Enter latitude:</label>
+                            <input type="text" class="form-control" id="lat" name="lat" autocomplete="off" placeholder="Enter lat" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="lng">Enter longitude:</label>
+                            <input type="text" class="form-control" id="lng" name="lng" autocomplete="off" placeholder="Enter lng " required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="lat">Get</label>
+                            <br />
+
+                            <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="pricing">Select truck</label>
+                            <select class="form-control" id="pricing" name="pricing" required></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="lat">Enter latitude:</label>
-                                                        <input type="text" class="form-control" id="lat" name="lat" autocomplete="off" placeholder="Enter lat" required></div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="lng">Enter longitude:</label>
-                                                            <input type="text" class="form-control" id="lng" name="lng" autocomplete="off" placeholder="Enter lng " required></div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group">
-                                                                <label for="lat">Get</label>
-                                                                <br>
 
-                                                                    <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Make Request</h6>
+                <table id="dataTableExample" class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <div class="form-group">
-                                                                    <label for="pricing">Select truck</label>
-                                                                    <select class="form-control" id="pricing" name="pricing" required>
-                                                                        {{!-- <option>Select truck</option>
-                                                                        {{#each tipOffs}}
-                                                                            <option value="{{ this.id }}">{{ this.siteName }}
-                                                                                <br>{{ this.location }}
-                                                                                    <br>{{ this.address }}
-                                                                                    </option>
-                                                                                {{/each}} --}}
+                            <th>Phone</th>
+                            <th>Community</th>
 
-                                                                            </select>
+                            <th>Amount</th>
+                            <th>Date</th>
 
-                                                                        </div>
-                                                                    </div>
+                            <th>Current Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each data}}
+                            <tr>
 
+                                <td>{{ this.id }}</td>
+                                <td>{{ this.customerName }}
 
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 grid-margin stretch-card">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <h6 class="card-title">Transactions</h6>
+                                    <td>{{ this.customerPhoneNumber }}</td>
 
-                                                            <div class="table-responsive">
-                                                                <table id="dataTableExample" class="table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Id</th>
-                                                                            <th>Name</th>
-                                                                          
-                                                                            <th>Phone</th>
-                                                                            <th>Community</th>
-                                                                                                                                                       
-                                                                             <th>Amount</th>
-                                                                            <th>Date</th>
+                                    <td>{{ this.community }}</td>
+                                    <td>GHS
+                                        {{ this.discountedTotalCost }}</td>
+                                    <td>{{{ formatDate this.createdAt }}}
+                                    </td>
 
-                                                                            <th>Current Status</th>
-                                                                            <th>Actions</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                 <tbody>
-                                                                        {{#each data}}
-                                                                            <tr>
+                                    <td>{{ this.currentStatus }}</td>
 
-                                                                                <td>{{ this.id }}</td>
-                                                                                <td>{{ this.customerName }}
-                                                                                
-                                                                                <td>{{ this.customerPhoneNumber }}</td>
+                                    <td>
+                                        <button {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" type="button" class="btn btn-warning" id={{ this.id }}>
 
-                                                                                <td>{{ this.community }}</td>
-                                                                                <td>GHS {{ this.discountedTotalCost }}</td>
-                                                                                <td>{{{ formatDate this.createdAt }}} </td>
-
-                                                                                  <td>{{ this.currentStatus }}</td>
-                                                                         
-                                                                             <td>
-                                                                            <button {{{ inactivatePayBtn this.currentStatus }}} 
-
-                                                                            data-toggle="modal"
-                                                                                data-target="#make-payment" type="button" 
-                                                                                data-customerName="{{ this.customerName }}"
-                                                                                data-discountedTotalCost="{{ this.discountedTotalCost }}"
-
-                                                                                data-customerphonenumber="{{ this.customerPhoneNumber }}"
-                                                                                data-id="{{ this.id }}" data-provider="{{ this.providerId }}"
-                                                                                data-client="{{ this.clientId }}"
-                                                                                data-community="{{ this.community }}" 
-                                                                                type="button"
-                                                                                class="btn btn-warning"
-                                                                                id={{this.id}}
-                                                                                 >
-                                                                              
-                                                                                Make Payment
-                                                                            </button>
+                                            Make Payment
+                                        </button>
 
                                     </td>
-                                                                        </tr>
-                                                                    {{/each}}
-                                                                </tbody> 
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
-                                        <div id="make-payment" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
-    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+       <div id="make-payment" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="card">
@@ -160,143 +159,103 @@
                     <h6 class="card-title">DETAILS</h6>
 
                     <form method="POST">
-                            <div class="row">
+                        <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="id">Tx ID</label>
-                                    <input type="text" class="form-control" id="id" autocomplete="off"
-                                        placeholder="Transaction ID" disabled>
+                                    <input type="text" class="form-control" id="id" autocomplete="off" placeholder="Transaction ID" disabled />
                                 </div>
                             </div>
-                             <div class="col-sm-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="customerName">Customer Name</label>
-                                    <input type="text" class="form-control" id="customerName" autocomplete="off"
-                                        placeholder="Customer Name" disabled>
+                                    <input type="text" class="form-control" id="customerName" autocomplete="off" placeholder="Customer Name" disabled />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="customerPhoneNumber">Phone Number</label>
-                                    <input type="text" class="form-control" id="customerPhoneNumber" autocomplete="off"
-                                        placeholder="Customer Phone Number" disabled>
+                                    <input type="text" class="form-control" id="customerPhoneNumber" autocomplete="off" placeholder="Customer Phone Number" disabled />
                                 </div>
                             </div>
-                           
-                            <div class="col-sm-3">
 
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="discountedTotalCost">Total Cost</label>
-                                    <input type="text" class="form-control" id="discountedTotalCost" placeholder="Total Cost"
-                                        disabled>
+                                    <input type="text" class="form-control" id="discountedTotalCost" placeholder="Total Cost" disabled />
                                 </div>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="providerId">Provider ID</label>
-                                    <input type="text" class="form-control" id="providerId" autocomplete="off"
-                                        placeholder="Provider Id" disabled>
+                                    <input type="text" class="form-control" id="providerId" autocomplete="off" placeholder="Provider Id" disabled />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="clientId">Client Id</label>
-                                    <input type="text" class="form-control" id="clientId" autocomplete="off"
-                                        placeholder="clientId" disabled>
-                                </div>
-                            </div>
-                           
-                            <div class="col-sm-3">
-
-                                <div class="form-group">
-                                    <label for="community_">Community</label>
-                                    <input type="text" class="form-control" id="community_" placeholder="Community"
-                                        disabled>
+                                    <input type="text" class="form-control" id="clientId" autocomplete="off" placeholder="clientId" disabled />
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row">
-                           
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="axle">Axle</label>
-                                    <input type="text" class="form-control" id="axle" autocomplete="off"
-                                        placeholder="Axle" disabled>
+                                    <label for="community">Community</label>
+                                    <input type="text" class="form-control" id="communityName" placeholder="Community" disabled />
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
+                            </div> 
+                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="trips">Trips</label>
-                                    <input type="text" class="form-control" id="trips" placeholder="Trips" disabled>
+                                    <input type="text" class="form-control" id="trips" placeholder="Trips" disabled />
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-
-                                <div class="form-group">
-                                    <label for="currentStatus">Current Status</label>
-                                    <input type="text" class="form-control" id="currentStatus"
-                                        placeholder="Current Status" disabled>
-                                </div>
-                            </div>
+                           
+                        </div>
+                        <div class="row">
+                         
+                          
 
                             <div class="col-sm-3">
-                                  <button 
-
-                                                                           
-                                                                                type="button"
-                                                                                class="btn btn-success"
-                                                                                id="make-payment-btn"
-                                                                                 >
-                                                                              
-                                                                                Make Payment
-                                                                            </button>
-                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                <button type="button" class="btn btn-success" id="make-payment-btn">
+                                    Make Payment
+                                </button>
                             </div>
                         </div>
-
-
-                        </div>
-                       
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-                                    </div>
-                                    {{>footer}}
 
-                                </div>
+                            {{>footer }}
 
-
-                                <!-- core:js -->
-                                <script src="/vendors/core/core.js"></script>
-                                <!-- endinject -->
-                                <script src="/js/custom/loadingoverlay.min.js"></script>
-
-                                <!-- plugin js for this page -->
-                                <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-                                <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-                                <!-- end plugin js for this page -->
-                                <!-- inject:js -->
-                                <script src="/vendors/feather-icons/feather.min.js"></script>
-                                <script src="/js/template.js"></script>
-                                <!-- endinject -->
-                                <!-- custom js for this page -->
-                                <script src="/js/data-table.js"></script>
-                                <!-- end custom js for this page -->
-                                <!-- end custom js for this page -->
-                                <script src="/js/custom/make-request-controller.js"></script>
-
-                            </body>
+                        </div>
 
 
-                        </html>
+                        <!-- core:js -->
+                        <script src="/vendors/core/core.js"></script>
+                        <!-- endinject -->
+                        <script src="/js/custom/loadingoverlay.min.js"></script>
+
+                        <!-- plugin js for this page -->
+                        <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+                        <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+                        <!-- end plugin js for this page -->
+                        <!-- inject:js -->
+                        <script src="/vendors/feather-icons/feather.min.js"></script>
+                        <script src="/js/template.js"></script>
+                        <!-- endinject -->
+                        <!-- custom js for this page -->
+                        <script src="/js/data-table.js"></script>
+                        <!-- end custom js for this page -->
+                        <!-- end custom js for this page -->
+                        <script src="/js/custom/make-request-controller.js"></script>
+
+                    </body>
+
+
+                </html>

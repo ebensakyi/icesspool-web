@@ -200,11 +200,11 @@ exports.login = async (req, res) => {
         );
 
         console.log(response);
-        // await helper.sendEmail(
-        //   user.email,
-        //   "ICESSPOOL PIN CODE",
-        //   `Your pin code is ${pin.pin}`
-        // );
+        await helper.sendEmail(
+          user.email,
+          "ICESSPOOL PIN CODE",
+          `Your pin code is ${pin.pin}`
+        );
 
         return res
           .status(200)

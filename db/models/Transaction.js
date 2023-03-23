@@ -62,6 +62,9 @@ module.exports = (sequelize, Sequelize) => {
         toiletType: {
             type: Sequelize.STRING,
         },
+        serviceType:{
+            type: Sequelize.INTEGER, 
+        },
         requestSource: {
             type: Sequelize.INTEGER,
 

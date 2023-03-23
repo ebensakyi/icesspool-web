@@ -44,7 +44,6 @@ initiatePayment = async (req, res) => {
         amount
       );
 
-      console.log(initiated);
       return res
         .status(200)
         .send({ statusCode: 1, message: "Payment initiated", data: initiated });

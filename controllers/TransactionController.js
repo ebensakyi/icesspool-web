@@ -7,11 +7,16 @@ const { Closure } = require("../db/models/");
 const { AxleClassification } = require("../db/models/");
 
 const { User } = require("../db/models/");
-const { ProviderBalance } = require("../db/models/");
 const { ProviderEarning } = require("../db/models/");
 const { IcesspoolEarning } = require("../db/models/");
-const { IcesspoolCommission } = require("../db/models/");
+const { TamaleEarning } = require("../db/models/");
+const { TellerEarning } = require("../db/models/");
+
 const { IcesspoolBalance } = require("../db/models/");
+const { TamaleBalance } = require("../db/models/");
+const { TellerBalance } = require("../db/models/");
+const { ProviderBalance } = require("../db/models/");
+
 const { Discount } = require("../db/models");
 const { Vehicle } = require("../db/models");
 const Sequelize = require("sequelize");
@@ -319,10 +324,10 @@ exports.closeTransaction = async (req, res) => {
       });
 
     let currentStatus = await transaction.currentStatus;
-    if (currentStatus == 4) {
+    if (currentStatus != 3) {
       return res.status(200).send({
         statusCode: 0,
-        message: "Transaction already closed.",
+        message: "Transaction cannot be closed.",
       });
     }
 
@@ -334,17 +339,20 @@ exports.closeTransaction = async (req, res) => {
     );
 
     const date = await Helper.getDate();
-    const theCommission = await IcesspoolCommission.findOne({
-      where: { id: 1 },
-    });
-    const commission = Number(theCommission.commission);
+    // const theCommission = await IcesspoolCommission.findOne({
+    //   where: { id: 1 },
+    // });
+    // const commission = Number(theCommission.commission);
     const transactionAmount = parseInt(transaction.discountedTotalCost);
     // const icesspoolAmount = transactionAmount * commission;
-    const icesspoolAmount = transactionAmount * 0.08;
+    const icesspoolAmount = transactionAmount * 0.05;
+    const tellerAmount = transactionAmount * 0.03;
 
     const tamaleAmount = transactionAmount * 0.05;
 
     const providerAmount = transactionAmount - (icesspoolAmount + tamaleAmount);
+
+   
 
     const tx = await TransactionStatus.create({
       transactionId: transaction.id,
@@ -369,11 +377,18 @@ exports.closeTransaction = async (req, res) => {
       completionDate: date,
     });
 
-    await IcesspoolEarning.create({
+    await TamaleEarning.create({
       transactionId: req.body.transactionId,
       amount: tamaleAmount,
       completionDate: date,
     });
+
+    await TellerEarning.create({
+      transactionId: req.body.transactionId,
+      amount: tellerAmount,
+      completionDate: date,
+    });
+
 
     await ProviderBalance.increment(["balance"], {
       by: parseInt(providerAmount),
@@ -381,6 +396,15 @@ exports.closeTransaction = async (req, res) => {
     });
     await IcesspoolBalance.increment(["balance"], {
       by: parseInt(icesspoolAmount),
+      where: { id: 1 },
+    });
+    await TamaleBalance.increment(["balance"], {
+      by: parseInt(tamaleAmount),
+      where: { id: 1 },
+    });
+
+    await TellerBalance.increment(["balance"], {
+      by: parseInt(tellerAmount),
       where: { id: 1 },
     });
 

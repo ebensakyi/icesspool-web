@@ -133,7 +133,7 @@
                                     <td>{{{ formatDate this.createdAt }}}
                                     </td>
 
-                                    <td>{{ this.currentStatus }}</td>
+                                    <td>{{{statusColors this.currentStatus }}}</td>
 
                                     <td>
                                         <button {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" type="button" class="btn btn-warning" id={{ this.id }}>

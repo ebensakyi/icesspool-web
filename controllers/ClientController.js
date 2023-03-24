@@ -113,7 +113,6 @@ exports.getTransactions = async (req, res) => {
       ],
     });
 
-    console.log("TX ", transactions);
     if (!transactions)
       return res
         .status(400)

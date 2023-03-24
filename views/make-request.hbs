@@ -60,16 +60,22 @@
                 <div class="row">
                    
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="lat">Enter latitude:</label>
                             <input type="text" class="form-control" id="lat" name="lat" autocomplete="off" placeholder="Enter lat" required />
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="lng">Enter longitude:</label>
                             <input type="text" class="form-control" id="lng" name="lng" autocomplete="off" placeholder="Enter lng " required />
+                        </div>
+                    </div>
+                     <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="lng">Enter number of trips:</label>
+                            <input type="text" class="form-control" id="trips" name="trips" autocomplete="off" placeholder="Enter trips " required />
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -77,7 +83,7 @@
                             <label for="lat">Get</label>
                             <br />
 
-                            <button id="get-pricing" class="btn btn-primary mr-2">Get prices</button>
+                            <button id="get-pricing" class="form-control btn btn-secondary mr-2">Get prices</button>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -136,7 +142,7 @@
                                     <td>{{{statusColors this.currentStatus }}}</td>
 
                                     <td>
-                                        <button {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" type="button" class="btn btn-warning" id={{ this.id }}>
+                                        <button  {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" type="button"  id={{ this.id }}>
 
                                             Make Payment
                                         </button>

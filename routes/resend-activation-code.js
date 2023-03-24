@@ -25,7 +25,6 @@ module.exports.route = (app) => {
   app.get("/resend-activation-code", function (req, res, next) {
     var phoneNumber = req.query.phoneNumber;
     var convertedNumber = phoneNumber.replace('0','+233')
-    console.log("HERRR ",phoneNumber,convertedNumber)
     getActivationCode(res, convertedNumber);
   });
 

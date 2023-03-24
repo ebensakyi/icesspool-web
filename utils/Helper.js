@@ -355,12 +355,15 @@ exports.inactivatePushTxBtn = (hbs) => {
     }
   });
 };
-
+//class="btn btn-warning"
 exports.inactivatePayBtn = (hbs) => {
   hbs.registerHelper("inactivatePayBtn", function (value) {
-    if (value != 2) {
-      return "disabled";
+    if (value == 2) {
+      return  ' class="btn btn-success"' ;
     }
+ 
+      return "disabled "+  ' class="btn btn-light"' ;
+    
   });
 };
 

@@ -69,7 +69,7 @@
                                 <span class="link-title">Dashboard</span>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item nav-category">Accounts</li>
 
                         <li class="nav-item">
@@ -122,7 +122,7 @@
                                 <span class="link-title">List</span>
                             </a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a href="/make-request" class="nav-link">
                                 <i class="link-icon" data-feather="box"></i>
                                 <span class="link-title">Make request</span>
@@ -148,19 +148,109 @@
                     </li> --}}
 
                         <li class="nav-item nav-category">Finances</li>
-                        <li class="nav-item">
-                            <a href="/withdrawal-requests" class="nav-link">
-                                <i class="link-icon" data-feather="hash"></i>
-                                <span class="link-title">Withdrawal Requests</span>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="/disbursement" class="nav-link">
                                 <i class="link-icon" data-feather="shuffle"></i>
                                 <span class="link-title">Disbursements</span>
                             </a>
                         </li>
+
+
                         <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#pf" role="button" aria-expanded="false" aria-controls="pf">
+                                <i class="link-icon" data-feather="user-check"></i>
+                                <span class="link-title">Providers</span>
+                                <i class="link-arrow" data-feather="chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="pf">
+                                <ul class="nav sub-menu">
+                                    <li class="nav-item">
+                                        <a href="/withdrawal-requests" class="nav-link">
+                                            <i class="link-icon" data-feather="hash"></i>
+                                            <span class="link-title">Withdrawal Requests</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/provider-wallet" class="nav-link">
+                                            <i class="link-icon" data-feather="trending-down"></i>
+                                            <span class="link-title">Provider Balance</span>
+                                        </a>
+                                    </li>
+                                    {{!-- <li class="nav-item">
+                                    <a href="existing-providers" class="nav-link">Existing</a>
+                                </li> --}}
+                                    <li class="nav-item">
+                                        <a href="/provider-earnings" class="nav-link">
+                                            <i class="link-icon" data-feather="dollar-sign"></i>
+                                            <span class="link-title">Provider Earnings</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#tf" role="button" aria-expanded="false" aria-controls="tf">
+                                <i class="link-icon" data-feather="user-check"></i>
+                                <span class="link-title">Tamale</span>
+                                <i class="link-arrow" data-feather="chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="tf">
+                                <ul class="nav sub-menu">
+                                    <li class="nav-item">
+                                        <a href="/tamale-wallet" class="nav-link">
+                                            <i class="link-icon" data-feather="trending-down"></i>
+                                            <span class="link-title">
+                                                Balance</span>
+                                        </a>
+                                    </li>
+                                    {{!-- <li class="nav-item">
+                                    <a href="existing-providers" class="nav-link">Existing</a>
+                                </li> --}}
+                                    <li class="nav-item">
+                                        <a href="/tamale-earnings" class="nav-link">
+                                            <i class="link-icon" data-feather="dollar-sign"></i>
+                                            <span class="link-title">
+                                                Earnings</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#if" role="button" aria-expanded="false" aria-controls="if">
+                                <i class="link-icon" data-feather="user-check"></i>
+                                <span class="link-title">iCesspool</span>
+                                <i class="link-arrow" data-feather="chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="if">
+                                <ul class="nav sub-menu">
+                                    <li class="nav-item">
+                                        <a href="/icesspool-wallet" class="nav-link">
+                                            <i class="link-icon" data-feather="trending-down"></i>
+                                            <span class="link-title">
+                                                Balance</span>
+                                        </a>
+                                    </li>
+                                    {{!-- <li class="nav-item">
+                                    <a href="existing-providers" class="nav-link">Existing</a>
+                                </li> --}}
+                                    <li class="nav-item">
+                                        <a href="/icesspool-earnings" class="nav-link">
+                                            <i class="link-icon" data-feather="dollar-sign"></i>
+                                            <span class="link-title">
+                                                Earnings</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        {{!-- <li class="nav-item">
                             <a href="/provider-wallet" class="nav-link">
                                 <i class="link-icon" data-feather="trending-down"></i>
                                 <span class="link-title">Provider Balance</span>
@@ -171,8 +261,8 @@
                                 <i class="link-icon" data-feather="dollar-sign"></i>
                                 <span class="link-title">Provider Earnings</span>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{!-- <li class="nav-item">
                             <a href="/icesspool-wallet" class="nav-link">
                                 <i class="link-icon" data-feather="trending-down"></i>
                                 <span class="link-title">iCesspool Balance</span>
@@ -198,7 +288,7 @@
                                 <i class="link-icon" data-feather="dollar-sign"></i>
                                 <span class="link-title">Tamale Earnings</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item nav-category">
                             Messaging<span class="badge badge-success">New</span>
@@ -218,7 +308,7 @@
                         </li>
 
                         <li class="nav-item nav-category">System settings</li>
-                        <li class="nav-item">
+                        {{!-- <li class="nav-item">
                             <a href="/discount" class="nav-link">
                                 <i class="link-icon" data-feather="percent"></i>
                                 <span class="link-title">Discount</span>
@@ -229,7 +319,7 @@
                                 <i class="link-icon" data-feather="percent"></i>
                                 <span class="link-title">Commission</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="/tipoffpoints" class="nav-link">
                                 <i class="link-icon" data-feather="map-pin"></i>

@@ -30,8 +30,8 @@
                                     <td>{{this.email}}</td>
                                     <td>{{this.phoneNumber}}</td>
                                     <td>{{this.Provider.ProviderRating.rating}}</td>
-                                    <td>{{this.createdAt}}</td>
-                                    <td>{{{isActive this.activated}}}</td>
+    <td>{{{ formatDate this.createdAt }}}
+                                    </td>                                    <td>{{{isActive this.activated}}}</td>
                                     <td><button data-toggle="modal" data-target="#details" type="button"
                                             class="btn btn-primary btn-icon" data-idd="{{this.id}}"
                                             data-toggle="tooltip" data-placement="top" title="Edit account">

@@ -28,8 +28,8 @@
                                         <td>{{ this.User.phoneNumber }}</td>
                                         <td>{{ this.code }}</td>
 
-                                        <td>{{ this.createdAt }}</td>
-
+    <td>{{{ formatDate this.createdAt }}}
+                                    </td>
                                     </tr>
                                 {{/each}}
                             </tbody>

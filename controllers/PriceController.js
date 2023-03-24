@@ -218,7 +218,7 @@ exports.calculatePricing = async (req, res) => {
 
     // console.log(singleTotalAnnualCost / singleAnnualSludgeVolume, mediumTotalAnnualCost, doubleTotalAnnualCost)
 
-    console.log(costs);
+   // console.log(costs);
 
     ///Calculate distance from user to tipoff points
 

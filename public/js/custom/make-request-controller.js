@@ -24,7 +24,7 @@ $("#get-pricing").click(function (e) {
       response.data.forEach((option) => {
         const optionElement = document.createElement("option");
         optionElement.value = option.id + "$" + option.cost;
-        optionElement.text = option.name + " - GHS " + option.cost;
+        optionElement.text = option.name + " - GHS " + option.cost ;
         select.appendChild(optionElement);
       });
     },
@@ -89,7 +89,6 @@ $("#make-payment").on("show.bs.modal", function (e) {
   const discountedTotalCost = $(e.relatedTarget).data("discountedtotalcost");
   const customerPhoneNumber = $(e.relatedTarget).data("customerphonenumber");
 
-console.log("trips",trips);
   $("#providerId").val(providerId);
   $("#clientId").val(clientId);
   $("#communityName").val(community);

@@ -33,7 +33,8 @@
                                     <td>{{this.email}}</td>
                                     <td>{{this.phoneNumber}}</td>
                                     <td>{{this.Location.Region.regionName}}</td>
-                                    <td>{{this.createdAt}}</td>
+                                      <td>{{{ formatDate this.createdAt }}}
+                                    </td>
                                     {{!-- <td>{{this.Location.District.districtName}}</td> 
                                 
                                     <td>{{this.Location.community}}</td> --}}

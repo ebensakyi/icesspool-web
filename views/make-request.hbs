@@ -108,7 +108,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Make Request</h6>
-                <table id="dataTableExample" class="table">
+                <table id="dataTableExample" class="table" style="overflow: scroll;">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -116,8 +116,9 @@
 
                             <th>Phone</th>
                             <th>Community</th>
-
+  <th>Trips</th>
                             <th>Amount</th>
+                            
                             <th>Date</th>
 
                             <th>Current Status</th>
@@ -134,6 +135,7 @@
                                     <td>{{ this.customerPhoneNumber }}</td>
 
                                     <td>{{ this.community }}</td>
+                                       <td>{{ this.trips }}</td>
                                     <td>GHS
                                         {{ this.discountedTotalCost }}</td>
                                     <td>{{{ formatDate this.createdAt }}}
@@ -142,7 +144,7 @@
                                     <td>{{{statusColors this.currentStatus }}}</td>
 
                                     <td>
-                                        <button  {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" type="button"  id={{ this.id }}>
+                                        <button  {{{ inactivatePayBtn this.currentStatus }}} data-toggle="modal" data-target="#make-payment" type="button" data-customerName="{{ this.customerName }}" data-discountedTotalCost="{{ this.discountedTotalCost }}" data-customerphonenumber="{{ this.customerPhoneNumber }}" data-id="{{ this.id }}" data-provider="{{ this.providerId }}" data-client="{{ this.clientId }}" data-community="{{ this.community }}" data-trips="{{ this.trips }}" type="button"  id={{ this.id }}>
 
                                             Make Payment
                                         </button>
@@ -214,8 +216,8 @@
                             </div> 
                              <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="trips">Trips</label>
-                                    <input type="text" class="form-control" id="trips" placeholder="Trips" disabled />
+                                    <label for="tripsNumber">Trips</label>
+                                    <input type="text" class="form-control" id="tripsNumber" placeholder="Trips" disabled />
                                 </div>
                             </div>
                            

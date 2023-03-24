@@ -17,6 +17,7 @@ $("#get-pricing").click(function (e) {
     data: { userX, userY },
     success: function (response) {
       // $.LoadingOverlay("hide");
+      $("#pricing").empty();
 
       const select = document.getElementById("pricing");
 
@@ -88,17 +89,12 @@ $("#make-payment").on("show.bs.modal", function (e) {
   const discountedTotalCost = $(e.relatedTarget).data("discountedtotalcost");
   const customerPhoneNumber = $(e.relatedTarget).data("customerphonenumber");
 
-  console.log("discountedtotalCost ", discountedTotalCost);
-  console.log("customerName ", customerName);
-  console.log("customerName ", customerName);
-  console.log("customerName ", customerName);
-  console.log("customerName ", customerName);
-
+console.log("trips",trips);
   $("#providerId").val(providerId);
   $("#clientId").val(clientId);
   $("#communityName").val(community);
   $("#axle").val(axle);
-  $("#trips").val(trips);
+  $("#tripsNumber").val(trips);
   $("#currentStatus").val(status);
   $("#id").val(id);
   $("#customerName").val(customerName);

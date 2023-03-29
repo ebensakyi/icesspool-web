@@ -83,7 +83,7 @@ $("#submit").click(function (e) {
   const id = $("#idd").val();
 
 
-  
+
   const data = {
     id: $("#idd").val(),
     surname: $("#surname").val(),
@@ -122,6 +122,8 @@ $("#submit").click(function (e) {
     method: "POST",
     data: data,
     success: function (data) {
+
+     location.reload();
      // $.LoadingOverlay("hide");
       // if (data.statusCode == 1) {
       //   $("#details").modal("toggle");

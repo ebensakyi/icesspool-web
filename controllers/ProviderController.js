@@ -144,6 +144,11 @@ exports.addServiceProvider = async (req, res) => {
     //   .catch((error) =>
     //     res.status(400).send({ statusCode: 0, message: error })
     //   );
+
+         res
+          .status(200)
+          .send({ statusCode: 1, message: "User created", data: user })
+      
   } catch (error) {
     await res.status(400).send({ statusCode: 0, message: error });
     console.log("Error>>> ", error);
@@ -370,7 +375,7 @@ exports.getProviderClientApp = async (req, res) => {
         userId: Number(req.params.id),
       },
     });
-    
+
     const user = await User.findOne({
       where: {
         userTypeId: 2,

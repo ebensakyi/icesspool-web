@@ -303,7 +303,7 @@
                                     <th>Rating</th>
                                     <th>Registration Date</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    {{!-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -317,7 +317,7 @@
                                     <td>{{this.Provider.ProviderRating.rating}}</td>
                                      <td>{{{ formatDate this.createdAt }}}
                                     </td>                                    <td>{{{isActive this.activated}}}</td>
-                                    <td><button data-toggle="modal" data-target="#details" type="button"
+                                    {{!-- <td><button data-toggle="modal" data-target="#details" type="button"
                                             class="btn btn-primary btn-icon" data-idd="{{this.id}}"
                                             data-toggle="tooltip" data-placement="top" title="Edit account">
                                             <i data-feather="edit"></i>
@@ -333,7 +333,7 @@
                                             title="Suspend account">
                                             <i data-feather="log-out"></i>
                                         </a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 {{/each}}
                             </tbody>

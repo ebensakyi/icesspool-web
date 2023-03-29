@@ -4,6 +4,8 @@ const Validator = require("../controllers/Validator");
 module.exports = (app) => {
   app.get("/existing-providers", ProviderController.existingProviderPage);
   app.get("/providers", ProviderController.newProviderPage);
+  app.get("/add-service-provider", ProviderController.addServiceProviderPage);
+  app.post("/api/v1/add-service-provider", ProviderController.addServiceProvider);
 
   app.get("/momo-accounts", ProviderController.momoPage);
 

@@ -14,13 +14,149 @@ const Helper = require("../utils/Helper");
 
 ///////////////////////WEB/////////////////////
 
+exports.addServiceProviderPage = async (req, res) => {
+  await Helper.isLogin(req, res);
+  const users = await User.findAll({
+    order: [["createdAt", "DESC"]],
+    where: {
+      userTypeId: 2,
+    },
+    include: [
+      {
+        model: Vehicle,
+        include: [{ model: AxleClassification }],
+      },
+      {
+        model: Location,
+        include: [{ model: District, include: [{ model: Region }] }],
+      },
+      { model: Provider, include: [{ model: ProviderRating }] },
+    ],
+  });
+  const momo = await MomoNetwork.findAll({ where: { deleted: 0 } });
+  const licenseClasses = await LicenseClasses.findAll({
+    where: { deleted: 0 },
+  });
+  const districts = await District.findAll({ where: { deleted: 0 } });
+
+  const regions = await Region.findAll({ where: { deleted: 0 } });
+  res.render("add-service-provider", {
+    user: req.session.user,
+    data: users,
+    districts: districts,
+    regions: regions,
+    momo: momo,
+    licenseClasses: licenseClasses,
+  });
+};
+
+exports.addServiceProvider = async (req, res) => {
+  try {
+    console.log(req.body);
+    // if (!req.params.id) {
+    //   const error = "Please provide user id";
+    //   return res.status(400).send({ statusCode: 0, message: error });
+    // }
+    let password = await generateRandom(8);
+    const user = await User.create({
+      surname: req.body.surname,
+      otherNames: req.body.otherNames,
+      phoneNumber: req.body.phoneNumber,
+      password: password,
+      userTypeId: 2,
+    });
+
+    // const user = await User.findOne({
+    //   where: { id: req.params.id },
+    //   include: [{ model: Provider }],
+    // });
+
+    // let providerId = user.Provider.id;
+    // const provider = await Provider.findOne({
+    //   where: { id: providerId },
+    //   include: [
+    //     { model: User, include: [{ model: Location, model: Vehicle }] },
+    //   ],
+    // });
+
+    // if (!provider)
+    //   return res.status(400).json({ statusCode: 0, message: "User not found" });
+
+    // await Provider.create(
+    //   {
+    //     ghanaPostGPS: req.body.ghanaPostGps || provider.ghanaPostGPS,
+    //     company: req.body.companyName || provider.company,
+    //     officeLocation: req.body.officeLocation || provider.officeLocation,
+    //     driversLicense: req.body.driversLicense || provider.driversLicense,
+    //     licenseNumber: req.body.licenseNumber || provider.licenseNumber,
+    //     licenseClassification:
+    //       req.body.licenseClassification || provider.licenseClassification,
+    //   },
+    //   { where: { id: providerId } }
+    // );
+
+    // const vehicle = await Vehicle.findOne({
+    //   where: { userId: req.params.id },
+    //   include: [{ model: AxleClassification }],
+    // });
+
+    // await Vehicle.update(
+    //   {
+    //     axleClassificationId: req.body.axleClassification || vehicle.axleClass,
+    //     vehicleNumber: req.body.vehicleNumber || vehicle.vehicleNumber,
+    //     owner: req.body.vehicleOwnerName || vehicle.owner,
+    //     ownerNumber: req.body.vehicleOwnerPhoneNumber || vehicle.ownerNumber,
+    //     tankCapacity: req.body.tankCapacity || vehicle.tankCapacity,
+    //     insuranceExpiry: req.body.insuranceExpiry || vehicle.insuranceExpiry,
+    //     insuranceNumber: req.body.insuranceNumber || vehicle.insuranceNumber,
+    //     //roadWorthy: req.body.roadWorthy || vehicle.roadWorthy,
+    //     //roadWorthyExpiry: req.body.roadWorthyExpiry || vehicle.roadWorthyExpiry,
+    //   },
+    //   { where: { userId: vehicle.userId } }
+    // );
+
+    // const location = await Location.findOne({
+    //   where: { userId: req.params.id },
+    // });
+    // await Location.update(
+    //   {
+    //     districtId: req.body.district || location.districtId,
+    //     community: req.body.community || location.community,
+    //   },
+    //   { where: { userId: user.id } }
+    // );
+
+    // await MomoAccount.update(
+    //   {
+    //     momoNumber: req.body.momoNumber,
+    //     momoNetwork: req.body.momoNetwork,
+    //   },
+    //   { where: { providerId: providerId } }
+    // );
+
+    // await Provider.findOne({
+    //   where: { id: providerId },
+    //   include: [{ model: User, include: [{ model: Location }] }],
+    // })
+    //   .then((user) =>
+    //     res
+    //       .status(200)
+    //       .send({ statusCode: 1, message: "User updated", data: user })
+    //   )
+    //   .catch((error) =>
+    //     res.status(400).send({ statusCode: 0, message: error })
+    //   );
+  } catch (error) {
+    await res.status(400).send({ statusCode: 0, message: error });
+    console.log("Error>>> ", error);
+  }
+};
+
 exports.newProviderPage = async (req, res) => {
   try {
     await Helper.isLogin(req, res);
     const users = await User.findAll({
-      order: [
-        ['createdAt', 'DESC'],
-      ],    
+      order: [["createdAt", "DESC"]],
       where: {
         userTypeId: 2,
       },
@@ -454,6 +590,16 @@ exports.changeProviderStatus = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+generateRandom = async (length) => {
+  var result = "";
+  var characters = "0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 };
 
 //+233209125718

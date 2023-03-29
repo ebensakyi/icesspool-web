@@ -174,7 +174,6 @@ exports.login = async (req, res) => {
       where: { email: req.body.email, userTypeId: 1, deleted: 0 },
     });
 
-    console.log(user);
 
     if (user != null) {
       const valid = await user.validPassword(req.body.password);

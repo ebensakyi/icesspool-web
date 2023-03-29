@@ -37,6 +37,8 @@ exports.createProvider = async (req, res) => {
       surname: req.body.surname,
       otherNames: req.body.otherNames,
       phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+
       fcm: req.body.fcm,
       password: req.body.password,
       userTypeId: 2,

@@ -62,6 +62,8 @@ exports.addServiceProvider = async (req, res) => {
       surname: req.body.surname,
       otherNames: req.body.otherNames,
       phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+
       password: password,
       userTypeId: 2,
     });
@@ -81,40 +83,39 @@ exports.addServiceProvider = async (req, res) => {
 
     // if (!provider)
     //   return res.status(400).json({ statusCode: 0, message: "User not found" });
+ await Vehicle.create(
+      {
+        axleClassificationId: req.body.axleClassification,
+        vehicleNumber: req.body.vehicleNumber,
+        owner: req.body.vehicleOwnerName,
+        ownerNumber: req.body.vehicleOwnerPhoneNumber ,
+        tankCapacity: req.body.tankCapacity,
+        insuranceExpiry: req.body.insuranceExpiry,
+        insuranceNumber: req.body.insuranceNumber ,
+        userId:user.id
+      
+      },
+     
+    );
+    const providerId = await Helper.generateProviderCode(req.body.region);
 
-    // await Provider.create(
-    //   {
-    //     ghanaPostGPS: req.body.ghanaPostGps || provider.ghanaPostGPS,
-    //     company: req.body.companyName || provider.company,
-    //     officeLocation: req.body.officeLocation || provider.officeLocation,
-    //     driversLicense: req.body.driversLicense || provider.driversLicense,
-    //     licenseNumber: req.body.licenseNumber || provider.licenseNumber,
-    //     licenseClassification:
-    //       req.body.licenseClassification || provider.licenseClassification,
-    //   },
-    //   { where: { id: providerId } }
-    // );
+    await Provider.create({
+      id: providerId,
+      ghanaPostGPS: req.body.ghanaPostGps,
+      company: req.body.companyName,
+      officeLocation: req.body.officeLocation,
+      driversLicense: req.body.driverLicense,
+      licenseNumber: req.body.licenseNumber,
+      licenseClassification: req.body.licenseClassification,
+      userId: user.id,
+    });
 
     // const vehicle = await Vehicle.findOne({
     //   where: { userId: req.params.id },
     //   include: [{ model: AxleClassification }],
     // });
 
-    // await Vehicle.update(
-    //   {
-    //     axleClassificationId: req.body.axleClassification || vehicle.axleClass,
-    //     vehicleNumber: req.body.vehicleNumber || vehicle.vehicleNumber,
-    //     owner: req.body.vehicleOwnerName || vehicle.owner,
-    //     ownerNumber: req.body.vehicleOwnerPhoneNumber || vehicle.ownerNumber,
-    //     tankCapacity: req.body.tankCapacity || vehicle.tankCapacity,
-    //     insuranceExpiry: req.body.insuranceExpiry || vehicle.insuranceExpiry,
-    //     insuranceNumber: req.body.insuranceNumber || vehicle.insuranceNumber,
-    //     //roadWorthy: req.body.roadWorthy || vehicle.roadWorthy,
-    //     //roadWorthyExpiry: req.body.roadWorthyExpiry || vehicle.roadWorthyExpiry,
-    //   },
-    //   { where: { userId: vehicle.userId } }
-    // );
-
+   
     // const location = await Location.findOne({
     //   where: { userId: req.params.id },
     // });

@@ -244,9 +244,7 @@ exports.offerCancelledByCustomer = async (req, res) => {
 
 exports.offerCancelledByProvider = async (req, res) => {
   try {
-    console.log(
-      "offerCancelledByProviderofferCancelledByProviderofferCancelledByProvider"
-    );
+   
     let currentStatus = req.body.txStatusCode;
 
     await Transaction.update(

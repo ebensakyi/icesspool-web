@@ -108,7 +108,6 @@ exports.makeRequest = async (req, res) => {
       include: [{ model: User }],
     });
 
-    console.log("VEHU ",v);
 
     let fcms = await getFcmsArr(v);
     await Helper.sendFCMNotification(

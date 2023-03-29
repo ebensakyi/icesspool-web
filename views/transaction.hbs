@@ -63,10 +63,8 @@
                                             }}</a>
                                         <br>
                                         <br> --}}
-                                        {{ this.Client.User.surname }}
-                                        {{ this.Client.User.otherNames }}<br>
-                                        {{ this.Client.User.phoneNumber }}<br>
-                                        {{ this.Client.User.email }}<br>
+                                        {{ this.customerName }}
+                                       
 
                                     </td>
                                     <td>GHS
@@ -386,27 +384,51 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
+                                    <label for="id">Transaction ID</label>
+                                    <input type="text" class="form-control" id="id" autocomplete="off"
+                                        placeholder="Transaction Id" disabled>
+                                </div>
+                            </div>
+                             <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="trips">Trips</label>
+                                    <input type="text" class="form-control" id="trips" autocomplete="off"
+                                        placeholder="Trips" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
                                     <label for="providerId">Provider ID</label>
                                     <input type="text" class="form-control" id="providerId" autocomplete="off"
                                         placeholder="Provider Id" disabled>
                                 </div>
                             </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="clientId">Client Id</label>
+                                    <input type="text" class="form-control" id="clientId" autocomplete="off"
+                                        placeholder="clientId" disabled>
+                                </div>
+                            </div>
+                          
+                            <div class="col-sm-3">
+
+                                <div class="form-group">
+                                    <label for="community">Community</label>
+                                    <input type="text" class="form-control" id="community" placeholder="Community"
+                                        disabled>
+                                </div>
+                            </div> 
+                             <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="axle">Truck Type</label>
+                                    <input type="text" class="form-control" id="axle" placeholder="Truck Type"
+                                        disabled>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="tx-statuses" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h6 class="card-title">STATUSES</h6>
-                                            <div class="table-responsive">
-                                                <table id="statusTable" class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th hidden>Id</th>
-                                                            <th>Status</th>
-
-                        </div>
+                       
                         <div class="alert alert-fill-danger" role="alert">
                             Once offer is closed, it cannot be reversed. Click outside the form to close it.
                         </div>
@@ -429,6 +451,7 @@
 
                     <form method="POST">
                         <div class="row">
+                             
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="providerId">Provider ID</label>
@@ -490,10 +513,8 @@
                                 </div>
                             </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                      
+                           
                         </div>
 
 

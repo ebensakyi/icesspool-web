@@ -68,6 +68,11 @@ exports.addServiceProvider = async (req, res) => {
       userTypeId: 2,
     });
 
+    let response = await Helper.sendSMS(
+      req.body.phoneNumber,
+      `Your service provider password is ${password}`
+    );
+
     // const user = await User.findOne({
     //   where: { id: req.params.id },
     //   include: [{ model: Provider }],
@@ -83,20 +88,16 @@ exports.addServiceProvider = async (req, res) => {
 
     // if (!provider)
     //   return res.status(400).json({ statusCode: 0, message: "User not found" });
- await Vehicle.create(
-      {
-        axleClassificationId: req.body.axleClassification,
-        vehicleNumber: req.body.vehicleNumber,
-        owner: req.body.vehicleOwnerName,
-        ownerNumber: req.body.vehicleOwnerPhoneNumber ,
-        tankCapacity: req.body.tankCapacity,
-        insuranceExpiry: req.body.insuranceExpiry,
-        insuranceNumber: req.body.insuranceNumber ,
-        userId:user.id
-      
-      },
-     
-    );
+    await Vehicle.create({
+      axleClassificationId: req.body.axleClassification,
+      vehicleNumber: req.body.vehicleNumber,
+      owner: req.body.vehicleOwnerName,
+      ownerNumber: req.body.vehicleOwnerPhoneNumber,
+      tankCapacity: req.body.tankCapacity,
+      insuranceExpiry: req.body.insuranceExpiry,
+      insuranceNumber: req.body.insuranceNumber,
+      userId: user.id,
+    });
     const providerId = await Helper.generateProviderCode(req.body.region);
 
     await Provider.create({
@@ -115,25 +116,21 @@ exports.addServiceProvider = async (req, res) => {
     //   include: [{ model: AxleClassification }],
     // });
 
-   
     // const location = await Location.findOne({
     //   where: { userId: req.params.id },
     // });
-    // await Location.update(
-    //   {
-    //     districtId: req.body.district || location.districtId,
-    //     community: req.body.community || location.community,
-    //   },
-    //   { where: { userId: user.id } }
-    // );
+    await Location.create({
+      regionId: req.body.region,
+      districtId: req.body.district,
+      community: req.body.community,
+      userId: user.id,
+    });
 
-    // await MomoAccount.update(
-    //   {
-    //     momoNumber: req.body.momoNumber,
-    //     momoNetwork: req.body.momoNetwork,
-    //   },
-    //   { where: { providerId: providerId } }
-    // );
+    await MomoAccount.create({
+      momoNumber: req.body.momoNumber,
+      momoNetwork: req.body.momoNetwork,
+      providerId: providerId,
+    });
 
     // await Provider.findOne({
     //   where: { id: providerId },
@@ -499,6 +496,7 @@ exports.updateProvider = async (req, res) => {
     });
     await Location.update(
       {
+        regionId: req.body.region || location.regionId,
         districtId: req.body.district || location.districtId,
         community: req.body.community || location.community,
       },

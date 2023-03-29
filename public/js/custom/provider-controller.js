@@ -8,6 +8,8 @@ $("#details").on("show.bs.modal", function (e) {
     method: "GET",
     success: function (response) {
       $.LoadingOverlay("hide");
+
+      console.log(response);
       $("#providerId").val(response.data.Provider.id);
 
       $("#surname").val(response.data.surname);
@@ -112,6 +114,7 @@ $("#submit").click(function (e) {
     vehicleOwnerPhoneNumber: $("#vehicleOwnerPhoneNumber").val(),
   };
 
+  console.log(data);
 
   $.ajax({
     url: `/api/v1/provider/${id}`,

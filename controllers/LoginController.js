@@ -199,7 +199,6 @@ exports.login = async (req, res) => {
           `Your pin code is ${pin.pin}`
         );
 
-        console.log(response);
         await helper.sendEmail(
           user.email,
           "ICESSPOOL PIN CODE",

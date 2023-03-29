@@ -108,6 +108,8 @@ exports.makeRequest = async (req, res) => {
       include: [{ model: User }],
     });
 
+    console.log("VEHU ",v);
+
     let fcms = await getFcmsArr(v);
     await Helper.sendFCMNotification(
       fcms,
@@ -214,4 +216,14 @@ exports.deleteScannerUser = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+
+getFcmsArr = async (arr) => {
+  let fcmArr = [];
+  await arr?.map((fcm) => {
+    fcm = fcm.User?.fcm;
+    fcmArr.push(fcm);
+  });
+  return fcmArr;
 };

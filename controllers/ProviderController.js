@@ -363,12 +363,14 @@ exports.getProviderClientApp = async (req, res) => {
       const error = "Please provide user id";
       return res.status(400).send({ statusCode: 0, message: error });
     }
+    console.log(req.params);
 
     const provider = await Provider.findOne({
       where: {
-        userId: req.params.id,
+        userId: Number(req.params.id),
       },
     });
+    
     const user = await User.findOne({
       where: {
         userTypeId: 2,

@@ -285,6 +285,8 @@ exports.offerCancelledByProvider = async (req, res) => {
         include: [{ model: User }],
       });
 
+      console.log("VEHICLE: ",v);
+
       let fcms = await getFcmsArr(v);
       await Helper.sendFCMNotification(
         fcms,

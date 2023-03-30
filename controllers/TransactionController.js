@@ -244,7 +244,6 @@ exports.offerCancelledByCustomer = async (req, res) => {
 
 exports.offerCancelledByProvider = async (req, res) => {
   try {
-   
     let currentStatus = req.body.txStatusCode;
 
     await Transaction.update(
@@ -283,7 +282,7 @@ exports.offerCancelledByProvider = async (req, res) => {
         include: [{ model: User }],
       });
 
-      console.log("VEHICLE: ",v);
+      console.log("VEHICLE: ", v);
 
       let fcms = await getFcmsArr(v);
       await Helper.sendFCMNotification(
@@ -350,9 +349,8 @@ exports.closeTransaction = async (req, res) => {
 
     const tamaleAmount = transactionAmount * 0.05;
 
-    const providerAmount = transactionAmount - (icesspoolAmount + tamaleAmount+ tellerAmount);
-
-   
+    const providerAmount =
+      transactionAmount - (icesspoolAmount + tamaleAmount + tellerAmount);
 
     const tx = await TransactionStatus.create({
       transactionId: transaction.id,
@@ -389,6 +387,14 @@ exports.closeTransaction = async (req, res) => {
       completionDate: date,
     });
 
+    let pb = await ProviderBalance.count({
+      where: {
+        providerId: req.body.providerId,
+      },
+    });
+    if (pb == 0) {
+      await ProviderBalance.create({ providerId: providerId });
+    }
 
     await ProviderBalance.increment(["balance"], {
       by: parseInt(providerAmount),

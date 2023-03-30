@@ -111,6 +111,8 @@ exports.addServiceProvider = async (req, res) => {
       userId: user.id,
     });
 
+    await ProviderBalance.create({ providerId: providerId })
+
     // const vehicle = await Vehicle.findOne({
     //   where: { userId: req.params.id },
     //   include: [{ model: AxleClassification }],

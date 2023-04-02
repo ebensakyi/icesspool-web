@@ -2,6 +2,8 @@ const { validationResult } = require("express-validator");
 
 const { User, LicenseClasses } = require("../db/models");
 const { Provider } = require("../db/models");
+const {ProviderBalance} = require("../db/models")
+
 const { MomoAccount } = require("../db/models");
 const { Location } = require("../db/models");
 const { Region } = require("../db/models");

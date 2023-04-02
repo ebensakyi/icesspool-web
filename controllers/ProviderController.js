@@ -112,6 +112,7 @@ exports.addServiceProvider = async (req, res) => {
     });
 
     await ProviderBalance.create({ providerId: providerId })
+    await ProviderRating.create({ providerId: providerId });
 
     // const vehicle = await Vehicle.findOne({
     //   where: { userId: req.params.id },

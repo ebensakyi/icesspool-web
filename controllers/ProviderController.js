@@ -54,7 +54,6 @@ exports.addServiceProviderPage = async (req, res) => {
 
 exports.addServiceProvider = async (req, res) => {
   try {
-    console.log(req.body);
     // if (!req.params.id) {
     //   const error = "Please provide user id";
     //   return res.status(400).send({ statusCode: 0, message: error });

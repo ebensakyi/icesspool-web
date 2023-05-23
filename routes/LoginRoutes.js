@@ -8,6 +8,8 @@ module.exports = (app) => {
 
   //web
   app.get("/", LoginController.loginPage);
+  app.get("/auth/login", LoginController.loginPage);
+
   app.post("/login", LoginController.login);
   app.post("/profile", LoginController.changeWebPassword);
   app.get("/profile", LoginController.getProfilePage);

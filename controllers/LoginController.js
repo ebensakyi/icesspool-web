@@ -49,6 +49,7 @@ exports.mobileLogin = async (req, res) => {
 };
 
 exports.loginPage = async (req, res) => {
+  console.log("login pages");
   res.render("login");
 };
 
@@ -227,7 +228,6 @@ exports._2faValidate = async (req, res) => {
     where: { pin: req.body.pin, email: req.session.user.email },
   });
   // await _2fa.destroy({ where: { email: req.session.user.email } });
-  console.log("PINS ", pins);
   if (pins == 1) {
    // await _2fa.destroy({ where: { email: req.session.user.email } });
     return res.status(200).send({ statusCode: 1, message: "User found" });

@@ -69,7 +69,7 @@ exports.addServiceProvider = async (req, res) => {
       userTypeId: 2,
     });
 
-    console.log("password",password);
+    console.log("password============>",password);
     let response = await Helper.sendSMS(
       req.body.phoneNumber,
       `Your service provider password is ${password}`

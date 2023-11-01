@@ -1,0 +1,191 @@
+sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org && sudo npm i --f && sudo npx prisma generate && sudo npm run build && sudo chmod -R 777 /var/www/html/dashboard.esicapps.org && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+
+CREATE TABLE "SanitationReport" (
+    "id" SERIAL PRIMARY KEY,
+    "community" VARCHAR(255),
+    "image" VARCHAR(255),
+    "districtId" INTEGER,
+    "reportTypeId" INTEGER,
+    "description" VARCHAR(1000),
+    "latitude" DECIMAL(11,8) NOT NULL,
+    "longitude" DECIMAL(11,8) NOT NULL,
+    "status" INTEGER NOT NULL DEFAULT 0,
+   "sanitationReportUserId" INTEGER,
+    "deleted" INTEGER DEFAULT 0,  
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "SanitationReport_pkey" PRIMARY KEY ("id")
+);
+
+
+
+CREATE TABLE "SanitationReportUser" (
+  "id"         SERIAL PRIMARY KEY,
+  "fcmId"      VARCHAR(255),
+  "fullName"    VARCHAR(255),
+  "phoneNumber" VARCHAR(255),
+  "email"      VARCHAR(255),
+   "deleted" INTEGER DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+ 
+     CONSTRAINT "SanitationReportUser_pkey" PRIMARY KEY ("id")
+
+);
+
+
+1. login
+2. Add user logs to all tables
+
+
+cd ~/
+git clone https://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@github.com/ebensakyi/esicapps-web.git
+cd ~/esicapps-web
+sudo cp * /var/www/html/dashboard.esicapps.org
+sudo npm i
+npx prisma generate
+sudo npm run build
+pm2 delete dashboard.esicapps.org
+pm2 start npm --name dashboard.esicapps.org -- run start
+
+
+
+
+1. Check for null
+
+
+Kofi@2318.com
+
+
+
+
+sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+
+
+
+work on all publishing with  residential as template
+
+pm2 stop esicapps.org && pm2 delete esicapps.org
+ln -s /etc/nginx/sites-available/example.conf /etc/nginx/sites-enabled/
+
+
+
+sudo rm -f -r  /var/www/html/esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps.org && git clone https://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@github.com/ebensakyi/esicapps.org.git && cd ~/esicapps.org  && sudo cp -r * /var/www/html/esicapps.org 
+
+
+1. login
+2. Add user logs to all tables
+
+
+cd ~/
+git clone https://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@github.com/ebensakyi/esicapps-web.git
+cd ~/esicapps-web
+sudo cp * /var/www/html/dashboard.esicapps.org
+sudo npm i
+npx prisma generate
+sudo npm run build
+pm2 delete dashboard.esicapps.org
+pm2 start npm --name dashboard.esicapps.org -- run start
+
+
+
+
+1. Check for null
+
+
+
+
+
+
+sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+
+
+
+work on all publishing with  residential as template
+
+
+
+
+1. Work on dashboard
+2. save  reinspection
+
+
+ 
+update "District"
+   set name = TRIM(name);
+   
+   update "Community"
+   set name = upper(name);
+
+
+
+   1. woork on reset password
+   2. enable sms foor accoount creation
+   3. paginate, search and filter users
+   4. paginate, search and filter user loogs
+   5. edit dataview
+
+
+
+   ////////////////////////////////////////////////////////////////
+   1. Check added users district and regions based on login user level
+   2. work on user export
+   3. work on data filter
+   4. check paths  and block users if page is not accessible
+
+//// ***
+1. add searchval to export to xls
+
+
+
+1.structure old data
+2. work on filters
+3. terst mobile app. create user from backend and use to login, download primary data and conduct inspection
+
+
+
+ 
+update "District"
+   set name = TRIM(name);
+   
+   update "Community"
+   set name = upper(name);
+
+
+
+   1. woork on reset password
+   2. enable sms foor accoount creation
+   3. paginate, search and filter users
+   4. paginate, search and filter user loogs
+   5. edit dataview
+
+
+
+   ////////////////////////////////////////////////////////////////
+   1. Check added users district and regions based on login user level
+   2. work on user export
+   3. work on data filter
+   4. check paths  and block users if page is not accessible
+
+//// ***
+////////////////////////
+
+
+
+
+
+
+
+1. show details on a modal in maps - in esicapps - done
+2. login district user and regional users and check pages
+3. export data by filter - done for reporter
+4. add new pages to accessible pages 
+5. add user restrictions even when url is typed
+6. optimize data selection in findMany. don't select all fields not needed
+
+WORK ON REPORTS FOR VARIOUS USERS
+
+
+33aa179,33ac760,33adfd1
+0593940099

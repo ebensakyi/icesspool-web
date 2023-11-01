@@ -152,7 +152,7 @@ export default function Header() {
                                         ? "nav-link"
                                         : "nav-link collapsed"
                                 }
-                                data-bs-target="#esicapps1-nav"
+                                data-bs-target="#finance-nav"
                                 data-bs-toggle="collapse"
                                 href="#"
                             >
@@ -163,9 +163,9 @@ export default function Header() {
                                 <i className="bi bi-chevron-down ms-auto" />
                             </Link>
                             <ul
-                                id="esicapps1-nav"
+                                id="finance-nav"
                                 className="nav-content collapse "
-                                data-bs-parent="#esicapps1-nav"
+                                data-bs-parent="#finance-nav"
                             >
 
                                 <li>

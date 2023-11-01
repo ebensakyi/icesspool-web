@@ -3,7 +3,7 @@ import { logActivity } from "@/utils/log";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
-import ElectoralArea from "../../../../../components/primary-data/ElectoralArea";
+import ElectoralArea from "../../../../../components/unused/primary-data/ElectoralArea";
 
 export async function POST(request: Request) {
   try {

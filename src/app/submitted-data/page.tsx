@@ -1,4 +1,4 @@
-import Data from '@/src/components/submitted-data/Data';
+import Data from '@/src/components/unused/submitted-data/Data';
 import { SERVER_BASE_URL } from '@/config';
 import { headers } from 'next/headers';
 

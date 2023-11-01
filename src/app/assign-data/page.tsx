@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import DataTransfer from '@/src/components/assign-data/AssignData';
+import DataTransfer from '@/src/components/unused/assign-data/AssignData';
 import { headers } from 'next/headers';
 
 

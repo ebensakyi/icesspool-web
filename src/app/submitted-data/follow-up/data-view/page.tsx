@@ -1,6 +1,6 @@
 
 import { SERVER_BASE_URL } from '@/config';
-import FollowUpView from '@/src/components/submitted-data/FollowUpView';
+import FollowUpView from '@/src/components/unused/submitted-data/FollowUpView';
 import { headers } from 'next/headers';
 
 async function getSubmittedData(searchParams: any) {

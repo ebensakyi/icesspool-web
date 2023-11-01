@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import FollowUp from '@/src/components/submitted-data/FollowUp';
+import FollowUp from '@/src/components/unused/submitted-data/FollowUp';
 import { headers } from 'next/headers';
 
 async function getSubmittedData(searchParams: any) {

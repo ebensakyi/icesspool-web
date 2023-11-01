@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
-import District from "@/src/components/primary-data/District";
+import District from "@/src/components/unused/primary-data/District";
 import { headers } from "next/headers"
 
 

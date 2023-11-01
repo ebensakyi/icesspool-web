@@ -1,6 +1,6 @@
 
 import { SERVER_BASE_URL } from '@/config';
-import DataView from '@/src/components/submitted-data/DataView';
+import DataView from '@/src/components/unused/submitted-data/DataView';
 import { headers } from 'next/headers';
 
 async function getSubmittedData(searchParams: any) {

@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from "@/config";
-import Map from "@/src/components/map/Map";
+import Map from "@/src/components/unused/map/Map";
 //import dynamic from "next/dynamic";
 
 // const Map = dynamic(() => import("@/src/components/map/Map"), {

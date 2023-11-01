@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from "@/config";
 
-import SanitationReportList from "@/src/components/sanitation-report/SanitationReport";
+import SanitationReportList from "@/src/components/unused/sanitation-report/SanitationReport";
 import { headers } from "next/headers";
 async function getSanitationReports(searchParams: any) {
     try {

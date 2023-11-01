@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import {  SERVER_BASE_URL } from "@/config";
-import OtherData from "@/src/components/primary-data/OtherData";
+import OtherData from "@/src/components/unused/primary-data/OtherData";
 import { headers } from "next/headers";
 
 

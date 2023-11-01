@@ -130,7 +130,7 @@ export default function Header() {
                                 <span>Dashboard</span>
                             </Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
 
                             <Link className={
                                 pathname == "/"
@@ -141,8 +141,7 @@ export default function Header() {
 " />
                                 <span>Make Request</span>
                             </Link>
-                        </li>
-                        <li className="nav-heading"></li>
+                        </li> */}
 
                         <li className="nav-item">
 
@@ -152,49 +151,37 @@ export default function Header() {
                                         ? "nav-link"
                                         : "nav-link collapsed"
                                 }
-                                data-bs-target="#finance-nav"
+                                data-bs-target="#mq-nav"
                                 data-bs-toggle="collapse"
                                 href="#"
                             >
-                                <i className="bi bi-currency-dollar
-
+                                <i className="bi bi-arrow-up-right-square
 " />
-                                <span>Finance</span>
+                                <span>Make Request</span>
                                 <i className="bi bi-chevron-down ms-auto" />
                             </Link>
                             <ul
-                                id="finance-nav"
+                                id="mq-nav"
                                 className="nav-content collapse "
-                                data-bs-parent="#finance-nav"
+                                data-bs-parent="#mq-nav"
                             >
 
                                 <li>
                                     <Link href="/esicapps1/table">
                                         <i className="bi bi-circle" />
-                                        <span>iCesspool</span>
+                                        <span>Water Point</span>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/esicapps1/table">
                                         <i className="bi bi-circle" />
-                                        <span>System Charges</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span>Operator</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span>MMDA</span>
+                                        <span>Tipping Points</span>
                                     </Link>
                                 </li>
 
                             </ul>
                         </li>
+
 
 
 
@@ -388,6 +375,100 @@ export default function Header() {
                             </ul>
                         </li>
 
+                        <li className="nav-heading">FINANCE</li>
+
+                        <li className="nav-item">
+
+                            <Link
+                                className={
+                                    pathname == "/esicapps1/general"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }
+                                data-bs-target="#earnings-nav"
+                                data-bs-toggle="collapse"
+                                href="#"
+                            >
+                                <i className="bi bi-currency-dollar
+
+" />
+                                <span>Earnings</span>
+                                <i className="bi bi-chevron-down ms-auto" />
+                            </Link>
+                            <ul
+                                id="earnings-nav"
+                                className="nav-content collapse "
+                                data-bs-parent="#earnings-nav"
+                            >
+
+                                <li>
+                                    <Link href="/finance/icesspool">
+                                        <i className="bi bi-circle" />
+                                        <span>iCesspool</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/finance/system-charges">
+                                        <i className="bi bi-circle" />
+                                        <span>System Charges</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/finance/operate">
+                                        <i className="bi bi-circle" />
+                                        <span>Operator</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/esicapps1/table">
+                                        <i className="bi bi-circle" />
+                                        <span>MMDA</span>
+                                    </Link>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li className="nav-item">
+
+                            <Link
+                                className={
+                                    pathname == "/esicapps1/general"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }
+                                data-bs-target="#withdrawals-nav"
+                                data-bs-toggle="collapse"
+                                href="#"
+                            >
+                                <i className="bi bi-currency-dollar
+
+" />
+                                <span>Withdrawals</span>
+                                <i className="bi bi-chevron-down ms-auto" />
+                            </Link>
+                            <ul
+                                id="withdrawals-nav"
+                                className="nav-content collapse "
+                                data-bs-parent="#withdrawals-nav"
+                            >
+
+                               
+                                <li>
+                                    <Link href="/finance/withdrawal/operator">
+                                        <i className="bi bi-circle" />
+                                        <span>Operator</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/esicapps1/table">
+                                        <i className="bi bi-circle" />
+                                        <span>MMDA</span>
+                                    </Link>
+                                </li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </aside> : <></>}
         </>

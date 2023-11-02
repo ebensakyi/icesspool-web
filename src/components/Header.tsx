@@ -167,15 +167,21 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/make-request/water">
                                         <i className="bi bi-circle" />
-                                        <span>Water Point</span>
+                                        <span>Water </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/make-request/desludging">
                                         <i className="bi bi-circle" />
-                                        <span>Tipping Points</span>
+                                        <span>Desludging toilet </span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/make-request/bio-digester">
+                                        <i className="bi bi-circle" />
+                                        <span>Bio-digester</span>
                                     </Link>
                                 </li>
 
@@ -461,7 +467,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/finance/withdrawal/mmda">
                                         <i className="bi bi-circle" />
                                         <span>MMDA</span>
                                     </Link>

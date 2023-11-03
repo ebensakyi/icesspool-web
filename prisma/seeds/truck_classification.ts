@@ -1,4 +1,4 @@
-export const truckTypes = [
+export const truckClassification = [
   {
     name: "Mini",
     tankCapacity: 4.5,

@@ -330,6 +330,8 @@ model ScannerUser {
   updatedAt     DateTime?
 }
 
+
+
 model Status {
   id        Int       @id @default(autoincrement())
   state     String    @db.VarChar(255)

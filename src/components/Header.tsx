@@ -265,13 +265,13 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/services/water-point">
                                         <i className="bi bi-circle" />
                                         <span>Water Point</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/services/tipping-point">
                                         <i className="bi bi-circle" />
                                         <span>Tipping Points</span>
                                     </Link>

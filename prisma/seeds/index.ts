@@ -30,8 +30,8 @@ async function main() {
       data: userTypes,
     });
   
-    await prisma.district.createMany({
-      data: district,
+    await prisma.mainEntity.createMany({
+      data: entities,
     });
 }
 

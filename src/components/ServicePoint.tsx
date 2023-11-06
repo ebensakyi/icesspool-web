@@ -4,7 +4,7 @@ import { signal } from '@preact/signals';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 
-export const TippingPoint = ({data}:any) => {
+export const ServicePoint = ({data}:any) => {
 
 
     console.log(data);
@@ -32,7 +32,7 @@ export const TippingPoint = ({data}:any) => {
   return (
     <main id="main" className="main">
             <div className="pagetitle">
-                <h1>NOTIFICATION</h1>
+                <h1>SERVICE POINTS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -49,7 +49,7 @@ export const TippingPoint = ({data}:any) => {
                     <div className="col-lg-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Send Notification</h5>
+                                <h5 className="card-title">Add</h5>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Title *
@@ -102,7 +102,7 @@ export const TippingPoint = ({data}:any) => {
                     <div className="col-lg-8">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Notifications</h5>
+                                <h5 className="card-title">List</h5>
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
@@ -117,7 +117,7 @@ export const TippingPoint = ({data}:any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.notifications.map((data: any) => {
+                                        {data?.servicePoints?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.title}</td>

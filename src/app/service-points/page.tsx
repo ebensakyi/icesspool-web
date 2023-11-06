@@ -1,9 +1,8 @@
-import Data from '@/src/components/unused/submitted-data/Data';
 import { SERVER_BASE_URL } from '@/config';
+import { ServicePoint } from '@/src/components/ServicePoint';
 import { headers } from 'next/headers';
-import { TippingPoint } from '@/src/components/services/TippingPoint';
 
-async function getTippingPoints(searchParams: any) {
+async function getServicePoints(searchParams: any) {
 
     let { searchText } = searchParams
 
@@ -12,7 +11,7 @@ async function getTippingPoints(searchParams: any) {
 
 
 
-    const res = await fetch(`${SERVER_BASE_URL}/api/services/tipping-point?page=${page}&searchText=${searchText}`, { cache: 'no-store',headers: headers() })
+    const res = await fetch(`${SERVER_BASE_URL}/api/service-points?page=${page}&searchText=${searchText}`, { cache: 'no-store',headers: headers() })
 
     if (!res.ok) {
         throw new Error('Failed to fetch data')
@@ -25,7 +24,7 @@ async function getTippingPoints(searchParams: any) {
   
 
 export default async function Page({ searchParams }: any) {
-    const tippingPoints = await getTippingPoints(searchParams)
+    const servicePoints = await getServicePoints(searchParams)
 
 
 
@@ -49,11 +48,11 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    let data = {tippingPoints}
+    let data = {servicePoints}
 
 
 
-    return <TippingPoint data={data} />
+    return <ServicePoint data={data} />
 
 
 }

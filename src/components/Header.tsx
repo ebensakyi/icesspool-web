@@ -265,15 +265,15 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/services/water-point">
+                                    <Link href="/services">
                                         <i className="bi bi-circle" />
-                                        <span>Water Point</span>
+                                        <span>Services</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/tipping-point">
+                                    <Link href="/service-points">
                                         <i className="bi bi-circle" />
-                                        <span>Tipping Points</span>
+                                        <span>Service Points</span>
                                     </Link>
                                 </li>
 

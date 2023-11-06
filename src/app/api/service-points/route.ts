@@ -66,7 +66,7 @@ export async function GET(request: Request) {
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.servicePoint.findMany({
-      where: { assignedToId: Number(userId) },
+      where: { deleted: 0},
     });
 
     return NextResponse.json({response:[]});

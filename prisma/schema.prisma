@@ -30,7 +30,7 @@ model TruckClassification {
 }
 
 model Service {
-  id           String         @id @db.VarChar(255)
+  id           Int            @id @default(autoincrement())
   name         String?
   deleted      Int?           @default(0)
   createdAt    DateTime?
@@ -99,9 +99,8 @@ model Discount {
 
 model MainEntity {
   id             Int          @id @default(autoincrement())
-  transactionId  String       @unique(map: "transactionId") @db.VarChar(255)
-  amount         Decimal      @db.Decimal(10, 2)
-  completionDate String       @db.VarChar(255)
+  name  String      @db.VarChar(255)
+
   deleted        Int?         @default(0)
   createdAt      DateTime?
   updatedAt      DateTime?
@@ -179,7 +178,7 @@ model PricingModel {
   updatedAt  DateTime?
   locationId String    @db.VarChar(255)
   Service    Service   @relation(fields: [serviceId], references: [id])
-  serviceId  String    @db.VarChar(255)
+  serviceId  Int
 }
 
 model DesludgingServicePricing {
@@ -330,8 +329,6 @@ model ScannerUser {
   updatedAt     DateTime?
 }
 
-
-
 model Status {
   id        Int       @id @default(autoincrement())
   state     String    @db.VarChar(255)
@@ -353,7 +350,7 @@ model ServicePoint {
   Service   Service   @relation(fields: [serviceId], references: [id])
   createdAt DateTime?
   updatedAt DateTime?
-  serviceId String    @db.VarChar(255)
+  serviceId Int
 }
 
 model Transaction {
@@ -410,7 +407,7 @@ model User {
 
 model UserType {
   id        Int       @id @default(autoincrement())
-  title     String    @db.VarChar(255)
+  name     String    @db.VarChar(255)
   deleted   Int?      @default(0)
   createdAt DateTime?
   updatedAt DateTime?

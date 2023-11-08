@@ -4,30 +4,33 @@ import { logActivity } from "@/utils/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
-// export async function POST(request: Request) {
-//   try {
-//     const res = await request.json();
-//     const session: any = await getServerSession(authOptions);
+export async function POST(request: Request) {
+  try {
+    const res = await request.json();
+    const session: any = await getServerSession(authOptions);
 
-//     const userId = session?.user?.id;
+    console.log(res);
+    
 
-//     await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
+    // const userId = session?.user?.id;
 
-//     const data = {
-//       assignedToId: Number(res?.assignedToUser),
-//       assignedFromId: Number(res?.assignedFromUser),
-//       userId: userId,
-//     };
+    // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
-//     const response = await prisma.assignData.create({ data });
+    // const data = {
+    //   assignedToId: Number(res?.assignedToUser),
+    //   assignedFromId: Number(res?.assignedFromUser),
+    //   userId: userId,
+    // };
 
-//     return NextResponse.json(response);
-//   } catch (error: any) {
-//     console.log(error);
+    const response =1// await prisma.assignData.create({ data });
 
-//     return NextResponse.json(error, { status: 500 });
-//   }
-// }
+    return NextResponse.json(response);
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json(error, { status: 500 });
+  }
+}
 
 // export async function PUT(request: Request) {
 //   try {

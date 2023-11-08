@@ -348,35 +348,18 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/user">
                                         <i className="bi bi-circle" />
-                                        <span> System admin</span>
+                                        <span> Users</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/auth/profile">
                                         <i className="bi bi-circle" />
-                                        <span> Regional admin</span>
+                                        <span> Profile</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span> Operators</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span> Customer</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span> Scanner</span>
-                                    </Link>
-                                </li>
+                                
 
                             </ul>
                         </li>

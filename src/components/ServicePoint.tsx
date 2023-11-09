@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const ServicePoint = ({ data }: any) => {
-    const [id, setId] = useState(null);
+    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
@@ -47,7 +47,13 @@ export const ServicePoint = ({ data }: any) => {
             };
             const response = await axios.post("/api/service-points", data);
             toast.success(response.data.message);
+            setId("")
             setName("")
+            setAddress("");
+
+            setLatitude("");
+            setLongitude("");
+            setService("");
             setStatus("");
 
             router.refresh()
@@ -78,7 +84,7 @@ export const ServicePoint = ({ data }: any) => {
             };
              response = await axios.put("/api/service-points", data);
             toast.success(response.data.message);
-            setId(null)
+            setId("")
             setName("")
             setAddress("");
 
@@ -89,7 +95,7 @@ export const ServicePoint = ({ data }: any) => {
             router.refresh()
 
         } catch (error: any) {
-            console.log(error);
+            console.log(error.response);
             
             // if (error.response.status == 401) {
             //     toast.error(error.response.data.message);
@@ -296,7 +302,7 @@ export const ServicePoint = ({ data }: any) => {
                                                                                 setAddress(data.address)
                                                                                 setLatitude(data.latitude)
                                                                                 setLongitude(data.longitude)
-                                                                                setService(data.service)
+                                                                                setService(data.serviceId)
                                                                                 setStatus(data.status)
                                                                                 // setIsEditing(true);
 

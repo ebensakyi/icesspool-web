@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
-import { logActivity } from "@/utils/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
@@ -21,7 +20,7 @@ export async function POST(request: Request) {
 
     const response = await prisma.servicePoint.create({ data });
 
-    return NextResponse.json(response);
+    return NextResponse.json({ response, message: "Data submitted succesfully" });
   } catch (error: any) {
     console.log(error);
 
@@ -35,7 +34,7 @@ export async function PUT(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     console.log(res);
-    
+
 
     const userId = session?.user?.id;
     const data = {
@@ -53,7 +52,7 @@ export async function PUT(request: Request) {
       data,
     });
 
-    return NextResponse.json({ status: 200 });
+    return NextResponse.json({  message: "Data submitted succesfully" });
   } catch (error: any) {
     console.log(error);
 
@@ -73,8 +72,8 @@ export async function GET(request: Request) {
 
     const response = await prisma.servicePoint.findMany({
       where: { deleted: 0 },
-      include:{
-        Service:true
+      include: {
+        Service: true
       }
     });
 

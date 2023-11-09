@@ -7,6 +7,8 @@ import { entities} from "./main_entities";
 import { services } from "./services";
 import { truckClassification } from './truck_classification';
 import { userTypes } from "./user_types";
+import { users } from "./users";
+import { regions } from "./regions";
 
 async function main() {
 
@@ -32,6 +34,14 @@ async function main() {
   
     await prisma.mainEntity.createMany({
       data: entities,
+    });
+
+    await prisma.user.createMany({
+      data: users,
+    });
+
+    await prisma.region.createMany({
+      data: regions,
     });
 }
 

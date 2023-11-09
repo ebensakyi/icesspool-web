@@ -28,7 +28,6 @@ export default function Login() {
         //callbackUrl:SERVER_BASE_URL
         // callbackUrl: `${window.location.origin}/` 
       });
-console.log("result==> ",result);
 
 
     } catch (error) {
@@ -37,7 +36,6 @@ console.log("result==> ",result);
   };
 
   const handlePasswordVisibility = () => {
-    console.log("LOL");
 
     setShowPassword(!showPassword);
   };

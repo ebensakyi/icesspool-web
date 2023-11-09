@@ -9,7 +9,4 @@ export { default } from "next-auth/middleware"
 
 
 
-export const config = { matcher: ["/", "/user","/submitted-data","/data-transfer","/user","/user/guide",
-"/user/role","/user/log","/messaging/notification","/messaging/sms","/primary-data/community",
-"/primary-data/district","/primary-data/electoral-area","/primary-data/other-data","/report/general",
-"/submitted-data/data-edit","/submitted-data/data-view","/submitted-data"] }
+export const config = { matcher: [] }

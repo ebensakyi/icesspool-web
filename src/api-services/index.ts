@@ -35,7 +35,7 @@ export async function getServicePoints(searchParams: any) {
 
 
 
-export async function getRegions() {
+export async function getRegions(searchParams:any) {
 
     let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/region`, { cache: 'no-store' });
   

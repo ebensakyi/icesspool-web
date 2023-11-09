@@ -271,6 +271,12 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link href="/service-location">
+                                        <i className="bi bi-circle" />
+                                        <span>Services Locations</span>
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="/service-points">
                                         <i className="bi bi-circle" />
                                         <span>Service Points</span>

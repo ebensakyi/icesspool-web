@@ -52,7 +52,7 @@ export default async function Page({ searchParams }: any) {
 
 
   const dashboardData = await getDashboardData(searchParams)
-  const regions = await getRegions()
+  const regions = await getRegions(searchParams)
   // const districts = await getDistricts()
 
 

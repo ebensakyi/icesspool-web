@@ -30,14 +30,15 @@ model TruckClassification {
 }
 
 model Service {
-  id           Int            @id @default(autoincrement())
-  name         String?
-  status       Int?           @default(1)
-  deleted      Int?           @default(0)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  PricingModel PricingModel[]
-  ServicePoint ServicePoint[]
+  id              Int               @id @default(autoincrement())
+  name            String?
+  status          Int?              @default(1)
+  deleted         Int?              @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PricingModel    PricingModel[]
+  ServicePoint    ServicePoint[]
+  LocationService LocationService[]
 }
 
 model Balance {
@@ -90,11 +91,25 @@ model Discount {
 }
 
 model Region {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  deleted         Int?              @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  LocationService LocationService[]
+}
+
+model LocationService {
+  id      Int     @id @default(autoincrement())
+  Region  Region  @relation(fields: [regionId], references: [id])
+  Service Service @relation(fields: [serviceId], references: [id])
+  status  Int?    @default(0)
+
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  regionId  Int
+  serviceId Int
 }
 
 // model District {

@@ -10,8 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const ServiceLocation = ({ data }: any) => {
     const [id, setId] = useState(null);
-    const [name, setName] = useState("");
-    const [status, setStatus] = useState(2);
+    const [region, setRegion] = useState("");
+    const [service, setService] = useState("");
+    const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -29,18 +30,20 @@ export const ServiceLocation = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == 0) {
+            if (service == "" || status == ""||region =="") {
                 return toast.error("Please fill form");
             }
 
             let data = {
-                name,
+                region,
+                service,
                 status,
             };
             const response = await axios.post("/api/services", data);
             toast.success(response.data.message);
-            setName("")
-            setStatus(2);
+            setService("")
+            setStatus("");
+            setRegion("")
 
             router.refresh()
 
@@ -54,7 +57,7 @@ export const ServiceLocation = ({ data }: any) => {
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == 0) {
+            if (region == "" || status == ""||service=="") {
                 return toast.error("Please fill form");
             }
 
@@ -66,8 +69,9 @@ export const ServiceLocation = ({ data }: any) => {
             const response = await axios.put("/api/services", data);
             toast.success(response.data.message);
             setId(null)
-            setName("")
-            setStatus(2);
+            setRegion("")
+            setStatus("");
+            setService("")
 
             router.refresh()
 
@@ -111,19 +115,17 @@ export const ServiceLocation = ({ data }: any) => {
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            setStatus(e.target.value);
+                                            setService(e.target.value);
                                         }}
-                                        value={status}
+                                        value={service}
                                     >
                                         <option value={0}>Select service * </option>
-                                        <option value={1}>Active </option>
-                                        <option value={2}>Inactive </option>
-
-                                        {/* {data?.sendingTypes?.map((data: any) => (
+                                      
+                                        {data?.services?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
                                             </option>
-                                        ))} */}
+                                        ))}
                                     </select>
                                 </div>
 
@@ -135,19 +137,18 @@ export const ServiceLocation = ({ data }: any) => {
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            setStatus(e.target.value);
+                                            setRegion(e.target.value);
                                         }}
-                                        value={status}
+                                        value={region}
                                     >
                                         <option value={0}>Select location * </option>
-                                        <option value={1}>Active </option>
-                                        <option value={2}>Inactive </option>
+                                      
 
-                                        {/* {data?.sendingTypes?.map((data: any) => (
+                                        {data?.regions?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
                                             </option>
-                                        ))} */}
+                                        ))}
                                     </select>
                                 </div>
                                 <div className=" mb-3">
@@ -211,7 +212,8 @@ export const ServiceLocation = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">Region</th>
+                                            <th scope="col">Service</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -224,7 +226,9 @@ export const ServiceLocation = ({ data }: any) => {
                                         {data?.services?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
+                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.Service?.name}</td>
+
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
@@ -256,7 +260,8 @@ export const ServiceLocation = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setName(data.name)
+                                                                                setRegion(data.Region.name)
+                                                                                setService(data.Service.name)
                                                                                 setStatus(data.status)
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);

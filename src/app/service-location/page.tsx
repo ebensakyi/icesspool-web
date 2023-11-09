@@ -1,21 +1,21 @@
-import { ServicePoint } from '@/src/components/ServicePoint';
-import { getServicePoints, getServices } from '@/src/api-services';
+import { getRegions, getServices } from '@/src/api-services';
+import { ServiceLocation } from '@/src/components/ServiceLocation';
 
 
 
 
 
 export default async function Page({ searchParams }: any) {
-    const servicePoints = await getServicePoints(searchParams)
+    const regions = await getRegions(searchParams)
     const services = await getServices(searchParams)
 
 
 
-    let data = { servicePoints, services }
+    let data = { regions, services }
 
 
 
-    return <ServicePoint data={data} />
+    return <ServiceLocation data={data} />
 
 
 }

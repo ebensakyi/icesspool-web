@@ -45,3 +45,14 @@ export async function getRegions(searchParams:any) {
     return await response.json();
   
   }
+
+  export async function getServiceLocations(searchParams:any) {
+
+    let response = await fetch(`${SERVER_BASE_URL}/api/service-location`, { cache: 'no-store' });
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch data')
+    }
+    return await response.json();
+  
+  }

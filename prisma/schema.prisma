@@ -38,7 +38,7 @@ model Service {
   updatedAt       DateTime          @updatedAt
   PricingModel    PricingModel[]
   ServicePoint    ServicePoint[]
-  LocationService LocationService[]
+  ServiceLocation ServiceLocation[]
 }
 
 model Balance {
@@ -96,10 +96,10 @@ model Region {
   deleted         Int?              @default(0)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  LocationService LocationService[]
+  ServiceLocation ServiceLocation[]
 }
 
-model LocationService {
+model ServiceLocation {
   id      Int     @id @default(autoincrement())
   Region  Region  @relation(fields: [regionId], references: [id])
   Service Service @relation(fields: [serviceId], references: [id])

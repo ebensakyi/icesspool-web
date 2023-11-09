@@ -9,8 +9,6 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    console.log(res);
-
     const data = {
       name: res?.name,
       status: Number(res?.status),
@@ -36,9 +34,8 @@ export async function PUT(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
     console.log(res);
-
+    
 
     const userId = session?.user?.id;
     const data = {
@@ -74,12 +71,12 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.service.findMany({
+    const response = await prisma.servicePoint.findMany({
       where: { deleted: 0 },
+      include:{
+        Service:true
+      }
     });
-
-    console.log(response);
-
 
     return NextResponse.json({ response });
   } catch (error) {

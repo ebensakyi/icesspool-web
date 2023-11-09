@@ -11,11 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 export const ServicePoint = ({ data }: any) => {
     const [id, setId] = useState(null);
     const [name, setName] = useState("");
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
     const [address, setAddress] = useState("");
     const [service, setService] = useState("");
-    const [status, setStatus] = useState(2);
+    const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -33,7 +33,7 @@ export const ServicePoint = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == 0) {
+            if (name == "" || status == "") {
                 return toast.error("Please fill form");
             }
 
@@ -48,7 +48,7 @@ export const ServicePoint = ({ data }: any) => {
             const response = await axios.post("/api/service-points", data);
             toast.success(response.data.message);
             setName("")
-            setStatus(2);
+            setStatus("");
 
             router.refresh()
 
@@ -60,33 +60,40 @@ export const ServicePoint = ({ data }: any) => {
     };
 
     const update = async (e: any) => {
+        let response
         try {
             e.preventDefault();
-            if (name == "" || status == 0) {
+            if (name == "" || status == "" || latitude == null || longitude == null || address == "" || service == null || status == null) {
                 return toast.error("Please fill form");
             }
 
             let data = {
                 id: Number(id),
-               name,
+                name,
                 latitude: Number(latitude),
                 longitude: Number(longitude),
                 address,
                 service: Number(service),
                 status: Number(status),
             };
-            const response = await axios.put("/api/service-pointss", data);
+             response = await axios.put("/api/service-points", data);
             toast.success(response.data.message);
             setId(null)
             setName("")
-            setStatus(2);
+            setAddress("");
 
+            setLatitude("");
+            setLongitude("");
+            setService("");
+            setStatus("");
             router.refresh()
 
         } catch (error: any) {
-            if (error.response.status == 401) {
-                toast.error(error.response.data.message);
-            }
+            console.log(error);
+            
+            // if (error.response.status == 401) {
+            //     toast.error(error.response.data.message);
+            // }
         }
     };
 
@@ -180,7 +187,7 @@ export const ServicePoint = ({ data }: any) => {
                                         }}
                                         value={status}
                                     >
-                                        <option value={0}>Select status * </option>
+                                        <option value={""}>Select status * </option>
                                         <option value={1}>Active </option>
                                         <option value={2}>Inactive </option>
 
@@ -232,6 +239,10 @@ export const ServicePoint = ({ data }: any) => {
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Latitute</th>
+                                            <th scope="col">Longitude</th>
+                                            <th scope="col">Service</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -241,10 +252,15 @@ export const ServicePoint = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response.map((data: any) => {
+                                        {data?.servicePoints?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
+                                                    <td>{data?.address}</td>
+                                                    <td>{data?.latitude}</td>
+                                                    <td>{data?.longitude}</td>
+                                                    <td>{data?.Service?.name}</td>
+
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
@@ -277,12 +293,11 @@ export const ServicePoint = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
                                                                                 setName(data.name)
+                                                                                setAddress(data.address)
+                                                                                setLatitude(data.latitude)
+                                                                                setLongitude(data.longitude)
+                                                                                setService(data.service)
                                                                                 setStatus(data.status)
-                                                                                // setSendingType(data.sendingType)
-                                                                                // setDistrictId(data.districtId);
-
-
-
                                                                                 // setIsEditing(true);
 
                                                                             }}

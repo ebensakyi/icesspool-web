@@ -1,11 +1,8 @@
-import { SERVER_BASE_URL } from '@/config';
 import { Service } from '@/src/components/Service';
-import { ServicePoint } from '@/src/components/ServicePoint';
 import { getServices } from '@/src/api-services';
-import { headers } from 'next/headers';
 
 
-  
+
 
 export default async function Page({ searchParams }: any) {
     const services = await getServices(searchParams)
@@ -32,7 +29,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    let data = {services}
+    let data = { services }
 
 
 

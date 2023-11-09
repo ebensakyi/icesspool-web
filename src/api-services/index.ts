@@ -31,3 +31,17 @@ export async function getServicePoints(searchParams: any) {
 
     return res.json()
 }
+
+
+
+
+export async function getRegions() {
+
+    let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/region`, { cache: 'no-store' });
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch data')
+    }
+    return await response.json();
+  
+  }

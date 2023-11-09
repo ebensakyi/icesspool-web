@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import Dashboard from '../components/dashboard/Dashboard'
+import Dashboard from '../components/Dashboard'
 import { SERVER_BASE_URL } from '@/config'
 import { headers } from 'next/headers'
 import { getServerSession } from "next-auth";
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
+import {  getRegions } from '@/src/api-services';
 
 
 async function getDashboardData(searchParams: any) {
@@ -28,27 +28,17 @@ async function getDashboardData(searchParams: any) {
 }
 
 
-async function getRegions() {
 
-  let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/region`, { cache: 'no-store' });
+// async function getDistricts() {
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  return await response.json();
+//   let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/district`, { cache: 'no-store' });
 
-}
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data')
+//   }
+//   return await response.json();
 
-async function getDistricts() {
-
-  let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/district`, { cache: 'no-store' });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  return await response.json();
-
-}
+// }
 
 
 export default async function Page({ searchParams }: any) {
@@ -63,11 +53,11 @@ export default async function Page({ searchParams }: any) {
 
   const dashboardData = await getDashboardData(searchParams)
   const regions = await getRegions()
-  const districts = await getDistricts()
+  // const districts = await getDistricts()
 
 
 
-  let data = { session, dashboardData, regions, districts }
+  let data = { session, dashboardData, regions }
 
 
   return <Dashboard data={data} />

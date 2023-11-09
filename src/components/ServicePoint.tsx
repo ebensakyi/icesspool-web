@@ -45,7 +45,7 @@ export const ServicePoint = ({ data }: any) => {
                 service: Number(service),
                 status: Number(status),
             };
-            const response = await axios.post("/api/services", data);
+            const response = await axios.post("/api/service-points", data);
             toast.success(response.data.message);
             setName("")
             setStatus(2);
@@ -68,10 +68,14 @@ export const ServicePoint = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                name,
-                status,
+               name,
+                latitude: Number(latitude),
+                longitude: Number(longitude),
+                address,
+                service: Number(service),
+                status: Number(status),
             };
-            const response = await axios.put("/api/services", data);
+            const response = await axios.put("/api/service-pointss", data);
             toast.success(response.data.message);
             setId(null)
             setName("")

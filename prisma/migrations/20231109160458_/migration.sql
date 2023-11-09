@@ -374,13 +374,13 @@ CREATE TABLE `Status` (
 -- CreateTable
 CREATE TABLE `ServicePoint` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `siteName` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
     `placeId` VARCHAR(255) NULL,
     `address` VARCHAR(255) NULL,
     `location` VARCHAR(255) NULL,
-    `lat` DECIMAL(10, 6) NULL,
-    `lng` DECIMAL(10, 6) NULL,
-    `active` INTEGER NULL DEFAULT 1,
+    `latitude` DECIMAL(10, 6) NULL,
+    `longitude` DECIMAL(10, 6) NULL,
+    `status` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

@@ -346,7 +346,7 @@ model ServicePoint {
   location  String?  @db.VarChar(255)
   latitude  Decimal? @db.Decimal(10, 6)
   longitude Decimal? @db.Decimal(10, 6)
-  active    Int?     @default(1)
+  status    Int?     @default(1)
   deleted   Int?     @default(0)
   Service   Service  @relation(fields: [serviceId], references: [id])
   createdAt DateTime @default(now())

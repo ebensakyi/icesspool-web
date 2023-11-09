@@ -11,17 +11,17 @@ export async function POST(request: Request) {
 
     console.log(res);
 
-
-    // const userId = session?.user?.id;
-
-    // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
-
     const data = {
       name: res?.name,
       status: Number(res?.status),
+      latitude: Number(res?.latitude),
+      longitude: Number(res?.longitude),
+      address: res?.address,
+      serviceId: Number(res?.service),
     };
 
-    const response = await prisma.service.create({ data });
+
+    const response = await prisma.servicePoint.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {
@@ -38,18 +38,18 @@ export async function PUT(request: Request) {
 
 
     console.log(res);
-    
+
 
     const userId = session?.user?.id;
     const data = {
       name: res?.name,
       latitude: Number(res?.latitude),
       longitude: Number(res?.longitude),
-      address: Number(res?.address),
-      service: Number(res?.service),
+      address: res?.address,
+      serviceId: Number(res?.service),
       status: Number(res?.status),
     };
-    await prisma.service.update({
+    await prisma.servicePoint.update({
       where: {
         id: Number(res?.id),
       },

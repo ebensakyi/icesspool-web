@@ -18,22 +18,22 @@ export async function POST(request: Request) {
         phoneNumber: phoneNumber,
         deleted: 0,
       },
-      include: { Region: true, District: true,UserRole:true },
+     // include: { Region: true, District: true,UserRole:true },
     });
 
     
 
-    const pageAccess = await prisma.pageAccess.findMany({
-      where: {
-        userRoleId: user?.userRoleId,
-        deleted: 0,
-      },
-    });
+    // const pageAccess = await prisma.pageAccess.findMany({
+    //   where: {
+    //     userRoleId: user?.userRoleId,
+    //     deleted: 0,
+    //   },
+    // });
 
 
-    let privileges = pageAccess?.map((d: any) => {
-      return d.pageId;
-    });
+    // let privileges = pageAccess?.map((d: any) => {
+    //   return d.pageId;
+    // });
 
 
     // if(user?.passwordChanged==0){
@@ -52,7 +52,9 @@ export async function POST(request: Request) {
     if (isValid) {
       const token = jwt.sign(user, process.env.TOKEN_SECRET ?? "");
 
-      return NextResponse.json({ ...user, token, privileges });
+     // return NextResponse.json({ ...user, token, privileges });
+      return NextResponse.json({ ...user, token });
+
     }
     return NextResponse.json(null, { status: 400 });
   } catch (error: any) {

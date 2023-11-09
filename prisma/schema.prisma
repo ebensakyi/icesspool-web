@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Otp {
-  id        Int       @id @default(autoincrement())
-  code      String    @db.VarChar(255)
-  userId    String?   @db.VarChar(255)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  code      String   @db.VarChar(255)
+  userId    String?  @db.VarChar(255)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model TruckClassification {
@@ -21,8 +21,8 @@ model TruckClassification {
   name                      String                      @unique(map: "axleClass") @db.VarChar(255)
   tankCapacity              Decimal?                    @default(0.00) @db.Decimal(10, 2)
   deleted                   Int?                        @default(0)
-  createdAt                 DateTime?
-  updatedAt                 DateTime?
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
   Vehicle                   Vehicle[]
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
@@ -32,9 +32,10 @@ model TruckClassification {
 model Service {
   id           Int            @id @default(autoincrement())
   name         String?
+  status       Int?           @default(1)
   deleted      Int?           @default(0)
-  createdAt    DateTime?
-  updatedAt    DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   PricingModel PricingModel[]
   ServicePoint ServicePoint[]
 }
@@ -43,8 +44,8 @@ model Balance {
   id           Int        @id @default(autoincrement())
   balance      Decimal?   @default(0.00) @db.Decimal(10, 2)
   deleted      Int?       @default(0)
-  createdAt    DateTime?
-  updatedAt    DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   MainEntity   MainEntity @relation(fields: [mainEntityId], references: [id])
   mainEntityId Int
 }
@@ -55,8 +56,8 @@ model Location {
   lat                       Decimal?                    @db.Decimal(10, 8)
   lng                       Decimal?                    @db.Decimal(10, 8)
   deleted                   Int?                        @default(0)
-  createdAt                 DateTime?
-  updatedAt                 DateTime?
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
   PricingModel              PricingModel[]
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
@@ -64,28 +65,28 @@ model Location {
 }
 
 model TransactionClosure {
-  id            Int       @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   userId        Int?
-  transactionId String?   @db.VarChar(255)
-  gpsAccuracy   Decimal?  @db.Decimal(10, 2)
-  lat           Decimal?  @db.Decimal(10, 8)
-  lng           Decimal?  @db.Decimal(10, 8)
-  deleted       Int?      @default(0)
-  createdAt     DateTime?
-  updatedAt     DateTime?
+  transactionId String?  @db.VarChar(255)
+  gpsAccuracy   Decimal? @db.Decimal(10, 2)
+  lat           Decimal? @db.Decimal(10, 8)
+  lng           Decimal? @db.Decimal(10, 8)
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Discount {
-  id        Int       @id @default(autoincrement())
-  trip1     Decimal   @db.Decimal(10, 2)
-  trip2     Decimal   @db.Decimal(10, 2)
-  trip3     Decimal   @db.Decimal(10, 2)
-  trip4     Decimal   @db.Decimal(10, 2)
-  trip5     Decimal   @db.Decimal(10, 2)
-  beyond5   Decimal   @db.Decimal(10, 2)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  trip1     Decimal  @db.Decimal(10, 2)
+  trip2     Decimal  @db.Decimal(10, 2)
+  trip3     Decimal  @db.Decimal(10, 2)
+  trip4     Decimal  @db.Decimal(10, 2)
+  trip5     Decimal  @db.Decimal(10, 2)
+  beyond5   Decimal  @db.Decimal(10, 2)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // model District {
@@ -98,14 +99,14 @@ model Discount {
 // }
 
 model MainEntity {
-  id             Int          @id @default(autoincrement())
-  name  String      @db.VarChar(255)
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
 
-  deleted        Int?         @default(0)
-  createdAt      DateTime?
-  updatedAt      DateTime?
-  Commission     Commission[]
-  Balance        Balance[]
+  deleted    Int?         @default(0)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Commission Commission[]
+  Balance    Balance[]
 }
 
 model Commission {
@@ -114,29 +115,29 @@ model Commission {
   commission   Decimal    @unique(map: "commission") @db.Decimal(10, 2)
   status       Int?       @default(1)
   deleted      Int?       @default(0)
-  createdAt    DateTime?
-  updatedAt    DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   MainEntity   MainEntity @relation(fields: [mainEntityId], references: [id])
   //icesspool and mmda
 }
 
 model Logs {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
-  activity  String?   @db.VarChar(255)
-  createdAt DateTime?
-  updatedAt DateTime?
+  activity  String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Message {
-  id        Int       @id @default(autoincrement())
-  type      String?   @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  type      String?  @db.VarChar(255)
   to        Int
   sentBy    Int
-  message   String    @db.VarChar(255)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  message   String   @db.VarChar(255)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model MomoAccount {
@@ -145,39 +146,39 @@ model MomoAccount {
   momoNumber  String?  @db.VarChar(255)
   momoNetwork Int?
   deleted     Int?     @default(0)
-  createdAt   DateTime @db.DateTime(0)
-  updatedAt   DateTime @db.DateTime(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model MomoNetwork {
-  id        Int       @id @default(autoincrement())
-  network   String    @db.VarChar(255)
-  abbrv     String    @db.VarChar(255)
-  status    Int?      @default(0)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  network   String   @db.VarChar(255)
+  abbrv     String   @db.VarChar(255)
+  status    Int?     @default(0)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Payment {
-  id            Int       @id @default(autoincrement())
-  transactionId String    @db.VarChar(255)
-  paymentId     String    @db.VarChar(255)
-  status        Int?      @default(0)
-  deleted       Int?      @default(0)
-  createdAt     DateTime?
-  updatedAt     DateTime?
+  id            Int      @id @default(autoincrement())
+  transactionId String   @db.VarChar(255)
+  paymentId     String   @db.VarChar(255)
+  status        Int?     @default(0)
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model PricingModel {
   id       Int      @id @default(autoincrement())
   Location Location @relation(fields: [locationId], references: [id])
 
-  deleted    Int?      @default(0)
-  createdAt  DateTime?
-  updatedAt  DateTime?
-  locationId String    @db.VarChar(255)
-  Service    Service   @relation(fields: [serviceId], references: [id])
+  deleted    Int?     @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  locationId String   @db.VarChar(255)
+  Service    Service  @relation(fields: [serviceId], references: [id])
   serviceId  Int
 }
 
@@ -199,8 +200,8 @@ model DesludgingServicePricing {
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   deleted                Int?                @default(0)
-  createdAt              DateTime?
-  updatedAt              DateTime?
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
   Location               Location            @relation(fields: [locationId], references: [id])
 
   locationId String @db.VarChar(255)
@@ -224,8 +225,8 @@ model WaterServicePricing {
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   deleted                Int?                @default(0)
-  createdAt              DateTime?
-  updatedAt              DateTime?
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
   Location               Location            @relation(fields: [locationId], references: [id])
 
   locationId String @db.VarChar(255)
@@ -249,61 +250,61 @@ model BiodigesterServicePricing {
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   deleted                Int?                @default(0)
-  createdAt              DateTime?
-  updatedAt              DateTime?
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
   Location               Location            @relation(fields: [locationId], references: [id])
   locationId             String              @db.VarChar(255)
 }
 
 model Operator {
-  id                    String    @id @db.VarChar(255)
+  id                    String   @id @db.VarChar(255)
   userId                Int?
-  passportPicture       String?   @db.Text
-  idCardPicture         String?   @db.Text
-  company               String?   @db.VarChar(255)
-  officeLocation        String?   @db.VarChar(255)
-  ghanaPostGPS          String?   @db.VarChar(255)
-  licenseNumber         String?   @db.VarChar(255)
+  passportPicture       String?  @db.Text
+  idCardPicture         String?  @db.Text
+  company               String?  @db.VarChar(255)
+  officeLocation        String?  @db.VarChar(255)
+  ghanaPostGPS          String?  @db.VarChar(255)
+  licenseNumber         String?  @db.VarChar(255)
   licenseClassification Int?
-  driversLicense        String?   @db.VarChar(255)
-  deleted               Int?      @default(0)
-  createdAt             DateTime?
-  updatedAt             DateTime?
+  driversLicense        String?  @db.VarChar(255)
+  deleted               Int?     @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
 
 model ProviderEarning {
-  id             Int       @id @default(autoincrement())
-  transactionId  String    @unique(map: "transactionId") @db.VarChar(255)
-  operatorId     String?   @db.VarChar(255)
-  amount         Decimal   @db.Decimal(10, 2)
-  completionDate String    @db.VarChar(255)
-  deleted        Int?      @default(0)
-  createdAt      DateTime?
-  updatedAt      DateTime?
+  id             Int      @id @default(autoincrement())
+  transactionId  String   @unique(map: "transactionId") @db.VarChar(255)
+  operatorId     String?  @db.VarChar(255)
+  amount         Decimal  @db.Decimal(10, 2)
+  completionDate String   @db.VarChar(255)
+  deleted        Int?     @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model OperatorRating {
-  id         Int       @id @default(autoincrement())
-  operatorId String    @db.VarChar(255)
-  rating     Decimal?  @default(0.0) @db.Decimal(2, 1)
-  deleted    Int?      @default(0)
-  createdAt  DateTime?
-  updatedAt  DateTime?
+  id         Int      @id @default(autoincrement())
+  operatorId String   @db.VarChar(255)
+  rating     Decimal? @default(0.0) @db.Decimal(2, 1)
+  deleted    Int?     @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model TransactionRating {
-  id            Int       @id @default(autoincrement())
-  transactionId String    @unique(map: "transactionId") @db.VarChar(255)
-  rating        Decimal?  @default(0.0) @db.Decimal(2, 1)
-  comment       String?   @db.VarChar(255)
-  deleted       Int?      @default(0)
-  createdAt     DateTime?
-  updatedAt     DateTime?
+  id            Int      @id @default(autoincrement())
+  transactionId String   @unique(map: "transactionId") @db.VarChar(255)
+  rating        Decimal? @default(0.0) @db.Decimal(2, 1)
+  comment       String?  @db.VarChar(255)
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model RatingBreakdown {
-  id               Int       @id @default(autoincrement())
-  ratingId         Int       @unique(map: "ratingId")
+  id               Int      @id @default(autoincrement())
+  ratingId         Int      @unique(map: "ratingId")
   helmet           Int?
   abusive          Int?
   overall          Int?
@@ -314,68 +315,68 @@ model RatingBreakdown {
   damageProperty   Int?
   closeOpenSeal    Int?
   cleanEnvironment Int?
-  deleted          Int?      @default(0)
-  createdAt        DateTime?
-  updatedAt        DateTime?
+  deleted          Int?     @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model ScannerUser {
-  id            Int       @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   userId        Int?
   tipoffPointId Int?
-  activated     Int?      @default(0)
-  deleted       Int?      @default(0)
-  createdAt     DateTime?
-  updatedAt     DateTime?
+  activated     Int?     @default(0)
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Status {
-  id        Int       @id @default(autoincrement())
-  state     String    @db.VarChar(255)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  state     String   @db.VarChar(255)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ServicePoint {
-  id        Int       @id @default(autoincrement())
-  siteName  String    @db.VarChar(255)
-  placeId   String?   @db.VarChar(255)
-  address   String?   @db.VarChar(255)
-  location  String?   @db.VarChar(255)
-  lat       Decimal?  @db.Decimal(10, 6)
-  lng       Decimal?  @db.Decimal(10, 6)
-  active    Int?      @default(1)
-  deleted   Int?      @default(0)
-  Service   Service   @relation(fields: [serviceId], references: [id])
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  placeId   String?  @db.VarChar(255)
+  address   String?  @db.VarChar(255)
+  location  String?  @db.VarChar(255)
+  latitude  Decimal? @db.Decimal(10, 6)
+  longitude Decimal? @db.Decimal(10, 6)
+  active    Int?     @default(1)
+  deleted   Int?     @default(0)
+  Service   Service  @relation(fields: [serviceId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   serviceId Int
 }
 
 model Transaction {
-  id                  String    @id @db.VarChar(255)
-  operatorId          String?   @db.VarChar(255)
-  clientId            String?   @db.VarChar(255)
-  unitCost            Decimal   @db.Decimal(10, 2)
-  discountedTotalCost Decimal   @db.Decimal(10, 2)
-  actualTotalCost     Decimal   @db.Decimal(10, 2)
-  community           String    @db.VarChar(255)
-  gpsAccuracy         Decimal?  @db.Decimal(10, 2)
-  lat                 Decimal?  @db.Decimal(10, 8)
-  lng                 Decimal?  @db.Decimal(10, 8)
+  id                  String   @id @db.VarChar(255)
+  operatorId          String?  @db.VarChar(255)
+  clientId            String?  @db.VarChar(255)
+  unitCost            Decimal  @db.Decimal(10, 2)
+  discountedTotalCost Decimal  @db.Decimal(10, 2)
+  actualTotalCost     Decimal  @db.Decimal(10, 2)
+  community           String   @db.VarChar(255)
+  gpsAccuracy         Decimal? @db.Decimal(10, 2)
+  lat                 Decimal? @db.Decimal(10, 8)
+  lng                 Decimal? @db.Decimal(10, 8)
   axle                Int
   trips               Int
-  paymentStatus       Int?      @default(0)
+  paymentStatus       Int?     @default(0)
   currentStatus       Int
-  requestTypeId       Int?      @default(1)
-  toiletType          String?   @db.VarChar(255)
-  deleted             Int?      @default(0)
-  createdAt           DateTime?
-  updatedAt           DateTime?
+  requestTypeId       Int?     @default(1)
+  toiletType          String?  @db.VarChar(255)
+  deleted             Int?     @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   requestSource       Int?
-  customerName        String?   @db.VarChar(100)
-  customerPhoneNumber String?   @db.VarChar(100)
+  customerName        String?  @db.VarChar(100)
+  customerPhoneNumber String?  @db.VarChar(100)
   serviceType         Int?
 }
 
@@ -386,31 +387,31 @@ model TransactionStatus {
   date          DateTime? @db.Date
   time          DateTime? @db.Time(0)
   deleted       Int?      @default(0)
-  createdAt     DateTime?
-  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  surname     String    @db.VarChar(255)
-  otherNames  String    @db.VarChar(255)
-  email       String?   @db.VarChar(255)
-  phoneNumber String    @db.VarChar(255)
-  fcm         String?   @db.VarChar(255)
-  password    String    @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  surname     String   @db.VarChar(255)
+  otherNames  String   @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  phoneNumber String   @db.VarChar(255)
+  fcm         String?  @db.VarChar(255)
+  password    String   @db.VarChar(255)
   userTypeId  Int
-  activated   Int?      @default(0)
-  deleted     Int?      @default(0)
-  createdAt   DateTime?
-  updatedAt   DateTime?
+  activated   Int?     @default(0)
+  deleted     Int?     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model UserType {
-  id        Int       @id @default(autoincrement())
-  name     String    @db.VarChar(255)
-  deleted   Int?      @default(0)
-  createdAt DateTime?
-  updatedAt DateTime?
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Vehicle {
@@ -425,8 +426,8 @@ model Vehicle {
   roadWorthy            String?             @db.VarChar(255)
   tankCapacity          Int?
   deleted               Int?                @default(0)
-  createdAt             DateTime?
-  updatedAt             DateTime?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
 }
@@ -440,6 +441,6 @@ model Withdrawal {
   status           Int?      @default(0)
   approvedBy       Int?
   deleted          Int?      @default(0)
-  createdAt        DateTime?
-  updatedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }

@@ -2,11 +2,16 @@
 import { LOGIN_URL } from '@/config';
 import { signal } from '@preact/signals';
 import axios from 'axios';
+import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const Service = ({ data }: any) => {
+    const [id, setId] = useState(null);
+    const [name, setName] = useState("");
+    const [status, setStatus] = useState(2);
 
     const { data: session } = useSession({
         required: true,
@@ -19,24 +24,50 @@ export const Service = ({ data }: any) => {
     const router = useRouter();
     const pathname = usePathname()
 
-    const name = signal("");
-    const status = signal(2);
+
 
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name.value == "" || status.value == null) {
+            if (name == "" || status == 0) {
                 return toast.error("Please fill form");
             }
-          
+
             let data = {
                 name,
                 status,
             };
-            const response = await axios.post("/api/service", data);
+            const response = await axios.post("/api/services", data);
             toast.success(response.data.message);
-            name.value ="";
-            status.value = 2;
+            setName("")
+            setStatus(2);
+
+            router.refresh()
+
+        } catch (error: any) {
+            if (error.response.status == 401) {
+                toast.error(error.response.data.message);
+            }
+        }
+    };
+
+    const update = async (e: any) => {
+        try {
+            e.preventDefault();
+            if (name == "" || status == 0) {
+                return toast.error("Please fill form");
+            }
+
+            let data = {
+                id:Number(id),
+                name,
+                status,
+            };
+            const response = await axios.put("/api/services", data);
+            toast.success(response.data.message);
+            setId(null)
+            setName("")
+            setStatus(2);
 
             router.refresh()
 
@@ -76,7 +107,7 @@ export const Service = ({ data }: any) => {
                                         Name *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name' value={name.value} onChange={(e: any) => name.value = e.target.value} />
+                                        <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">
@@ -87,13 +118,13 @@ export const Service = ({ data }: any) => {
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            status.value = e.target.value;
+                                            setStatus(e.target.value);
                                         }}
-                                        value={status.value}
+                                        value={status}
                                     >
-                                        <option >Select status * </option>
+                                        <option value={0}>Select status * </option>
                                         <option value={1}>Active </option>
-                                        <option value={2} >Inactive </option>
+                                        <option value={2}>Inactive </option>
 
                                         {/* {data?.sendingTypes?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
@@ -114,15 +145,17 @@ export const Service = ({ data }: any) => {
                                             <div className="col-sm-10">
 
                                                 <button
-                                                  className="btn btn-primary"
+                                                    className="btn btn-primary"
                                                     onClick={async (e) => {
-
+                                                        if (id) {
+                                                            return update(e)
+                                                        }
                                                         add(e)
 
                                                     }}
 
                                                 >
-                                                   Submit
+                                                    Submit
                                                 </button>
 
                                             </div>
@@ -154,8 +187,10 @@ export const Service = ({ data }: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
-                                                    <td>{data?.satus}</td>
-                                                    <td>{data?.createdAt}</td>
+                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
+                                                    <td>  {moment(data?.createdAt).format(
+                                                        "MMM Do YYYY, h:mm:ss a"
+                                                    )}</td>
                                                     <td>
                                                         <div
                                                             className="btn-group"
@@ -182,9 +217,9 @@ export const Service = ({ data }: any) => {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-                                                                                // setMessageId(data.id);
-                                                                                // setTitle(data.title)
-                                                                                // setMessage(data.message)
+                                                                                setId(data.id);
+                                                                                setName(data.name)
+                                                                                setStatus(data.status)
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);
 
@@ -194,9 +229,10 @@ export const Service = ({ data }: any) => {
 
                                                                             }}
                                                                         >
-                                                                            Resend
+                                                                            Edit
                                                                         </button>
                                                                     </li>
+                                                                  
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

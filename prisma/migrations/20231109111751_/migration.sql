@@ -4,8 +4,8 @@ CREATE TABLE `Otp` (
     `code` VARCHAR(255) NOT NULL,
     `userId` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -16,8 +16,8 @@ CREATE TABLE `TruckClassification` (
     `name` VARCHAR(255) NOT NULL,
     `tankCapacity` DECIMAL(10, 2) NULL DEFAULT 0.00,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `axleClass`(`name`),
     PRIMARY KEY (`id`)
@@ -27,9 +27,10 @@ CREATE TABLE `TruckClassification` (
 CREATE TABLE `Service` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NULL,
+    `status` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -39,8 +40,8 @@ CREATE TABLE `Balance` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `balance` DECIMAL(10, 2) NULL DEFAULT 0.00,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `mainEntityId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -53,8 +54,8 @@ CREATE TABLE `Location` (
     `lat` DECIMAL(10, 8) NULL,
     `lng` DECIMAL(10, 8) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -68,8 +69,8 @@ CREATE TABLE `TransactionClosure` (
     `lat` DECIMAL(10, 8) NULL,
     `lng` DECIMAL(10, 8) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -84,8 +85,8 @@ CREATE TABLE `Discount` (
     `trip5` DECIMAL(10, 2) NOT NULL,
     `beyond5` DECIMAL(10, 2) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -95,8 +96,8 @@ CREATE TABLE `MainEntity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -108,8 +109,8 @@ CREATE TABLE `Commission` (
     `commission` DECIMAL(10, 2) NOT NULL,
     `status` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `commission`(`commission`),
     PRIMARY KEY (`id`)
@@ -120,8 +121,8 @@ CREATE TABLE `Logs` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `activity` VARCHAR(255) NULL,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -134,8 +135,8 @@ CREATE TABLE `Message` (
     `sentBy` INTEGER NOT NULL,
     `message` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -147,8 +148,8 @@ CREATE TABLE `MomoAccount` (
     `momoNumber` VARCHAR(255) NULL,
     `momoNetwork` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(0) NOT NULL,
-    `updatedAt` DATETIME(0) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `operatorId`(`operatorId`),
     PRIMARY KEY (`id`)
@@ -161,8 +162,8 @@ CREATE TABLE `MomoNetwork` (
     `abbrv` VARCHAR(255) NOT NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -174,8 +175,8 @@ CREATE TABLE `Payment` (
     `paymentId` VARCHAR(255) NOT NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -184,8 +185,8 @@ CREATE TABLE `Payment` (
 CREATE TABLE `PricingModel` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `locationId` VARCHAR(255) NOT NULL,
     `serviceId` INTEGER NOT NULL,
 
@@ -209,8 +210,8 @@ CREATE TABLE `DesludgingServicePricing` (
     `pumpAnnualDepreciation` DECIMAL(10, 2) NULL,
     `truckClassificationId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `locationId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -233,8 +234,8 @@ CREATE TABLE `WaterServicePricing` (
     `pumpAnnualDepreciation` DECIMAL(10, 2) NULL,
     `truckClassificationId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `locationId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -257,8 +258,8 @@ CREATE TABLE `BiodigesterServicePricing` (
     `pumpAnnualDepreciation` DECIMAL(10, 2) NULL,
     `truckClassificationId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `locationId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -277,8 +278,8 @@ CREATE TABLE `Operator` (
     `licenseClassification` INTEGER NULL,
     `driversLicense` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -291,8 +292,8 @@ CREATE TABLE `ProviderEarning` (
     `amount` DECIMAL(10, 2) NOT NULL,
     `completionDate` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `transactionId`(`transactionId`),
     PRIMARY KEY (`id`)
@@ -304,8 +305,8 @@ CREATE TABLE `OperatorRating` (
     `operatorId` VARCHAR(255) NOT NULL,
     `rating` DECIMAL(2, 1) NULL DEFAULT 0.0,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -317,8 +318,8 @@ CREATE TABLE `TransactionRating` (
     `rating` DECIMAL(2, 1) NULL DEFAULT 0.0,
     `comment` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `transactionId`(`transactionId`),
     PRIMARY KEY (`id`)
@@ -339,8 +340,8 @@ CREATE TABLE `RatingBreakdown` (
     `closeOpenSeal` INTEGER NULL,
     `cleanEnvironment` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `ratingId`(`ratingId`),
     PRIMARY KEY (`id`)
@@ -353,8 +354,8 @@ CREATE TABLE `ScannerUser` (
     `tipoffPointId` INTEGER NULL,
     `activated` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -364,8 +365,8 @@ CREATE TABLE `Status` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `state` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -381,8 +382,8 @@ CREATE TABLE `ServicePoint` (
     `lng` DECIMAL(10, 6) NULL,
     `active` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `serviceId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -407,8 +408,8 @@ CREATE TABLE `Transaction` (
     `requestTypeId` INTEGER NULL DEFAULT 1,
     `toiletType` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `requestSource` INTEGER NULL,
     `customerName` VARCHAR(100) NULL,
     `customerPhoneNumber` VARCHAR(100) NULL,
@@ -425,8 +426,8 @@ CREATE TABLE `TransactionStatus` (
     `date` DATE NULL,
     `time` TIME(0) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -443,8 +444,8 @@ CREATE TABLE `User` (
     `userTypeId` INTEGER NOT NULL,
     `activated` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -454,8 +455,8 @@ CREATE TABLE `UserType` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -473,8 +474,8 @@ CREATE TABLE `Vehicle` (
     `roadWorthy` VARCHAR(255) NULL,
     `tankCapacity` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
     `truckClassificationId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -490,8 +491,8 @@ CREATE TABLE `Withdrawal` (
     `status` INTEGER NULL DEFAULT 0,
     `approvedBy` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NULL,
-    `updatedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

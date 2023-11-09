@@ -4,56 +4,65 @@ import { logActivity } from "@/utils/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
-// export async function POST(request: Request) {
-//   try {
-//     const res = await request.json();
-//     const session: any = await getServerSession(authOptions);
+export async function POST(request: Request) {
+  try {
+    const res = await request.json();
+    const session: any = await getServerSession(authOptions);
 
-//     const userId = session?.user?.id;
+    console.log(res);
 
-//     await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
-//     const data = {
-//       assignedToId: Number(res?.assignedToUser),
-//       assignedFromId: Number(res?.assignedFromUser),
-//       userId: userId,
-//     };
+    // const userId = session?.user?.id;
 
-//     const response = await prisma.assignData.create({ data });
+    // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
-//     return NextResponse.json(response);
-//   } catch (error: any) {
-//     console.log(error);
+    const data = {
+      name: res?.name,
+      status: Number(res?.status),
+    };
 
-//     return NextResponse.json(error, { status: 500 });
-//   }
-// }
+    const response = await prisma.service.create({ data });
 
-// export async function PUT(request: Request) {
-//   try {
-//     const res = await request.json();
-//     const session: any = await getServerSession(authOptions);
+    return NextResponse.json(response);
+  } catch (error: any) {
+    console.log(error);
 
-//     const userId = session?.user?.id;
+    return NextResponse.json(error, { status: 500 });
+  }
+}
 
-//     let assignData: any = await prisma.assignData.findFirst({
-//       where: { id: Number(res.id) },
-//     });
+export async function PUT(request: Request) {
+  try {
+    const res = await request.json();
+    const session: any = await getServerSession(authOptions);
 
-//     await prisma.assignData.update({
-//       where: {
-//         id: Number(res?.id),
-//       },
-//       data: { deleted: Math.abs(assignData?.deleted - 1) },
-//     });
 
-//     return NextResponse.json({ status: 200 });
-//   } catch (error: any) {
-//     console.log(error);
+    console.log(res);
+    
 
-//     return NextResponse.json(error, { status: 500 });
-//   }
-// }
+    const userId = session?.user?.id;
+    const data = {
+      name: res?.name,
+      latitude: Number(res?.latitude),
+      longitude: Number(res?.longitude),
+      address: Number(res?.address),
+      service: Number(res?.service),
+      status: Number(res?.status),
+    };
+    await prisma.service.update({
+      where: {
+        id: Number(res?.id),
+      },
+      data,
+    });
+
+    return NextResponse.json({ status: 200 });
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json(error, { status: 500 });
+  }
+}
 
 export async function GET(request: Request) {
   try {
@@ -65,11 +74,14 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.servicePoint.findMany({
-      where: { deleted: 0},
+    const response = await prisma.service.findMany({
+      where: { deleted: 0 },
     });
 
-    return NextResponse.json({response:[]});
+    console.log(response);
+
+
+    return NextResponse.json({ response });
   } catch (error) {
     console.log(error);
 

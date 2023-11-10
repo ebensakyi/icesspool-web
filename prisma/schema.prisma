@@ -20,9 +20,12 @@ model TruckClassification {
   id                        Int                         @id @default(autoincrement())
   name                      String                      @unique(map: "axleClass") @db.VarChar(255)
   tankCapacity              Decimal?                    @default(0.00) @db.Decimal(10, 2)
-  deleted                   Int?                        @default(0)
+  deleted                   Int?                        @default(0) 
+   serviceId                 Int
+
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
+  Service                   Service                     @relation(fields: [serviceId], references: [id])
   Vehicle                   Vehicle[]
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
@@ -30,15 +33,16 @@ model TruckClassification {
 }
 
 model Service {
-  id              Int               @id @default(autoincrement())
-  name            String?
-  status          Int?              @default(1)
-  deleted         Int?              @default(0)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  PricingModel    PricingModel[]
-  ServicePoint    ServicePoint[]
-  ServiceLocation ServiceLocation[]
+  id                  Int                   @id @default(autoincrement())
+  name                String?
+  status              Int?                  @default(1)
+  deleted             Int?                  @default(0)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  PricingModel        PricingModel[]
+  ServicePoint        ServicePoint[]
+  ServiceLocation     ServiceLocation[]
+  TruckClassification TruckClassification[]
 }
 
 model Balance {

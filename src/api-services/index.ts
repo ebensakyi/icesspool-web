@@ -56,3 +56,14 @@ export async function getServiceLocations(searchParams: any) {
   return await response.json();
 
 }
+
+export async function getTruckClasses(searchParams: any,service:number) {
+
+    let response = await fetch(`${SERVER_BASE_URL}/api/truck-classification?serviceId=${service}`, { cache: 'no-store' });
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch data')
+    }
+    return await response.json();
+  
+  }

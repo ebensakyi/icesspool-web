@@ -10,9 +10,9 @@ export async function POST(request: Request) {
 
     const data = {
       status: Number(res?.status),
-      regionId: Number(res?.regionId),
-      serviceId: Number(res?.serviceId),
-   
+      regionId: Number(res?.region),
+      serviceId: Number(res?.service),
+
     };
 
 
@@ -20,9 +20,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ response, message: "Data submitted succesfully" });
   } catch (error: any) {
-    console.log(error);
+    console.log(error.message);
 
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
 
@@ -31,15 +31,14 @@ export async function PUT(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    console.log(res);
 
 
     const userId = session?.user?.id;
     const data = {
       status: Number(res?.status),
-      regionId: Number(res?.regionId),
-      serviceId: Number(res?.serviceId),
-   
+      regionId: Number(res?.region),
+      serviceId: Number(res?.service),
+
     };
     await prisma.serviceLocation.update({
       where: {
@@ -48,7 +47,7 @@ export async function PUT(request: Request) {
       data,
     });
 
-    return NextResponse.json({  message: "Data submitted succesfully" });
+    return NextResponse.json({ message: "Data submitted succesfully" });
   } catch (error: any) {
     console.log(error);
 
@@ -70,7 +69,7 @@ export async function GET(request: Request) {
       where: { deleted: 0 },
       include: {
         Service: true,
-        Region:true
+        Region: true
       }
     });
 

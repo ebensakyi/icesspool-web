@@ -112,6 +112,8 @@ model ServiceLocation {
   updatedAt DateTime @updatedAt
   regionId  Int
   serviceId Int
+
+  @@unique([regionId, serviceId], name: "regionServiceKey")
 }
 
 // model District {

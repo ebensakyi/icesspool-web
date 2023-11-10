@@ -114,6 +114,7 @@ CREATE TABLE `ServiceLocation` (
     `regionId` INTEGER NOT NULL,
     `serviceId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `ServiceLocation_regionId_serviceId_key`(`regionId`, `serviceId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

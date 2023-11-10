@@ -9,7 +9,9 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const ServiceLocation = ({ data }: any) => {
-    const [id, setId] = useState(null);
+
+    
+    const [id, setId] = useState("");
     const [region, setRegion] = useState("");
     const [service, setService] = useState("");
     const [status, setStatus] = useState("");
@@ -39,7 +41,7 @@ export const ServiceLocation = ({ data }: any) => {
                 service,
                 status,
             };
-            const response = await axios.post("/api/services", data);
+            const response = await axios.post("/api/service-location", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
@@ -48,6 +50,8 @@ export const ServiceLocation = ({ data }: any) => {
             router.refresh()
 
         } catch (error: any) {
+            console.log(error);
+            
             if (error.response.status == 401) {
                 toast.error(error.response.data.message);
             }
@@ -68,7 +72,7 @@ export const ServiceLocation = ({ data }: any) => {
             };
             const response = await axios.put("/api/services", data);
             toast.success(response.data.message);
-            setId(null)
+            setId("")
             setRegion("")
             setStatus("");
             setService("")
@@ -223,7 +227,7 @@ export const ServiceLocation = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response.map((data: any) => {
+                                        {data?.serviceLocations?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Region?.name}</td>

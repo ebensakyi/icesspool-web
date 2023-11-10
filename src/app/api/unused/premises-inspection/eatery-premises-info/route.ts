@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma/db";
 import { EateryInfo } from "@/typings";
-import { logActivity } from "@/utils/log";
+import { logActivity } from "@/libs/log";
 import { NextResponse } from "next/server";
 
 

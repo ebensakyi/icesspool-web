@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
-import { logActivity } from "@/utils/log";
-import { generateCode } from "@/utils/generate-code";
+import { logActivity } from "@/libs/log";
+import { generateCode } from "@/libs/generate-code";
 
 import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
-import { upload2S3, saveFileOnDisk } from "@/utils/upload";
+import { upload2S3, saveFileOnDisk } from "@/libs/upload";
 import formidable from "formidable";
 
 export async function POST(request: Request) {

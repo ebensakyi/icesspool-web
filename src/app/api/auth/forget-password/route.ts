@@ -3,8 +3,8 @@ import { prisma } from "@/prisma/db";
 import bcrypt from "bcryptjs";
 // import { destroySession, setSession } from "../../../../../utils/session-manager";
 import jwt from "jsonwebtoken";
-import { generateCode } from "@/utils/generate-code";
-import { sendSMS } from "@/utils/send-hubtel-sms";
+import { generateCode } from "@/libs/generate-code";
+import { sendSMS } from "@/libs/send-hubtel-sms";
 
 export async function POST(request: Request) {
   try {

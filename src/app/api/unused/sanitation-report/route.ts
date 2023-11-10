@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
-import { logActivity } from "@/utils/log";
-import { upload2S3, saveFileOnDisk } from "@/utils/upload";
-import { sendSMS } from "../../../../../utils/send-hubtel-sms";
+import { logActivity } from "@/libs/log";
+import { upload2S3, saveFileOnDisk } from "@/libs/upload";
+import { sendSMS } from "../../../../../libs/send-hubtel-sms";
 
 export async function POST(request: Request) {
   try {

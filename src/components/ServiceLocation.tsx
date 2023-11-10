@@ -52,9 +52,8 @@ export const ServiceLocation = ({ data }: any) => {
         } catch (error: any) {
             console.log(error);
             
-            if (error.response.status == 401) {
                 toast.error(error.response.data.message);
-            }
+            
         }
     };
 
@@ -91,6 +90,17 @@ export const ServiceLocation = ({ data }: any) => {
 
     return (
         <main id="main" className="main">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="pagetitle">
                 <h1>SERVICE LOCATION</h1>
                 {/* <nav>

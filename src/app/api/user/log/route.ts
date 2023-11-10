@@ -5,7 +5,7 @@ import AWS from "aws-sdk";
 import fs from "fs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { logActivity } from "@/utils/log";
+import { logActivity } from "@/libs/log";
 
 const XLSX = require("xlsx");
 export async function GET(request: Request) {

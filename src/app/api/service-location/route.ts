@@ -20,9 +20,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ response, message: "Data submitted succesfully" });
   } catch (error: any) {
-    console.log(error.message);
+    let message = ""
+    if(error.code=="P2002"){
+       message = "Service and Location combination already exist"
+    }
 
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json({ message: message }, { status: 500 });
   }
 }
 

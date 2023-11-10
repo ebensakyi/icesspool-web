@@ -1,12 +1,12 @@
-import { generateCode } from "@/utils/generate-code";
+import { generateCode } from "@/libs/generate-code";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/prisma/db";
-import { sendSMS } from "@/utils/send-hubtel-sms";
-import { append_233 } from "@/utils/append-233";
+import { sendSMS } from "@/libs/send-hubtel-sms";
+import { append_233 } from "@/libs/append-233";
 import { NextResponse } from "next/server";
-import { logActivity } from "@/utils/log";
+import { logActivity } from "@/libs/log";
 
 export async function POST(request: Request) {
   try {

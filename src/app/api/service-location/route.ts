@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
+import { createFailedResponse, createSuccessResponse } from "@/libs/response";
 
 export async function POST(request: Request) {
   try {
@@ -18,14 +19,18 @@ export async function POST(request: Request) {
 
     const response = await prisma.serviceLocation.create({ data });
 
-    return NextResponse.json({ response, message: "Data submitted succesfully" });
-  } catch (error: any) {
-    let message = ""
-    if(error.code=="P2002"){
-       message = "Service and Location combination already exist"
-    }
+    // return NextResponse.json({ response, message: "Data submitted succesfully" });
 
-    return NextResponse.json({ message: message }, { status: 500 });
+    return createSuccessResponse(response, "Data submitted succesfully")
+  } catch (error: any) {
+    // let message = ""
+    // if(error.code=="P2002"){
+    //    message = "Service and Location combination already exist"
+    // }
+
+    // return NextResponse.json({ message: message }, { status: 500 });
+
+    return createFailedResponse(error.code, 500)
   }
 }
 

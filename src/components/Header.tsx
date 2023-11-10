@@ -215,19 +215,19 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/offers/desludging">
                                         <i className="bi bi-circle" />
                                         <span>Desludging</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/offers/water">
                                         <i className="bi bi-circle" />
                                         <span>Water</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/offers/biodigester">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digest</span>
                                     </Link>
@@ -309,19 +309,19 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/pricing/desludging">
                                         <i className="bi bi-circle" />
                                         <span>Desluging </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/pricing/water">
                                         <i className="bi bi-circle" />
                                         <span>Water </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/esicapps1/table">
+                                    <Link href="/pricing/biodigester">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>

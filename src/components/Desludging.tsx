@@ -194,7 +194,7 @@ export const Desludging = ({ data }: any) => {
                                     </div>
                                 </div> */}
                                 <div className="row">
-                                    <div className="col-lg-4">
+                                    <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Insurance *
@@ -204,7 +204,7 @@ export const Desludging = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-4">
+                                    <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Repair cost *
@@ -214,7 +214,7 @@ export const Desludging = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-4">
+                                    <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Road worthy *
@@ -229,7 +229,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Unit Fuel Cost *
+                                                Unit Fuel Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
@@ -239,7 +239,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                           No. of Working days *
+                                                No. of Working days *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter name' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
@@ -249,7 +249,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Truck Depreciation *
+                                                Truck Depreciation *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
@@ -261,7 +261,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Annual Admin Cost *
+                                                Annual Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
@@ -271,7 +271,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Annual Overhead Cost *
+                                                Annual Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
@@ -281,7 +281,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Annual Tools Cost *
+                                                Annual Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
@@ -293,7 +293,7 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Profit Percentage *
+                                                Profit Percentage *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter profit percentage' value={profitPercentage} onChange={(e: any) => setProfitPercentage(e.target.value)} />
@@ -303,91 +303,91 @@ export const Desludging = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Pump Annual Depreciation *
+                                                Pump Annual Depreciation *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className="col-lg-4">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Name *
+                                                Truck Classification *
                                             </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
-                                            </div>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setTruckClassification(e.target.value);
+                                                }}
+                                                value={truckClassification}
+                                            >
+                                                <option value={0}>Select truck class * </option>
+
+
+                                                {data?.truckClassifications?.response?.map((data: any) => (
+                                                    <option key={data.id} value={data.id}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                    Truck Classification *
-                                    </label>
-                                    <select
-                                        className="form-control"
-                                        aria-label="Default select example"
-                                        onChange={(e: any) => {
-                                            setTruckClassification(e.target.value);
-                                        }}
-                                        value={truckClassification}
-                                    >
-                                        <option value={0}>Select truck class * </option>
+                                <div className="row">
+                                   
+                                    <div className="col-lg-4">
 
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
 
-                                        {data?.truckClassifications?.response?.map((data: any) => (
-                                            <option key={data.id} value={data.id}>
-                                                {data.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Status *
-                                    </label>
-                                    <select
-                                        className="form-control"
-                                        aria-label="Default select example"
-                                        onChange={(e: any) => {
-                                            setStatus(e.target.value);
-                                        }}
-                                        value={status}
-                                    >
-                                        <option value={""}>Select status * </option>
-                                        <option value={1}>Active </option>
-                                        <option value={2}>Inactive </option>
-
-                                        {/* {data?.sendingTypes?.map((data: any) => (
+                                                {/* {data?.sendingTypes?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
                                             </option>
                                         ))} */}
-                                    </select>
-                                </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Region *
-                                    </label>
-                                    <select
-                                        className="form-control"
-                                        aria-label="Default select example"
-                                        onChange={(e: any) => {
-                                            setStatus(e.target.value);
-                                        }}
-                                        value={status}
-                                    >
-                                        <option value={""}>Select region * </option>
-                                      
-                                    {data?.regions?.response?.map((data: any) => (
-                                            <option key={data.id} value={data.id}>
-                                                {data.name}
-                                            </option>
-                                        ))} 
-                                    </select>
-                                </div>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
 
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Region *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select region * </option>
+
+                                                {data?.regions?.response?.map((data: any) => (
+                                                    <option key={data.id} value={data.id}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <div className=" mb-3">

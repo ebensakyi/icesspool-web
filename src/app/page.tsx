@@ -60,5 +60,6 @@ export default async function Page({ searchParams }: any) {
   let data = { session, dashboardData, regions }
 
 
-  return <Dashboard data={data} />
+  // return <Dashboard data={data} />
+  return <>DASHBOARD</>
 }

@@ -10,11 +10,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const Desludging = ({ data }: any) => {
     const [id, setId] = useState("");
-    const [name, setName] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [longitude, setLongitude] = useState("");
-    const [address, setAddress] = useState("");
-    const [service, setService] = useState("");
+    const [insurance, setInsurance] = useState("");
+    const [repairCost, setRepairCost] = useState("");
+    const [roadWorthy, setRoadWorthy] = useState("");
+    const [unitFuelCost, setUnitFuelCost] = useState("");
+    const [workingDays, setWorkingDays] = useState("");
+    const [truckDepreciation, setTruckDepreciation] = useState("");
+    const [annualAdminCost, setAnnualAdminCost] = useState("");
+    const [annualOverheadCost, setAnnualOverheadCost] = useState("");
+    const [annualToolsCost, setAnnualToolsCost] = useState("");
+    const [profitPercentage, setProfitPercentage] = useState("");
+    const [pumpAnnualDepreciation, setPumpAnnualDepreciation] = useState("");
+    const [truckClassification, setTruckClassification] = useState("");
+    const [region, setRegion] = useState("");
+
+
     const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
@@ -82,7 +92,7 @@ export const Desludging = ({ data }: any) => {
                 service: Number(service),
                 status: Number(status),
             };
-             response = await axios.put("/api/service-points", data);
+            response = await axios.put("/api/service-points", data);
             toast.success(response.data.message);
             setId("")
             setName("")
@@ -96,7 +106,7 @@ export const Desludging = ({ data }: any) => {
 
         } catch (error: any) {
             console.log(error.response);
-            
+
             // if (error.response.status == 401) {
             //     toast.error(error.response.data.message);
             // }
@@ -109,7 +119,7 @@ export const Desludging = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>FEACAL DESLUDGING</h1>
+                <h1>FEACAL DESLUDGING PRICING</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -123,58 +133,186 @@ export const Desludging = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Add</h5>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Name *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                {/* <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Name *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Name *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Name *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> */}
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Insurance *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter insurance' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Repair cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter repair cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Road worthy *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter road worthy' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Unit Fuel Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                           No. of Working days *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter name' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Truck Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Annual Admin Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Annual Overhead Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Annual Tools Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Profit Percentage *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter profit percentage' value={profitPercentage} onChange={(e: any) => setProfitPercentage(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Pump Annual Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Name *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div> */}
                                 </div>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Latitude *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter Latitude' value={latitude} onChange={(e: any) => setLatitude(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Longitude *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter Longitude' value={longitude} onChange={(e: any) => setLongitude(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Address *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter Address' value={address} onChange={(e: any) => setAddress(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Service *
+                                    Truck Classification *
                                     </label>
                                     <select
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            setService(e.target.value);
+                                            setTruckClassification(e.target.value);
                                         }}
-                                        value={service}
+                                        value={truckClassification}
                                     >
-                                        <option value={0}>Select service * </option>
+                                        <option value={0}>Select truck class * </option>
 
 
-                                        {data?.services?.response?.map((data: any) => (
+                                        {data?.truckClassifications?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
                                             </option>
@@ -204,7 +342,27 @@ export const Desludging = ({ data }: any) => {
                                         ))} */}
                                     </select>
                                 </div>
-
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Region *
+                                    </label>
+                                    <select
+                                        className="form-control"
+                                        aria-label="Default select example"
+                                        onChange={(e: any) => {
+                                            setStatus(e.target.value);
+                                        }}
+                                        value={status}
+                                    >
+                                        <option value={""}>Select region * </option>
+                                      
+                                    {data?.regions?.response?.map((data: any) => (
+                                            <option key={data.id} value={data.id}>
+                                                {data.name}
+                                            </option>
+                                        ))} 
+                                    </select>
+                                </div>
 
 
 
@@ -298,13 +456,12 @@ export const Desludging = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setName(data.name)
-                                                                                setAddress(data.address)
-                                                                                setLatitude(data.latitude)
-                                                                                setLongitude(data.longitude)
-                                                                                setService(data.serviceId)
-                                                                                setStatus(data.status)
-                                                                                // setIsEditing(true);
+                                                                                // setInsurance(data.name)
+                                                                                // setAddress(data.address)
+                                                                                // setLatitude(data.latitude)
+                                                                                // setLongitude(data.longitude)
+                                                                                // setService(data.serviceId)
+                                                                                // setStatus(data.status)
 
                                                                             }}
                                                                         >

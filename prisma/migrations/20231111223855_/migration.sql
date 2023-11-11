@@ -14,9 +14,11 @@ CREATE TABLE `Otp` (
 CREATE TABLE `TruckClassification` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `tankCapacity` DECIMAL(10, 2) NULL DEFAULT 0.00,
-    `deleted` INTEGER NULL DEFAULT 0,
     `serviceId` INTEGER NOT NULL,
+    `tankCapacity` DECIMAL(10, 2) NULL DEFAULT 0.00,
+    `regionId` INTEGER NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `status` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -527,6 +529,9 @@ CREATE TABLE `Withdrawal` (
 
 -- AddForeignKey
 ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Balance` ADD CONSTRAINT `Balance_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -43,28 +43,40 @@ export const Desludging = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == "") {
-                return toast.error("Please fill form");
-            }
+            // if (name == "" || status == "") {
+            //     return toast.error("Please fill form");
+            // }
 
             let data = {
-                name,
-                latitude: Number(latitude),
-                longitude: Number(longitude),
-                address,
-                service: Number(service),
+                insurance,
+                repairCost: Number(repairCost),
+                roadWorthy: Number(roadWorthy),
+                unitFuelCost: Number(unitFuelCost),
+                workingDays: Number(workingDays),
+                truckDepreciation: Number(truckDepreciation),
+                annualAdminCost: Number(annualAdminCost),
+                annualOverheadCost: Number(annualOverheadCost),
+                annualToolsCost: Number(annualToolsCost),
+                profitPercentage: Number(profitPercentage),
+                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+
+                truckClassification: Number(truckClassification),
                 status: Number(status),
             };
             const response = await axios.post("/api/service-points", data);
             toast.success(response.data.message);
             setId("")
-            setName("")
-            setAddress("");
+            setRepairCost("")
+            setRoadWorthy("");
 
-            setLatitude("");
-            setLongitude("");
-            setService("");
-            setStatus("");
+            setUnitFuelCost("");
+            setWorkingDays("");
+            setTruckDepreciation("");
+            setAnnualAdminCost("");
+            setAnnualOverheadCost("");
+            setProfitPercentage("");
+            setPumpAnnualDepreciation("");
+            setTruckClassification("");
 
             router.refresh()
 
@@ -79,29 +91,41 @@ export const Desludging = ({ data }: any) => {
         let response
         try {
             e.preventDefault();
-            if (name == "" || status == "" || latitude == null || longitude == null || address == "" || service == null || status == null) {
-                return toast.error("Please fill form");
-            }
+            // if (name == "" || status == "" || latitude == null || longitude == null || address == "" || service == null || status == null) {
+            //     return toast.error("Please fill form");
+            // }
 
             let data = {
                 id: Number(id),
-                name,
-                latitude: Number(latitude),
-                longitude: Number(longitude),
-                address,
-                service: Number(service),
+                insurance,
+                repairCost: Number(repairCost),
+                roadWorthy: Number(roadWorthy),
+                unitFuelCost: Number(unitFuelCost),
+                workingDays: Number(workingDays),
+                truckDepreciation: Number(truckDepreciation),
+                annualAdminCost: Number(annualAdminCost),
+                annualOverheadCost: Number(annualOverheadCost),
+                annualToolsCost: Number(annualToolsCost),
+                profitPercentage: Number(profitPercentage),
+                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+
+                truckClassification: Number(truckClassification),
                 status: Number(status),
             };
             response = await axios.put("/api/service-points", data);
             toast.success(response.data.message);
             setId("")
-            setName("")
-            setAddress("");
+            setRepairCost("")
+            setRoadWorthy("");
 
-            setLatitude("");
-            setLongitude("");
-            setService("");
-            setStatus("");
+            setUnitFuelCost("");
+            setWorkingDays("");
+            setTruckDepreciation("");
+            setAnnualAdminCost("");
+            setAnnualOverheadCost("");
+            setProfitPercentage("");
+            setPumpAnnualDepreciation("");
+            setTruckClassification("");
             router.refresh()
 
         } catch (error: any) {

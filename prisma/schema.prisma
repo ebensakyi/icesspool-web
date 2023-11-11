@@ -17,11 +17,14 @@ model Otp {
 }
 
 model TruckClassification {
-  id                        Int                         @id @default(autoincrement())
-  name                      String                      @unique(map: "axleClass") @db.VarChar(255)
-  tankCapacity              Decimal?                    @default(0.00) @db.Decimal(10, 2)
-  deleted                   Int?                        @default(0) 
-   serviceId                 Int
+  id           Int      @id @default(autoincrement())
+  name         String   @unique(map: "axleClass") @db.VarChar(255)
+  serviceId    Int
+  tankCapacity Decimal? @default(0.00) @db.Decimal(10, 2)
+  regionId     Int?
+
+  deleted Int? @default(0)
+  status  Int? @default(0)
 
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
@@ -30,6 +33,7 @@ model TruckClassification {
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
+  Region                    Region?                     @relation(fields: [regionId], references: [id])
 }
 
 model Service {
@@ -95,14 +99,15 @@ model Discount {
 }
 
 model Region {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(255)
-  latitude        Decimal           @db.Decimal(10, 2)
-  longitude       Decimal           @db.Decimal(10, 2)
-  deleted         Int?              @default(0)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  ServiceLocation ServiceLocation[]
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(255)
+  latitude            Decimal               @db.Decimal(10, 2)
+  longitude           Decimal               @db.Decimal(10, 2)
+  deleted             Int?                  @default(0)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ServiceLocation     ServiceLocation[]
+  TruckClassification TruckClassification[]
 }
 
 model ServiceLocation {

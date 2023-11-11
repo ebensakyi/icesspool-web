@@ -10,9 +10,11 @@ export async function POST(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     const data = {
+      name: res?.name,
       status: Number(res?.status),
       regionId: Number(res?.region),
       serviceId: Number(res?.service),
+      tankCapacity: Number(res?.tankCapacity)
     };
 
     const response = await prisma.truckClassification.create({ data });

@@ -68,3 +68,16 @@ export async function getTruckClasses(searchParams: any, service?: number) {
   }
   return await response.json();
 }
+
+
+export async function getDesludgingPricing(searchParams: any, service?: number) {
+    let response = await fetch(
+      `${SERVER_BASE_URL}/api/pricing/desludging?serviceId=${service}`,
+      { cache: "no-store" }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return await response.json();
+  }

@@ -84,11 +84,10 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.service.findMany({
+    const response = await prisma.desludgingServicePricing.findMany({
       where: { deleted: 0 },
     });
 
-    console.log(response);
 
 
     return NextResponse.json({ response });

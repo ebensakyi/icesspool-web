@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const Desludging = ({ data }: any) => {
+
+
     const [id, setId] = useState("");
     const [insurance, setInsurance] = useState("");
     const [repairCost, setRepairCost] = useState("");
@@ -24,7 +26,7 @@ export const Desludging = ({ data }: any) => {
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
-    
+
     const [region, setRegion] = useState("");
 
 
@@ -342,7 +344,7 @@ export const Desludging = ({ data }: any) => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                <div className="col-lg-4">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Fuel Distance Constant *
@@ -434,18 +436,32 @@ export const Desludging = ({ data }: any) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <div className="card">
-                            <div className="card-body">
+                            <div className="card-body" style={{
+                                "display": "block",
+                                "overflowX": "auto",
+                                "whiteSpace": "nowrap"
+                            }}>
                                 <h5 className="card-title">List</h5>
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Address</th>
-                                            <th scope="col">Latitute</th>
-                                            <th scope="col">Longitude</th>
-                                            <th scope="col">Service</th>
+                                            <th scope="col">region</th>
+
+                                            <th scope="col">insurance</th>
+                                            <th scope="col">repairCost</th>
+                                            <th scope="col">roadWorthy</th>
+                                            <th scope="col">unitFuelCost</th>
+                                            <th scope="col">workingDays</th>
+                                            <th scope="col">truckDepreciation</th>
+                                            <th scope="col">annualAdminCost</th>
+                                            <th scope="col">annualOverheadCost</th>
+                                            <th scope="col">annualToolsCost</th>
+                                            <th scope="col">profitPercentage</th>
+                                            <th scope="col">pumpAnnualDepreciation</th>
+                                            <th scope="col">truckClassification</th>
+                                            <th scope="col">fuelDistanceConst</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -455,14 +471,23 @@ export const Desludging = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.servicePoints?.response.map((data: any) => {
+                                        {data?.desludgingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
-                                                    <td>{data?.address}</td>
-                                                    <td>{data?.latitude}</td>
-                                                    <td>{data?.longitude}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.insurance}</td>
+                                                    <td>{data?.repairCost}</td>
+                                                    <td>{data?.roadWorthy}</td>
+                                                    <td>{data?.unitFuelCost}</td>
+                                                    <td>{data?.workingDays}</td>
+                                                    <td>{data?.truckDepreciation}</td>
+                                                    <td>{data?.annualAdminCost}</td>
+                                                    <td>{data?.annualOverheadCost}</td>
+                                                    <td>{data?.annualToolsCost}</td>
+                                                    <td>{data?.profitPercentage}</td>
+                                                    <td>{data?.pumpAnnualDepreciation}</td>
+                                                    <td>{data?.truckClassification}</td>
+                                                    <td>{data?.fuelDistanceConst}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(

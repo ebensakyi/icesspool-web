@@ -22,6 +22,9 @@ export const Desludging = ({ data }: any) => {
     const [profitPercentage, setProfitPercentage] = useState("");
     const [pumpAnnualDepreciation, setPumpAnnualDepreciation] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
+    const [fuelDistanceConst, setFuelDistanceConst] = useState("");
+
+    
     const [region, setRegion] = useState("");
 
 
@@ -59,11 +62,12 @@ export const Desludging = ({ data }: any) => {
                 annualToolsCost: Number(annualToolsCost),
                 profitPercentage: Number(profitPercentage),
                 pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
-
+                region: Number(region),
                 truckClassification: Number(truckClassification),
+                fuelDistanceConst: Number(fuelDistanceConst),
                 status: Number(status),
             };
-            const response = await axios.post("/api/service-points", data);
+            const response = await axios.post("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -77,6 +81,7 @@ export const Desludging = ({ data }: any) => {
             setProfitPercentage("");
             setPumpAnnualDepreciation("");
             setTruckClassification("");
+            setFuelDistanceConst("")
 
             router.refresh()
 
@@ -97,7 +102,7 @@ export const Desludging = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                insurance,
+                insurance: Number(insurance),
                 repairCost: Number(repairCost),
                 roadWorthy: Number(roadWorthy),
                 unitFuelCost: Number(unitFuelCost),
@@ -126,6 +131,7 @@ export const Desludging = ({ data }: any) => {
             setProfitPercentage("");
             setPumpAnnualDepreciation("");
             setTruckClassification("");
+            setFuelDistanceConst("")
             router.refresh()
 
         } catch (error: any) {
@@ -168,7 +174,7 @@ export const Desludging = ({ data }: any) => {
                                                 Name *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +184,7 @@ export const Desludging = ({ data }: any) => {
                                                 Name *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +194,7 @@ export const Desludging = ({ data }: any) => {
                                                 Name *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +206,7 @@ export const Desludging = ({ data }: any) => {
                                                 Insurance *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter insurance' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter insurance' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +216,7 @@ export const Desludging = ({ data }: any) => {
                                                 Repair cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter repair cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter repair cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +226,7 @@ export const Desludging = ({ data }: any) => {
                                                 Road worthy *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter road worthy' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter road worthy' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -232,7 +238,7 @@ export const Desludging = ({ data }: any) => {
                                                 Unit Fuel Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -242,7 +248,7 @@ export const Desludging = ({ data }: any) => {
                                                 No. of Working days *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter name' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter  no. of Working days' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -252,7 +258,7 @@ export const Desludging = ({ data }: any) => {
                                                 Truck Depreciation *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -264,7 +270,7 @@ export const Desludging = ({ data }: any) => {
                                                 Annual Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +280,7 @@ export const Desludging = ({ data }: any) => {
                                                 Annual Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -284,7 +290,7 @@ export const Desludging = ({ data }: any) => {
                                                 Annual Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +302,7 @@ export const Desludging = ({ data }: any) => {
                                                 Profit Percentage *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter profit percentage' value={profitPercentage} onChange={(e: any) => setProfitPercentage(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter profit percentage' value={profitPercentage} onChange={(e: any) => setProfitPercentage(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -306,7 +312,7 @@ export const Desludging = ({ data }: any) => {
                                                 Pump Annual Depreciation *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -336,7 +342,16 @@ export const Desludging = ({ data }: any) => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                   
+                                <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Fuel Distance Constant *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={fuelDistanceConst} onChange={(e: any) => setFuelDistanceConst(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="col-lg-4">
 
                                         <div className=" mb-3">
@@ -373,9 +388,9 @@ export const Desludging = ({ data }: any) => {
                                                 className="form-control"
                                                 aria-label="Default select example"
                                                 onChange={(e: any) => {
-                                                    setStatus(e.target.value);
+                                                    setRegion(e.target.value);
                                                 }}
-                                                value={status}
+                                                value={region}
                                             >
                                                 <option value={""}>Select region * </option>
 

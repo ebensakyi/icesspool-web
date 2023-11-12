@@ -86,6 +86,9 @@ export async function GET(request: Request) {
 
     const response = await prisma.desludgingServicePricing.findMany({
       where: { deleted: 0 },
+      include:{
+        Region:true
+      }
     });
 
 

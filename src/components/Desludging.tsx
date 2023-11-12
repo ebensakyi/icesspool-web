@@ -447,21 +447,21 @@ export const Desludging = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">region</th>
+                                            <th scope="col">Region</th>
 
-                                            <th scope="col">insurance</th>
-                                            <th scope="col">repairCost</th>
-                                            <th scope="col">roadWorthy</th>
-                                            <th scope="col">unitFuelCost</th>
-                                            <th scope="col">workingDays</th>
-                                            <th scope="col">truckDepreciation</th>
-                                            <th scope="col">annualAdminCost</th>
-                                            <th scope="col">annualOverheadCost</th>
-                                            <th scope="col">annualToolsCost</th>
-                                            <th scope="col">profitPercentage</th>
-                                            <th scope="col">pumpAnnualDepreciation</th>
-                                            <th scope="col">truckClassification</th>
-                                            <th scope="col">fuelDistanceConst</th>
+                                            <th scope="col">Insurance</th>
+                                            <th scope="col">Repair Cost</th>
+                                            <th scope="col">Road Worthy</th>
+                                            <th scope="col">Unit Fuel Cost</th>
+                                            <th scope="col">Working Days</th>
+                                            <th scope="col">Truck Depreciation</th>
+                                            <th scope="col">Annual Admin Cost</th>
+                                            <th scope="col">Annual Overhead Cost</th>
+                                            <th scope="col">Annual Tools Cost</th>
+                                            <th scope="col">Profit Percentage</th>
+                                            <th scope="col">Pump Annual Depreciation</th>
+                                            <th scope="col">Truck Classification</th>
+                                            <th scope="col">Fuel Distance Const</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>

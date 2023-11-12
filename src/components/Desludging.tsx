@@ -486,7 +486,7 @@ export const Desludging = ({ data }: any) => {
                                                     <td>{data?.annualToolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
                                                     <td>{data?.pumpAnnualDepreciation}</td>
-                                                    <td>{data?.truckClassification}</td>
+                                                    <td>{data?.TruckClassification?.name}</td>
                                                     <td>{data?.fuelDistanceConst}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>

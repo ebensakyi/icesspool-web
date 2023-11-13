@@ -56,10 +56,29 @@ export async function PUT(request: Request) {
 
     const userId = session?.user?.id;
     const data = {
-      name: res?.name,
-      status: Number(res?.status),
-    };
-    await prisma.service.update({
+        status: Number(res?.status),
+        insurance: Number(res?.insurance),
+        repairCost: Number(res?.repairCost),
+        roadWorthy: Number(res?.roadWorthy),
+        unitFuelCost: Number(res?.unitFuelCost),
+        workingDays: Number(res?.workingDays),
+        truckDepreciation: Number(res?.truckDepreciation),
+        annualAdminCost: Number(res?.annualAdminCost),
+        annualOverheadCost: Number(res?.annualOverheadCost),
+        annualToolsCost: Number(res?.annualToolsCost),
+        profitPercentage: Number(res?.profitPercentage),
+        pumpAnnualDepreciation: Number(res?.pumpAnnualDepreciation),
+  
+        truckClassificationId: Number(res?.truckClassification),
+        fuelDistanceConst: Number(res?.fuelDistanceConst),
+  
+        serviceId: 1,
+        regionId:Number(res?.region),
+  
+      };
+
+      
+    await prisma.desludgingServicePricing.update({
       where: {
         id: Number(res?.id),
       },

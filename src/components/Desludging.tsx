@@ -114,11 +114,15 @@ export const Desludging = ({ data }: any) => {
                 annualToolsCost: Number(annualToolsCost),
                 profitPercentage: Number(profitPercentage),
                 pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+                fuelDistanceConst: Number(fuelDistanceConst),
+                region: Number(region),
 
                 truckClassification: Number(truckClassification),
                 status: Number(status),
             };
-            response = await axios.put("/api/service-points", data);
+
+            
+            response = await axios.put("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -407,48 +411,48 @@ export const Desludging = ({ data }: any) => {
                                 </div>
 
                                 <div className="text-right">
-                                  
-
-                                                    <button
-                                                        className="btn btn-primary"
-                                                        onClick={async (e) => {
-                                                            if (id) {
-                                                                return update(e)
-                                                            }
-                                                            add(e)
-
-                                                        }}
-
-                                                    >
-                                                        Submit
-                                                    </button>
-
-                                           {" "}
-
-                                                    <button
-                                                        className="btn btn-danger"
-                                                        onClick={async (e) => {
-
-                                                            setId("")
-                                                            setRepairCost("")
-                                                            setRoadWorthy("");
-                                                            setInsurance("");
-                                                            setUnitFuelCost("");
-                                                            setWorkingDays("");
-                                                            setTruckDepreciation("");
-                                                            setAnnualAdminCost("");
-                                                            setAnnualOverheadCost("");
-                                                            setProfitPercentage("");
-                                                            setPumpAnnualDepreciation("");
-                                                            setTruckClassification("");
-                                                            setFuelDistanceConst("")
 
 
-                                                        }}
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={async (e) => {
+                                            if (id) {
+                                                return update(e)
+                                            }
+                                            add(e)
 
-                                                    >
-                                                        Clear Form
-                                                    </button>
+                                        }}
+
+                                    >
+                                        Submit
+                                    </button>
+
+                                    {" "}
+
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={async (e) => {
+
+                                            setId("")
+                                            setRepairCost("")
+                                            setRoadWorthy("");
+                                            setInsurance("");
+                                            setUnitFuelCost("");
+                                            setWorkingDays("");
+                                            setTruckDepreciation("");
+                                            setAnnualAdminCost("");
+                                            setAnnualOverheadCost("");
+                                            setProfitPercentage("");
+                                            setPumpAnnualDepreciation("");
+                                            setTruckClassification("");
+                                            setFuelDistanceConst("")
+
+
+                                        }}
+
+                                    >
+                                        Clear Form
+                                    </button>
 
 
 
@@ -545,6 +549,7 @@ export const Desludging = ({ data }: any) => {
 
                                                                                 setRepairCost(data.repairCost)
                                                                                 setRoadWorthy(data.roadWorthy);
+                                                                                setInsurance(data.insurance);
 
                                                                                 setUnitFuelCost(data.unitFuelCost);
                                                                                 setWorkingDays(data.workingDays);
@@ -553,9 +558,11 @@ export const Desludging = ({ data }: any) => {
                                                                                 setAnnualOverheadCost(data.annualOverheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
                                                                                 setPumpAnnualDepreciation(data.pumpAnnualDepreciation);
-                                                                                setTruckClassification(data.truckClassification);
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
-
+                                                                                setAnnualToolsCost(data.annualToolsCost)
+                                                                                setTruckClassification(data.truckClassificationId)
+                                                                                setRegion(data.regionId)
+                                                                                setStatus(data.status)
                                                                             }}
                                                                         >
                                                                             Edit

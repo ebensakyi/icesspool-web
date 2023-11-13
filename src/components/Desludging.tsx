@@ -448,6 +448,7 @@ export const Desludging = ({ data }: any) => {
                                     <thead>
                                         <tr>
                                             <th scope="col">Region</th>
+                                            <th scope="col">Truck Classification</th>
 
                                             <th scope="col">Insurance</th>
                                             <th scope="col">Repair Cost</th>
@@ -460,7 +461,6 @@ export const Desludging = ({ data }: any) => {
                                             <th scope="col">Annual Tools Cost</th>
                                             <th scope="col">Profit Percentage</th>
                                             <th scope="col">Pump Annual Depreciation</th>
-                                            <th scope="col">Truck Classification</th>
                                             <th scope="col">Fuel Distance Const</th>
 
                                             <th scope="col">Status</th>
@@ -474,7 +474,9 @@ export const Desludging = ({ data }: any) => {
                                         {data?.desludgingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.Region?.name}</td> 
+                                                                                                       <td>{data?.TruckClassification?.name}</td>
+
                                                     <td>{data?.insurance}</td>
                                                     <td>{data?.repairCost}</td>
                                                     <td>{data?.roadWorthy}</td>
@@ -486,7 +488,6 @@ export const Desludging = ({ data }: any) => {
                                                     <td>{data?.annualToolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
                                                     <td>{data?.pumpAnnualDepreciation}</td>
-                                                    <td>{data?.TruckClassification?.name}</td>
                                                     <td>{data?.fuelDistanceConst}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>

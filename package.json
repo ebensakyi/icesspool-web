@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
-    "@preact/signals": "^1.2.1",
     "@prisma/client": "^5.4.2",
     "@react-google-maps/api": "^2.19.2",
     "@types/react": "18.2.15",

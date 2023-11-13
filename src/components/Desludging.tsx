@@ -1,6 +1,5 @@
 "use client"
 import { LOGIN_URL } from '@/config';
-import { signal } from '@preact/signals';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -124,6 +123,7 @@ export const Desludging = ({ data }: any) => {
             setId("")
             setRepairCost("")
             setRoadWorthy("");
+            setInsurance("");
 
             setUnitFuelCost("");
             setWorkingDays("");
@@ -406,31 +406,52 @@ export const Desludging = ({ data }: any) => {
                                     </div>
                                 </div>
 
+                                <div className="text-right">
+                                  
 
-                                <div className=" mb-3">
-                                    <div className="col-sm-10">
+                                                    <button
+                                                        className="btn btn-primary"
+                                                        onClick={async (e) => {
+                                                            if (id) {
+                                                                return update(e)
+                                                            }
+                                                            add(e)
+
+                                                        }}
+
+                                                    >
+                                                        Submit
+                                                    </button>
+
+                                           {" "}
+
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={async (e) => {
+
+                                                            setId("")
+                                                            setRepairCost("")
+                                                            setRoadWorthy("");
+                                                            setInsurance("");
+                                                            setUnitFuelCost("");
+                                                            setWorkingDays("");
+                                                            setTruckDepreciation("");
+                                                            setAnnualAdminCost("");
+                                                            setAnnualOverheadCost("");
+                                                            setProfitPercentage("");
+                                                            setPumpAnnualDepreciation("");
+                                                            setTruckClassification("");
+                                                            setFuelDistanceConst("")
 
 
-                                        <div className=" mb-3">
-                                            <div className="col-sm-10">
+                                                        }}
 
-                                                <button
-                                                    className="btn btn-primary"
-                                                    onClick={async (e) => {
-                                                        if (id) {
-                                                            return update(e)
-                                                        }
-                                                        add(e)
+                                                    >
+                                                        Clear Form
+                                                    </button>
 
-                                                    }}
 
-                                                >
-                                                    Submit
-                                                </button>
 
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -474,8 +495,8 @@ export const Desludging = ({ data }: any) => {
                                         {data?.desludgingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.Region?.name}</td> 
-                                                                                                       <td>{data?.TruckClassification?.name}</td>
+                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.TruckClassification?.name}</td>
 
                                                     <td>{data?.insurance}</td>
                                                     <td>{data?.repairCost}</td>
@@ -521,12 +542,19 @@ export const Desludging = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                // setInsurance(data.name)
-                                                                                // setAddress(data.address)
-                                                                                // setLatitude(data.latitude)
-                                                                                // setLongitude(data.longitude)
-                                                                                // setService(data.serviceId)
-                                                                                // setStatus(data.status)
+
+                                                                                setRepairCost(data.repairCost)
+                                                                                setRoadWorthy(data.roadWorthy);
+
+                                                                                setUnitFuelCost(data.unitFuelCost);
+                                                                                setWorkingDays(data.workingDays);
+                                                                                setTruckDepreciation(data.truckDepreciation);
+                                                                                setAnnualAdminCost(data.annualAdminCost);
+                                                                                setAnnualOverheadCost(data.annualOverheadCost);
+                                                                                setProfitPercentage(data.profitPercentage);
+                                                                                setPumpAnnualDepreciation(data.pumpAnnualDepreciation);
+                                                                                setTruckClassification(data.truckClassification);
+                                                                                setFuelDistanceConst(data.fuelDistanceConst)
 
                                                                             }}
                                                                         >

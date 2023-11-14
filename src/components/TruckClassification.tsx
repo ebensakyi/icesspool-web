@@ -120,6 +120,23 @@ export const TruckClassification = ({ data }: any) => {
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Add</h5>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Name *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter name' />
+                                    </div>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Truck capacity *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter capacity' />
+                                    </div>
+                                </div>
+                               
                                
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -237,7 +254,7 @@ export const TruckClassification = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.serviceLocations?.response.map((data: any) => {
+                                        {data?.truckClassifications?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Region?.name}</td>

@@ -10,8 +10,6 @@ import { calculateDeludgingPrice } from "@/libs/pricing";
 //     const res = await request.json();
 //     const session: any = await getServerSession(authOptions);
 
-
-
 //     // const userId = session?.user?.id;
 
 //     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
@@ -37,8 +35,6 @@ import { calculateDeludgingPrice } from "@/libs/pricing";
 //       regionId:Number(res?.region),
 
 //     };
-
-    
 
 //     const response = await prisma.desludgingServicePricing.create({ data });
 
@@ -69,16 +65,15 @@ import { calculateDeludgingPrice } from "@/libs/pricing";
 //         annualToolsCost: Number(res?.annualToolsCost),
 //         profitPercentage: Number(res?.profitPercentage),
 //         pumpAnnualDepreciation: Number(res?.pumpAnnualDepreciation),
-  
+
 //         truckClassificationId: Number(res?.truckClassification),
 //         fuelDistanceConst: Number(res?.fuelDistanceConst),
-  
+
 //         serviceId: 1,
 //         regionId:Number(res?.region),
-  
+
 //       };
 
-      
 //     await prisma.desludgingServicePricing.update({
 //       where: {
 //         id: Number(res?.id),
@@ -105,16 +100,19 @@ export async function GET(request: Request) {
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const pricingData = await prisma.desludgingServicePricing.findMany({
-      where: { deleted: 0 },
-      include:{
-        Region:true,
-        TruckClassification:true
-      }
+      where: {
+        deleted: 0,
+        TruckClassification: {
+          status: 1,
+        },
+      },
+      include: {
+        Region: true,
+        TruckClassification: true,
+      },
     });
 
-   let response =   await calculateDeludgingPrice(pricingData)
-
-
+    let response = await calculateDeludgingPrice(pricingData);
 
     return NextResponse.json({ response });
   } catch (error) {
@@ -123,4 +121,3 @@ export async function GET(request: Request) {
     return NextResponse.json(error);
   }
 }
-

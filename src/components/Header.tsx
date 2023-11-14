@@ -242,7 +242,17 @@ export default function Header() {
                         <li className="nav-heading">SETTINGS</li>
 
                         <li className="nav-item">
+                            <li className="nav-item">
 
+                                <Link className={
+                                    pathname == "/truck-classification"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                } href="/truck-classification">
+                                    <i className="bi bi-truck" />
+                                    <span>Truck Classes</span>
+                                </Link>
+                            </li>
                             <Link
                                 className={
                                     pathname == "/esicapps1/general"
@@ -265,7 +275,11 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/services">
+                                    <Link href="/services" className={
+                                    pathname == "/services"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }>
                                         <i className="bi bi-circle" />
                                         <span>Services</span>
                                     </Link>
@@ -365,7 +379,7 @@ export default function Header() {
                                         <span> Profile</span>
                                     </Link>
                                 </li>
-                                
+
 
                             </ul>
                         </li>
@@ -448,7 +462,7 @@ export default function Header() {
                                 data-bs-parent="#withdrawals-nav"
                             >
 
-                               
+
                                 <li>
                                     <Link href="/finance/withdrawal/operator">
                                         <i className="bi bi-circle" />

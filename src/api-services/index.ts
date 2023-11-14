@@ -81,3 +81,15 @@ export async function getDesludgingPricing(searchParams: any, service?: number) 
     }
     return await response.json();
   }
+
+  export async function getTruckClassification(searchParams: any) {
+    let response = await fetch(
+      `${SERVER_BASE_URL}/api/truck-classification`,
+      { cache: "no-store" }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return await response.json();
+  }

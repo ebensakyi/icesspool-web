@@ -4,7 +4,7 @@ export const calculateDeludgingPrice = async (data: any) => {
   console.log(data);
 
   let distance = await getShortestDistanceBetweenUserServicePoint();
-  let pricing: any = [];
+  let pricing: any =  []
 
   data.map((d: any) => {
     const pumpAnnualDepreciation = parseFloat(d.pumpAnnualDepreciation);
@@ -18,23 +18,25 @@ export const calculateDeludgingPrice = async (data: any) => {
     const annualOverheads = parseFloat(d.annualOverheadCost);
     const annualToolsCost = parseFloat(d.annualToolsCost);
     const profitPercentage = parseFloat(d.profitPercentage);
-
+  
     const tankVolume = parseFloat(d.TruckClassification.tankCapacity);
-
+  
+  
     const truckAnnualDepreciation = parseFloat(d.truckDepreciation);
 
+  
     //Calculation
     const fuelPerTrip = distance * fuelDistanceConstant;
     const roundTripFuelVolume = fuelPerTrip * 2;
-
+  
     const fuelCostForDailyRoundTrip = roundTripFuelVolume * fuelUnitCost;
-
+  
     const operationCost =
       workingDays * fuelCostForDailyRoundTrip +
       insurance +
       repairCost +
       roadWorthy;
-
+  
     const totalAnnualCostService =
       operationCost +
       truckAnnualDepreciation +
@@ -42,19 +44,30 @@ export const calculateDeludgingPrice = async (data: any) => {
       annualOverheads +
       annualToolsCost +
       annualAdminCost;
-
+   
     const totalAnnualCost =
-      totalAnnualCostService + totalAnnualCostService * profitPercentage;
-
+    totalAnnualCostService +
+    totalAnnualCostService * profitPercentage;
+  
     const annualSludgeVolume = tankVolume * workingDays;
-
+  
     //COST
-    const cost = ((totalAnnualCost / annualSludgeVolume) * tankVolume).toFixed(
-      0
-    );
+    const cost = (
+      (totalAnnualCost / annualSludgeVolume) *
+      tankVolume
+    ).toFixed(0);
 
-    pricing.push({id: d.TruckClassification.id, name: d.TruckClassification.name, price: cost });
+
+    pricing.push({cost})
+  
   });
+
+
+
+
+
+
+
 
   // const pumpAnnualDepreciation = parseFloat(data[0].pumpAnnualDepreciation);
   // const fuelUnitCost = parseFloat(data[0].unitFuelCost);

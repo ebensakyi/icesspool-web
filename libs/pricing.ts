@@ -1,23 +1,10 @@
 import { getShortestDistanceBetweenUserServicePoint } from "./distance";
-import { isInCity } from "./is-location-in-city";
+import { isInCity } from "./icesspool-availabilty";
 
 export const calculateDeludgingPrice = async (data: any) => {
 
 
-  const cityCoordinates = [5.736477, -0.104436];
 
-  // Example GPS coordinates
-  const gpsCoordinatesInsideCity = [5.606564, -0.158467]; // Coordinates inside New York
-  const gpsCoordinatesOutsideCity = [5.692319, -0.466085]; // Coordinates outside New York
-  
-  const cityRadiusKm = 40; // Adjust this based on the radius you want to consider for the city
-  let isIn = await isInCity(gpsCoordinatesOutsideCity, cityCoordinates, cityRadiusKm)
-  if (isIn) {
-    console.log("The GPS coordinates are within the specified city.");
-  } else {
-    console.log("The GPS coordinates are outside the specified city.");
-  }
-  
 
  
   let distance = await getShortestDistanceBetweenUserServicePoint();

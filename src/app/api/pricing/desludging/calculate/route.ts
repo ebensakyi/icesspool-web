@@ -3,6 +3,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { calculateDeludgingPrice } from "@/libs/pricing";
+import { isInCity } from "@/libs/icesspool-availabilty";
 // import { authOptions } from "../../auth/[...nextauth]/options";
 
 // export async function POST(request: Request) {
@@ -111,6 +112,25 @@ export async function GET(request: Request) {
         TruckClassification: true,
       },
     });
+
+
+
+    ////////////////check if icesspool is available at users location
+
+    const cityCoordinates = [5.736477, -0.104436];
+
+    // Example GPS coordinates
+    const gpsCoordinatesInsideCity = [5.606564, -0.158467]; // Coordinates inside New York
+    const gpsCoordinatesOutsideCity = [5.692319, -0.466085]; // Coordinates outside New York
+    
+    const cityRadiusKm = 40; // Adjust this based on the radius you want to consider for the city
+    let isIn = await isInCity(gpsCoordinatesOutsideCity, cityCoordinates, cityRadiusKm)
+    if (isIn) {
+      console.log("The GPS coordinates are within the specified city.");
+    } else {
+      console.log("The GPS coordinates are outside the specified city.");
+    }
+    
 
     let response = await calculateDeludgingPrice(pricingData);
 

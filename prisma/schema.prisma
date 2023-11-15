@@ -106,6 +106,7 @@ model Region {
   name                      String                      @db.VarChar(255)
   latitude                  Decimal                     @db.Decimal(10, 2)
   longitude                 Decimal                     @db.Decimal(10, 2)
+  cityRadius                Decimal                     @db.Decimal(10, 2)
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
@@ -242,10 +243,10 @@ model DesludgingServicePricing {
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   status                 Int?                @default(0)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Region    Region   @relation(fields: [regionId], references: [id])
+  deleted                Int?                @default(0)
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  Region                 Region              @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
 
   // locationId String @db.VarChar(255)

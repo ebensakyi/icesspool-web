@@ -32,16 +32,18 @@ export const TruckClassification = ({ data }: any) => {
 
 
     const add = async (e: any) => {
-        try {
+       // try {
             e.preventDefault();
             if (service == "" || status == "" || region == "") {
                 return toast.error("Please fill form");
             }
 
             let data = {
-                region,
-                service,
-                status,
+                name: name,
+                status: status,
+                regionId: region,
+                tankCapacity: tankCapacity,
+                serviceId: service,
             };
             const response = await axios.post("/api/truck-classification", data);
             toast.success(response.data.message);
@@ -52,12 +54,12 @@ export const TruckClassification = ({ data }: any) => {
 
             router.refresh()
 
-        } catch (error: any) {
-            console.log(error);
+        // } catch (error: any) {
+        //     console.log(error);
 
-            toast.error(error.response.data.message);
+        //     toast.error(error.response.data.message);
 
-        }
+        // }
     };
 
     const update = async (e: any) => {

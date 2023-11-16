@@ -87,6 +87,7 @@ CREATE TABLE `Region` (
     `name` VARCHAR(255) NOT NULL,
     `latitude` DECIMAL(10, 2) NOT NULL,
     `longitude` DECIMAL(10, 2) NOT NULL,
+    `cityRadius` DECIMAL(10, 2) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

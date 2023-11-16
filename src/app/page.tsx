@@ -8,23 +8,23 @@ import {  getRegions } from '@/src/api-services';
 
 
 async function getDashboardData(searchParams: any) {
-  let { filterBy } = searchParams
-  let { filterValue } = searchParams
-  let { from } = searchParams
-  let { to } = searchParams
+  // let { filterBy } = searchParams
+  // let { filterValue } = searchParams
+  // let { from } = searchParams
+  // let { to } = searchParams
 
 
 
-  const res = await fetch(`${SERVER_BASE_URL}/api/dashboard?filterBy=${filterBy}&filterValue=${filterValue}&from=${from}&to=${to}`, {
-    cache: 'no-store', method: "GET",
-    headers: headers()
-  })
+  // const res = await fetch(`${SERVER_BASE_URL}/api/dashboard?filterBy=${filterBy}&filterValue=${filterValue}&from=${from}&to=${to}`, {
+  //   cache: 'no-store', method: "GET",
+  //   headers: headers()
+  // })
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
+  // if (!res.ok) {
+  //   throw new Error('Failed to fetch data')
+  // }
 
-  return await res.json()
+  return {} //await res.json()
 }
 
 

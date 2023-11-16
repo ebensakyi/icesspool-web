@@ -1,6 +1,5 @@
 "use client"
 import { LOGIN_URL } from '@/config';
-import { signal } from '@preact/signals';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -10,11 +9,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const TruckClassification = ({ data }: any) => {
 
-    
+    console.log(data);
+
     const [id, setId] = useState("");
     const [region, setRegion] = useState("");
     const [service, setService] = useState("");
     const [status, setStatus] = useState("");
+    const [tankCapacity, setTankCapacity] = useState("");
+    const [name, setName] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -32,7 +34,7 @@ export const TruckClassification = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (service == "" || status == ""||region =="") {
+            if (service == "" || status == "" || region == "") {
                 return toast.error("Please fill form");
             }
 
@@ -41,35 +43,36 @@ export const TruckClassification = ({ data }: any) => {
                 service,
                 status,
             };
-            const response = await axios.post("/api/service-location", data);
+            const response = await axios.post("/api/truck-classification", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
             setRegion("")
 
+
             router.refresh()
 
         } catch (error: any) {
             console.log(error);
-            
-                toast.error(error.response.data.message);
-            
+
+            toast.error(error.response.data.message);
+
         }
     };
 
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (region == "" || status == ""||service=="") {
+            if (region == "" || status == "" || service == "") {
                 return toast.error("Please fill form");
             }
 
             let data = {
-                id:Number(id),
+                id: Number(id),
                 name,
                 status,
             };
-            const response = await axios.put("/api/services", data);
+            const response = await axios.put("/api/truck-classification", data);
             toast.success(response.data.message);
             setId("")
             setRegion("")
@@ -136,8 +139,8 @@ export const TruckClassification = ({ data }: any) => {
                                         <input type="text" className="form-control" placeholder='Enter capacity' />
                                     </div>
                                 </div>
-                               
-                               
+
+
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Service *
@@ -151,7 +154,7 @@ export const TruckClassification = ({ data }: any) => {
                                         value={service}
                                     >
                                         <option value={0}>Select service * </option>
-                                      
+
                                         {data?.services?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
@@ -173,7 +176,7 @@ export const TruckClassification = ({ data }: any) => {
                                         value={region}
                                     >
                                         <option value={0}>Select location * </option>
-                                      
+
 
                                         {data?.regions?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
@@ -243,6 +246,9 @@ export const TruckClassification = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Tank Capacity</th>
+
                                             <th scope="col">Region</th>
                                             <th scope="col">Service</th>
 
@@ -257,6 +263,9 @@ export const TruckClassification = ({ data }: any) => {
                                         {data?.truckClassifications?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
+                                                    <td>{data?.name}</td>
+                                                    <td>{data?.tankCapacity}</td>
+
                                                     <td>{data?.Region?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
@@ -306,7 +315,7 @@ export const TruckClassification = ({ data }: any) => {
                                                                             Edit
                                                                         </button>
                                                                     </li>
-                                                                  
+
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

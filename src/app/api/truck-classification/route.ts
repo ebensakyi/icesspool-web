@@ -69,11 +69,22 @@ export async function GET(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     // await logActivity("Visited data assignment page", session?.user?.id);
-
+    if (serviceId) {
+      const response = await prisma.truckClassification.findMany({
+        where: { deleted: 0, serviceId: serviceId },
+        include: {
+          Service: true,
+          Region: true
+        },
+      });
+      return NextResponse.json({ response });
+    }
     const response = await prisma.truckClassification.findMany({
-      where: { deleted: 0, serviceId: serviceId },
+      where: { deleted: 0 },
       include: {
         Service: true,
+         Region: true
+
       },
     });
 

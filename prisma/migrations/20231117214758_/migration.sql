@@ -21,6 +21,7 @@ CREATE TABLE `TruckClassification` (
     `status` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     UNIQUE INDEX `axleClass`(`name`),
     PRIMARY KEY (`id`)
@@ -85,9 +86,8 @@ CREATE TABLE `Discount` (
 CREATE TABLE `Region` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `latitude` DECIMAL(10, 2) NOT NULL,
-    `longitude` DECIMAL(10, 2) NOT NULL,
-    `cityRadius` DECIMAL(10, 2) NOT NULL,
+    `latitude` DECIMAL(10, 6) NULL,
+    `longitude` DECIMAL(10, 6) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -96,16 +96,17 @@ CREATE TABLE `Region` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ServiceLocation` (
+CREATE TABLE `ServiceArea` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `status` INTEGER NULL DEFAULT 0,
+    `name` VARCHAR(255) NOT NULL,
+    `cityPolygon` VARCHAR(255) NOT NULL DEFAULT '[67.25075122775252,35.9854261285504],[67.25075122775252,35.9854261285504]',
+    `regionId` INTEGER NOT NULL,
+    `serviceId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `regionId` INTEGER NOT NULL,
-    `serviceId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `ServiceLocation_regionId_serviceId_key`(`regionId`, `serviceId`),
+    UNIQUE INDEX `ServiceArea_regionId_serviceId_key`(`regionId`, `serviceId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -221,6 +222,7 @@ CREATE TABLE `DesludgingServicePricing` (
     `updatedAt` DATETIME(3) NOT NULL,
     `regionId` INTEGER NOT NULL,
     `serviceId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -246,6 +248,7 @@ CREATE TABLE `WaterServicePricing` (
     `updatedAt` DATETIME(3) NOT NULL,
     `regionId` INTEGER NOT NULL,
     `serviceId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -271,6 +274,7 @@ CREATE TABLE `BiodigesterServicePricing` (
     `updatedAt` DATETIME(3) NOT NULL,
     `regionId` INTEGER NOT NULL,
     `serviceId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -514,13 +518,16 @@ ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_serviceId_
 ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Balance` ADD CONSTRAINT `Balance_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ServiceLocation` ADD CONSTRAINT `ServiceLocation_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceArea` ADD CONSTRAINT `ServiceArea_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ServiceLocation` ADD CONSTRAINT `ServiceLocation_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceArea` ADD CONSTRAINT `ServiceArea_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -535,6 +542,9 @@ ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_
 ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -544,6 +554,9 @@ ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_regionId_f
 ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -551,6 +564,9 @@ ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricin
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -9,6 +9,7 @@ import { truckClassification } from './truck_classification';
 import { userTypes } from "./user_types";
 import { users } from "./users";
 import { regions } from "./regions";
+import { serviceAreas } from "./service_area";
 
 async function main() {
 
@@ -42,7 +43,9 @@ async function main() {
       data: users,
     });
 
-   
+    await prisma.serviceArea.createMany({
+      data: serviceAreas,
+    });
 }
 
 main()

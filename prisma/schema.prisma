@@ -122,7 +122,7 @@ model ServiceArea {
   id   Int    @id @default(autoincrement())
   name String @db.VarChar(255)
 
-  cityPolygon String  @default("[67.25075122775252,35.9854261285504],[67.25075122775252,35.9854261285504]") @db.VarChar(255)
+  cityPolygon String   @db.VarChar(255)
   regionId    Int
   Service     Service @relation(fields: [serviceId], references: [id])
   serviceId   Int

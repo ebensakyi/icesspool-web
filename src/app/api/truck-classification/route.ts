@@ -12,10 +12,11 @@ export async function POST(request: Request) {
     const data = {
       name: res?.name,
       status: Number(res?.status),
-      regionId: Number(res?.region),
+      serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
       tankCapacity: Number(res?.tankCapacity)
     };
+
 
     const response = await prisma.truckClassification.create({ data });
 
@@ -23,6 +24,9 @@ export async function POST(request: Request) {
 
     return createSuccessResponse(response, "Data submitted succesfully");
   } catch (error: any) {
+
+    console.log(error);
+    
     // let message = ""
     // if(error.code=="P2002"){
     //    message = "Service and Location combination already exist"

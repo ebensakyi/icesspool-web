@@ -32,7 +32,7 @@ export const TruckClassification = ({ data }: any) => {
 
 
     const add = async (e: any) => {
-       // try {
+        try {
             e.preventDefault();
             if (service == "" || status == "" || serviceArea == "") {
                 return toast.error("Please fill form");
@@ -41,25 +41,30 @@ export const TruckClassification = ({ data }: any) => {
             let data = {
                 name: name,
                 status: status,
-                serviceAreaId: serviceArea,
+                serviceArea: serviceArea,
                 tankCapacity: tankCapacity,
-                serviceId: service,
+                service: service,
             };
+
+            console.log(data);
+            
             const response = await axios.post("/api/truck-classification", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
             setServiceArea("")
+            setTankCapacity("")
+            setName("")
 
 
             router.refresh()
 
-        // } catch (error: any) {
-        //     console.log(error);
+        } catch (error: any) {
+            console.log(error);
 
-        //     toast.error(error.response.data.message);
+            toast.error(error.response.data.message);
 
-        // }
+        }
     };
 
     const update = async (e: any) => {
@@ -130,7 +135,9 @@ export const TruckClassification = ({ data }: any) => {
                                         Name *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name' />
+                                        <input type="text" className="form-control" placeholder='Enter name'   onChange={(e: any) => {
+                                            setName(e.target.value);
+                                        }} value={name} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">
@@ -138,7 +145,9 @@ export const TruckClassification = ({ data }: any) => {
                                         Truck capacity *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter capacity' />
+                                        <input type="number" className="form-control" placeholder='Enter capacity'   onChange={(e: any) => {
+                                            setTankCapacity(e.target.value);
+                                        }}  value={tankCapacity}/>
                                     </div>
                                 </div>
 
@@ -251,7 +260,7 @@ export const TruckClassification = ({ data }: any) => {
                                             <th scope="col">Name</th>
                                             <th scope="col">Tank Capacity</th>
 
-                                            <th scope="col">Region</th>
+                                            <th scope="col">Area</th>
                                             <th scope="col">Service</th>
 
                                             <th scope="col">Status</th>

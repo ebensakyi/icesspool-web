@@ -12,9 +12,12 @@ export async function POST(request: Request) {
     const data = {
       name:res?.name,
       regionId: Number(res?.region),
-      cityPolygon: res?.cityPolygon
+      cityPolygon: res?.cityPolygon,
+      status: Number(res?.status),
 
     };
+    console.log(data);
+    
 
 
     const response = await prisma.serviceArea.create({ data });
@@ -23,6 +26,8 @@ export async function POST(request: Request) {
 
     return createSuccessResponse(response, "Data submitted succesfully")
   } catch (error: any) {
+    console.log(error);
+    
     // let message = ""
     // if(error.code=="P2002"){
     //    message = "Service and Location combination already exist"
@@ -45,7 +50,8 @@ export async function PUT(request: Request) {
     const data = {
       status: Number(res?.status),
       regionId: Number(res?.region),
-      serviceId: Number(res?.service),
+      name: res?.name,
+      cityPolygon: res?.cityPolygon,
 
     };
     await prisma.serviceArea.update({

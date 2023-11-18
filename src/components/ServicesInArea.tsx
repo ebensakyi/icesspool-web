@@ -9,24 +9,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const ServiceArea = ({ data }: any) => {
 
-
+    
     const [id, setId] = useState("");
     const [region, setRegion] = useState("");
-    const [name, setName] = useState("");
+    const [service, setService] = useState("");
     const [status, setStatus] = useState("");
-
-    const [lat1, setLat1] = useState("");
-    const [lng1, setLng1] = useState("");
-
-    const [lat2, setLat2] = useState("");
-    const [lng2, setLng2] = useState("");
-
-    const [lat3, setLat3] = useState("");
-    const [lng3, setLng3] = useState("");
-
-    const [lat4, setLat4] = useState("");
-    const [lng4, setLng4] = useState("");
-
 
     const { data: session } = useSession({
         required: true,
@@ -44,50 +31,49 @@ export const ServiceArea = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || region == "") {
+            if (service == "" || status == ""||region =="") {
                 return toast.error("Please fill form");
             }
-            let cityPolygon = JSON.stringify([[lat1, lng1], [lat2, lng2], [lat3, lng3], [lat4, lng4]])
+
             let data = {
                 region,
-                name,
-                cityPolygon,
-                status
+                service,
+                status,
             };
-            console.log(data);
-            
-            const response = await axios.post("/api/service-area", data);
+            const response = await axios.post("/api/service-location", data);
             toast.success(response.data.message);
-            setId("")
+            setService("")
+            setStatus("");
             setRegion("")
 
             router.refresh()
 
         } catch (error: any) {
             console.log(error);
-
-            toast.error(error.response.data.message);
-
+            
+                toast.error(error.response.data.message);
+            
         }
     };
 
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (region == "" || name == "") {
+            if (region == "" || status == ""||service=="") {
                 return toast.error("Please fill form");
             }
 
             let data = {
-                id: Number(id),
+                id:Number(id),
                 name,
                 status,
             };
-            const response = await axios.put("/api/service-area", data);
+            const response = await axios.put("/api/services", data);
             toast.success(response.data.message);
             setId("")
             setRegion("")
-            setName("");
+            setStatus("");
+            setService("")
 
             router.refresh()
 
@@ -115,7 +101,7 @@ export const ServiceArea = ({ data }: any) => {
                 pauseOnHover
             />
             <div className="pagetitle">
-                <h1>SERVICE AREA</h1>
+                <h1>SERVICE LOCATION</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -129,135 +115,55 @@ export const ServiceArea = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-                    <div className="col-lg-6">
+                    <div className="col-lg-4">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Add</h5>
-                                <div className="row">
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Name *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Enter name' onChange={(e: any) => {
-                                                setName(e.target.value);
-                                            }} value={name} />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Region *
-                                        </label>
-                                        <select
-                                            className="form-control"
-                                            aria-label="Default select example"
-                                            onChange={(e: any) => {
-                                                setRegion(e.target.value);
-                                            }}
-                                            value={region}
-                                        >
-                                            <option value={0}>Select region * </option>
-
-
-                                            {data?.regions?.response?.map((data: any) => (
-                                                <option key={data.id} value={data.id}>
-                                                    {data.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
+                               
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Service *
+                                    </label>
+                                    <select
+                                        className="form-control"
+                                        aria-label="Default select example"
+                                        onChange={(e: any) => {
+                                            setService(e.target.value);
+                                        }}
+                                        value={service}
+                                    >
+                                        <option value={0}>Select service * </option>
+                                      
+                                        {data?.services?.response?.map((data: any) => (
+                                            <option key={data.id} value={data.id}>
+                                                {data.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
 
-                                <div className="row">
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Latitude 1 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter lat 1' onChange={(e: any) => {
-                                                setLat1(e.target.value);
-                                            }} value={lat1} />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Longitude 1 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter long 1' onChange={(e: any) => {
-                                                setLng1(e.target.value);
-                                            }} value={lng1} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Latitude 2 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter lat' onChange={(e: any) => {
-                                                setLat2(e.target.value);
-                                            }} value={lat2} />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Longitude 2 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter long' onChange={(e: any) => {
-                                                setLng2(e.target.value);
-                                            }} value={lng2} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Latitude 3 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter lat' onChange={(e: any) => {
-                                                setLat3(e.target.value);
-                                            }} value={lat3} />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Longitude 3 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter long' onChange={(e: any) => {
-                                                setLng3(e.target.value);
-                                            }} value={lng3} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Latitude 4 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter lat' onChange={(e: any) => {
-                                                setLat4(e.target.value);
-                                            }} value={lat4} />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Longitude 4 *
-                                        </label>
-                                        <div className="col-sm-12">
-                                            <input type="number" className="form-control" placeholder='Enter long' onChange={(e: any) => {
-                                                setLng4(e.target.value);
-                                            }} value={lng4} />
-                                        </div>
-                                    </div>
-                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Location *
+                                    </label>
+                                    <select
+                                        className="form-control"
+                                        aria-label="Default select example"
+                                        onChange={(e: any) => {
+                                            setRegion(e.target.value);
+                                        }}
+                                        value={region}
+                                    >
+                                        <option value={0}>Select location * </option>
+                                      
 
-
+                                        {data?.regions?.response?.map((data: any) => (
+                                            <option key={data.id} value={data.id}>
+                                                {data.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Status *
@@ -312,17 +218,15 @@ export const ServiceArea = ({ data }: any) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-8">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">List</h5>
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
-
                                             <th scope="col">Region</th>
-                                            <th scope="col">Map</th>
+                                            <th scope="col">Service</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -370,7 +274,7 @@ export const ServiceArea = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
                                                                                 setRegion(data.Region.name)
-                                                                                setName(data.name)
+                                                                                setService(data.Service.name)
                                                                                 setStatus(data.status)
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);
@@ -384,7 +288,7 @@ export const ServiceArea = ({ data }: any) => {
                                                                             Edit
                                                                         </button>
                                                                     </li>
-
+                                                                  
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

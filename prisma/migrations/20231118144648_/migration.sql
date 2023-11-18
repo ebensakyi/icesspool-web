@@ -100,10 +100,12 @@ CREATE TABLE `ServiceArea` (
     `name` VARCHAR(255) NOT NULL,
     `cityPolygon` VARCHAR(255) NOT NULL,
     `regionId` INTEGER NOT NULL,
+    `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `ServiceArea_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

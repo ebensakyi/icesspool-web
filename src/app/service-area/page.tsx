@@ -1,5 +1,5 @@
-import { getRegions, getServiceLocations, getServices } from '@/src/api-services';
-import { ServiceLocation } from '@/src/components/ServiceLocation';
+import { getRegions, getServiceAreas, getServices } from '@/src/api-services';
+import { ServiceArea } from '@/src/components/ServiceArea';
 
 
 
@@ -8,15 +8,15 @@ import { ServiceLocation } from '@/src/components/ServiceLocation';
 export default async function Page({ searchParams }: any) {
     const regions = await getRegions(searchParams)
     const services = await getServices(searchParams)
-    const serviceLocations = await getServiceLocations(searchParams)
+    const serviceAreas = await getServiceAreas(searchParams)
 
 
 
-    let data = { regions, services,serviceLocations }
+    let data = { regions, services,serviceAreas }
 
 
 
-    return <ServiceLocation data={data} />
+    return <ServiceArea data={data} />
 
 
 }

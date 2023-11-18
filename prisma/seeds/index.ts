@@ -22,7 +22,9 @@ async function main() {
  await prisma.region.createMany({
       data: regions,
     });
-
+  await prisma.serviceArea.createMany({
+      data: serviceAreas,
+    });
     await prisma.service.createMany({
       data: services,
     });
@@ -43,9 +45,7 @@ async function main() {
       data: users,
     });
 
-    await prisma.serviceArea.createMany({
-      data: serviceAreas,
-    });
+  
 }
 
 main()

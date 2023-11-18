@@ -17,11 +17,11 @@ model Otp {
 }
 
 model TruckClassification {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique(map: "axleClass") @db.VarChar(255)
-  serviceId    Int
-  tankCapacity Decimal? @default(0.00) @db.Decimal(10, 2)
-  regionId     Int?
+  id            Int      @id @default(autoincrement())
+  name          String   @unique(map: "axleClass") @db.VarChar(255)
+  serviceId     Int
+  tankCapacity  Decimal? @default(0.00) @db.Decimal(10, 2)
+  serviceAreaId Int?
 
   deleted Int? @default(0)
   status  Int? @default(0)
@@ -33,9 +33,7 @@ model TruckClassification {
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  Region                    Region?                     @relation(fields: [regionId], references: [id])
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
-  serviceAreaId             Int?
 }
 
 model Service {
@@ -51,7 +49,7 @@ model Service {
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  ServiceArea               ServiceArea[]
+  ServicesInArea             ServicesInArea[]
 }
 
 model Balance {
@@ -111,7 +109,6 @@ model Region {
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
-  TruckClassification       TruckClassification[]
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
@@ -122,10 +119,8 @@ model ServiceArea {
   id   Int    @id @default(autoincrement())
   name String @db.VarChar(255)
 
-  cityPolygon String   @db.VarChar(255)
+  cityPolygon String @db.VarChar(255)
   regionId    Int
-  Service     Service @relation(fields: [serviceId], references: [id])
-  serviceId   Int
 
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
@@ -135,8 +130,22 @@ model ServiceArea {
   BiodigesterServicePricing BiodigesterServicePricing[]
   DesludgingServicePricing  DesludgingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
+  ServicesInArea             ServicesInArea[]
+}
 
-  @@unique([regionId, serviceId], name: "areaServiceKey")
+model ServicesInArea {
+  id          Int         @id @default(autoincrement())
+serviceAreaId Int
+  serviceId     Int 
+   ServiceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Service   Service  @relation(fields: [serviceId], references: [id])
+
+   @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
+  
 }
 
 // model ServiceLocation {

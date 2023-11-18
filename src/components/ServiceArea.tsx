@@ -47,14 +47,13 @@ export const ServiceArea = ({ data }: any) => {
             if (name == "" || region == "") {
                 return toast.error("Please fill form");
             }
-            let cityPolygon = JSON.stringify([[lat1, lng1], [lat2, lng2], [lat3, lng3], [lat4, lng4]])
+            // let cityPolygon = JSON.stringify([[lat1, lng1], [lat2, lng2], [lat3, lng3], [lat4, lng4]])
             let data = {
                 region,
                 name,
-                cityPolygon,
+                lat1, lng1, lat2, lng2, lat3, lng3, lat4, lng4,
                 status
             };
-            console.log(data);
 
             const response = await axios.post("/api/service-area", data);
             toast.success(response.data.message);
@@ -322,7 +321,7 @@ export const ServiceArea = ({ data }: any) => {
                                             <th scope="col">Name</th>
 
                                             <th scope="col">Region</th>
-                                            <th scope="col">Map</th>
+                                            {/* <th scope="col">Map</th> */}
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -338,7 +337,7 @@ export const ServiceArea = ({ data }: any) => {
                                                     <td>{data?.name}</td>
 
                                                     <td>{data?.Region?.name}</td>
-                                                    <td>{JSON.parse(data?.cityPolygon)}</td>
+                                                    {/* <td>{data?.cityPolygon}</td> */}
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
@@ -374,7 +373,16 @@ export const ServiceArea = ({ data }: any) => {
                                                                                 setRegion(data.Region.name)
                                                                                 setName(data.name)
                                                                                 setStatus(data.status)
-                                                                                // setSendingType(data.sendingType)
+                                                                                setLat1(data.lat1)
+                                                                                setLat2(data.lat2)
+                                                                                setLat3(data.lat3)
+                                                                                setLat4(data.lat4)
+
+                                                                                setLng1(data.lng1)
+                                                                                setLng2(data.lng2)
+                                                                                setLng3(data.lng3)
+                                                                                setLng4(data.lng4)
+
                                                                                 // setDistrictId(data.districtId);
 
 

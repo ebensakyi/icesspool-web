@@ -10,23 +10,30 @@ export async function POST(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     const data = {
-      name:res?.name,
+      name: res?.name,
       regionId: Number(res?.region),
-      cityPolygon: res?.cityPolygon,
+      lat1: res?.lat1,
+      lng1: res?.lng1,
+
+      lat2: res?.lat2,
+      lng2: res?.lng2,
+
+      lat3: res?.lat3,
+      lng3: res?.lng3,
+
+      lat4: res?.lat4,
+      lng4: res?.lng4,
       status: Number(res?.status),
-
     };
-    
-
 
     const response = await prisma.serviceArea.create({ data });
 
     // return NextResponse.json({ response, message: "Data submitted succesfully" });
 
-    return createSuccessResponse(response, "Data submitted succesfully")
+    return createSuccessResponse(response, "Data submitted succesfully");
   } catch (error: any) {
     console.log(error);
-    
+
     // let message = ""
     // if(error.code=="P2002"){
     //    message = "Service and Location combination already exist"
@@ -34,7 +41,7 @@ export async function POST(request: Request) {
 
     // return NextResponse.json({ message: message }, { status: 500 });
 
-    return createFailedResponse(error.code, 500)
+    return createFailedResponse(error.code, 500);
   }
 }
 
@@ -43,15 +50,22 @@ export async function PUT(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
-
     const userId = session?.user?.id;
     const data = {
       status: Number(res?.status),
       regionId: Number(res?.region),
       name: res?.name,
-      cityPolygon: res?.cityPolygon,
+      lat1: res?.lat1,
+      lng1: res?.lng1,
 
+      lat2: res?.lat2,
+      lng2: res?.lng2,
+
+      lat3: res?.lat3,
+      lng3: res?.lng3,
+
+      lat4: res?.lat4,
+      lng4: res?.lng4,
     };
     await prisma.serviceArea.update({
       where: {
@@ -81,8 +95,8 @@ export async function GET(request: Request) {
     const response = await prisma.serviceArea.findMany({
       where: { deleted: 0 },
       include: {
-        Region: true
-      }
+        Region: true,
+      },
     });
 
     return NextResponse.json({ response });

@@ -268,7 +268,7 @@ export const TruckClassification = ({ data }: any) => {
                                                     <td>{data?.name}</td>
                                                     <td>{data?.tankCapacity}</td>
 
-                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.ServiceArea?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>

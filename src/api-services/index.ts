@@ -46,8 +46,8 @@ export async function getRegions(searchParams: any) {
   return await response.json();
 }
 
-export async function getServiceLocations(searchParams: any) {
-  let response = await fetch(`${SERVER_BASE_URL}/api/service-location`, {
+export async function getServiceAreas(searchParams: any) {
+  let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
     cache: "no-store",
   });
 

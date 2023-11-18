@@ -74,7 +74,7 @@ export async function GET(request: Request) {
         where: { deleted: 0, serviceId: serviceId },
         include: {
           Service: true,
-          Region: true
+          ServiceArea: true
         },
       });
       return NextResponse.json({ response });
@@ -83,7 +83,7 @@ export async function GET(request: Request) {
       where: { deleted: 0 },
       include: {
         Service: true,
-         Region: true
+        ServiceArea: true
 
       },
     });

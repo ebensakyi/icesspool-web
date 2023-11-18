@@ -117,11 +117,20 @@ model Region {
 
 model ServiceArea {
   id   Int    @id @default(autoincrement())
-  name String @db.VarChar(255) @unique
+  name String @unique @db.VarChar(255)
 
-  cityPolygon String @db.VarChar(255)
-  regionId    Int
-  status   Int?     @default(0)
+  // cityPolygon String @db.VarChar(255)
+  lat1 Decimal @db.Decimal(10, 2)
+  lng1 Decimal @db.Decimal(10, 2)
+  lat2 Decimal @db.Decimal(10, 2)
+  lng2 Decimal @db.Decimal(10, 2)
+  lat3 Decimal @db.Decimal(10, 2)
+  lng3 Decimal @db.Decimal(10, 2)
+  lat4 Decimal @db.Decimal(10, 2)
+  lng4 Decimal @db.Decimal(10, 2)
+
+  regionId Int
+  status   Int? @default(0)
 
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())

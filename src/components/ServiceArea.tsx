@@ -55,7 +55,7 @@ export const ServiceArea = ({ data }: any) => {
                 status
             };
             console.log(data);
-            
+
             const response = await axios.post("/api/service-area", data);
             toast.success(response.data.message);
             setId("")
@@ -332,11 +332,13 @@ export const ServiceArea = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.serviceLocations?.response.map((data: any) => {
+                                        {data?.serviceAreas?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
+                                                    <td>{data?.name}</td>
+
                                                     <td>{data?.Region?.name}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                    <td>{JSON.parse(data?.cityPolygon)}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(

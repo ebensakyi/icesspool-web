@@ -236,7 +236,7 @@ export const ServiceArea = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.serviceLocations?.response.map((data: any) => {
+                                        {data?.serviceAreas?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Region?.name}</td>

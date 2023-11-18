@@ -69,7 +69,6 @@ export async function GET(request: Request) {
       where: { deleted: 0 },
     });
 
-    console.log(response);
 
 
     return NextResponse.json({ response });

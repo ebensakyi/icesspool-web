@@ -16,7 +16,6 @@ export async function POST(request: Request) {
       status: Number(res?.status),
 
     };
-    console.log(data);
     
 
 

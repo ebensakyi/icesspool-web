@@ -49,7 +49,7 @@ model Service {
   DesludgingServicePricing  DesludgingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  ServicesInArea             ServicesInArea[]
+  ServicesInArea            ServicesInArea[]
 }
 
 model Balance {
@@ -130,22 +130,21 @@ model ServiceArea {
   BiodigesterServicePricing BiodigesterServicePricing[]
   DesludgingServicePricing  DesludgingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
-  ServicesInArea             ServicesInArea[]
+  ServicesInArea            ServicesInArea[]
 }
 
 model ServicesInArea {
-  id          Int         @id @default(autoincrement())
-serviceAreaId Int
-  serviceId     Int 
-   ServiceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  id            Int         @id @default(autoincrement())
+  serviceAreaId Int
+  serviceId     Int
+  ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
 
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Service   Service  @relation(fields: [serviceId], references: [id])
 
-   @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
-  
+  @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
 }
 
 // model ServiceLocation {

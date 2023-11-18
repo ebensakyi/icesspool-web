@@ -12,7 +12,7 @@ export const TruckClassification = ({ data }: any) => {
     console.log(data);
 
     const [id, setId] = useState("");
-    const [region, setRegion] = useState("");
+    const [serviceArea, setServiceArea] = useState("");
     const [service, setService] = useState("");
     const [status, setStatus] = useState("");
     const [tankCapacity, setTankCapacity] = useState("");
@@ -34,14 +34,14 @@ export const TruckClassification = ({ data }: any) => {
     const add = async (e: any) => {
        // try {
             e.preventDefault();
-            if (service == "" || status == "" || region == "") {
+            if (service == "" || status == "" || serviceArea == "") {
                 return toast.error("Please fill form");
             }
 
             let data = {
                 name: name,
                 status: status,
-                regionId: region,
+                serviceAreaId: serviceArea,
                 tankCapacity: tankCapacity,
                 serviceId: service,
             };
@@ -49,7 +49,7 @@ export const TruckClassification = ({ data }: any) => {
             toast.success(response.data.message);
             setService("")
             setStatus("");
-            setRegion("")
+            setServiceArea("")
 
 
             router.refresh()
@@ -65,7 +65,7 @@ export const TruckClassification = ({ data }: any) => {
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (region == "" || status == "" || service == "") {
+            if (serviceArea == "" || status == "" || service == "") {
                 return toast.error("Please fill form");
             }
 
@@ -77,7 +77,7 @@ export const TruckClassification = ({ data }: any) => {
             const response = await axios.put("/api/truck-classification", data);
             toast.success(response.data.message);
             setId("")
-            setRegion("")
+            setServiceArea("")
             setStatus("");
             setService("")
 
@@ -167,20 +167,20 @@ export const TruckClassification = ({ data }: any) => {
 
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Location *
+                                        Service Area *
                                     </label>
                                     <select
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            setRegion(e.target.value);
+                                            setServiceArea(e.target.value);
                                         }}
-                                        value={region}
+                                        value={serviceArea}
                                     >
-                                        <option value={0}>Select location * </option>
+                                        <option value={0}>Select area * </option>
 
 
-                                        {data?.regions?.response?.map((data: any) => (
+                                        {data?.serviceAreas?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
                                             </option>
@@ -302,7 +302,7 @@ export const TruckClassification = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setRegion(data.Region.name)
+                                                                                setServiceArea(data.Region.name)
                                                                                 setService(data.Service.name)
                                                                                 setStatus(data.status)
                                                                                 // setSendingType(data.sendingType)

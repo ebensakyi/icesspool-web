@@ -10,14 +10,14 @@ export async function POST(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     const data = {
-      status: Number(res?.status),
+      name:res?.name,
       regionId: Number(res?.region),
-      serviceId: Number(res?.service),
+      cityPolygon: res?.cityPolygon
 
     };
 
 
-    const response = await prisma.serviceLocation.create({ data });
+    const response = await prisma.serviceArea.create({ data });
 
     // return NextResponse.json({ response, message: "Data submitted succesfully" });
 
@@ -48,7 +48,7 @@ export async function PUT(request: Request) {
       serviceId: Number(res?.service),
 
     };
-    await prisma.serviceLocation.update({
+    await prisma.serviceArea.update({
       where: {
         id: Number(res?.id),
       },
@@ -73,7 +73,7 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.serviceLocation.findMany({
+    const response = await prisma.serviceArea.findMany({
       where: { deleted: 0 },
       include: {
         Service: true,

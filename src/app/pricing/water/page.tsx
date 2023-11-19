@@ -1,5 +1,5 @@
 import { getRegions, getServicePoints, getServices } from '@/src/api-services';
-import { Desludging } from '@/src/components/Desludging';
+import { WaterPricing } from '@/src/components/WaterPricing';
 
 
 
@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <Desludging data={data} />
+    return <WaterPricing data={data} />
 
 
 }

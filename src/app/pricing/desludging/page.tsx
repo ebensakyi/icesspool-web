@@ -1,5 +1,5 @@
 import { getRegions, getDesludgingPricing, getServices, getTruckClasses } from '@/src/api-services';
-import { Desludging } from '@/src/components/Desludging';
+import { DesludgingPricing } from '@/src/components/DesludgingPricing';
 
 
 
@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <Desludging data={data} />
+    return <DesludgingPricing data={data} />
 
 
 }

@@ -1,6 +1,5 @@
-import { ServicePoint } from '@/src/components/ServicePoint';
 import { getServicePoints, getServices } from '@/src/api-services';
-import { Desludging } from '@/src/components/Desludging';
+import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
 
 
 
@@ -16,7 +15,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <Desludging data={data} />
+    return <BiodigesterPricing data={data} />
 
 
 }

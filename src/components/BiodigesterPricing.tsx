@@ -7,7 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export const Desludging = ({ data }: any) => {
+export const BiodigesterPricing = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
@@ -155,7 +155,7 @@ export const Desludging = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>FEACAL DESLUDGING PRICING</h1>
+                <h1>BIODIGESTER PRICING</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">

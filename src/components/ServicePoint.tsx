@@ -1,6 +1,5 @@
 "use client"
 import { LOGIN_URL } from '@/config';
-import { signal } from '@preact/signals';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -140,7 +139,7 @@ export const ServicePoint = ({ data }: any) => {
                                         Latitude *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter Latitude' value={latitude} onChange={(e: any) => setLatitude(e.target.value)} />
+                                        <input type="number" className="form-control" placeholder='Enter Latitude' value={latitude} onChange={(e: any) => setLatitude(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">
@@ -148,7 +147,7 @@ export const ServicePoint = ({ data }: any) => {
                                         Longitude *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter Longitude' value={longitude} onChange={(e: any) => setLongitude(e.target.value)} />
+                                        <input type="number" className="form-control" placeholder='Enter Longitude' value={longitude} onChange={(e: any) => setLongitude(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">

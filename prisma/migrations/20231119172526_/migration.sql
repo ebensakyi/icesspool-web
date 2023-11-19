@@ -121,6 +121,7 @@ CREATE TABLE `ServicesInArea` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `serviceAreaId` INTEGER NOT NULL,
     `serviceId` INTEGER NOT NULL,
+    `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

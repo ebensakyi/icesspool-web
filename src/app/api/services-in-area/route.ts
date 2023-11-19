@@ -76,6 +76,7 @@ export async function GET(request: Request) {
       where: { deleted: 0 },
       include: {
         ServiceArea: true,
+        Service:true
       },
     });
 

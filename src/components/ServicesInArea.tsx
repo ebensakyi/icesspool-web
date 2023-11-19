@@ -101,7 +101,7 @@ export const ServicesInArea = ({ data }: any) => {
                 pauseOnHover
             />
             <div className="pagetitle">
-                <h1>SERVICE LOCATION</h1>
+                <h1>SERVICES IN AREAS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -239,7 +239,7 @@ export const ServicesInArea = ({ data }: any) => {
                                         {data?.servicesInAreas?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
+                                                    <td>{data?.ServiceArea?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>

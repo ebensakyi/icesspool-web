@@ -40,7 +40,7 @@ export const ServicesInArea = ({ data }: any) => {
                 service,
                 status,
             };
-            const response = await axios.post("/api/service-location", data);
+            const response = await axios.post("/api/services-in-area", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
@@ -68,7 +68,7 @@ export const ServicesInArea = ({ data }: any) => {
                 name,
                 status,
             };
-            const response = await axios.put("/api/services", data);
+            const response = await axios.put("/api/services-in-area", data);
             toast.success(response.data.message);
             setId("")
             setServiceArea("")
@@ -225,7 +225,7 @@ export const ServicesInArea = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Region</th>
+                                            <th scope="col">Area</th>
                                             <th scope="col">Service</th>
 
                                             <th scope="col">Status</th>
@@ -236,10 +236,10 @@ export const ServicesInArea = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.serviceAreas?.response.map((data: any) => {
+                                        {data?.servicesInAreas?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>

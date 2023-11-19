@@ -148,7 +148,7 @@ model ServicesInArea {
   serviceAreaId Int
   serviceId     Int
   ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
-
+  status   Int? @default(0)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

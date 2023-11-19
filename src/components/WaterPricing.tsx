@@ -11,20 +11,25 @@ export const WaterPricing = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
-    const [insurance, setInsurance] = useState("");
+
+    const [insurance, setInsurance] = useState(""); 
     const [repairCost, setRepairCost] = useState("");
     const [roadWorthy, setRoadWorthy] = useState("");
     const [unitFuelCost, setUnitFuelCost] = useState("");
     const [workingDays, setWorkingDays] = useState("");
-    const [truckDepreciation, setTruckDepreciation] = useState("");
-    const [annualAdminCost, setAnnualAdminCost] = useState("");
-    const [annualOverheadCost, setAnnualOverheadCost] = useState("");
-    const [annualToolsCost, setAnnualToolsCost] = useState("");
+
     const [profitPercentage, setProfitPercentage] = useState("");
-    const [pumpAnnualDepreciation, setPumpAnnualDepreciation] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
+    const [annualTruckDepreciation, setAnnualTruckDepreciation] = useState("");
+    const [annualHoesDepreciation, setAnnualHoesDepreciation] = useState(""); 
+    const [annualToolsCost, setAnnualToolsCost] = useState(""); 
+    const [annualPumpDepreciation, setPumpDepreciation] = useState("");
+    const [annualOverheadCost, setAnnualOverheadCost] = useState("");
+    const [annualAdminCost, setAnnualAdminCost] = useState("");
+    const [waterUnitCost, setWaterUnitCost] = useState("");
+    const [operatorsProfit, setOperatorsProfitt] = useState("");
 
     const [region, setRegion] = useState("");
 

@@ -178,6 +178,8 @@ export const WaterPricing = ({ data }: any) => {
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Add</h5>
+
+                                
                                 {/* <div className="row">
                                     <div className="col-lg-4">
                                         <div className=" mb-3">

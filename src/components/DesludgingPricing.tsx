@@ -21,7 +21,7 @@ export const DesludgingPricing = ({ data }: any) => {
     const [annualOverheadCost, setAnnualOverheadCost] = useState("");
     const [annualToolsCost, setAnnualToolsCost] = useState("");
     const [profitPercentage, setProfitPercentage] = useState("");
-    const [pumpAnnualDepreciation, setPumpAnnualDepreciation] = useState("");
+    const [annualPumpDepreciation, setAnnualPumpDepreciation] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
@@ -62,7 +62,7 @@ export const DesludgingPricing = ({ data }: any) => {
                 annualOverheadCost: Number(annualOverheadCost),
                 annualToolsCost: Number(annualToolsCost),
                 profitPercentage: Number(profitPercentage),
-                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+                annualPumpDepreciation: Number(annualPumpDepreciation),
                 region: Number(region),
                 truckClassification: Number(truckClassification),
                 fuelDistanceConst: Number(fuelDistanceConst),
@@ -80,7 +80,7 @@ export const DesludgingPricing = ({ data }: any) => {
             setAnnualAdminCost("");
             setAnnualOverheadCost("");
             setProfitPercentage("");
-            setPumpAnnualDepreciation("");
+            setAnnualPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
 
@@ -113,7 +113,7 @@ export const DesludgingPricing = ({ data }: any) => {
                 annualOverheadCost: Number(annualOverheadCost),
                 annualToolsCost: Number(annualToolsCost),
                 profitPercentage: Number(profitPercentage),
-                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+                annualPumpDepreciation: Number(annualPumpDepreciation),
                 fuelDistanceConst: Number(fuelDistanceConst),
                 region: Number(region),
 
@@ -135,7 +135,7 @@ export const DesludgingPricing = ({ data }: any) => {
             setAnnualAdminCost("");
             setAnnualOverheadCost("");
             setProfitPercentage("");
-            setPumpAnnualDepreciation("");
+            setAnnualPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
             router.refresh()
@@ -318,7 +318,7 @@ export const DesludgingPricing = ({ data }: any) => {
                                                 Pump Annual Depreciation *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={annualPumpDepreciation} onChange={(e: any) => setAnnualPumpDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -443,7 +443,7 @@ export const DesludgingPricing = ({ data }: any) => {
                                             setAnnualAdminCost("");
                                             setAnnualOverheadCost("");
                                             setProfitPercentage("");
-                                            setPumpAnnualDepreciation("");
+                                            setAnnualPumpDepreciation("");
                                             setTruckClassification("");
                                             setFuelDistanceConst("")
 
@@ -557,7 +557,7 @@ export const DesludgingPricing = ({ data }: any) => {
                                                                                 setAnnualAdminCost(data.annualAdminCost);
                                                                                 setAnnualOverheadCost(data.annualOverheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
-                                                                                setPumpAnnualDepreciation(data.pumpAnnualDepreciation);
+                                                                                setAnnualPumpDepreciation(data.pumpAnnualDepreciation);
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
                                                                                 setAnnualToolsCost(data.annualToolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)

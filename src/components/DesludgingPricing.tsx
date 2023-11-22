@@ -508,9 +508,9 @@ export const DesludgingPricing = ({ data }: any) => {
                                                     <td>{data?.unitFuelCost}</td>
                                                     <td>{data?.workingDays}</td>
                                                     <td>{data?.truckDepreciation}</td>
-                                                    <td>{data?.AdminCost}</td>
-                                                    <td>{data?.OverheadCost}</td>
-                                                    <td>{data?.ToolsCost}</td>
+                                                    <td>{data?.adminCost}</td>
+                                                    <td>{data?.overheadCost}</td>
+                                                    <td>{data?.toolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
                                                     <td>{data?.pumpDepreciation}</td>
                                                     <td>{data?.fuelDistanceConst}</td>

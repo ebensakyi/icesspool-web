@@ -276,11 +276,11 @@ model DesludgingServicePricing {
   unitFuelCost           Decimal?            @db.Decimal(10, 2)
   workingDays            Int?
   truckDepreciation      Int?
-  annualAdminCost        Decimal?            @db.Decimal(10, 2)
-  annualOverheadCost     Decimal?            @db.Decimal(10, 2)
-  annualToolsCost        Decimal?            @db.Decimal(10, 2)
+  AdminCost        Decimal?            @db.Decimal(10, 2)
+  OverheadCost     Decimal?            @db.Decimal(10, 2)
+  ToolsCost        Decimal?            @db.Decimal(10, 2)
   profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpAnnualDepreciation Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation Decimal?            @db.Decimal(10, 2)
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   status                 Int?                @default(0)
@@ -309,11 +309,11 @@ model WaterServicePricing {
   unitFuelCost           Decimal?            @db.Decimal(10, 2)
   workingDays            Int?
   truckDepreciation      Int?
-  annualAdminCost        Decimal?            @db.Decimal(10, 2)
-  annualOverheadCost     Decimal?            @db.Decimal(10, 2)
-  annualToolsCost        Decimal?            @db.Decimal(10, 2)
+  AdminCost        Decimal?            @db.Decimal(10, 2)
+  OverheadCost     Decimal?            @db.Decimal(10, 2)
+  ToolsCost        Decimal?            @db.Decimal(10, 2)
   profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpAnnualDepreciation Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation Decimal?            @db.Decimal(10, 2)
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   deleted                Int?                @default(0)
@@ -340,11 +340,11 @@ model BiodigesterServicePricing {
   unitFuelCost           Decimal?            @db.Decimal(10, 2)
   workingDays            Int?
   truckDepreciation      Int?
-  annualAdminCost        Decimal?            @db.Decimal(10, 2)
-  annualOverheadCost     Decimal?            @db.Decimal(10, 2)
-  annualToolsCost        Decimal?            @db.Decimal(10, 2)
+  AdminCost        Decimal?            @db.Decimal(10, 2)
+  OverheadCost     Decimal?            @db.Decimal(10, 2)
+  ToolsCost        Decimal?            @db.Decimal(10, 2)
   profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpAnnualDepreciation Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation Decimal?            @db.Decimal(10, 2)
   TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId  Int
   deleted                Int?                @default(0)

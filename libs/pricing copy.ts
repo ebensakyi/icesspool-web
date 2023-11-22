@@ -7,22 +7,22 @@ export const calculateDeludgingPrice = async (data: any) => {
   let pricing: any =  []
 
   data.map((d: any) => {
-    const pumpAnnualDepreciation = parseFloat(d.pumpAnnualDepreciation);
+    const pumpDepreciation = parseFloat(d.pumpDepreciation);
     const fuelUnitCost = parseFloat(d.unitFuelCost);
     const fuelDistanceConstant = parseFloat(d.fuelDistanceConst);
     const insurance = parseFloat(d.insurance);
     const repairCost = parseFloat(d.repairCost);
     const roadWorthy = parseFloat(d.roadWorthy);
     const workingDays = parseFloat(d.workingDays);
-    const annualAdminCost = parseFloat(d.annualAdminCost);
-    const annualOverheads = parseFloat(d.annualOverheadCost);
-    const annualToolsCost = parseFloat(d.annualToolsCost);
+    const AdminCost = parseFloat(d.AdminCost);
+    const Overheads = parseFloat(d.OverheadCost);
+    const ToolsCost = parseFloat(d.ToolsCost);
     const profitPercentage = parseFloat(d.profitPercentage);
   
     const tankVolume = parseFloat(d.TruckClassification.tankCapacity);
   
   
-    const truckAnnualDepreciation = parseFloat(d.truckDepreciation);
+    const truckDepreciation = parseFloat(d.truckDepreciation);
 
   
     //Calculation
@@ -37,23 +37,23 @@ export const calculateDeludgingPrice = async (data: any) => {
       repairCost +
       roadWorthy;
   
-    const totalAnnualCostService =
+    const totalCostService =
       operationCost +
-      truckAnnualDepreciation +
-      pumpAnnualDepreciation +
-      annualOverheads +
-      annualToolsCost +
-      annualAdminCost;
+      truckDepreciation +
+      pumpDepreciation +
+      Overheads +
+      ToolsCost +
+      AdminCost;
    
-    const totalAnnualCost =
-    totalAnnualCostService +
-    totalAnnualCostService * profitPercentage;
+    const totalCost =
+    totalCostService +
+    totalCostService * profitPercentage;
   
-    const annualSludgeVolume = tankVolume * workingDays;
+    const SludgeVolume = tankVolume * workingDays;
   
     //COST
     const cost = (
-      (totalAnnualCost / annualSludgeVolume) *
+      (totalCost / SludgeVolume) *
       tankVolume
     ).toFixed(0);
 
@@ -69,25 +69,25 @@ export const calculateDeludgingPrice = async (data: any) => {
 
 
 
-  // const pumpAnnualDepreciation = parseFloat(data[0].pumpAnnualDepreciation);
+  // const pumpDepreciation = parseFloat(data[0].pumpDepreciation);
   // const fuelUnitCost = parseFloat(data[0].unitFuelCost);
   // const fuelDistanceConstant = parseFloat(data[0].fuelDistanceConst);
   // const insurance = parseFloat(data[0].insurance);
   // const repairCost = parseFloat(data[0].repairCost);
   // const roadWorthy = parseFloat(data[0].roadWorthy);
   // const workingDays = parseFloat(data[0].workingDays);
-  // const annualAdminCost = parseFloat(data[0].annualAdminCost);
-  // const annualOverheads = parseFloat(data[0].annualOverheadCost);
-  // const annualToolsCost = parseFloat(data[0].annualToolsCost);
+  // const AdminCost = parseFloat(data[0].AdminCost);
+  // const Overheads = parseFloat(data[0].OverheadCost);
+  // const ToolsCost = parseFloat(data[0].ToolsCost);
   // const profitPercentage = parseFloat(data[0].profitPercentage);
 
   // const singleTankVolume = parseFloat(data[0].TruckClassification.tankCapacity);
   // const mediumTankVolume = parseFloat(data[0].TruckClassification.tankCapacity);
   // const doubleTankVolume = parseFloat(data[0].TruckClassification.tankCapacity);
 
-  // const singleTruckAnnualDepreciation = parseFloat(data[0].truckDepreciation);
-  // const mediumTruckAnnualDepreciation = parseFloat(data[0].truckDepreciation);
-  // const doubleTruckAnnualDepreciation = parseFloat(data[0].truckDepreciation);
+  // const singleTruckDepreciation = parseFloat(data[0].truckDepreciation);
+  // const mediumTruckDepreciation = parseFloat(data[0].truckDepreciation);
+  // const doubleTruckDepreciation = parseFloat(data[0].truckDepreciation);
 
   // //Calculation
   // const fuelPerTrip = distance * fuelDistanceConstant;
@@ -101,53 +101,53 @@ export const calculateDeludgingPrice = async (data: any) => {
   //   repairCost +
   //   roadWorthy;
 
-  // const singleTotalAnnualCostService =
+  // const singleTotalCostService =
   //   operationCost +
-  //   singleTruckAnnualDepreciation +
-  //   pumpAnnualDepreciation +
-  //   annualOverheads +
-  //   annualToolsCost +
-  //   annualAdminCost;
-  // const mediumTotalAnnualCostService =
+  //   singleTruckDepreciation +
+  //   pumpDepreciation +
+  //   Overheads +
+  //   ToolsCost +
+  //   AdminCost;
+  // const mediumTotalCostService =
   //   operationCost +
-  //   mediumTruckAnnualDepreciation +
-  //   pumpAnnualDepreciation +
-  //   annualOverheads +
-  //   annualToolsCost +
-  //   annualAdminCost;
-  // const doubleTotalAnnualCostService =
+  //   mediumTruckDepreciation +
+  //   pumpDepreciation +
+  //   Overheads +
+  //   ToolsCost +
+  //   AdminCost;
+  // const doubleTotalCostService =
   //   operationCost +
-  //   doubleTruckAnnualDepreciation +
-  //   pumpAnnualDepreciation +
-  //   annualOverheads +
-  //   annualToolsCost +
-  //   annualAdminCost;
+  //   doubleTruckDepreciation +
+  //   pumpDepreciation +
+  //   Overheads +
+  //   ToolsCost +
+  //   AdminCost;
 
-  // const singleTotalAnnualCost =
-  //   singleTotalAnnualCostService +
-  //   singleTotalAnnualCostService * profitPercentage;
-  // const mediumTotalAnnualCost =
-  //   mediumTotalAnnualCostService +
-  //   mediumTotalAnnualCostService * profitPercentage;
-  // const doubleTotalAnnualCost =
-  //   doubleTotalAnnualCostService +
-  //   doubleTotalAnnualCostService * profitPercentage;
+  // const singleTotalCost =
+  //   singleTotalCostService +
+  //   singleTotalCostService * profitPercentage;
+  // const mediumTotalCost =
+  //   mediumTotalCostService +
+  //   mediumTotalCostService * profitPercentage;
+  // const doubleTotalCost =
+  //   doubleTotalCostService +
+  //   doubleTotalCostService * profitPercentage;
 
-  // const singleAnnualSludgeVolume = singleTankVolume * workingDays;
-  // const mediumAnnualSludgeVolume = mediumTankVolume * workingDays;
-  // const doubleAnnualSludgeVolume = doubleTankVolume * workingDays;
+  // const singleSludgeVolume = singleTankVolume * workingDays;
+  // const mediumSludgeVolume = mediumTankVolume * workingDays;
+  // const doubleSludgeVolume = doubleTankVolume * workingDays;
 
   // //COST
   // const singleCost = (
-  //   (singleTotalAnnualCost / singleAnnualSludgeVolume) *
+  //   (singleTotalCost / singleSludgeVolume) *
   //   singleTankVolume
   // ).toFixed(0);
   // const mediumCost = (
-  //   (mediumTotalAnnualCost / mediumAnnualSludgeVolume) *
+  //   (mediumTotalCost / mediumSludgeVolume) *
   //   mediumTankVolume
   // ).toFixed(0);
   // const doubleCost = (
-  //   (doubleTotalAnnualCost / doubleAnnualSludgeVolume) *
+  //   (doubleTotalCost / doubleSludgeVolume) *
   //   doubleTankVolume
   // ).toFixed(0);
 

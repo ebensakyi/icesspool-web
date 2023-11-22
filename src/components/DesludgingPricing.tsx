@@ -17,11 +17,11 @@ export const DesludgingPricing = ({ data }: any) => {
     const [unitFuelCost, setUnitFuelCost] = useState("");
     const [workingDays, setWorkingDays] = useState("");
     const [truckDepreciation, setTruckDepreciation] = useState("");
-    const [annualAdminCost, setAnnualAdminCost] = useState("");
-    const [annualOverheadCost, setAnnualOverheadCost] = useState("");
-    const [annualToolsCost, setAnnualToolsCost] = useState("");
+    const [adminCost, setAdminCost] = useState("");
+    const [overheadCost, setOverheadCost] = useState("");
+    const [toolsCost, setToolsCost] = useState("");
     const [profitPercentage, setProfitPercentage] = useState("");
-    const [annualPumpDepreciation, setAnnualPumpDepreciation] = useState("");
+    const [pumpDepreciation, setPumpDepreciation] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
@@ -58,11 +58,11 @@ export const DesludgingPricing = ({ data }: any) => {
                 unitFuelCost: Number(unitFuelCost),
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
-                annualAdminCost: Number(annualAdminCost),
-                annualOverheadCost: Number(annualOverheadCost),
-                annualToolsCost: Number(annualToolsCost),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
-                annualPumpDepreciation: Number(annualPumpDepreciation),
+                pumpDepreciation: Number(pumpDepreciation),
                 region: Number(region),
                 truckClassification: Number(truckClassification),
                 fuelDistanceConst: Number(fuelDistanceConst),
@@ -77,10 +77,10 @@ export const DesludgingPricing = ({ data }: any) => {
             setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
-            setAnnualAdminCost("");
-            setAnnualOverheadCost("");
+            setAdminCost("");
+            setOverheadCost("");
             setProfitPercentage("");
-            setAnnualPumpDepreciation("");
+            setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
 
@@ -109,11 +109,11 @@ export const DesludgingPricing = ({ data }: any) => {
                 unitFuelCost: Number(unitFuelCost),
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
-                annualAdminCost: Number(annualAdminCost),
-                annualOverheadCost: Number(annualOverheadCost),
-                annualToolsCost: Number(annualToolsCost),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
-                annualPumpDepreciation: Number(annualPumpDepreciation),
+                pumpDepreciation: Number(pumpDepreciation),
                 fuelDistanceConst: Number(fuelDistanceConst),
                 region: Number(region),
 
@@ -132,10 +132,10 @@ export const DesludgingPricing = ({ data }: any) => {
             setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
-            setAnnualAdminCost("");
-            setAnnualOverheadCost("");
+            setAdminCost("");
+            setOverheadCost("");
             setProfitPercentage("");
-            setAnnualPumpDepreciation("");
+            setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
             router.refresh()
@@ -273,30 +273,30 @@ export const DesludgingPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Annual Admin Cost *
+                                                 Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter  admin cost' value={adminCost} onChange={(e: any) => setAdminCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Annual Overhead Cost *
+                                                 Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter  overhead cost' value={overheadCost} onChange={(e: any) => setOverheadCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Annual Tools Cost *
+                                                 Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter  tools cost' value={toolsCost} onChange={(e: any) => setToolsCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -315,10 +315,10 @@ export const DesludgingPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Pump Annual Depreciation *
+                                                Pump  Depreciation *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={annualPumpDepreciation} onChange={(e: any) => setAnnualPumpDepreciation(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter pump  depreciation' value={pumpDepreciation} onChange={(e: any) => setPumpDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -440,10 +440,10 @@ export const DesludgingPricing = ({ data }: any) => {
                                             setUnitFuelCost("");
                                             setWorkingDays("");
                                             setTruckDepreciation("");
-                                            setAnnualAdminCost("");
-                                            setAnnualOverheadCost("");
+                                            setAdminCost("");
+                                            setOverheadCost("");
                                             setProfitPercentage("");
-                                            setAnnualPumpDepreciation("");
+                                            setPumpDepreciation("");
                                             setTruckClassification("");
                                             setFuelDistanceConst("")
 
@@ -481,11 +481,11 @@ export const DesludgingPricing = ({ data }: any) => {
                                             <th scope="col">Unit Fuel Cost</th>
                                             <th scope="col">Working Days</th>
                                             <th scope="col">Truck Depreciation</th>
-                                            <th scope="col">Annual Admin Cost</th>
-                                            <th scope="col">Annual Overhead Cost</th>
-                                            <th scope="col">Annual Tools Cost</th>
+                                            <th scope="col"> Admin Cost</th>
+                                            <th scope="col"> Overhead Cost</th>
+                                            <th scope="col"> Tools Cost</th>
                                             <th scope="col">Profit Percentage</th>
-                                            <th scope="col">Pump Annual Depreciation</th>
+                                            <th scope="col">Pump  Depreciation</th>
                                             <th scope="col">Fuel Distance Const</th>
 
                                             <th scope="col">Status</th>
@@ -508,11 +508,11 @@ export const DesludgingPricing = ({ data }: any) => {
                                                     <td>{data?.unitFuelCost}</td>
                                                     <td>{data?.workingDays}</td>
                                                     <td>{data?.truckDepreciation}</td>
-                                                    <td>{data?.annualAdminCost}</td>
-                                                    <td>{data?.annualOverheadCost}</td>
-                                                    <td>{data?.annualToolsCost}</td>
+                                                    <td>{data?.AdminCost}</td>
+                                                    <td>{data?.OverheadCost}</td>
+                                                    <td>{data?.ToolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
-                                                    <td>{data?.pumpAnnualDepreciation}</td>
+                                                    <td>{data?.pumpDepreciation}</td>
                                                     <td>{data?.fuelDistanceConst}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
@@ -554,12 +554,12 @@ export const DesludgingPricing = ({ data }: any) => {
                                                                                 setUnitFuelCost(data.unitFuelCost);
                                                                                 setWorkingDays(data.workingDays);
                                                                                 setTruckDepreciation(data.truckDepreciation);
-                                                                                setAnnualAdminCost(data.annualAdminCost);
-                                                                                setAnnualOverheadCost(data.annualOverheadCost);
+                                                                                setAdminCost(data.AdminCost);
+                                                                                setOverheadCost(data.OverheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
-                                                                                setAnnualPumpDepreciation(data.pumpAnnualDepreciation);
+                                                                                setPumpDepreciation(data.pumpDepreciation);
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
-                                                                                setAnnualToolsCost(data.annualToolsCost)
+                                                                                setToolsCost(data.ToolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)
                                                                                 setRegion(data.regionId)
                                                                                 setStatus(data.status)

@@ -12,24 +12,27 @@ export const WaterPricing = ({ data }: any) => {
 
     const [id, setId] = useState("");
 
-    const [insurance, setInsurance] = useState(""); 
-    const [repairCost, setRepairCost] = useState("");
-    const [roadWorthy, setRoadWorthy] = useState("");
-    const [unitFuelCost, setUnitFuelCost] = useState("");
-    const [workingDays, setWorkingDays] = useState("");
+    const [insurance, setInsurance] = useState(""); //
+    const [roadWorthy, setRoadWorthy] = useState(""); //
+    const [rawWaterCost, setRawWaterCost] = useState(""); //
+    const [repairCost, setRepairCost] = useState(""); //
+    const [pumpDepreciation, setPumpDepreciation] = useState("");//
+    const [adminCost, setAdminCost] = useState(""); //
+    const [toolsCost, setToolsCost] = useState(""); //
+    const [hoseDepreciation, setHoseDepreciation] = useState(""); //
+    const [truckDepreciation, setTruckDepreciation] = useState("");//
+    const [overheadCost, setOverheadCost] = useState("");//
+    // const [operatorsProfit, setOperatorsProfitt] = useState("");//
+    const [waterUnitCost, setWaterUnitCost] = useState("");//
+   // const [fuelDistanceConst, setFuelDistanceConst] = useState("");
+    const [workingDays, setWorkingDays] = useState(""); //
+    const [unitFuelCost, setUnitFuelCost] = useState(""); //
+
+   
 
     const [profitPercentage, setProfitPercentage] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
-    const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
-    const [truckDepreciation, setTruckDepreciation] = useState("");
-    const [hoesDepreciation, setHoesDepreciation] = useState(""); 
-    const [toolsCost, setToolsCost] = useState(""); 
-    const [pumpDepreciation, setPumpDepreciation] = useState("");
-    const [overheadCost, setOverheadCost] = useState("");
-    const [adminCost, setAdminCost] = useState("");
-    const [waterUnitCost, setWaterUnitCost] = useState("");
-    const [operatorsProfit, setOperatorsProfitt] = useState("");
 
     const [region, setRegion] = useState("");
 
@@ -70,7 +73,9 @@ export const WaterPricing = ({ data }: any) => {
                 pumpDepreciation: Number(pumpDepreciation),
                 region: Number(region),
                 truckClassification: Number(truckClassification),
-                fuelDistanceConst: Number(fuelDistanceConst),
+                rawWaterCost: Number(rawWaterCost),
+                hoseDepreciation: Number(hoseDepreciation),
+                waterUnitCost:Number(waterUnitCost),
                 status: Number(status),
             };
             const response = await axios.post("/api/pricing/desludging", data);
@@ -87,7 +92,6 @@ export const WaterPricing = ({ data }: any) => {
             setProfitPercentage("");
             setPumpDepreciation("");
             setTruckClassification("");
-            setFuelDistanceConst("")
 
             router.refresh()
 
@@ -119,7 +123,6 @@ export const WaterPricing = ({ data }: any) => {
                 toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
                 pumpDepreciation: Number(pumpDepreciation),
-                fuelDistanceConst: Number(fuelDistanceConst),
                 region: Number(region),
 
                 truckClassification: Number(truckClassification),
@@ -142,7 +145,6 @@ export const WaterPricing = ({ data }: any) => {
             setProfitPercentage("");
             setPumpDepreciation("");
             setTruckClassification("");
-            setFuelDistanceConst("")
             router.refresh()
 
         } catch (error: any) {
@@ -359,10 +361,20 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Fuel Distance Constant *
+                                               Raw Water Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={fuelDistanceConst} onChange={(e: any) => setFuelDistanceConst(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                               Hose Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={hoseDepreciation} onChange={(e: any) => setHoseDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -453,7 +465,7 @@ export const WaterPricing = ({ data }: any) => {
                                             setProfitPercentage("");
                                             setPumpDepreciation("");
                                             setTruckClassification("");
-                                            setFuelDistanceConst("")
+                                            setRawWaterCost("")
 
 
                                         }}
@@ -566,7 +578,7 @@ export const WaterPricing = ({ data }: any) => {
                                                                                 setOverheadCost(data.overheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
                                                                                 setPumpDepreciation(data.pumpDepreciation);
-                                                                                setFuelDistanceConst(data.fuelDistanceConst)
+                                                                                setRawWaterCost(data.rawWaterCost)
                                                                                 setToolsCost(data.toolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)
                                                                                 setRegion(data.regionId)

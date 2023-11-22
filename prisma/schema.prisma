@@ -148,11 +148,11 @@ model ServicesInArea {
   serviceAreaId Int
   serviceId     Int
   ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
-  status   Int? @default(0)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Service   Service  @relation(fields: [serviceId], references: [id])
+  status        Int?        @default(0)
+  deleted       Int?        @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Service       Service     @relation(fields: [serviceId], references: [id])
 
   @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
 }
@@ -269,25 +269,25 @@ model Payment {
 model DesludgingServicePricing {
   id Int @id @default(autoincrement())
 
-  fuelDistanceConst      Decimal?            @db.Decimal(10, 2)
-  insurance              Decimal?            @db.Decimal(10, 2)
-  repairCost             Decimal?            @db.Decimal(10, 2)
-  roadWorthy             Decimal?            @db.Decimal(10, 2)
-  unitFuelCost           Decimal?            @db.Decimal(10, 2)
-  workingDays            Int?
-  truckDepreciation      Int?
-  AdminCost        Decimal?            @db.Decimal(10, 2)
-  OverheadCost     Decimal?            @db.Decimal(10, 2)
-  ToolsCost        Decimal?            @db.Decimal(10, 2)
-  profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpDepreciation Decimal?            @db.Decimal(10, 2)
-  TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
-  truckClassificationId  Int
-  status                 Int?                @default(0)
-  deleted                Int?                @default(0)
-  createdAt              DateTime            @default(now())
-  updatedAt              DateTime            @updatedAt
-  Region                 Region              @relation(fields: [regionId], references: [id])
+  fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
+  insurance             Decimal?            @db.Decimal(10, 2)
+  repairCost            Decimal?            @db.Decimal(10, 2)
+  roadWorthy            Decimal?            @db.Decimal(10, 2)
+  unitFuelCost          Decimal?            @db.Decimal(10, 2)
+  workingDays           Int?
+  truckDepreciation     Int?
+  adminCost             Decimal?            @db.Decimal(10, 2)
+  overheadCost          Decimal?            @db.Decimal(10, 2)
+  toolsCost             Decimal?            @db.Decimal(10, 2)
+  profitPercentage      Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation      Decimal?            @db.Decimal(10, 2)
+  TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
+  truckClassificationId Int
+  status                Int?                @default(0)
+  deleted               Int?                @default(0)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  Region                Region              @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
 
   // locationId String @db.VarChar(255)
@@ -302,24 +302,24 @@ model DesludgingServicePricing {
 model WaterServicePricing {
   id Int @id @default(autoincrement())
 
-  fuelDistanceConst      Decimal?            @db.Decimal(10, 2)
-  insurance              Decimal?            @db.Decimal(10, 2)
-  repairCost             Decimal?            @db.Decimal(10, 2)
-  roadWorthy             Decimal?            @db.Decimal(10, 2)
-  unitFuelCost           Decimal?            @db.Decimal(10, 2)
-  workingDays            Int?
-  truckDepreciation      Int?
-  AdminCost        Decimal?            @db.Decimal(10, 2)
-  OverheadCost     Decimal?            @db.Decimal(10, 2)
-  ToolsCost        Decimal?            @db.Decimal(10, 2)
-  profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpDepreciation Decimal?            @db.Decimal(10, 2)
-  TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
-  truckClassificationId  Int
-  deleted                Int?                @default(0)
-  createdAt              DateTime            @default(now())
-  updatedAt              DateTime            @updatedAt
-  Region                 Region              @relation(fields: [regionId], references: [id])
+  fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
+  insurance             Decimal?            @db.Decimal(10, 2)
+  repairCost            Decimal?            @db.Decimal(10, 2)
+  roadWorthy            Decimal?            @db.Decimal(10, 2)
+  unitFuelCost          Decimal?            @db.Decimal(10, 2)
+  workingDays           Int?
+  truckDepreciation     Int?
+  adminCost             Decimal?            @db.Decimal(10, 2)
+  overheadCost          Decimal?            @db.Decimal(10, 2)
+  toolsCost             Decimal?            @db.Decimal(10, 2)
+  profitPercentage      Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation      Decimal?            @db.Decimal(10, 2)
+  TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
+  truckClassificationId Int
+  deleted               Int?                @default(0)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  Region                Region              @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
 
   // locationId String @db.VarChar(255)
@@ -333,28 +333,28 @@ model WaterServicePricing {
 model BiodigesterServicePricing {
   id Int @id @default(autoincrement())
 
-  fuelDistanceConst      Decimal?            @db.Decimal(10, 2)
-  insurance              Decimal?            @db.Decimal(10, 2)
-  repairCost             Decimal?            @db.Decimal(10, 2)
-  roadWorthy             Decimal?            @db.Decimal(10, 2)
-  unitFuelCost           Decimal?            @db.Decimal(10, 2)
-  workingDays            Int?
-  truckDepreciation      Int?
-  AdminCost        Decimal?            @db.Decimal(10, 2)
-  OverheadCost     Decimal?            @db.Decimal(10, 2)
-  ToolsCost        Decimal?            @db.Decimal(10, 2)
-  profitPercentage       Decimal?            @db.Decimal(10, 2)
-  pumpDepreciation Decimal?            @db.Decimal(10, 2)
-  TruckClassification    TruckClassification @relation(fields: [truckClassificationId], references: [id])
-  truckClassificationId  Int
-  deleted                Int?                @default(0)
-  createdAt              DateTime            @default(now())
-  updatedAt              DateTime            @updatedAt
-  Region                 Region              @relation(fields: [regionId], references: [id])
+  fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
+  insurance             Decimal?            @db.Decimal(10, 2)
+  repairCost            Decimal?            @db.Decimal(10, 2)
+  roadWorthy            Decimal?            @db.Decimal(10, 2)
+  unitFuelCost          Decimal?            @db.Decimal(10, 2)
+  workingDays           Int?
+  truckDepreciation     Int?
+  adminCost             Decimal?            @db.Decimal(10, 2)
+  overheadCost          Decimal?            @db.Decimal(10, 2)
+  toolsCost             Decimal?            @db.Decimal(10, 2)
+  profitPercentage      Decimal?            @db.Decimal(10, 2)
+  pumpDepreciation      Decimal?            @db.Decimal(10, 2)
+  TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
+  truckClassificationId Int
+  deleted               Int?                @default(0)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  Region                Region              @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
   // locationId             String              @db.VarChar(255)
-  regionId               Int
-  Service                Service             @relation(fields: [serviceId], references: [id])
+  regionId              Int
+  Service               Service             @relation(fields: [serviceId], references: [id])
 
   serviceId     Int
   ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])

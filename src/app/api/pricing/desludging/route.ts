@@ -63,9 +63,9 @@ export async function PUT(request: Request) {
         unitFuelCost: Number(res?.unitFuelCost),
         workingDays: Number(res?.workingDays),
         truckDepreciation: Number(res?.truckDepreciation),
-        AdminCost: Number(res?.AdminCost),
-        OverheadCost: Number(res?.OverheadCost),
-        ToolsCost: Number(res?.ToolsCost),
+        adminCost: Number(res?.adminCost),
+        overheadCost: Number(res?.overheadCost),
+        toolsCost: Number(res?.toolsCost),
         profitPercentage: Number(res?.profitPercentage),
         pumpDepreciation: Number(res?.pumpDepreciation),
   

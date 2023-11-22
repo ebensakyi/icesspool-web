@@ -22,12 +22,12 @@ export const WaterPricing = ({ data }: any) => {
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
-    const [annualTruckDepreciation, setAnnualTruckDepreciation] = useState("");
-    const [annualHoesDepreciation, setAnnualHoesDepreciation] = useState(""); 
-    const [annualToolsCost, setAnnualToolsCost] = useState(""); 
-    const [annualPumpDepreciation, setPumpDepreciation] = useState("");
-    const [annualOverheadCost, setAnnualOverheadCost] = useState("");
-    const [annualAdminCost, setAnnualAdminCost] = useState("");
+    const [truckDepreciation, setTruckDepreciation] = useState("");
+    const [hoesDepreciation, setHoesDepreciation] = useState(""); 
+    const [toolsCost, setToolsCost] = useState(""); 
+    const [pumpDepreciation, setPumpDepreciation] = useState("");
+    const [overheadCost, setOverheadCost] = useState("");
+    const [adminCost, setAdminCost] = useState("");
     const [waterUnitCost, setWaterUnitCost] = useState("");
     const [operatorsProfit, setOperatorsProfitt] = useState("");
 
@@ -63,11 +63,11 @@ export const WaterPricing = ({ data }: any) => {
                 unitFuelCost: Number(unitFuelCost),
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
-                annualAdminCost: Number(annualAdminCost),
-                annualOverheadCost: Number(annualOverheadCost),
-                annualToolsCost: Number(annualToolsCost),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
-                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+                pumpDepreciation: Number(pumpDepreciation),
                 region: Number(region),
                 truckClassification: Number(truckClassification),
                 fuelDistanceConst: Number(fuelDistanceConst),
@@ -82,10 +82,10 @@ export const WaterPricing = ({ data }: any) => {
             setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
-            setAnnualAdminCost("");
-            setAnnualOverheadCost("");
+            setAdminCost("");
+            setOverheadCost("");
             setProfitPercentage("");
-            setPumpAnnualDepreciation("");
+            setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
 
@@ -114,11 +114,11 @@ export const WaterPricing = ({ data }: any) => {
                 unitFuelCost: Number(unitFuelCost),
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
-                annualAdminCost: Number(annualAdminCost),
-                annualOverheadCost: Number(annualOverheadCost),
-                annualToolsCost: Number(annualToolsCost),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
-                pumpAnnualDepreciation: Number(pumpAnnualDepreciation),
+                pumpDepreciation: Number(pumpDepreciation),
                 fuelDistanceConst: Number(fuelDistanceConst),
                 region: Number(region),
 
@@ -137,10 +137,10 @@ export const WaterPricing = ({ data }: any) => {
             setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
-            setAnnualAdminCost("");
-            setAnnualOverheadCost("");
+            setAdminCost("");
+            setOverheadCost("");
             setProfitPercentage("");
-            setPumpAnnualDepreciation("");
+            setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
             router.refresh()
@@ -283,7 +283,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Annual Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual admin cost' value={annualAdminCost} onChange={(e: any) => setAnnualAdminCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual admin cost' value={adminCost} onChange={(e: any) => setAdminCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +293,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Annual Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual overhead cost' value={annualOverheadCost} onChange={(e: any) => setAnnualOverheadCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual overhead cost' value={overheadCost} onChange={(e: any) => setOverheadCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +303,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Annual Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter annual tools cost' value={annualToolsCost} onChange={(e: any) => setAnnualToolsCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter annual tools cost' value={toolsCost} onChange={(e: any) => setToolsCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -326,7 +326,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Pump Annual Depreciation *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={pumpAnnualDepreciation} onChange={(e: any) => setPumpAnnualDepreciation(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter pump annual depreciation' value={pumpDepreciation} onChange={(e: any) => setPumpDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -448,10 +448,10 @@ export const WaterPricing = ({ data }: any) => {
                                             setUnitFuelCost("");
                                             setWorkingDays("");
                                             setTruckDepreciation("");
-                                            setAnnualAdminCost("");
-                                            setAnnualOverheadCost("");
+                                            setAdminCost("");
+                                            setOverheadCost("");
                                             setProfitPercentage("");
-                                            setPumpAnnualDepreciation("");
+                                            setPumpDepreciation("");
                                             setTruckClassification("");
                                             setFuelDistanceConst("")
 
@@ -516,11 +516,11 @@ export const WaterPricing = ({ data }: any) => {
                                                     <td>{data?.unitFuelCost}</td>
                                                     <td>{data?.workingDays}</td>
                                                     <td>{data?.truckDepreciation}</td>
-                                                    <td>{data?.annualAdminCost}</td>
-                                                    <td>{data?.annualOverheadCost}</td>
-                                                    <td>{data?.annualToolsCost}</td>
+                                                    <td>{data?.adminCost}</td>
+                                                    <td>{data?.overheadCost}</td>
+                                                    <td>{data?.toolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
-                                                    <td>{data?.pumpAnnualDepreciation}</td>
+                                                    <td>{data?.pumpDepreciation}</td>
                                                     <td>{data?.fuelDistanceConst}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
@@ -562,12 +562,12 @@ export const WaterPricing = ({ data }: any) => {
                                                                                 setUnitFuelCost(data.unitFuelCost);
                                                                                 setWorkingDays(data.workingDays);
                                                                                 setTruckDepreciation(data.truckDepreciation);
-                                                                                setAnnualAdminCost(data.annualAdminCost);
-                                                                                setAnnualOverheadCost(data.annualOverheadCost);
+                                                                                setAdminCost(data.adminCost);
+                                                                                setOverheadCost(data.overheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
-                                                                                setPumpAnnualDepreciation(data.pumpAnnualDepreciation);
+                                                                                setPumpDepreciation(data.pumpDepreciation);
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
-                                                                                setAnnualToolsCost(data.annualToolsCost)
+                                                                                setToolsCost(data.toolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)
                                                                                 setRegion(data.regionId)
                                                                                 setStatus(data.status)

@@ -11,17 +11,18 @@ export const DesludgingPricing = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
-    const [insurance, setInsurance] = useState("");
-    const [repairCost, setRepairCost] = useState("");
-    const [roadWorthy, setRoadWorthy] = useState("");
+    const [insurance, setInsurance] = useState(""); //
+    const [roadWorthy, setRoadWorthy] = useState(""); //
+    const [repairCost, setRepairCost] = useState(""); //
+    const [pumpDepreciation, setPumpDepreciation] = useState("");//
+    const [adminCost, setAdminCost] = useState(""); //
+
     const [unitFuelCost, setUnitFuelCost] = useState("");
     const [workingDays, setWorkingDays] = useState("");
     const [truckDepreciation, setTruckDepreciation] = useState("");
-    const [adminCost, setAdminCost] = useState("");
     const [overheadCost, setOverheadCost] = useState("");
     const [toolsCost, setToolsCost] = useState("");
     const [profitPercentage, setProfitPercentage] = useState("");
-    const [pumpDepreciation, setPumpDepreciation] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 

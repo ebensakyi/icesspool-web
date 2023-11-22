@@ -59,6 +59,15 @@ export const ServiceArea = ({ data }: any) => {
             toast.success(response.data.message);
             setId("")
             setRegion("")
+            setLat1("")
+            setLat2("")
+            setLat3("")
+            setLat4("")
+            setLng1("")
+            setLng2("")
+            setLng3("")
+            setLng4("")
+            setName("");
 
             router.refresh()
 
@@ -87,7 +96,14 @@ export const ServiceArea = ({ data }: any) => {
             setId("")
             setRegion("")
             setName("");
-
+            setLat1("")
+            setLat2("")
+            setLat3("")
+            setLat4("")
+            setLng1("")
+            setLng2("")
+            setLng3("")
+            setLng4("")
             router.refresh()
 
         } catch (error: any) {

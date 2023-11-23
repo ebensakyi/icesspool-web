@@ -555,12 +555,12 @@ export const DesludgingPricing = ({ data }: any) => {
                                                                                 setUnitFuelCost(data.unitFuelCost);
                                                                                 setWorkingDays(data.workingDays);
                                                                                 setTruckDepreciation(data.truckDepreciation);
-                                                                                setAdminCost(data.AdminCost);
-                                                                                setOverheadCost(data.OverheadCost);
+                                                                                setAdminCost(data.adminCost);
+                                                                                setOverheadCost(data.overheadCost);
                                                                                 setProfitPercentage(data.profitPercentage);
                                                                                 setPumpDepreciation(data.pumpDepreciation);
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
-                                                                                setToolsCost(data.ToolsCost)
+                                                                                setToolsCost(data.toolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)
                                                                                 setRegion(data.regionId)
                                                                                 setStatus(data.status)

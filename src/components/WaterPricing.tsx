@@ -12,21 +12,20 @@ export const WaterPricing = ({ data }: any) => {
 
     const [id, setId] = useState("");
 
-    const [insurance, setInsurance] = useState(""); //
-    const [roadWorthy, setRoadWorthy] = useState(""); //
-    const [rawWaterCost, setRawWaterCost] = useState(""); //
-    const [repairCost, setRepairCost] = useState(""); //
-    const [pumpDepreciation, setPumpDepreciation] = useState("");//
-    const [adminCost, setAdminCost] = useState(""); //
-    const [toolsCost, setToolsCost] = useState(""); //
-    const [hoseDepreciation, setHoseDepreciation] = useState(""); //
-    const [truckDepreciation, setTruckDepreciation] = useState("");//
-    const [overheadCost, setOverheadCost] = useState("");//
-    // const [operatorsProfit, setOperatorsProfitt] = useState("");//
+    // const [insurance, setInsurance] = useState(""); //
+    // const [roadWorthy, setRoadWorthy] = useState(""); //
+    const [rawWaterCost, setRawWaterCost] = useState(""); //1
+    // const [repairCost, setRepairCost] = useState(""); //
+    const [pumpDepreciation, setPumpDepreciation] = useState("");//1
+    const [adminCost, setAdminCost] = useState(""); //1
+    const [toolsCost, setToolsCost] = useState(""); //1
+    const [hoseDepreciation, setHoseDepreciation] = useState(""); //1
+    const [truckDepreciation, setTruckDepreciation] = useState("");//1
+    const [overheadCost, setOverheadCost] = useState("");//1
+    const [operationCost, setOperationCost] = useState("");//1
     const [waterUnitCost, setWaterUnitCost] = useState("");//
-   // const [fuelDistanceConst, setFuelDistanceConst] = useState("");
-    const [workingDays, setWorkingDays] = useState(""); //
-    const [unitFuelCost, setUnitFuelCost] = useState(""); //
+    const [workingDays, setWorkingDays] = useState(""); //1
+    const [annualEstVol, setAnnualEstVol] = useState(""); //1
 
    
 
@@ -60,10 +59,7 @@ export const WaterPricing = ({ data }: any) => {
             // }
 
             let data = {
-                insurance,
-                repairCost: Number(repairCost),
-                roadWorthy: Number(roadWorthy),
-                unitFuelCost: Number(unitFuelCost),
+             
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
                 adminCost: Number(adminCost),
@@ -81,10 +77,9 @@ export const WaterPricing = ({ data }: any) => {
             const response = await axios.post("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
-            setRepairCost("")
-            setRoadWorthy("");
+            // setRepairCost("")
+            // setRoadWorthy("");
 
-            setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
             setAdminCost("");
@@ -112,11 +107,11 @@ export const WaterPricing = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                insurance: Number(insurance),
-                repairCost: Number(repairCost),
-                roadWorthy: Number(roadWorthy),
-                unitFuelCost: Number(unitFuelCost),
+                // insurance: Number(insurance),
+                // repairCost: Number(repairCost),
+                // roadWorthy: Number(roadWorthy),
                 workingDays: Number(workingDays),
+                rawWaterCost: Number(rawWaterCost),
                 truckDepreciation: Number(truckDepreciation),
                 adminCost: Number(adminCost),
                 overheadCost: Number(overheadCost),
@@ -133,11 +128,10 @@ export const WaterPricing = ({ data }: any) => {
             response = await axios.put("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
-            setRepairCost("")
-            setRoadWorthy("");
-            setInsurance("");
+            // setRepairCost("")
+            // setRoadWorthy("");
+            // setInsurance("");
 
-            setUnitFuelCost("");
             setWorkingDays("");
             setTruckDepreciation("");
             setAdminCost("");
@@ -214,7 +208,7 @@ export const WaterPricing = ({ data }: any) => {
                                         </div>
                                     </div>
                                 </div> */}
-                                <div className="row">
+                                {/* <div className="row">
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -245,9 +239,9 @@ export const WaterPricing = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row">
-                                    <div className="col-lg-4">
+                                    {/* <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Unit Fuel Cost *
@@ -256,7 +250,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -454,10 +448,7 @@ export const WaterPricing = ({ data }: any) => {
                                         onClick={async (e) => {
 
                                             setId("")
-                                            setRepairCost("")
-                                            setRoadWorthy("");
-                                            setInsurance("");
-                                            setUnitFuelCost("");
+                                           
                                             setWorkingDays("");
                                             setTruckDepreciation("");
                                             setAdminCost("");
@@ -567,11 +558,6 @@ export const WaterPricing = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
 
-                                                                                setRepairCost(data.repairCost)
-                                                                                setRoadWorthy(data.roadWorthy);
-                                                                                setInsurance(data.insurance);
-
-                                                                                setUnitFuelCost(data.unitFuelCost);
                                                                                 setWorkingDays(data.workingDays);
                                                                                 setTruckDepreciation(data.truckDepreciation);
                                                                                 setAdminCost(data.adminCost);

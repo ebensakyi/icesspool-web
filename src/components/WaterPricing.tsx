@@ -12,10 +12,10 @@ export const WaterPricing = ({ data }: any) => {
 
     const [id, setId] = useState("");
 
-    // const [insurance, setInsurance] = useState(""); //
-    // const [roadWorthy, setRoadWorthy] = useState(""); //
+    const [insurance, setInsurance] = useState(""); //1
+     const [roadWorthy, setRoadWorthy] = useState(""); //1
     const [rawWaterCost, setRawWaterCost] = useState(""); //1
-    // const [repairCost, setRepairCost] = useState(""); //
+     const [repairCost, setRepairCost] = useState(""); //1
     const [pumpDepreciation, setPumpDepreciation] = useState("");//1
     const [adminCost, setAdminCost] = useState(""); //1
     const [toolsCost, setToolsCost] = useState(""); //1

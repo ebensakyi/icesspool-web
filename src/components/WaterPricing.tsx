@@ -13,21 +13,20 @@ export const WaterPricing = ({ data }: any) => {
     const [id, setId] = useState("");
 
     const [insurance, setInsurance] = useState(""); //1
-     const [roadWorthy, setRoadWorthy] = useState(""); //1
+    const [roadWorthy, setRoadWorthy] = useState(""); //1
     const [rawWaterCost, setRawWaterCost] = useState(""); //1
-     const [repairCost, setRepairCost] = useState(""); //1
+    const [repairCost, setRepairCost] = useState(""); //1
     const [pumpDepreciation, setPumpDepreciation] = useState("");//1
     const [adminCost, setAdminCost] = useState(""); //1
     const [toolsCost, setToolsCost] = useState(""); //1
     const [hoseDepreciation, setHoseDepreciation] = useState(""); //1
     const [truckDepreciation, setTruckDepreciation] = useState("");//1
     const [overheadCost, setOverheadCost] = useState("");//1
-    const [operationCost, setOperationCost] = useState("");//1
-    const [waterUnitCost, setWaterUnitCost] = useState("");//
+    const [unitFuelCost, setUnitFuelCost] = useState("");//1
     const [workingDays, setWorkingDays] = useState(""); //1
     const [annualEstVol, setAnnualEstVol] = useState(""); //1
 
-   
+
 
     const [profitPercentage, setProfitPercentage] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
@@ -59,7 +58,7 @@ export const WaterPricing = ({ data }: any) => {
             // }
 
             let data = {
-             
+
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
                 adminCost: Number(adminCost),
@@ -71,7 +70,6 @@ export const WaterPricing = ({ data }: any) => {
                 truckClassification: Number(truckClassification),
                 rawWaterCost: Number(rawWaterCost),
                 hoseDepreciation: Number(hoseDepreciation),
-                waterUnitCost:Number(waterUnitCost),
                 status: Number(status),
             };
             const response = await axios.post("/api/pricing/desludging", data);
@@ -107,9 +105,9 @@ export const WaterPricing = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                // insurance: Number(insurance),
-                // repairCost: Number(repairCost),
-                // roadWorthy: Number(roadWorthy),
+                insurance: Number(insurance),
+                repairCost: Number(repairCost),
+                roadWorthy: Number(roadWorthy),
                 workingDays: Number(workingDays),
                 rawWaterCost: Number(rawWaterCost),
                 truckDepreciation: Number(truckDepreciation),
@@ -124,13 +122,13 @@ export const WaterPricing = ({ data }: any) => {
                 status: Number(status),
             };
 
-            
+
             response = await axios.put("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
-            // setRepairCost("")
-            // setRoadWorthy("");
-            // setInsurance("");
+            setRepairCost("")
+            setRoadWorthy("");
+            setInsurance("");
 
             setWorkingDays("");
             setTruckDepreciation("");
@@ -176,8 +174,28 @@ export const WaterPricing = ({ data }: any) => {
                                 <h5 className="card-title">Add</h5>
 
 
-                                {/* <div className="row">
+                                <div className="row">
                                     <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Annual Est. Water Volume *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter name' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                               Raw Water Unit Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter name' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Name *
@@ -186,29 +204,9 @@ export const WaterPricing = ({ data }: any) => {
                                                 <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Name *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Name *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                {/* <div className="row">
+                                    </div> */}
+                                </div>
+                                <div className="row">
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -239,9 +237,9 @@ export const WaterPricing = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div className="row">
-                                    {/* <div className="col-lg-4">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Unit Fuel Cost *
@@ -250,7 +248,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div> */}
+                                    </div>
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -276,7 +274,7 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Admin Cost *
+                                                Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  admin cost' value={adminCost} onChange={(e: any) => setAdminCost(e.target.value)} />
@@ -286,7 +284,7 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Overhead Cost *
+                                                Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  overhead cost' value={overheadCost} onChange={(e: any) => setOverheadCost(e.target.value)} />
@@ -296,7 +294,7 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Tools Cost *
+                                                Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  tools cost' value={toolsCost} onChange={(e: any) => setToolsCost(e.target.value)} />
@@ -305,7 +303,7 @@ export const WaterPricing = ({ data }: any) => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    
+
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -355,7 +353,7 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                               Raw Water Cost *
+                                                Raw Water Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
@@ -365,7 +363,7 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                               Hose Depreciation *
+                                                Hose Depreciation *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={hoseDepreciation} onChange={(e: any) => setHoseDepreciation(e.target.value)} />
@@ -448,7 +446,7 @@ export const WaterPricing = ({ data }: any) => {
                                         onClick={async (e) => {
 
                                             setId("")
-                                           
+
                                             setWorkingDays("");
                                             setTruckDepreciation("");
                                             setAdminCost("");

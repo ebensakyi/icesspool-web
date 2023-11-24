@@ -165,19 +165,19 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#mq-nav"
                             >
-
-                                <li>
-                                    <Link href="/make-request/water">
-                                        <i className="bi bi-circle" />
-                                        <span>Water </span>
-                                    </Link>
-                                </li>
                                 <li>
                                     <Link href="/make-request/desludging">
                                         <i className="bi bi-circle" />
                                         <span>Desludging toilet </span>
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link href="/make-request/water">
+                                        <i className="bi bi-circle" />
+                                        <span>Water </span>
+                                    </Link>
+                                </li>
+
                                 <li>
                                     <Link href="/make-request/bio-digester">
                                         <i className="bi bi-circle" />
@@ -276,10 +276,10 @@ export default function Header() {
 
                                 <li>
                                     <Link href="/services" className={
-                                    pathname == "/services"
-                                        ? "nav-link"
-                                        : "nav-link collapsed"
-                                }>
+                                        pathname == "/services"
+                                            ? "nav-link"
+                                            : "nav-link collapsed"
+                                    }>
                                         <i className="bi bi-circle" />
                                         <span>Services</span>
                                     </Link>

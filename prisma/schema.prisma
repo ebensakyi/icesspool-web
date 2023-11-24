@@ -299,6 +299,7 @@ model DesludgingServicePricing {
   serviceAreaId Int?
 }
 
+
 model WaterServicePricing {
   id Int @id @default(autoincrement())
 

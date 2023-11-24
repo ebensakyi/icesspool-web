@@ -25,6 +25,7 @@ export const WaterPricing = ({ data }: any) => {
     const [unitFuelCost, setUnitFuelCost] = useState("");//1
     const [workingDays, setWorkingDays] = useState(""); //1
     const [annualEstVol, setAnnualEstVol] = useState(""); //1
+    const [fuelDistanceConst, setFuelDistanceConst] = useState(""); //1
 
 
 
@@ -58,7 +59,10 @@ export const WaterPricing = ({ data }: any) => {
             // }
 
             let data = {
-
+                insurance: Number(insurance),
+                repairCost: Number(repairCost),
+                unitFuelCost: Number(unitFuelCost),
+                roadWorthy: Number(roadWorthy),
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
                 adminCost: Number(adminCost),
@@ -70,8 +74,12 @@ export const WaterPricing = ({ data }: any) => {
                 truckClassification: Number(truckClassification),
                 rawWaterCost: Number(rawWaterCost),
                 hoseDepreciation: Number(hoseDepreciation),
+                fuelDistanceConst: Number(fuelDistanceConst),
                 status: Number(status),
             };
+
+            console.log(data);
+            
             const response = await axios.post("/api/pricing/water", data);
             toast.success(response.data.message);
             setId("")
@@ -181,7 +189,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Annual Est. Water Volume *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter water volume' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -191,20 +199,20 @@ export const WaterPricing = ({ data }: any) => {
                                                 Raw Water Unit Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter raw water unit cost' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className="col-lg-4">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Name *
+                                            Fuel Distance Const *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter fuel distance const' value={fuelDistanceConst} onChange={(e: any) => setFuelDistanceConst(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-lg-4 col-md-6">

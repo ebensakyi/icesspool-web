@@ -36,8 +36,6 @@ export async function POST(request: Request) {
       regionId:Number(res?.region),
 
     };
-
-    console.log(data);
     
 
     

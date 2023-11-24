@@ -82,6 +82,19 @@ export async function getDesludgingPricing(searchParams: any, service?: number) 
     return await response.json();
   }
 
+  export async function getWaterPricing(searchParams: any, service?: number) {
+    let response = await fetch(
+      `${SERVER_BASE_URL}/api/pricing/water?serviceId=${service}`,
+      { cache: "no-store" }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return await response.json();
+  }
+
+
   export async function getTruckClassification(searchParams: any) {
     let response = await fetch(
       `${SERVER_BASE_URL}/api/truck-classification`,

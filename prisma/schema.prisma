@@ -269,18 +269,18 @@ model Payment {
 model DesludgingServicePricing {
   id Int @id @default(autoincrement())
 
-  fuelDistanceConst     Decimal            @db.Decimal(10, 2)
-  insurance             Decimal            @db.Decimal(10, 2)
-  repairCost            Decimal            @db.Decimal(10, 2)
-  roadWorthy            Decimal            @db.Decimal(10, 2)
-  unitFuelCost          Decimal            @db.Decimal(10, 2)
+  fuelDistanceConst     Decimal             @db.Decimal(10, 2)
+  insurance             Decimal             @db.Decimal(10, 2)
+  repairCost            Decimal             @db.Decimal(10, 2)
+  roadWorthy            Decimal             @db.Decimal(10, 2)
+  unitFuelCost          Decimal             @db.Decimal(10, 2)
   workingDays           Int
   truckDepreciation     Int
-  adminCost             Decimal          @db.Decimal(10, 2)
-  overheadCost          Decimal            @db.Decimal(10, 2)
-  toolsCost             Decimal            @db.Decimal(10, 2)
-  profitPercentage      Decimal            @db.Decimal(10, 2)
-  pumpDepreciation      Decimal            @db.Decimal(10, 2)
+  adminCost             Decimal             @db.Decimal(10, 2)
+  overheadCost          Decimal             @db.Decimal(10, 2)
+  toolsCost             Decimal             @db.Decimal(10, 2)
+  profitPercentage      Decimal             @db.Decimal(10, 2)
+  pumpDepreciation      Decimal             @db.Decimal(10, 2)
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
   status                Int?                @default(0)
@@ -299,22 +299,21 @@ model DesludgingServicePricing {
   serviceAreaId Int?
 }
 
-
 model WaterServicePricing {
   id Int @id @default(autoincrement())
 
-  fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
-  insurance             Decimal?            @db.Decimal(10, 2)
-  repairCost            Decimal?            @db.Decimal(10, 2)
-  roadWorthy            Decimal?            @db.Decimal(10, 2)
-  unitFuelCost          Decimal?            @db.Decimal(10, 2)
-  workingDays           Int?
-  truckDepreciation     Int?
-  adminCost             Decimal?            @db.Decimal(10, 2)
-  overheadCost          Decimal?            @db.Decimal(10, 2)
-  toolsCost             Decimal?            @db.Decimal(10, 2)
-  profitPercentage      Decimal?            @db.Decimal(10, 2)
-  pumpDepreciation      Decimal?            @db.Decimal(10, 2)
+  fuelDistanceConst     Decimal             @db.Decimal(10, 2)
+  insurance             Decimal             @db.Decimal(10, 2)
+  repairCost            Decimal             @db.Decimal(10, 2)
+  roadWorthy            Decimal             @db.Decimal(10, 2)
+  unitFuelCost          Decimal             @db.Decimal(10, 2)
+  workingDays           Int
+  truckDepreciation      Decimal             @db.Decimal(10, 2)
+  adminCost             Decimal             @db.Decimal(10, 2)
+  overheadCost          Decimal             @db.Decimal(10, 2)
+  toolsCost             Decimal             @db.Decimal(10, 2)
+  profitPercentage      Decimal             @db.Decimal(10, 2)
+  pumpDepreciation      Decimal             @db.Decimal(10, 2)
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
   deleted               Int?                @default(0)

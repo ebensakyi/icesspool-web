@@ -1,3 +1,7 @@
-export const getShortestDistanceBetweenUserServicePoint = (userLocation: any)=>{
-    return 100
-}
+export const getShortestDistanceBetweenUserServicePoint = (
+  userLocation: any
+) => {
+  console.log("getShortestDistanceBetweenUserServicePoint ", userLocation);
+
+  return 100;
+};

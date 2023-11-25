@@ -1,11 +1,10 @@
 import { getShortestDistanceBetweenUserServicePoint } from "./distance";
 
-export const calculateDeludgingPrice = async (pricingModel: any,userLocation:any,tripNumber:any) => {
-
-
-
-
- 
+export const calculateDeludgingPrice = async (
+  pricingModel: any,
+  userLocation: any,
+  tripNumber: any
+) => {
   let distance = await getShortestDistanceBetweenUserServicePoint(userLocation);
 
   let pricing: any = [];
@@ -47,17 +46,18 @@ export const calculateDeludgingPrice = async (pricingModel: any,userLocation:any
       ToolsCost +
       AdminCost;
 
-    const totalCost =
-      totalCostService + totalCostService * profitPercentage;
+    const totalCost = totalCostService + totalCostService * profitPercentage;
 
     const SludgeVolume = tankVolume * workingDays;
 
     //COST
-    const cost = ((totalCost / SludgeVolume) * tankVolume).toFixed(
-      0
-    );
+    const cost = ((totalCost / SludgeVolume) * tankVolume).toFixed(0);
 
-    pricing.push({id: d.TruckClassification.id, name: d.TruckClassification.name, price: cost });
+    pricing.push({
+      id: d.TruckClassification.id,
+      name: d.TruckClassification.name,
+      price: cost,
+    });
   });
 
   // const pumpDepreciation = parseFloat(data[0].pumpDepreciation);

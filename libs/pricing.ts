@@ -1,11 +1,11 @@
-import { getShortestDistanceBetweenUserServicePoint } from "./distance";
+import { getShortestDistanceBtnUserServicePoint } from "./distance";
 
 export const calculateDeludgingPrice = async (
   pricingModel: any,
   userLocation: any,
   tripNumber: any
 ) => {
-  let distance = await getShortestDistanceBetweenUserServicePoint(userLocation);
+  let distance = await getShortestDistanceBtnUserServicePoint(userLocation);
 
   let pricing: any = [];
 

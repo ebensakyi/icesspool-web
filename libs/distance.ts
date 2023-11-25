@@ -1,3 +1,3 @@
-export const getShortestDistanceBetweenUserServicePoint = ()=>{
+export const getShortestDistanceBetweenUserServicePoint = (userLocation: any)=>{
     return 100
 }

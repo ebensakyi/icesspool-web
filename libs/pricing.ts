@@ -1,16 +1,16 @@
 import { getShortestDistanceBetweenUserServicePoint } from "./distance";
-import { isInCity } from "./icesspool-availabilty";
 
-export const calculateDeludgingPrice = async (data: any) => {
+export const calculateDeludgingPrice = async (pricingModel: any,userLocation:any,tripNumber:any) => {
 
 
 
 
  
-  let distance = await getShortestDistanceBetweenUserServicePoint();
+  let distance = await getShortestDistanceBetweenUserServicePoint(userLocation);
+
   let pricing: any = [];
 
-  data.map((d: any) => {
+  pricingModel.map((d: any) => {
     const pumpDepreciation = parseFloat(d.pumpDepreciation);
     const fuelUnitCost = parseFloat(d.unitFuelCost);
     const fuelDistanceConstant = parseFloat(d.fuelDistanceConst);

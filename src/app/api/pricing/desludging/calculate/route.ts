@@ -93,15 +93,15 @@ import { isServiceAvailableInUserLocation } from "@/libs/is-in-city";
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
-
+    // 5.601454,-0.169431
     let userId = Number(searchParams.get("userId"));
-    let userLatitude = Number(searchParams.get("latitude"));
-    let userLongitude = Number(searchParams.get("longitude"));
+    let userLatitude = 5.601454; // Number(searchParams.get("latitude"));
+    let userLongitude = -0.169431; //Number(searchParams.get("longitude"));
     let tripsNumber = Number(searchParams.get("userId"));
 
+    let price;
 
-
-    const pricingData = await prisma.desludgingServicePricing.findMany({
+    const pricingModel = await prisma.desludgingServicePricing.findMany({
       where: {
         deleted: 0,
         TruckClassification: {
@@ -114,8 +114,6 @@ export async function GET(request: Request) {
       },
     });
 
-
-
     ////////////////check if icesspool is available at users location
 
     // const cityCoordinates = [5.736477, -0.104436];
@@ -124,26 +122,27 @@ export async function GET(request: Request) {
     // const gpsCoordinatesInsideCity = [5.606564, -0.158467]; // Coordinates inside New York
     // const gpsCoordinatesOutsideCity = [5.692319, -0.466085]; // Coordinates outside New York
 
-    const userLocation = [Number(userLatitude),Number(userLongitude)]
+    const userLocation = [Number(userLatitude), Number(userLongitude)];
 
+    let isInWhichServiceArea = await isServiceAvailableInUserLocation(
+      userLocation
+    );
+    if (isInWhichServiceArea) {
+      //consider type of service
+      //if is in one of icesspool service area, get pricing using closest service point in service area from user locatoin
+      console.log("The GPS coordinates are within the specified city.");
 
-    
-    let isIn = await isServiceAvailableInUserLocation(userLocation)
-    // if (isIn) {
-    //   console.log("The GPS coordinates are within the specified city.");
-    // } else {
-    //   console.log("The GPS coordinates are outside the specified city.");
-    // }
-    
+      price = await calculateDeludgingPrice(pricingModel,userLocation, tripsNumber);
 
-    let response = await calculateDeludgingPrice(pricingData);
+      console.log(price);
+    } else {
+      console.log("The GPS coordinates are outside the specified city.");
+    }
 
-    return NextResponse.json({ response });
+    return NextResponse.json({ price });
   } catch (error) {
     console.log(error);
 
     return NextResponse.json(error);
   }
 }
-
-

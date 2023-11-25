@@ -7,32 +7,47 @@ const getCityBoundaries = async () => {
       status: 1,
     },
   });
-console.table(boundaries);
 
-  return boundaries
+  let cityBoundaries = await prepareCityBoundaries(boundaries);
+  console.log(cityBoundaries);
+
+  return cityBoundaries;
 };
 
+const prepareCityBoundaries = async (data: any) => {
+  for (let i = 0; i <= data.length; i++) {
+    return [
+      [Number(data[i].lat1), Number(data[i].lng1)],
+      [Number(data[i].lat2), Number(data[i].lng2)],
+      [Number(data[i].lat3), Number(data[i].lng3)],
+      [Number(data[i].lat4), Number(data[i].lng4)],
+    ];
+  }
+  // boundaries.map(data=>{
+  //   return [[data?.lat1,]]
+  // })
+};
 
-export const isServiceAvailableInUserLocation = async (point: any) => {
-  await getCityBoundaries()
+export const isServiceAvailableInUserLocation = async (userPoint: any) => {
+  let cityPolygon: any = await getCityBoundaries();
 
-  // const x = point[0];
-  // const y = point[1];
-   let isInside = false;
+  const x = userPoint[0];
+  const y = userPoint[1];
+  let isInside = false;
 
-  // for (let i = 0, j = cityPolygon.length - 1; i < cityPolygon.length; j = i++) {
-  //   const xi = cityPolygon[i][0];
-  //   const yi = cityPolygon[i][1];
-  //   const xj = cityPolygon[j][0];
-  //   const yj = cityPolygon[j][1];
+  for (let i = 0, j = cityPolygon.length - 1; i < cityPolygon.length; j = i++) {
+    const xi = cityPolygon[i][0];
+    const yi = cityPolygon[i][1];
+    const xj = cityPolygon[j][0];
+    const yj = cityPolygon[j][1];
 
-  //   const intersect =
-  //     yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+    const intersect =
+      yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
 
-  //   if (intersect) {
-  //     isInside = !isInside;
-  //   }
-  // }
+    if (intersect) {
+      isInside = !isInside;
+    }
+  }
 
   return isInside;
 };

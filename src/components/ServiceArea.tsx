@@ -12,6 +12,8 @@ export const ServiceArea = ({ data }: any) => {
 
     const [id, setId] = useState("");
     const [region, setRegion] = useState("");
+    const [regionId, setRegionId] = useState("");
+
     const [name, setName] = useState("");
     const [status, setStatus] = useState("");
 
@@ -68,6 +70,8 @@ export const ServiceArea = ({ data }: any) => {
             setLng3("")
             setLng4("")
             setName("");
+            setStatus("")
+            setRegionId("")
 
             router.refresh()
 
@@ -88,7 +92,7 @@ export const ServiceArea = ({ data }: any) => {
 
           
             let data = {
-                  id: Number(id), region,
+                  id: Number(id), region:Number(regionId),
                 name,
                 lat1, lng1, lat2, lng2, lat3, lng3, lat4, lng4,
                 status
@@ -107,6 +111,9 @@ export const ServiceArea = ({ data }: any) => {
             setLng2("")
             setLng3("")
             setLng4("")
+            setRegionId("")
+            setStatus("")
+
             router.refresh()
 
         } catch (error: any) {
@@ -172,7 +179,7 @@ export const ServiceArea = ({ data }: any) => {
                                             onChange={(e: any) => {
                                                 setRegion(e.target.value);
                                             }}
-                                            value={region}
+                                            value={regionId}
                                         >
                                             <option value={0}>Select region * </option>
 
@@ -390,6 +397,7 @@ export const ServiceArea = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
                                                                                 setRegion(data.Region.name)
+                                                                                setRegionId(data.regionId)
                                                                                 setName(data.name)
                                                                                 setStatus(data.status)
                                                                                 setLat1(data.lat1)
@@ -401,6 +409,7 @@ export const ServiceArea = ({ data }: any) => {
                                                                                 setLng2(data.lng2)
                                                                                 setLng3(data.lng3)
                                                                                 setLng4(data.lng4)
+                                                                                
 
                                                                                 // setDistrictId(data.districtId);
 

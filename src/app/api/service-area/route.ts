@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       status: Number(res?.status),
     };
 
-    
+
 
     const response = await prisma.serviceArea.create({ data });
 
@@ -69,6 +69,9 @@ export async function PUT(request: Request) {
       lat4: Number(res?.lat4),
       lng4: Number(res?.lng4),
     };
+
+    console.log(data);
+    
     await prisma.serviceArea.update({
       where: {
         id: Number(res?.id),

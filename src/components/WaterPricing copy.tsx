@@ -7,7 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export const MakeDesludgingRequest = ({ data }: any) => {
+export const WaterPricing = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
@@ -36,10 +36,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
     const router = useRouter();
     const pathname = usePathname()
 
-    const getPricing = async () => {
 
-        const response = await axios.get(`/api/pricing/desludging/calculate?latitude=${customerLat}&longitude=${customerLng}&tripsNumber=${tripsNumber}`);
-    }
 
     const add = async (e: any) => {
         try {
@@ -58,6 +55,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
 
             };
 
+            console.log(data);
 
             const response = await axios.post("/api/pricing/water", data);
             toast.success(response.data.message);
@@ -125,7 +123,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>MAKE REQUEST</h1>
+                <h1>WATER PRICING</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -146,41 +144,27 @@ export const MakeDesludgingRequest = ({ data }: any) => {
 
 
                                 <div className="row">
-                                    <div className="col-lg-3">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Customer name *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" value={customerName} onChange={(e: any) => setCustomerName(e.target.value)} />
+                                                <input type="number" className="form-control" value={customerName} onChange={(e: any) => setCustomerName(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Phone Number *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="tel" className="form-control" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} />
+                                                <input type="number" className="form-control" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Number of trips *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder=' Enter number of trips' value={tripsNumber} onChange={(e: any) => setTripsNumber(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div className="row">
-
-                                    <div className="col-lg-3">
+                                    <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Enter latitude *
@@ -190,22 +174,29 @@ export const MakeDesludgingRequest = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6">
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Enter longitude *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerLng} onChange={(e: any) => {
-                                                    setCustomerLng(e.target.value)
-                                                    if (customerLat != "" && customerLng != "") {
-getPricing()
-                                                    }
-                                                }} />
+                                                <input type="number" className="form-control" value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3">
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Enter number of trips *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter repair cost' value={tripsNumber} onChange={(e: any) => setTripsNumber(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
 
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -297,7 +288,7 @@ getPricing()
                                             <th scope="col">Trips</th>
                                             <th scope="col">Truck</th>
                                             <th scope="col">Price</th>
-
+                                         
                                             <th scope="col">Created Date</th>
 
                                             <th scope="col">Action</th>

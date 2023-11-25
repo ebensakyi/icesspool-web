@@ -12,19 +12,21 @@ export async function POST(request: Request) {
     const data = {
       name: res?.name,
       regionId: Number(res?.region),
-      lat1: res?.lat1,
-      lng1: res?.lng1,
+      lat1: Number(res?.lat1),
+      lng1: Number(res?.lng1),
 
-      lat2: res?.lat2,
-      lng2: res?.lng2,
+      lat2: Number(res?.lat2),
+      lng2: Number(res?.lng2),
 
-      lat3: res?.lat3,
-      lng3: res?.lng3,
+      lat3: Number(res?.lat3),
+      lng3: Number(res?.lng3),
 
-      lat4: res?.lat4,
-      lng4: res?.lng4,
+      lat4: Number(res?.lat4),
+      lng4: Number(res?.lng4),
       status: Number(res?.status),
     };
+
+    
 
     const response = await prisma.serviceArea.create({ data });
 
@@ -55,17 +57,17 @@ export async function PUT(request: Request) {
       status: Number(res?.status),
       regionId: Number(res?.region),
       name: res?.name,
-      lat1: res?.lat1,
-      lng1: res?.lng1,
+      lat1: Number(res?.lat1),
+      lng1: Number(res?.lng1),
 
-      lat2: res?.lat2,
-      lng2: res?.lng2,
+      lat2: Number(res?.lat2),
+      lng2: Number(res?.lng2),
 
-      lat3: res?.lat3,
-      lng3: res?.lng3,
+      lat3: Number(res?.lat3),
+      lng3: Number(res?.lng3),
 
-      lat4: res?.lat4,
-      lng4: res?.lng4,
+      lat4: Number(res?.lat4),
+      lng4: Number(res?.lng4),
     };
     await prisma.serviceArea.update({
       where: {

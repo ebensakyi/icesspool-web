@@ -12,15 +12,27 @@ export const WaterPricing = ({ data }: any) => {
 
     const [id, setId] = useState("");
 
-    const [customerName, setCustomerName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [customerLat, setCustomerLat] = useState("");
-    const [customerLng, setCustomerLng] = useState("");
-    const [truck, setTruck] = useState("");
-    const [price, setPrice] = useState("");
+    const [insurance, setInsurance] = useState(""); //1
+    const [roadWorthy, setRoadWorthy] = useState(""); //1
+    const [rawWaterCost, setRawWaterCost] = useState(""); //1
+    const [repairCost, setRepairCost] = useState(""); //1
+    const [pumpDepreciation, setPumpDepreciation] = useState("");//1
+    const [adminCost, setAdminCost] = useState(""); //1
+    const [toolsCost, setToolsCost] = useState(""); //1
+    const [hoseDepreciation, setHoseDepreciation] = useState(""); //1
+    const [truckDepreciation, setTruckDepreciation] = useState("");//1
+    const [overheadCost, setOverheadCost] = useState("");//1
+    const [unitFuelCost, setUnitFuelCost] = useState("");//1
+    const [workingDays, setWorkingDays] = useState(""); //1
+    const [annualEstVol, setAnnualEstVol] = useState(""); //1
 
 
-    const [tripsNumber, setTripsNumber] = useState("");
+
+    const [profitPercentage, setProfitPercentage] = useState("");
+    const [truckClassification, setTruckClassification] = useState("");
+
+
+    const [region, setRegion] = useState("");
 
 
     const [status, setStatus] = useState("");
@@ -46,26 +58,33 @@ export const WaterPricing = ({ data }: any) => {
             // }
 
             let data = {
-                customerName: customerName,
-                customerLat: Number(customerLat),
-                customerLng: Number(customerLng),
-                truck: Number(truck),
-                price: Number(price),
-                phoneNumber: phoneNumber
 
+                workingDays: Number(workingDays),
+                truckDepreciation: Number(truckDepreciation),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
+                profitPercentage: Number(profitPercentage),
+                pumpDepreciation: Number(pumpDepreciation),
+                region: Number(region),
+                truckClassification: Number(truckClassification),
+                rawWaterCost: Number(rawWaterCost),
+                hoseDepreciation: Number(hoseDepreciation),
+                status: Number(status),
             };
-
-            console.log(data);
-
-            const response = await axios.post("/api/pricing/water", data);
+            const response = await axios.post("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
-            setCustomerLat("");
-            setCustomerLng("");
-            setCustomerName("");
-            setPhoneNumber("");
-            setTruck("");
-            setPrice("");
+            // setRepairCost("")
+            // setRoadWorthy("");
+
+            setWorkingDays("");
+            setTruckDepreciation("");
+            setAdminCost("");
+            setOverheadCost("");
+            setProfitPercentage("");
+            setPumpDepreciation("");
+            setTruckClassification("");
 
             router.refresh()
 
@@ -86,26 +105,38 @@ export const WaterPricing = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                customerName: customerName,
-                customerLat: Number(customerLat),
-                customerLng: Number(customerLng),
-                truck: Number(truck),
-                price: Number(price),
-                phoneNumber: phoneNumber
+                insurance: Number(insurance),
+                repairCost: Number(repairCost),
+                roadWorthy: Number(roadWorthy),
+                workingDays: Number(workingDays),
+                rawWaterCost: Number(rawWaterCost),
+                truckDepreciation: Number(truckDepreciation),
+                adminCost: Number(adminCost),
+                overheadCost: Number(overheadCost),
+                toolsCost: Number(toolsCost),
+                profitPercentage: Number(profitPercentage),
+                pumpDepreciation: Number(pumpDepreciation),
+                region: Number(region),
+
+                truckClassification: Number(truckClassification),
+                status: Number(status),
             };
 
 
-            response = await axios.put("/api/pricing/water", data);
+            response = await axios.put("/api/pricing/desludging", data);
             toast.success(response.data.message);
             setId("")
-            setId("")
-            setCustomerLat("");
-            setCustomerLng("");
-            setCustomerName("");
-            setPhoneNumber("");
-            setTruck("");
-            setPrice("");
+            setRepairCost("")
+            setRoadWorthy("");
+            setInsurance("");
 
+            setWorkingDays("");
+            setTruckDepreciation("");
+            setAdminCost("");
+            setOverheadCost("");
+            setProfitPercentage("");
+            setPumpDepreciation("");
+            setTruckClassification("");
             router.refresh()
 
         } catch (error: any) {
@@ -147,52 +178,195 @@ export const WaterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Customer name *
+                                                Annual Est. Water Volume *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerName} onChange={(e: any) => setCustomerName(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Phone Number *
+                                                Water Unit Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-4">
+                                    {/* <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Enter latitude *
+                                                Name *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="row">
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Enter longitude *
+                                                Insurance *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter insurance' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Enter number of trips *
+                                                Repair cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter repair cost' value={tripsNumber} onChange={(e: any) => setTripsNumber(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter repair cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Road worthy *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter road worthy' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Unit Fuel Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                No. of Working days *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter  no. of Working days' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Truck Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Admin Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter  admin cost' value={adminCost} onChange={(e: any) => setAdminCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Overhead Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter  overhead cost' value={overheadCost} onChange={(e: any) => setOverheadCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Tools Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter  tools cost' value={toolsCost} onChange={(e: any) => setToolsCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Profit Percentage *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter profit percentage' value={profitPercentage} onChange={(e: any) => setProfitPercentage(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Pump  Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter pump  depreciation' value={pumpDepreciation} onChange={(e: any) => setPumpDepreciation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Truck Classification *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setTruckClassification(e.target.value);
+                                                }}
+                                                value={truckClassification}
+                                            >
+                                                <option value={0}>Select truck class * </option>
+
+
+                                                {data?.truckClassifications?.response?.map((data: any) => (
+                                                    <option key={data.id} value={data.id}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Raw Water Cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Hose Depreciation *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={hoseDepreciation} onChange={(e: any) => setHoseDepreciation(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -200,25 +374,49 @@ export const WaterPricing = ({ data }: any) => {
 
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Truck *
+                                                Status *
                                             </label>
                                             <select
                                                 className="form-control"
                                                 aria-label="Default select example"
                                                 onChange={(e: any) => {
-                                                    setTruck(e.target.value);
+                                                    setStatus(e.target.value);
                                                 }}
-                                                value={truck}
+                                                value={status}
                                             >
-                                                <option value={""}>Select truck * </option>
+                                                <option value={""}>Select status * </option>
                                                 <option value={1}>Active </option>
                                                 <option value={2}>Inactive </option>
 
                                                 {/* {data?.sendingTypes?.map((data: any) => (
-    <option key={data.id} value={data.id}>
-        {data.name}
-    </option>
-))} */}
+                                            <option key={data.id} value={data.id}>
+                                                {data.name}
+                                            </option>
+                                        ))} */}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Region *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setRegion(e.target.value);
+                                                }}
+                                                value={region}
+                                            >
+                                                <option value={""}>Select region * </option>
+
+                                                {data?.regions?.response?.map((data: any) => (
+                                                    <option key={data.id} value={data.id}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
@@ -248,12 +446,15 @@ export const WaterPricing = ({ data }: any) => {
                                         onClick={async (e) => {
 
                                             setId("")
-                                            setCustomerLat("");
-                                            setCustomerLng("");
-                                            setCustomerName("");
-                                            setPhoneNumber("");
-                                            setTruck("");
-                                            setPrice("");
+
+                                            setWorkingDays("");
+                                            setTruckDepreciation("");
+                                            setAdminCost("");
+                                            setOverheadCost("");
+                                            setProfitPercentage("");
+                                            setPumpDepreciation("");
+                                            setTruckClassification("");
+                                            setRawWaterCost("")
 
 
                                         }}
@@ -280,15 +481,23 @@ export const WaterPricing = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Customer</th>
-                                            <th scope="col">Phone number</th>
+                                            <th scope="col">Region</th>
+                                            <th scope="col">Truck Classification</th>
 
-                                            <th scope="col">Latitude</th>
-                                            <th scope="col">Longitude</th>
-                                            <th scope="col">Trips</th>
-                                            <th scope="col">Truck</th>
-                                            <th scope="col">Price</th>
-                                         
+                                            <th scope="col">Insurance</th>
+                                            <th scope="col">Repair Cost</th>
+                                            <th scope="col">Road Worthy</th>
+                                            <th scope="col">Unit Fuel Cost</th>
+                                            <th scope="col">Working Days</th>
+                                            <th scope="col">Truck Depreciation</th>
+                                            <th scope="col"> Admin Cost</th>
+                                            <th scope="col"> Overhead Cost</th>
+                                            <th scope="col"> Tools Cost</th>
+                                            <th scope="col">Profit Percentage</th>
+                                            <th scope="col">Pump  Depreciation</th>
+                                            <th scope="col">Fuel Distance Const</th>
+
+                                            <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
 
                                             <th scope="col">Action</th>
@@ -296,7 +505,7 @@ export const WaterPricing = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.waterPricings?.response.map((data: any) => {
+                                        {data?.desludgingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Region?.name}</td>
@@ -345,14 +554,19 @@ export const WaterPricing = ({ data }: any) => {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-                                                                                setId("")
-                                                                                setCustomerLat("");
-                                                                                setCustomerLng("");
-                                                                                setCustomerName("");
-                                                                                setPhoneNumber("");
-                                                                                setTruck("");
-                                                                                setPrice("");
+                                                                                setId(data.id);
 
+                                                                                setWorkingDays(data.workingDays);
+                                                                                setTruckDepreciation(data.truckDepreciation);
+                                                                                setAdminCost(data.adminCost);
+                                                                                setOverheadCost(data.overheadCost);
+                                                                                setProfitPercentage(data.profitPercentage);
+                                                                                setPumpDepreciation(data.pumpDepreciation);
+                                                                                setRawWaterCost(data.rawWaterCost)
+                                                                                setToolsCost(data.toolsCost)
+                                                                                setTruckClassification(data.truckClassificationId)
+                                                                                setRegion(data.regionId)
+                                                                                setStatus(data.status)
                                                                             }}
                                                                         >
                                                                             Edit

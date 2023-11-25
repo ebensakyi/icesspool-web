@@ -86,11 +86,14 @@ export const ServiceArea = ({ data }: any) => {
                 return toast.error("Please fill form");
             }
 
+          
             let data = {
-                id: Number(id),
+                  id: Number(id), region,
                 name,
-                status,
+                lat1, lng1, lat2, lng2, lat3, lng3, lat4, lng4,
+                status
             };
+
             const response = await axios.put("/api/service-area", data);
             toast.success(response.data.message);
             setId("")

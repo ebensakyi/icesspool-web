@@ -485,9 +485,9 @@ model Transaction {
   Service               Service             @relation(fields: [serviceId], references: [id])
   serviceId             Int
   truckClassificationId Int
-  Operator              User               @relation(fields: [operatorId], references: [id])
+  Operator              User                @relation("operator", fields: [operatorId], references: [id])
   operatorId            Int
-  Client                User                @relation(fields: [clientId], references: [id])
+  Client                User                @relation("client", fields: [clientId], references: [id])
   clientId              Int
 }
 
@@ -503,19 +503,21 @@ model TransactionStatus {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  surname     String        @db.VarChar(255)
-  otherNames  String        @db.VarChar(255)
-  email       String?       @db.VarChar(255)
-  phoneNumber String        @db.VarChar(255)
-  fcm         String?       @db.VarChar(255)
-  password    String        @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  surname     String   @db.VarChar(255)
+  otherNames  String   @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  phoneNumber String   @db.VarChar(255)
+  fcm         String?  @db.VarChar(255)
+  password    String   @db.VarChar(255)
   userTypeId  Int
-  activated   Int?          @default(0)
-  deleted     Int?          @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Transaction Transaction[]
+  activated   Int?     @default(0)
+  deleted     Int?     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  operator Transaction[] @relation("operator", fields: [operatorId], references: [id])
+  client   Transaction[] @relation("client", fields: [clientId], references: [id])
 }
 
 model UserType {

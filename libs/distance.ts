@@ -18,11 +18,11 @@ export const getShortestDistanceBtnUserServicePoint = async (
 
   const options = {
     method: 'POST',
-    url: 'https://maps.googleapis.com/maps/api/distancematrix/json',
+    url: process.env.DISTANCE_MATRIX_API_URL,
     params: {
       destinations: '40.659569,-73.933783|40.729029,-73.851524|40.6860072,-73.6334271|40.598566,-73.7527626',
       origins: '40.6655101,-73.89188969999998',
-      key: 'AIzaSyCASoJIfdhowhu2y-abeSuidJSvgJZWebM'
+      key: process.env.GOOGLE_API_KEY
     }
   };
   
@@ -31,6 +31,9 @@ export const getShortestDistanceBtnUserServicePoint = async (
   }).catch(function (error) {
     console.error(error);
   });
+
+//   const response = await axios.post(options);
+
 
 
 //   const requestData = {

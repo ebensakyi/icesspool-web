@@ -6,7 +6,7 @@ export const getShortestDistanceBtnUserServicePoint = async (
 ) => {
   console.log("getShortestDistanceBetweenUserServicePoint ", userLocation);
 
-  let servicePoints = await prisma.servicePoint.findFirst({
+  let servicePoints = await prisma.servicePoint.findMany({
     where: {
       serviceId: 1,
       status: 1,
@@ -14,24 +14,67 @@ export const getShortestDistanceBtnUserServicePoint = async (
     },
   });
 
-  let processedServicePoints = await buildTipOffPoints(servicePoints)
 
-  var options = {
-    method: "POST",
-    url: process.env.DISTANCE_MATRIX_API_URL,
+
+  const options = {
+    method: 'POST',
+    url: 'https://maps.googleapis.com/maps/api/distancematrix/json',
     params: {
-      travelMode: "DRIVING",
-      unitSystem: "METRIC",
-      origins: processedServicePoints.toString().replace("|,", "|"),
-      destinations: `${userLocation[0]},${userLocation[1]}`,
-      key: process.env.DISTANCE_MATRIX_API_KEY,
-    },
-    headers: { "content-type": "application/json" },
+      destinations: '40.659569,-73.933783|40.729029,-73.851524|40.6860072,-73.6334271|40.598566,-73.7527626',
+      origins: '40.6655101,-73.89188969999998',
+      key: 'AIzaSyCASoJIfdhowhu2y-abeSuidJSvgJZWebM'
+    }
   };
-
-  axios(options).then((response) => {
-    console.log(response.status);
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
   });
+
+
+//   const requestData = {
+//     origins: ['New York,NY', 'Los Angeles,CA'],
+//     destinations: ['San Francisco,CA', 'Seattle,WA'],
+//     key: "AIzaSyCASoJIfdhowhu2y-abeSuidJSvgJZWebM",
+//   };
+
+  
+//   async function makeGoogleMatrixApiRequest() {  
+
+//     try {
+//       const response = await axios.post('https://maps.googleapis.com/maps/api/distancematrix/json', requestData);
+//       // Handle the response
+//       console.log(response.data);
+//     } catch (error) {
+//       // Handle errors
+//       console.error('Error making Google Matrix API request:', error);
+//     }
+//   }
+  
+//   // Call the async function
+//   makeGoogleMatrixApiRequest();
+  
+
+//   let processedServicePoints = await buildTipOffPoints(servicePoints)
+//   console.log("processedServicePoints<====> ",processedServicePoints);
+
+//   var options = {
+//     method: "POST",
+//     url: process.env.DISTANCE_MATRIX_API_URL,
+//     qs: {
+//       travelMode: "DRIVING",
+//       unitSystem: "METRIC",
+//       origins: processedServicePoints.toString().replace("|,", "|"),
+//       destinations: `${userLocation[0]},${userLocation[1]}`,
+//       key: process.env.DISTANCE_MATRIX_API_KEY,
+//     },
+//     headers: { "content-type": "application/json" },
+//   };
+
+//   axios(options).then((response) => {
+//     console.log(response.status);
+//   });
 
   //   return new Promise((resolve, reject) => {
   //     request(options, (error, response, body) => {
@@ -59,6 +102,8 @@ export const getShortestDistanceBtnUserServicePoint = async (
 };
 
 const buildTipOffPoints = async (servicePoints: any) => {
+    console.log("buildTipOffPoints==> ",servicePoints);
+    
   let points: any = [];
   await servicePoints.map((point: any) => {
     points.push(point.lat, point.lng + "|");

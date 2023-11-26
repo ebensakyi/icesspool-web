@@ -14,7 +14,8 @@ export async function POST(request: Request) {
       status: Number(res?.status),
       serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
-      tankCapacity: Number(res?.tankCapacity)
+      tankCapacity: Number(res?.tankCapacity),
+
     };
 
 
@@ -45,9 +46,11 @@ export async function PUT(request: Request) {
 
     const userId = session?.user?.id;
     const data = {
+      name: res?.name,
       status: Number(res?.status),
-      regionId: Number(res?.region),
+      serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
+      tankCapacity: Number(res?.tankCapacity),
     };
     await prisma.truckClassification.update({
       where: {

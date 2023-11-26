@@ -7,6 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { serviceAreas } from '../../prisma/seeds/service_area';
 export const TruckClassification = ({ data }: any) => {
 
     console.log(data);
@@ -47,7 +48,7 @@ export const TruckClassification = ({ data }: any) => {
             };
 
             console.log(data);
-            
+
             const response = await axios.post("/api/truck-classification", data);
             toast.success(response.data.message);
             setService("")
@@ -135,7 +136,7 @@ export const TruckClassification = ({ data }: any) => {
                                         Name *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name'   onChange={(e: any) => {
+                                        <input type="text" className="form-control" placeholder='Enter name' onChange={(e: any) => {
                                             setName(e.target.value);
                                         }} value={name} />
                                     </div>
@@ -145,9 +146,9 @@ export const TruckClassification = ({ data }: any) => {
                                         Truck capacity *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="number" className="form-control" placeholder='Enter capacity'   onChange={(e: any) => {
+                                        <input type="number" className="form-control" placeholder='Enter capacity' onChange={(e: any) => {
                                             setTankCapacity(e.target.value);
-                                        }}  value={tankCapacity}/>
+                                        }} value={tankCapacity} />
                                     </div>
                                 </div>
 
@@ -311,12 +312,11 @@ export const TruckClassification = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setServiceArea(data.Region.name)
-                                                                                setService(data.Service.name)
+                                                                                setName(data.name)
+                                                                                setTankCapacity(data.tankCapacity)
+                                                                                setServiceArea(data.serviceAreaId)
+                                                                                setService(data.serviceId)
                                                                                 setStatus(data.status)
-                                                                                // setSendingType(data.sendingType)
-                                                                                // setDistrictId(data.districtId);
-
 
 
                                                                                 // setIsEditing(true);

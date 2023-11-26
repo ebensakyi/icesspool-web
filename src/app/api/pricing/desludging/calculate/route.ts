@@ -114,6 +114,10 @@ export async function GET(request: Request) {
       },
     });
 
+
+    console.log("pricingModel=====> ",pricingModel);
+    
+
     ////////////////check if icesspool is available at users location
 
     // const cityCoordinates = [5.736477, -0.104436];

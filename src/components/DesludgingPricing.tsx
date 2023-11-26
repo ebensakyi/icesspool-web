@@ -84,6 +84,8 @@ export const DesludgingPricing = ({ data }: any) => {
             setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
+            setInsurance("")
+            setToolsCost("")
 
             router.refresh()
 
@@ -139,6 +141,8 @@ export const DesludgingPricing = ({ data }: any) => {
             setPumpDepreciation("");
             setTruckClassification("");
             setFuelDistanceConst("")
+            setInsurance("")
+            setToolsCost("")
             router.refresh()
 
         } catch (error: any) {

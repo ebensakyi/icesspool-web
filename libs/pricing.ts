@@ -53,6 +53,10 @@ export const calculateDeludgingPrice = async (
     //COST
     const cost = ((totalCost / SludgeVolume) * tankVolume).toFixed(0);
 
+    console.log("cost==>",cost);
+    
+
+
     pricing.push({
       id: d.TruckClassification.id,
       name: d.TruckClassification.name,
@@ -60,6 +64,10 @@ export const calculateDeludgingPrice = async (
     });
   });
 
+
+
+  console.log(pricing);
+  
   // const pumpDepreciation = parseFloat(data[0].pumpDepreciation);
   // const fuelUnitCost = parseFloat(data[0].unitFuelCost);
   // const fuelDistanceConstant = parseFloat(data[0].fuelDistanceConst);

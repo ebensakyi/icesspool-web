@@ -14,70 +14,77 @@ export const getShortestDistanceBtnUserServicePoint = async (
     },
   });
 
-
+  let latLngString = await convertToString(servicePoints);
 
   const options = {
-    method: 'POST',
+    method: "POST",
     url: process.env.DISTANCE_MATRIX_API_URL,
     params: {
-      destinations: '40.659569,-73.933783|40.729029,-73.851524|40.6860072,-73.6334271|40.598566,-73.7527626',
-      origins: '40.6655101,-73.89188969999998',
-      key: process.env.GOOGLE_API_KEY
-    }
+      destinations: latLngString,
+      origins: "5.5630081,-0.2141458",
+      key: process.env.GOOGLE_API_KEY,
+    },
   };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
 
-//   const response = await axios.post(options);
+//   axios
+//     .request(options)
+//     .then(function (response) {
 
+//       let distances:any = [];
+//             response.data.rows.map((d:any) => {
+//               let e = d.elements;
+//               if (e[0].status != "OK") {
+//                 return;
+//               }
+//               e.map((f:any) => {
+//                 distances.push(f.distance.value / 1000);
+//               });
+//             });
+//             console.log(distances);
+//             console.log(Math.min.apply(null, distances));
+            
+    
+//             //return resolve(Math.min.apply(null, distances));
+//     })
+//     .catch(function (error) {
+//       console.error(error);
+//     });
 
+  const response = await axios.request(options);
 
-//   const requestData = {
-//     origins: ['New York,NY', 'Los Angeles,CA'],
-//     destinations: ['San Francisco,CA', 'Seattle,WA'],
-//     key: "AIzaSyCASoJIfdhowhu2y-abeSuidJSvgJZWebM",
-//   };
+      let distances:any = [];
+            response.data.rows.map((d:any) => {
+              let e = d.elements;
+              if (e[0].status != "OK") {
+                return;
+              }
+              e.map((f:any) => {
+                distances.push(f.distance.value / 1000);
+              });
+            });
+           
+    
+            //return resolve(Math.min.apply(null, distances));  
 
-  
-//   async function makeGoogleMatrixApiRequest() {  
+  //   let processedServicePoints = await buildTipOffPoints(servicePoints)
+  //   console.log("processedServicePoints<====> ",processedServicePoints);
 
-//     try {
-//       const response = await axios.post('https://maps.googleapis.com/maps/api/distancematrix/json', requestData);
-//       // Handle the response
-//       console.log(response.data);
-//     } catch (error) {
-//       // Handle errors
-//       console.error('Error making Google Matrix API request:', error);
-//     }
-//   }
-  
-//   // Call the async function
-//   makeGoogleMatrixApiRequest();
-  
+  //   var options = {
+  //     method: "POST",
+  //     url: process.env.DISTANCE_MATRIX_API_URL,
+  //     qs: {
+  //       travelMode: "DRIVING",
+  //       unitSystem: "METRIC",
+  //       origins: processedServicePoints.toString().replace("|,", "|"),
+  //       destinations: `${userLocation[0]},${userLocation[1]}`,
+  //       key: process.env.DISTANCE_MATRIX_API_KEY,
+  //     },
+  //     headers: { "content-type": "application/json" },
+  //   };
 
-//   let processedServicePoints = await buildTipOffPoints(servicePoints)
-//   console.log("processedServicePoints<====> ",processedServicePoints);
-
-//   var options = {
-//     method: "POST",
-//     url: process.env.DISTANCE_MATRIX_API_URL,
-//     qs: {
-//       travelMode: "DRIVING",
-//       unitSystem: "METRIC",
-//       origins: processedServicePoints.toString().replace("|,", "|"),
-//       destinations: `${userLocation[0]},${userLocation[1]}`,
-//       key: process.env.DISTANCE_MATRIX_API_KEY,
-//     },
-//     headers: { "content-type": "application/json" },
-//   };
-
-//   axios(options).then((response) => {
-//     console.log(response.status);
-//   });
+  //   axios(options).then((response) => {
+  //     console.log(response.status);
+  //   });
 
   //   return new Promise((resolve, reject) => {
   //     request(options, (error, response, body) => {
@@ -101,15 +108,13 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
   //   });
 
-  return 100;
+  return  Math.min.apply(null, distances);
 };
 
-const buildTipOffPoints = async (servicePoints: any) => {
-    console.log("buildTipOffPoints==> ",servicePoints);
-    
-  let points: any = [];
-  await servicePoints.map((point: any) => {
-    points.push(point.lat, point.lng + "|");
-  });
-  return points;
+const convertToString = async (servicePoints: any) => {
+  const latLngString = servicePoints
+    .map((point: any) => `${point.latitude},${point.longitude}`)
+    .join("|");
+
+  return latLngString;
 };

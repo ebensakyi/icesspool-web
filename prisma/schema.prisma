@@ -17,8 +17,8 @@ model Otp {
 }
 
 model TruckClassification {
-  id            Int      @id @default(autoincrement())
-  name          String   @unique(map: "axleClass") @db.VarChar(255)
+  id            Int     @id @default(autoincrement())
+  name          String  @unique(map: "axleClass") @db.VarChar(255)
   serviceId     Int
   tankCapacity  Decimal @default(0.00) @db.Decimal(10, 2)
   serviceAreaId Int
@@ -34,6 +34,7 @@ model TruckClassification {
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
+  Transaction               Transaction[]
 }
 
 model Service {
@@ -50,6 +51,7 @@ model Service {
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServicesInArea            ServicesInArea[]
+  Transaction               Transaction[]
 }
 
 model Balance {
@@ -308,7 +310,7 @@ model WaterServicePricing {
   roadWorthy            Decimal             @db.Decimal(10, 2)
   unitFuelCost          Decimal             @db.Decimal(10, 2)
   workingDays           Int
-  truckDepreciation      Decimal             @db.Decimal(10, 2)
+  truckDepreciation     Decimal             @db.Decimal(10, 2)
   adminCost             Decimal             @db.Decimal(10, 2)
   overheadCost          Decimal             @db.Decimal(10, 2)
   toolsCost             Decimal             @db.Decimal(10, 2)
@@ -460,29 +462,33 @@ model ServicePoint {
 }
 
 model Transaction {
-  id                  String   @id @db.VarChar(255)
-  operatorId          String?  @db.VarChar(255)
-  clientId            String?  @db.VarChar(255)
-  unitCost            Decimal  @db.Decimal(10, 2)
-  discountedTotalCost Decimal  @db.Decimal(10, 2)
-  actualTotalCost     Decimal  @db.Decimal(10, 2)
-  community           String   @db.VarChar(255)
-  gpsAccuracy         Decimal? @db.Decimal(10, 2)
-  lat                 Decimal? @db.Decimal(10, 8)
-  lng                 Decimal? @db.Decimal(10, 8)
-  axle                Int
-  trips               Int
-  paymentStatus       Int?     @default(0)
-  currentStatus       Int
-  requestTypeId       Int?     @default(1)
-  toiletType          String?  @db.VarChar(255)
-  deleted             Int?     @default(0)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  requestSource       Int?
-  customerName        String?  @db.VarChar(100)
-  customerPhoneNumber String?  @db.VarChar(100)
-  serviceType         Int?
+  id                    String              @id @db.VarChar(255)
+  unitCost              Decimal             @db.Decimal(10, 2)
+  discountedCost        Decimal             @db.Decimal(10, 2)
+  actualCost            Decimal             @db.Decimal(10, 2)
+  community             String?             @db.VarChar(255)
+  gpsAccuracy           Decimal?            @db.Decimal(10, 2)
+  lat                   Decimal             @db.Decimal(10, 8)
+  lng                   Decimal             @db.Decimal(10, 8)
+  trips                 Int
+  paymentStatus         Int?                @default(0)
+  currentStatus         Int
+  requestTypeId         Int?                @default(1)
+  toiletType            String?             @db.VarChar(255)
+  TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
+  deleted               Int?                @default(0)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  requestSource         Int?
+  customerName          String?             @db.VarChar(100)
+  customerPhoneNumber   String?             @db.VarChar(100)
+  Service               Service             @relation(fields: [serviceId], references: [id])
+  serviceId             Int
+  truckClassificationId Int
+  Operator              User               @relation(fields: [operatorId], references: [id])
+  operatorId            Int
+  Client                User                @relation(fields: [clientId], references: [id])
+  clientId              Int
 }
 
 model TransactionStatus {
@@ -497,18 +503,19 @@ model TransactionStatus {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  surname     String   @db.VarChar(255)
-  otherNames  String   @db.VarChar(255)
-  email       String?  @db.VarChar(255)
-  phoneNumber String   @db.VarChar(255)
-  fcm         String?  @db.VarChar(255)
-  password    String   @db.VarChar(255)
+  id          Int           @id @default(autoincrement())
+  surname     String        @db.VarChar(255)
+  otherNames  String        @db.VarChar(255)
+  email       String?       @db.VarChar(255)
+  phoneNumber String        @db.VarChar(255)
+  fcm         String?       @db.VarChar(255)
+  password    String        @db.VarChar(255)
   userTypeId  Int
-  activated   Int?     @default(0)
-  deleted     Int?     @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  activated   Int?          @default(0)
+  deleted     Int?          @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Transaction Transaction[]
 }
 
 model UserType {

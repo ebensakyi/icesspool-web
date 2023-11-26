@@ -19,7 +19,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
     const [truck, setTruck] = useState("");
     const [price, setPrice] = useState("");
 
-    const [pricing, setPricing] = useState("");
+    const [pricing, setPricing] = useState([]);
 
     const [tripsNumber, setTripsNumber] = useState("");
 
@@ -227,9 +227,9 @@ export const MakeDesludgingRequest = ({ data }: any) => {
                                             >
                                                 <option value={""}>Select truck * </option>
 
-                                                {data?.sendingTypes?.map((data: any) => (
+                                                {pricing?.map((data: any) => (
                                                     <option key={data.id} value={data.id}>
-                                                        {data.name}
+                                                        {data.name}{" - GHS "}{data.price}
                                                     </option>
                                                 ))}
                                             </select>

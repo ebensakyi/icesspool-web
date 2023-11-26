@@ -77,8 +77,11 @@ export const TruckClassification = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                name,
-                status,
+                name: name,
+                status: status,
+                serviceArea: serviceArea,
+                tankCapacity: tankCapacity,
+                service: service,
             };
             const response = await axios.put("/api/truck-classification", data);
             toast.success(response.data.message);

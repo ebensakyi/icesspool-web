@@ -104,9 +104,9 @@ export async function GET(request: Request) {
     const pricingModel = await prisma.desludgingServicePricing.findMany({
       where: {
         deleted: 0,
-        TruckClassification: {
-          status: 1,
-        },
+        // TruckClassification: {
+        //   status: 1,
+        // },
       },
       include: {
         Region: true,
@@ -138,7 +138,6 @@ export async function GET(request: Request) {
 
       price = await calculateDeludgingPrice(pricingModel,userLocation, tripsNumber);
 
-      console.log(price);
     } else {
       console.log("The GPS coordinates are outside the specified city.");
     }

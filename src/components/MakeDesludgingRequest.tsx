@@ -19,6 +19,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
     const [truck, setTruck] = useState("");
     const [price, setPrice] = useState("");
 
+    const [pricing, setPricing] = useState("");
 
     const [tripsNumber, setTripsNumber] = useState("");
 
@@ -39,6 +40,11 @@ export const MakeDesludgingRequest = ({ data }: any) => {
     const getPricing = async () => {
 
         const response = await axios.get(`/api/pricing/desludging/calculate?latitude=${customerLat}&longitude=${customerLng}&tripsNumber=${tripsNumber}`);
+
+        setPricing(response.data.price)
+
+        console.log(response);
+
     }
 
     const add = async (e: any) => {
@@ -199,7 +205,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
                                                 <input type="number" className="form-control" value={customerLng} onChange={(e: any) => {
                                                     setCustomerLng(e.target.value)
                                                     if (customerLat != "" && customerLng != "") {
-getPricing()
+                                                        getPricing()
                                                     }
                                                 }} />
                                             </div>
@@ -220,14 +226,12 @@ getPricing()
                                                 value={truck}
                                             >
                                                 <option value={""}>Select truck * </option>
-                                                <option value={1}>Active </option>
-                                                <option value={2}>Inactive </option>
 
-                                                {/* {data?.sendingTypes?.map((data: any) => (
-    <option key={data.id} value={data.id}>
-        {data.name}
-    </option>
-))} */}
+                                                {data?.sendingTypes?.map((data: any) => (
+                                                    <option key={data.id} value={data.id}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>

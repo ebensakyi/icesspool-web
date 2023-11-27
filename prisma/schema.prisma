@@ -507,7 +507,7 @@ model User {
   surname     String        @db.VarChar(255)
   otherNames  String        @db.VarChar(255)
   email       String?       @db.VarChar(255)
-  phoneNumber String        @db.VarChar(255)
+  phoneNumber String        @db.VarChar(255) @unique
   fcm         String?       @db.VarChar(255)
   password    String        @db.VarChar(255)
   userTypeId  Int

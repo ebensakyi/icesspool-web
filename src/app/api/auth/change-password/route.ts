@@ -27,8 +27,13 @@ export async function POST(request: Request) {
     if (isValid) {
       const salt = await bcrypt.genSaltSync(10);
       let hashedPassword = bcrypt.hashSync(newPassword, salt);
-      let x = await prisma.user.update({
-        where: { phoneNumber },
+
+
+      let user = await prisma.user.findFirst({
+        where: { phoneNumber: phoneNumber },
+      });
+    await prisma.user.update({
+        where: { id:user.id },
         data: { password: hashedPassword, passwordChanged: 1 },
       });
 

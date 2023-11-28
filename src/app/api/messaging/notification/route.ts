@@ -38,41 +38,7 @@ export async function POST(request: Request) {
       let x = await sendFCM(res.title, res.message, user?.fcmId);
     }
 
-    if (res.sendingType == "2") {
-      const user: any = await prisma.user.findMany({
-        where: { districtId: Number(res.districtId) },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        let x = await sendFCM(res.title, res.message, user[i]?.fcmId);
-      }
-    }
-
-    if (res.sendingType == "3") {
-      const user: any = await prisma.user.findMany({
-        where: { regionId: Number(res.regionId) },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        let x = await sendFCM(res.title, res.message, user[i]?.fcmId);
-      }
-    }
-
-    if (res.sendingType == "4") {
-      const user: any = await prisma.user.findMany({
-        where: { deleted: 0 },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        let x = await sendFCM(res.title, res.message, user[i]?.fcmId);
-      }
-    }
+   
     if (recipientCount == 0) {
       return NextResponse.json(
         { message: "Recipient list is empty" },
@@ -80,9 +46,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await prisma.messaging.create({ data });
+    // const response = await prisma.messaging.create({ data });
 
-    return NextResponse.json(response);
+    return NextResponse.json({});
   } catch (error: any) {
     console.log(error);
 
@@ -102,91 +68,9 @@ export async function PUT(request: Request) {
 
     console.log(res);
 
-    const data = {
-      title: res.title,
-      message: res.message,
-      messageType: 1,
-      sendingType: Number(res.sendingType),
-      individualRecipient:
-        res.individualRecipient == undefined || "" || null || 0
-          ? null
-          : Number(res.individualRecipient),
-      districtId:
-        res.districtId == undefined || "" || null || 0
-          ? null
-          : Number(res.districtId),
-      regionId:
-        res.regionId == undefined || "" || null || 0
-          ? null
-          : Number(res.regionId),
-      sender: Number(userId),
-    };
+   
 
-
-    if (res.sendingType == "1") {
-      const user: any = await prisma.user.findFirst({
-        where: { id: Number(res.individualRecipient) },
-      });
-      recipientCount = user?.length;
-
-      let x = await sendFCM(res.title, res.message, user?.fcmId);
-    }
-
-    if (res.sendingType == "2") {
-      const user: any = await prisma.user.findMany({
-        where: { districtId: Number(res.districtId) },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        if (user[i]?.fcmId) {
-          await sendFCM(res.title, res.message, user[i]?.fcmId);
-        }
-      }
-    }
-
-    if (res.sendingType == "3") {
-      const user: any = await prisma.user.findMany({
-        where: { regionId: Number(res.regionId) },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        if (user[i]?.fcmId) {
-          await sendFCM(res.title, res.message, user[i]?.fcmId);
-        }
-      }
-    }
-
-    if (res.sendingType == "4") {
-      const user: any = await prisma.user.findMany({
-        where: { deleted: 0 },
-      });
-
-      recipientCount = user.length;
-
-      for (let i = 0; i < user.length; i++) {
-        let x = await sendFCM(res.title, res.message, user[i]?.fcmId);
-      }
-    }
-
-    if (recipientCount == 0) {
-      return NextResponse.json(
-        { message: "Recipient list is empty" },
-        { status: 201 }
-      );
-    }
-
-    const response = await prisma.messaging.update({
-      data: data,
-      where: {
-        id: messageId,
-      },
-    });
-
-    return NextResponse.json(response);
+    return NextResponse.json({});
   } catch (error: any) {
     console.log(error);
 
@@ -196,17 +80,8 @@ export async function PUT(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const data = await prisma.messaging.findMany({
-      where: { deleted: 0, messageType: 1 },
-      include: {
-        SendingType: true,
-        District: true,
-        Region: true,
-        Recipient: true,
-      },
-    });
-
-    return NextResponse.json(data);
+  
+    return NextResponse.json({});
   } catch (error) {
     console.log(error);
 

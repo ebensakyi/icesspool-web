@@ -9,15 +9,14 @@ export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
-    // const session: any = await getServerSession(authOptions);
-    const data = await prisma.messaging.update({
-      where: {
-        id: Number(res?.msgId),
-      },
-      data: {
-        isViewed: 1,
-      },
-    });
+    // const data = await prisma.notification.update({
+    //   where: {
+    //     id: Number(res?.msgId),
+    //   },
+    //   data: {
+    //     isViewed: 1,
+    //   },
+    // });
 
     return NextResponse.json({});
   } catch (error: any) {
@@ -37,24 +36,21 @@ export async function GET(request: Request) {
       where: { id: userId },
     });
 
-    const data = await prisma.messaging.findMany({
-      where: {
-        deleted: 0,
-        messageType: 1,
-        OR: [
-          { districtId: user?.districtId },
-          { sendingType: 4 },
-          { individualRecipient: userId },
-          { regionId: Number(user?.regionId) },
-        ],
-      },
-      // include: {
-      //   SendingType: true,
-      //   District: true,
-      //   Region: true,
-      //   Recipient: true,
-      // },
-    });
+    // const data = await prisma.notification.findMany({
+    //   where: {
+    //     deleted: 0,
+    //     messageType: 1,
+    //     OR: [
+    //       { districtId: user?.districtId },
+    //       { sendingType: 4 },
+    //       { individualRecipient: userId },
+    //       { regionId: Number(user?.regionId) },
+    //     ],
+    //   },
+   
+    // });
+
+    let data: any[] = []
 
     return NextResponse.json(data);
   } catch (error) {

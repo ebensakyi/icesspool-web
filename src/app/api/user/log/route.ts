@@ -30,23 +30,25 @@ export async function GET(request: Request) {
         ? ""
         : searchParams.get("searchText")?.toString();
 
-    let count = await prisma.logs.count({ where: { deleted: 0 } });
+    // let count = await prisma.logs.count({ where: { deleted: 0 } });
 
-    let response = await prisma.logs.findMany({
-      where: { deleted: 0 },
-      include: { User: true },
-      skip: skip,
-      take: perPage,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    // let response = await prisma.logs.findMany({
+    //   where: { deleted: 0 },
+    //   include: { User: true },
+    //   skip: skip,
+    //   take: perPage,
+    //   orderBy: {
+    //     createdAt: "desc",
+    //   },
+    // });
 
-    return NextResponse.json({
-      response,
-      curPage: curPage,
-      maxPage: Math.ceil(count / perPage),
-    });
+    // return NextResponse.json({
+    //   response,
+    //   curPage: curPage,
+    //   maxPage: Math.ceil(count / perPage),
+    // });
+
+    return NextResponse.json({})
   } catch (error) {
     console.log(error);
 
@@ -56,30 +58,31 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    let rawData = [];
-    let response = await prisma.logs.findMany({
-      where: { deleted: 0 },
-      include: { User: true },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    for (let i = 0; i < response?.length; i++) {
-      rawData?.push({
-        User: response[i]?.User.otherNames + " " + response[i]?.User.surname,
-        Activity: response[i]?.activity,
-        Date: response[i]?.createdAt,
-      });
-    }
+    //let rawData = [];
+    // let response = await prisma.logs.findMany({
+    //   where: { deleted: 0 },
+    //   include: { User: true },
+    //   orderBy: {
+    //     createdAt: "desc",
+    //   },
+    // });
+    // for (let i = 0; i < response?.length; i++) {
+    //   rawData?.push({
+    //     User: response[i]?.User.otherNames + " " + response[i]?.User.surname,
+    //     Activity: response[i]?.activity,
+    //     Date: response[i]?.createdAt,
+    //   });
+    // }
 
-    const workSheet = XLSX.utils.json_to_sheet(rawData);
-    const workBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
-    let filePath = `./public/temp/user-logs.xlsx`;
-    XLSX.writeFile(workBook, filePath);
+    // const workSheet = XLSX.utils.json_to_sheet(rawData);
+    // const workBook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
+    // let filePath = `./public/temp/user-logs.xlsx`;
+    // XLSX.writeFile(workBook, filePath);
 
-    let url = await uploadFile("user-logs.xlsx");
-    return NextResponse.json(url);
+    // let url = await uploadFile("user-logs.xlsx");
+   // return NextResponse.json(url);
+    return NextResponse.json({})
   } catch (error: any) {
     return NextResponse.json(error.message);
   }

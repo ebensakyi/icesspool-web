@@ -24,28 +24,26 @@ export async function POST(request: Request) {
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
 
-    let regionId = res.region;
+    // let regionId = res.region;
 
-    if (regionId == null) {
-      const district = await prisma.district.findFirst({
-        where: { id: Number(res.district) },
-      });
+    // if (regionId == null) {
+    //   const district = await prisma.district.findFirst({
+    //     where: { id: Number(res.district) },
+    //   });
 
-      regionId = district?.regionId;
-    }
+    //   regionId = district?.regionId;
+    // }
 
     const data = {
       userRoleId: res.userRoleId,
-      userLevelId: res.userLevelId,
+      userTypeId: res.userTypeId,
       surname: res.surname,
       otherNames: res.otherNames,
       email: res.email,
       phoneNumber: res.phoneNumber,
       designation: res.designation,
       password: hashedPassword,
-      tempPassword: password,
-      regionId: regionId,
-      districtId: res.district,
+     
     };
 
     let count = await prisma.user.count({
@@ -99,46 +97,42 @@ export async function GET(request: Request) {
     // let district = loggedInUserData?.districtId;
     // let users;
 
-    if (districtId) {
+    if (1) {
       const response = await prisma.user.findMany({
-        where:
-          searchText != ""
-            ? {
-                OR: [
-                  {
-                    surname: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    otherNames: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    phoneNumber: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                ],
-                districtId: Number(districtId),
-                deleted: 0,
-              }
-            : { districtId: Number(districtId), deleted: 0 },
+        // where:
+        //   searchText != ""
+        //     ? {
+        //         OR: [
+        //           {
+        //             surname: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             otherNames: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             phoneNumber: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             email: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //         ],
+        //         deleted: 0,
+        //       }
+        //     : { districtId: Number(districtId), deleted: 0 },
         include: {
-          Region: true,
-          District: true,
           UserRole: true,
-          UserLevel: true,
         },
         orderBy: {
           id: "desc",
@@ -146,39 +140,38 @@ export async function GET(request: Request) {
       });
 
       const count = await prisma.user.count({
-        where:
-          searchText != ""
-            ? {
-                OR: [
-                  {
-                    surname: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    otherNames: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    phoneNumber: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                ],
-                districtId: Number(districtId),
-                deleted: 0,
-              }
-            : { districtId: Number(districtId), deleted: 0 },
+        // where:
+        //   searchText != ""
+        //     ? {
+        //         OR: [
+        //           {
+        //             surname: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             otherNames: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             phoneNumber: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //           {
+        //             email: {
+        //               contains: searchText,
+        //               mode: "insensitive",
+        //             },
+        //           },
+        //         ],
+        //         deleted: 0,
+        //       }
+        //     : {deleted: 0 },
       });
 
       if (exportFile) {
@@ -195,48 +188,46 @@ export async function GET(request: Request) {
     }
 
     const response = await prisma.user.findMany({
-      where:
-        searchText != ""
-          ? {
-              OR: [
-                {
-                  surname: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  otherNames: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  phoneNumber: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  email: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  District: {
-                    name: { contains: searchText, mode: "insensitive" },
-                  },
-                },
-              ],
-              deleted: 0,
-            }
-          : { deleted: 0 },
+      // where:
+      //   searchText != ""
+      //     ? {
+      //         OR: [
+      //           {
+      //             surname: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             otherNames: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             phoneNumber: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             email: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             District: {
+      //               name: { contains: searchText, mode: "insensitive" },
+      //             },
+      //           },
+      //         ],
+      //         deleted: 0,
+      //       }
+      //     : { deleted: 0 },
       include: {
-        Region: true,
-        District: true,
+      
         UserRole: true,
-        UserLevel: true,
       },
       orderBy: {
         id: "desc",
@@ -246,43 +237,39 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.user.count({
-      where:
-        searchText != ""
-          ? {
-              OR: [
-                {
-                  surname: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  otherNames: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  phoneNumber: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  email: {
-                    contains: searchText,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  District: {
-                    name: { contains: searchText, mode: "insensitive" },
-                  },
-                },
-              ],
-              deleted: 0,
-            }
-          : { deleted: 0 },
+      // where:
+      //   searchText != ""
+      //     ? {
+      //         OR: [
+      //           {
+      //             surname: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             otherNames: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             phoneNumber: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+      //           {
+      //             email: {
+      //               contains: searchText,
+      //               mode: "insensitive",
+      //             },
+      //           },
+              
+      //         ],
+      //         deleted: 0,
+      //       }
+      //     : { deleted: 0 },
 
       orderBy: {
         id: "desc",
@@ -311,13 +298,13 @@ export async function PUT(request: Request) {
 
     let regionId = res.region;
 
-    if (regionId == null) {
-      const district = await prisma.district.findFirst({
-        where: { id: Number(res.district) },
-      });
+    // if (regionId == null) {
+    //   const district = await prisma.district.findFirst({
+    //     where: { id: Number(res.district) },
+    //   });
 
-      regionId = district?.regionId;
-    }
+    //   regionId = district?.regionId;
+    // }
 
     let id = res.userId;
 
@@ -411,7 +398,7 @@ const flattenArray = async (data: any) => {
       Name: data[i]?.otherNames + data[i]?.surname,
       "Phone Number": data[i]?.phoneNumber,
       Email: data[i]?.email,
-      "User Level": data[i]?.UserLevel?.name,
+      // "User Level": data[i]?.UserLevel?.name,
       Region: data[i]?.Region?.name,
       District: data[i]?.District?.name,
     });

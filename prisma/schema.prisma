@@ -237,7 +237,6 @@ model Notification {
   updatedAt DateTime @updatedAt
 }
 
-
 model MomoAccount {
   id          Int      @id @default(autoincrement())
   operatorId  String   @unique(map: "operatorId") @db.VarChar(255)
@@ -373,6 +372,45 @@ model BiodigesterServicePricing {
   serviceId     Int
   ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId Int?
+}
+
+model UserRole {
+  id                        Int          @id @default(autoincrement())
+  name                      String       @unique @db.VarChar(255)
+  userUpdatesAllowed        Int?         @default(0)
+  userDeletionAllowed       Int?         @default(0)
+  inspectionUpdatesAllowed  Int?         @default(0)
+  inspectionPublishAllowed  Int?         @default(0)
+  inspectionDeletionAllowed Int?         @default(0)
+  deleted                   Int?         @default(0)
+  createdAt                 DateTime     @default(now())
+  updatedAt                 DateTime     @updatedAt
+  PageAccess                PageAccess[]
+  // PageActionAccess          PageActionAccess[]
+  User                      User[]
+}
+
+model PageAccess {
+  id         Int      @id @default(autoincrement())
+  pageId     Int
+  userRoleId Int
+  deleted    Int?     @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Page       Page     @relation(fields: [pageId], references: [id])
+  UserRole   UserRole @relation(fields: [userRoleId], references: [id])
+}
+
+model Page {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique @db.VarChar(255)
+  path       String?      @unique @db.VarChar(255)
+  icon       String?      @db.VarChar(255)
+  deleted    Int?         @default(0)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  PageAccess PageAccess[]
+  // PageAction PageAction[] @relation("PageToPageAction")
 }
 
 model Operator {
@@ -515,23 +553,28 @@ model TransactionStatus {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  surname     String        @db.VarChar(255)
-  otherNames  String        @db.VarChar(255)
-  email       String?       @db.VarChar(255)
-  phoneNumber String        @db.VarChar(255) @unique
-  fcm         String?       @db.VarChar(255)
-  password    String        @db.VarChar(255)
-  passwordChanged  Int?          @default(0)
-  userTypeId  Int
-  activated   Int?          @default(0)
-  deleted     Int?          @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  operator    Transaction[] @relation("operator")
-  client      Transaction[] @relation("client")
+  id              Int           @id @default(autoincrement())
+  surname         String        @db.VarChar(255)
+  otherNames      String        @db.VarChar(255)
+  email           String?       @db.VarChar(255)
+  phoneNumber     String        @unique @db.VarChar(255)
+  fcm             String?       @db.VarChar(255)
+  password        String        @db.VarChar(255)
+  imagePath       String?       @db.VarChar(255)
+  passwordChanged Int?          @default(0)
+  userTypeId      Int
+  activated       Int?          @default(0)
+  deleted         Int?          @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  operator        Transaction[] @relation("operator")
+  client          Transaction[] @relation("client")
   // operator Transaction[] @relation("operator", fields: [operatorId], references: [id])
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
+  UserRole        UserRole?     @relation(fields: [userRoleId], references: [id])
+  userRoleId      Int?
+
+  UserType UserType @relation(fields: [userTypeId], references: [id])
 }
 
 model UserType {
@@ -540,6 +583,7 @@ model UserType {
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  User      User[]
 }
 
 model Vehicle {

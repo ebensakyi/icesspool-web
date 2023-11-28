@@ -510,6 +510,7 @@ model User {
   phoneNumber String        @db.VarChar(255) @unique
   fcm         String?       @db.VarChar(255)
   password    String        @db.VarChar(255)
+  passwordChanged  Int?          @default(0)
   userTypeId  Int
   activated   Int?          @default(0)
   deleted     Int?          @default(0)

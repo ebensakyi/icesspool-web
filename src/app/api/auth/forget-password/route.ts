@@ -36,11 +36,11 @@ export async function POST(request: Request) {
     }
 
 
-    let password: string = (await generateCode(4)) as string;
+    let password: string = await generateCode(4) as string;
 
     await prisma.user.update({
       data: {
-        tempPassword: password,
+        password: password,
       },
       where: {
         id: user?.id,

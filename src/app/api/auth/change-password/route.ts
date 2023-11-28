@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         where: { phoneNumber: phoneNumber },
       });
     await prisma.user.update({
-        where: { id:user.id },
+        where: { id:user?.id },
         data: { password: hashedPassword, passwordChanged: 1 },
       });
 

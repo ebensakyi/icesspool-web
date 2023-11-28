@@ -475,12 +475,14 @@ CREATE TABLE `User` (
     `phoneNumber` VARCHAR(255) NOT NULL,
     `fcm` VARCHAR(255) NULL,
     `password` VARCHAR(255) NOT NULL,
+    `passwordChanged` INTEGER NULL DEFAULT 0,
     `userTypeId` INTEGER NOT NULL,
     `activated` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `User_phoneNumber_key`(`phoneNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

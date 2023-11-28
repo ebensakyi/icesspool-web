@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Service } from '@/src/components/Service';
 import { getServices } from '@/src/api-services';
 

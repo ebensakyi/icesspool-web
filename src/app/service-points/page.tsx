@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { ServicePoint } from '@/src/components/ServicePoint';
 import { getServicePoints, getServices } from '@/src/api-services';
 

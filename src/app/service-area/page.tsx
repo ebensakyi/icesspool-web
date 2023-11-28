@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getRegions, getServiceAreas, getServices } from '@/src/api-services';
 import { ServiceArea } from '@/src/components/ServiceArea';
 

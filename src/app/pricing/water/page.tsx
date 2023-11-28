@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getRegions, getServicePoints, getServices, getTruckClasses, getWaterPricing } from '@/src/api-services';
 import { WaterPricing } from '@/src/components/WaterPricing';
 

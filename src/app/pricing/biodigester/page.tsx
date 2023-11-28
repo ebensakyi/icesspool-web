@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getServicePoints, getServices } from '@/src/api-services';
 import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
 

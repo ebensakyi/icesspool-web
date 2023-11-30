@@ -2,9 +2,9 @@ export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
 import Role from "@/src/components/user/Role";
+import Scanner from "@/src/components/user/Scanner";
 import { headers } from "next/headers";
 
-import { Suspense } from "react";
 async function getPages() {
 
     let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/pages`,{ cache: 'no-store',headers: headers() });
@@ -39,7 +39,7 @@ export default async function Page() {
 
 
 
-    return <Role data={data} />
+    return <Scanner data={data} />
 
 
 }

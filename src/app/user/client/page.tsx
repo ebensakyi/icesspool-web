@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
+import Client from "@/src/components/user/Client";
 import Role from "@/src/components/user/Role";
 import { headers } from "next/headers";
 
@@ -39,7 +40,7 @@ export default async function Page() {
 
 
 
-    return <Role data={data} />
+    return <Client data={data} />
 
 
 }

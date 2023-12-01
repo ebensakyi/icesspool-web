@@ -554,7 +554,7 @@ export default function Client({ data }: any) {
                                                 >
 
                                                     <option >Select user role</option>
-                                                    {data.roles.map((role: any) => {
+                                                    {data.userTypes.map((role: any) => {
                                                         return (
                                                             <option key={role.id} value={role.id}>{role.name}</option>
                                                         )

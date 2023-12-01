@@ -278,13 +278,13 @@ export default function Role({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.roles.map((role: any) => {
+                                        {data.userTypes.map((userType: any) => {
                                             return (
-                                                <tr key={role.id}>
-                                                    <td>{role.name}</td>
+                                                <tr key={userType.id}>
+                                                    <td>{userType.name}</td>
                                                     <td>
-                                                        <div className="row" key={role.id}>
-                                                            {role.PageAccess.map((pa: any) => {
+                                                        <div className="row" key={userType.id}>
+                                                            {userType.PageAccess.map((pa: any) => {
                                                                 return (
                                                                     <div key={pa.id} className="col-md-3">
                                                                         <span className="badge bg-primary"><i className="bi bi-check-circle me-1"></i>  {pa.Page?.name ?? ""}</span>
@@ -320,8 +320,8 @@ export default function Role({ data }: any) {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-                                                                                setRoleName(role.name);
-                                                                                let pageAcess = role.PageAccess.map(
+                                                                                setRoleName(userType.name);
+                                                                                let pageAcess = userType.PageAccess.map(
                                                                                     (access: any) => {
                                                                                         return {
                                                                                             value: access.Page.id,
@@ -331,7 +331,7 @@ export default function Role({ data }: any) {
                                                                                 );
                                                                                 setSelectedPages(pageAcess);
                                                                                 setIsEditing(1);
-                                                                                setRoleId(role.id);
+                                                                                setRoleId(userType.id);
 
                                                                             }}
                                                                         >
@@ -344,7 +344,7 @@ export default function Role({ data }: any) {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                                deleteRole(role.id);
+                                                                                deleteRole(userType.id);
                                                                             }}
                                                                         >
                                                                             Delete

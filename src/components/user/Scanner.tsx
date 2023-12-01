@@ -553,8 +553,8 @@ export default function Scanner({ data }: any) {
                                                     value={userRole}
                                                 >
 
-                                                    <option >Select user role</option>
-                                                    {data.roles.map((role: any) => {
+                                                    <option >Select user type</option>
+                                                    {data.userTypes.map((role: any) => {
                                                         return (
                                                             <option key={role.id} value={role.id}>{role.name}</option>
                                                         )

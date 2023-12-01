@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   
       // await logActivity("Visited data assignment page", session?.user?.id);
   
-      const response = await prisma.userRole.findMany({
+      const response = await prisma.userType.findMany({
         where: { deleted: 0 },
      
       });

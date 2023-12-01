@@ -14,12 +14,12 @@ export async function POST(request: Request) {
       inspectionPublishAllowed: Number(res.inspectionPublishAllowed),
       inspectionUpdatesAllowed: Number(res.inspectionUpdatesAllowed),
     };
-    const role = await prisma.userRole.create({ data });
+    const role = await prisma.userType.create({ data });
 
     let pages = await selectedPages.map((page: any) => {
       return {
         pageId: page.value,
-        userRoleId: role.id,
+        userTypeId: role.id,
       };
     });
 
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       data: pages,
 
       // data: {
-      //   userRoleId: role.id,
+      //   userTypeId: role.id,
       // },
       // skipDuplicates: true,
     });
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const data = await prisma.userRole.findMany({
+    const data = await prisma.userType.findMany({
       where: { deleted: 0 },
       include: { PageAccess: { include: { Page: true } } },
     });
@@ -62,27 +62,27 @@ export async function PUT(request: Request) {
     const res = await request.json();
 
     let selectedPages = res.selectedPages;
-    let userRoleId = res.roleId;
+    let userTypeId = res.roleId;
 
     let pages = await selectedPages.map((page: { value: any }) => {
       return {
         pageId: page.value,
-        userRoleId: userRoleId,
+        userTypeId: userTypeId,
       };
     });
 
     await prisma.pageAccess.deleteMany({
       where: {
-        userRoleId: userRoleId,
+        userTypeId: userTypeId,
       },
     });
 
-    await prisma.userRole.update({
+    await prisma.userType.update({
       data: {
         name: res.roleName,
       },
       where: {
-        id: userRoleId,
+        id: userTypeId,
       },
     });
 
@@ -90,7 +90,7 @@ export async function PUT(request: Request) {
       data: pages,
 
       // data: {
-      //   userRoleId: userRoleId,
+      //   userTypeId: userTypeId,
       //   userTypeName: name,
       // },
       // skipDuplicates: true,
@@ -108,7 +108,7 @@ export async function DELETE(request: Request) {
 
     const id = Number(searchParams.get("id"));
 
-    const data = await prisma.userRole.update({
+    const data = await prisma.userType.update({
       where: {
         id: id,
       },

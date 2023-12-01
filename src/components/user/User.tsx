@@ -28,7 +28,7 @@ export default function User({ data }: any) {
     const page = searchParams.get('page');
 
 
-    const [userRole, setUserRole] = useState("");
+    const [userType, setUserType] = useState("");
     const [userId, setUserId] = useState();
     const [selectedUserLevel, setSelectedUserLevel] = useState("");
 
@@ -133,7 +133,7 @@ export default function User({ data }: any) {
             if (designation == "") {
                 return toast.error("Designation cannot be empty");
             }
-            if (userRole == "") {
+            if (userType == "") {
                 return toast.error("User role cannot be empty");
             }
             if (selectedUserLevel == "2") {
@@ -152,7 +152,7 @@ export default function User({ data }: any) {
             if (loggedInUserLevel == 1) {
                 if (selectedUserLevel == "1") {
                     data = {
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -165,7 +165,7 @@ export default function User({ data }: any) {
                 }
                 if (selectedUserLevel == "2") {
                     data = {
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -179,7 +179,7 @@ export default function User({ data }: any) {
                 if (selectedUserLevel == "3") {
 
                     data = {
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -195,7 +195,7 @@ export default function User({ data }: any) {
             if (loggedInUserLevel == 2) {
                 if (selectedUserLevel == "2") {
                     data = {
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -208,7 +208,7 @@ export default function User({ data }: any) {
                 }
                 if (selectedUserLevel == "3") {
                     data = {
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -223,7 +223,7 @@ export default function User({ data }: any) {
 
             if (loggedInUserLevel == 3) {
                 data = {
-                    userRoleId: Number(userRole),
+                    userTypeId: Number(userType),
                     userLevelId: Number(selectedUserLevel),
                     surname,
                     otherNames,
@@ -250,7 +250,7 @@ export default function User({ data }: any) {
                 setEmail("");
                 setPhoneNumber("");
                 setDesignation("");
-                setUserRole("");
+                setUserType("");
                 setSelectedRegion("");
                 setSelectedDistrict("");
 
@@ -285,8 +285,8 @@ export default function User({ data }: any) {
             if (designation == "") {
                 return toast.error("Designation cannot be empty");
             }
-            if (userRole == "") {
-                return toast.error("User role cannot be empty");
+            if (userType == "") {
+                return toast.error("User type cannot be empty");
             }
             if (selectedUserLevel == "2") {
                 if (selectedRegion == null || selectedRegion == "") {
@@ -307,7 +307,7 @@ export default function User({ data }: any) {
                 if (selectedUserLevel == "1") {
                     data = {
                         userId: Number(userId),
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -322,7 +322,7 @@ export default function User({ data }: any) {
                     data = {
                         userId: Number(userId),
 
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -338,7 +338,7 @@ export default function User({ data }: any) {
                     data = {
                         userId: Number(userId),
 
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -356,7 +356,7 @@ export default function User({ data }: any) {
                     data = {
                         userId: Number(userId),
 
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -371,7 +371,7 @@ export default function User({ data }: any) {
                     data = {
                         userId: Number(userId),
 
-                        userRoleId: Number(userRole),
+                        userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
                         surname,
                         otherNames,
@@ -388,7 +388,7 @@ export default function User({ data }: any) {
                 data = {
                     userId: Number(userId),
 
-                    userRoleId: Number(userRole),
+                    userTypeId: Number(userType),
                     userLevelId: Number(selectedUserLevel),
                     surname,
                     otherNames,
@@ -406,7 +406,7 @@ export default function User({ data }: any) {
                 setEmail("");
                 setPhoneNumber("");
                 setDesignation("");
-                setUserRole("");
+                setUserType("");
                 setSelectedRegion("");
                 setSelectedDistrict("");
                 setIsEditing(false);
@@ -547,10 +547,10 @@ export default function User({ data }: any) {
                                             <label className="col-sm-12 col-form-label">Select role</label>
                                             <div className="col-sm-12">
                                                 <select
-                                                    onChange={(e: any) => setUserRole(e.target.value)}
+                                                    onChange={(e: any) => setUserType(e.target.value)}
                                                     className="form-select"
                                                     aria-label="Default select example"
-                                                    value={userRole}
+                                                    value={userType}
                                                 >
 
                                                     <option >Select user type</option>
@@ -739,7 +739,7 @@ export default function User({ data }: any) {
                                                             setEmail("");
                                                             setPhoneNumber("");
                                                             setDesignation("");
-                                                            setUserRole("");
+                                                            setUserType("");
                                                             setSelectedUserLevel("");
                                                             setSelectedRegion("");
                                                             setSelectedDistrict("");
@@ -869,7 +869,7 @@ export default function User({ data }: any) {
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
                                                                         setDesignation(user.designation);
-                                                                        setUserRole(user.userRoleId);
+                                                                        setUserType(user.userTypeId);
                                                                         setSelectedUserLevel(user.userLevelId);
                                                                         setUserId(user.id);
                                                                         setSelectedRegion(user.regionId);

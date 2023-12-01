@@ -24,7 +24,7 @@ export default function UserType({ data }: any) {
 
     const [name, setName] = useState("");
     const [selectedPages, setSelectedPages] = useState([]);
-    const [roleId, setRoleId] = useState();
+    const [userTypeId, setUserTypeId] = useState();
 
     const [userUpdatesAllowed, setUserUpdatesAllowed] = useState(0);
     const [userDeletionAllowed, setUserDeletionAllowed] = useState(0);
@@ -90,7 +90,7 @@ export default function UserType({ data }: any) {
             if (name == "") return toast.error("User type cannot be empty");
 
             let data = {
-                roleId: id,
+                userTypeId: id,
                 name,
                 selectedPages: selectedPages,
             };
@@ -239,7 +239,7 @@ export default function UserType({ data }: any) {
                                             <button
                                                 className="btn btn-warning"
                                                 onClick={(e) => {
-                                                    update(e, roleId);
+                                                    update(e, userTypeId);
                                                 }}
                                             >
                                                 Update
@@ -331,7 +331,7 @@ export default function UserType({ data }: any) {
                                                                                 );
                                                                                 setSelectedPages(pageAcess);
                                                                                 setIsEditing(1);
-                                                                                setRoleId(userType.id);
+                                                                                setUserTypeId(userType.id);
 
                                                                             }}
                                                                         >

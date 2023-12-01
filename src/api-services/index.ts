@@ -130,3 +130,15 @@ export async function getDesludgingPricing(searchParams: any, service?: number) 
 
 }
 
+
+export async function getPages() {
+
+  let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/pages`, { cache: 'no-store', headers: headers() });
+
+  if (!response.ok) {
+      throw new Error('Failed to fetch data')
+  }
+  return await response.json();
+
+}
+

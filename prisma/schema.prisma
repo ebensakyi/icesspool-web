@@ -17,13 +17,13 @@ model Otp {
 }
 
 model TruckClassification {
-  id            Int     @id @default(autoincrement())
-  name          String  @unique(map: "axleClass") @db.VarChar(255)
-  serviceId     Int
-  tankCapacity  Decimal @default(0.00) @db.Decimal(10, 2)
-  serviceAreaId Int
-  deleted Int? @default(0)
-  status  Int? @default(0)
+  id                        Int                         @id @default(autoincrement())
+  name                      String                      @unique(map: "axleClass") @db.VarChar(255)
+  serviceId                 Int
+  tankCapacity              Decimal                     @default(0.00) @db.Decimal(10, 2)
+  serviceAreaId             Int
+  deleted                   Int?                        @default(0)
+  status                    Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
   Service                   Service                     @relation(fields: [serviceId], references: [id])
@@ -372,7 +372,7 @@ model BiodigesterServicePricing {
   serviceAreaId Int?
 }
 
-model UserRole {
+model UserType {
   id                        Int          @id @default(autoincrement())
   name                      String       @unique @db.VarChar(255)
   userUpdatesAllowed        Int?         @default(0)
@@ -391,12 +391,12 @@ model UserRole {
 model PageAccess {
   id         Int      @id @default(autoincrement())
   pageId     Int
-  userRoleId Int
+  userTypeId Int
   deleted    Int?     @default(0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   Page       Page     @relation(fields: [pageId], references: [id])
-  UserRole   UserRole @relation(fields: [userRoleId], references: [id])
+  UserType   UserType @relation(fields: [userTypeId], references: [id])
 }
 
 model Page {
@@ -560,7 +560,7 @@ model User {
   password        String        @db.VarChar(255)
   imagePath       String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)
-  userTypeId      Int
+  // userTypeId      Int
   activated       Int?          @default(0)
   deleted         Int?          @default(0)
   createdAt       DateTime      @default(now())
@@ -569,20 +569,21 @@ model User {
   client          Transaction[] @relation("client")
   // operator Transaction[] @relation("operator", fields: [operatorId], references: [id])
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
-  UserRole        UserRole?     @relation(fields: [userRoleId], references: [id])
-  userRoleId      Int?
+  // UserType        UserType?     @relation(fields: [userTypeId], references: [id])
+  userTypeId      Int?
 
-  UserType UserType @relation(fields: [userTypeId], references: [id])
+  // UserType UserType @relation(fields: [userTypeId], references: [id])
+  UserType UserType? @relation(fields: [userTypeId], references: [id])
 }
 
-model UserType {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User[]
-}
+// model UserType {
+//   id        Int      @id @default(autoincrement())
+//   name      String   @db.VarChar(255)
+//   deleted   Int?     @default(0)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   User      User[]
+// }
 
 model Vehicle {
   id                    Int                 @id @default(autoincrement())

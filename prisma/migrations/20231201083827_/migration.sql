@@ -314,7 +314,7 @@ CREATE TABLE `BiodigesterServicePricing` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `UserRole` (
+CREATE TABLE `UserType` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `userUpdatesAllowed` INTEGER NULL DEFAULT 0,
@@ -326,7 +326,7 @@ CREATE TABLE `UserRole` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `UserRole_name_key`(`name`),
+    UNIQUE INDEX `UserType_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -334,7 +334,7 @@ CREATE TABLE `UserRole` (
 CREATE TABLE `PageAccess` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `pageId` INTEGER NOT NULL,
-    `userRoleId` INTEGER NOT NULL,
+    `userTypeId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -535,25 +535,13 @@ CREATE TABLE `User` (
     `password` VARCHAR(255) NOT NULL,
     `imagePath` VARCHAR(255) NULL,
     `passwordChanged` INTEGER NULL DEFAULT 0,
-    `userTypeId` INTEGER NOT NULL,
     `activated` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `userRoleId` INTEGER NULL,
+    `userTypeId` INTEGER NULL,
 
     UNIQUE INDEX `User_phoneNumber_key`(`phoneNumber`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `UserType` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
-    `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -654,7 +642,7 @@ ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricin
 ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_pageId_fkey` FOREIGN KEY (`pageId`) REFERENCES `Page`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_userRoleId_fkey` FOREIGN KEY (`userRoleId`) REFERENCES `UserRole`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -672,10 +660,7 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_operatorId_fkey` FOREIGN K
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `User` ADD CONSTRAINT `User_userRoleId_fkey` FOREIGN KEY (`userRoleId`) REFERENCES `UserRole`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `User` ADD CONSTRAINT `User_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `User` ADD CONSTRAINT `User_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

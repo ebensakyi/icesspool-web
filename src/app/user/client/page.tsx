@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
-import { getUseTypes } from "@/src/api-services";
+import { getUserTypes } from "@/src/api-services";
 import Client from "@/src/components/user/Client";
 import { headers } from "next/headers";
 
@@ -24,7 +24,7 @@ export default async function Page() {
   
 
     const pages = await getPages()
-    const userTypes = await getUseTypes()
+    const userTypes = await getUserTypes()
 
     let data = { pages, userTypes }
 

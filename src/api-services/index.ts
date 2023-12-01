@@ -120,7 +120,7 @@ export async function getDesludgingPricing(searchParams: any, service?: number) 
   }
   
 
-  export async function getUseTypes() {
+  export async function getUserTypes() {
 
     let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/user-type`, { cache: 'no-store', headers: headers() });
     if (!response.ok) {

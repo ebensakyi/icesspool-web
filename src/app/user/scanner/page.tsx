@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
-import Role from "@/src/components/user/Role";
+import Role from "@/src/components/user/UserType";
 import Scanner from "@/src/components/user/Scanner";
 import { headers } from "next/headers";
 

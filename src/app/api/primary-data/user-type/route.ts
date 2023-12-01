@@ -19,6 +19,7 @@ export async function GET(request: Request) {
         where: { deleted: 0 },
      
       });
+      
 
       return NextResponse.json({ response });
     } catch (error) {

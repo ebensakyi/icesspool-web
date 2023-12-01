@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useSession } from "next-auth/react";
 import { LOGIN_URL } from "@/config";
 
-export default function Role({ data }: any) {
+export default function UserType({ data }: any) {
 
     const { data: session } = useSession({
         required: true,
@@ -22,7 +22,7 @@ export default function Role({ data }: any) {
     const router = useRouter();
     const pathname = usePathname()
 
-    const [roleName, setRoleName] = useState("");
+    const [name, setName] = useState("");
     const [selectedPages, setSelectedPages] = useState([]);
     const [roleId, setRoleId] = useState();
 
@@ -53,19 +53,19 @@ export default function Role({ data }: any) {
 
             if (selectedPages.length == 0)
                 return toast.error("Pages cannot be empty");
-            if (roleName == "") return toast.error("Role name cannot be empty");
+            if (name == "") return toast.error("Name cannot be empty");
 
             let data = {
-                roleName,
+                name,
                 selectedPages: selectedPages,
                 inspectionDeletionAllowed,
                 inspectionPublishAllowed,
                 inspectionUpdatesAllowed
             };
 
-            const response = await axios.post("/api/user/role", data);
+            const response = await axios.post("/api/user/user-type", data);
             setSelectedPages([]);
-            setRoleName("");
+            setName("");
 
             if (response.status == 200) {
                 router.refresh()
@@ -87,17 +87,17 @@ export default function Role({ data }: any) {
             e.preventDefault();
             if (selectedPages.length == 0)
                 return toast.error("Pages cannot be empty");
-            if (roleName == "") return toast.error("User role cannot be empty");
+            if (name == "") return toast.error("User type cannot be empty");
 
             let data = {
                 roleId: id,
-                roleName,
+                name,
                 selectedPages: selectedPages,
             };
 
-            const response = await axios.put("/api/user/role", data);
+            const response = await axios.put("/api/user/user-type", data);
             setSelectedPages([]);
-            setRoleName("");
+            setName("");
             router.refresh()
 
             return toast.success("User role update");
@@ -106,10 +106,10 @@ export default function Role({ data }: any) {
             return toast.error("An error occurred");
         }
     };
-    const deleteRole = async (id: any) => {
+    const _delete = async (id: any) => {
         try {
             const response = await axios.delete(
-                `/api/user/role/?id=${id}`
+                `/api/user/user-type/?id=${id}`
             );
 
             if (response.status == 200) {
@@ -135,7 +135,7 @@ export default function Role({ data }: any) {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>ROLES</h1>
+                <h1>USER TYPES</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -152,13 +152,13 @@ export default function Role({ data }: any) {
                     <div className="col-lg-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Enter user roles</h5>
+                                <h5 className="card-title">Enter user type</h5>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Role
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter role name' value={roleName} onChange={(e) => setRoleName(e.target.value)} />
+                                        <input type="text" className="form-control" placeholder='Enter role name' value={name} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="mb-3">
@@ -320,7 +320,7 @@ export default function Role({ data }: any) {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-                                                                                setRoleName(userType.name);
+                                                                                setName(userType.name);
                                                                                 let pageAcess = userType.PageAccess.map(
                                                                                     (access: any) => {
                                                                                         return {
@@ -344,7 +344,7 @@ export default function Role({ data }: any) {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                                deleteRole(userType.id);
+                                                                                _delete(userType.id);
                                                                             }}
                                                                         >
                                                                             Delete

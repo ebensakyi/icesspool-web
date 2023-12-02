@@ -18,7 +18,7 @@ export default function Header() {
 
         <>
             {session?.user ?
-                <header id="header" className="header fixed-top d-flex align-items-center">
+                <header id="header" className="header fixed-top d-flex align-items-center" >
                     {/* <button onClick={()=>{
                         if(!showDrawer){
                             document.body.classList.add("toggle-sidebar")
@@ -115,7 +115,7 @@ export default function Header() {
                     </nav>
                 </header> : <></>}
             {session?.user ?
-                <aside id="sidebar" className="sidebar">
+                <aside id="sidebar" className="sidebar"style={{backgroundColor:"#e3f2fd"}}>
                     <ul className="sidebar-nav" id="sidebar-nav">
                         <li className="nav-heading">Main Menu</li>
 
@@ -391,13 +391,7 @@ export default function Header() {
                                         <span> Client</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/auth/profile">
-                                        <i className="bi bi-circle" />
-                                        <span> Profile</span>
-                                    </Link>
-                                </li>
-
+                              
 
                             </ul>
                         </li>

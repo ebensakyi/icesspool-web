@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
 
 export default function Admin({ data }: any) {
-    
+
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session }: any = useSession()
@@ -37,17 +37,17 @@ export default function Admin({ data }: any) {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
     // const [region, setRegion] = useState("");
-   
+
     const [isEditing, setIsEditing] = useState(false);
 
-   
+
     const [showOtp, setShowOtp] = useState(false);
 
     // const [searchText, setSearchText] = useState();
 
 
 
-  
+
 
     // const handleExportAll = async () => {
     //     try {
@@ -112,25 +112,28 @@ export default function Admin({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-            if (designation == "") {
-                return toast.error("Designation cannot be empty");
-            }
+            // if (designation == "") {
+            //     return toast.error("Designation cannot be empty");
+            // }
             if (userType == "") {
                 return toast.error("User role cannot be empty");
             }
-           
 
-            let data ={
-                        userTypeId: Number(userType),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        // region: Number(region),
-                        serviceArea:Number(serviceArea),
-                    };
-         
+
+            let data = {
+                userTypeId: Number(userType),
+                surname,
+                otherNames,
+                email,
+                phoneNumber,
+                designation,
+                // region: Number(region),
+                serviceArea: Number(serviceArea),
+            };
+
+            console.log(data);
+            
+
 
             const response = await axios.post("/api/user", data);
 
@@ -147,7 +150,7 @@ export default function Admin({ data }: any) {
                 setDesignation("");
                 setUserType("");
                 // setRegion("");
-              
+
                 router.refresh()
                 return toast.success("User added successfully");
 
@@ -181,13 +184,13 @@ export default function Admin({ data }: any) {
             if (userType == "") {
                 return toast.error("User role cannot be empty");
             }
-           
+
             let data = {}
 
 
 
 
-           
+
             const response = await axios.put("/api/user", data);
             if (response.status == 200) {
                 setSurname("");
@@ -349,29 +352,29 @@ export default function Admin({ data }: any) {
                                                 </select>
                                             </div>
                                         </div>
-                                            <div className="col-sm-3  mb-3">
-                                                <label className="col-sm-12 col-form-label">Select service area</label>
+                                        <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area</label>
 
-                                                <div className="col-sm-12">
-                                                    <select
-                                                        className="form-select"
-                                                        aria-label="Default select example"
-                                                        onChange={(e: any) => {
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option >Select area</option>
 
-                                                        }}
-                                                        value={serviceArea}
-                                                    >
-                                                        <option >Select area</option>
-                                                        
-                                                        {data.serviceAreas.response.map((ul: any) => {
-                                                    return (
-                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                    )
-                                                })}
-                                                    </select>
-                                                </div>
-                                            </div> 
-                                      
+                                                    {data.serviceAreas.response.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         {/* {selectedUserLevel == "3" ?
                                     <div className=" mb-3">
                                         <div className="col-sm-12">
@@ -388,8 +391,8 @@ export default function Admin({ data }: any) {
                                             </select>
                                         </div>
                                     </div>:<></>} */}
-                                 
-                                                    {/* <div className="col-sm-3  mb-3">
+
+                                        {/* <div className="col-sm-3  mb-3">
                                                         <label className="col-sm-12 col-form-label">Select region</label>
 
                                                         <div className="col-sm-12">
@@ -413,9 +416,9 @@ export default function Admin({ data }: any) {
                                                             </select>
                                                         </div>
                                                     </div> */}
-                                             
-                                               
-                                      </div>
+
+
+                                    </div>
 
 
                                     <div className=" mb-3">
@@ -566,10 +569,10 @@ export default function Admin({ data }: any) {
                                                                         setUserId(user.id);
                                                                         setServiceArea(user.districtId);
 
-                                                                       // await getDistrictsByRegion(user.regionId)
+                                                                        // await getDistrictsByRegion(user.regionId)
 
 
-                                                                      
+
                                                                     }}
                                                                 >
                                                                     Edit

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { generateCode } from "@/libs/generate-code";
-import { authOptions } from "../auth/[...nextauth]/options";
 import { v4 as uuidv4 } from "uuid";
 
 import bcrypt from "bcryptjs";
@@ -10,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
+import { authOptions } from "../[...nextauth]/options";
 
 const XLSX = require("xlsx");
 export async function POST(request: Request) {
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
     await sendSMS(
       res.phoneNumber,
-      `The temporal password for iCesspool App is ${password}`
+      `The temporal password for ESICApps App is ${password}`
     );
     return NextResponse.json(user);
   } catch (error: any) {

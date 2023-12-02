@@ -131,11 +131,10 @@ export default function Admin({ data }: any) {
                 serviceArea: Number(serviceArea),
             };
 
-            console.log(data);
             
 
 
-            const response = await axios.post("/api/user", data);
+            const response = await axios.post("/api/user/admin", data);
 
             if (response.status == 201) {
                 return toast.error("User's phone number already used.\nChange number and try again");

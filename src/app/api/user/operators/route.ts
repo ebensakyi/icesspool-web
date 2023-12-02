@@ -101,9 +101,6 @@ export async function GET(request: Request) {
 
     if (1) {
       const response = await prisma.user.findMany({
-        where:{
-          userTypeId:2
-        },
         // where:
         //   searchText != ""
         //     ? {
@@ -138,7 +135,7 @@ export async function GET(request: Request) {
         //     : { districtId: Number(districtId), deleted: 0 },
         include: {
           UserType: true,
-         // Scanner:true
+        //  Scanner:true
         },
         orderBy: {
           id: "desc",

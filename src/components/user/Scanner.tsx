@@ -11,6 +11,9 @@ import ReactPaginate from 'react-paginate';
 
 export default function Scanner({ data }: any) {
 
+    console.log(data);
+    
+
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session }: any = useSession()
@@ -260,7 +263,7 @@ export default function Scanner({ data }: any) {
                 pauseOnHover
             /> */}
             <div className="pagetitle">
-                <h1>USERS</h1>
+                <h1>SCANNER USERS</h1>
                 {/* <nav>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

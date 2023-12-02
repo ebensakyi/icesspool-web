@@ -474,7 +474,7 @@ export default function Client({ data }: any) {
                 pauseOnHover
             /> */}
             <div className="pagetitle">
-                <h1>USERS</h1>
+                <h1>CLIENT USERS</h1>
                 {/* <nav>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

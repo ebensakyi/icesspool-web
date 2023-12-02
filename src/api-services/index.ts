@@ -142,3 +142,14 @@ export async function getPages() {
 
 }
 
+
+export async function getAdmins() {
+
+  let response = await fetch(`${SERVER_BASE_URL}/api/user/admin`, { cache: 'no-store', headers: headers() });
+
+  if (!response.ok) {
+      throw new Error('Failed to fetch data')
+  }
+  return await response.json();
+
+}

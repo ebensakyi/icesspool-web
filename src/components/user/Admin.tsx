@@ -118,13 +118,10 @@ export default function Admin({ data }: any) {
             // if (designation == "") {
             //     return toast.error("Designation cannot be empty");
             // }
-            if (userType == "") {
-                return toast.error("User role cannot be empty");
-            }
+          
 
 
             let data = {
-                userTypeId: Number(userType),
                 surname,
                 otherNames,
                 email,
@@ -335,7 +332,7 @@ export default function Admin({ data }: any) {
                                                 <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
                                             </div>
                                         </div> */}
-                                        <div className="col-sm-3 mb-3">
+                                        {/* <div className="col-sm-3 mb-3">
                                             <label className="col-sm-12 col-form-label">Select user type</label>
                                             <div className="col-sm-12">
                                                 <select
@@ -353,7 +350,7 @@ export default function Admin({ data }: any) {
                                                     })}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="col-sm-3  mb-3">
                                             <label className="col-sm-12 col-form-label">Select service area</label>
 

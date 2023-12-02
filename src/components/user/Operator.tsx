@@ -263,7 +263,7 @@ export default function Operator({ data }: any) {
                 pauseOnHover
             /> */}
             <div className="pagetitle">
-                <h1>ADMIN USERS</h1>
+                <h1>OPERATORS</h1>
                 {/* <nav>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

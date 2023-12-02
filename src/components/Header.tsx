@@ -386,6 +386,12 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link href="/user/operator">
+                                        <i className="bi bi-circle" />
+                                        <span> Operators</span>
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="/user/client">
                                         <i className="bi bi-circle" />
                                         <span> Client</span>

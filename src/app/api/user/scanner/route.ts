@@ -10,6 +10,7 @@ import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import Scanner from '../../../../components/user/Scanner';
 
 const XLSX = require("xlsx");
 export async function POST(request: Request) {
@@ -134,6 +135,7 @@ export async function GET(request: Request) {
         //     : { districtId: Number(districtId), deleted: 0 },
         include: {
           UserType: true,
+          Scanner:true
         },
         orderBy: {
           id: "desc",

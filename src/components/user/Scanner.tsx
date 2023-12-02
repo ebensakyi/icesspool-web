@@ -15,7 +15,6 @@ export default function Scanner({ data }: any) {
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    console.log(data);
     
 
 
@@ -33,6 +32,7 @@ export default function Scanner({ data }: any) {
     const [userType, setUserType] = useState("");
     const [userId, setUserId] = useState();
     const [serviceArea, setServiceArea] = useState("");
+    const [service, setService] = useState("");
 
     const [surname, setSurname] = useState("");
     const [otherNames, setOtherNames] = useState("");
@@ -115,16 +115,10 @@ export default function Scanner({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-            // if (designation == "") {
-            //     return toast.error("Designation cannot be empty");
-            // }
-            if (userType == "") {
-                return toast.error("User role cannot be empty");
-            }
+          
 
 
             let data = {
-                userTypeId: Number(userType),
                 surname,
                 otherNames,
                 email,
@@ -335,27 +329,30 @@ export default function Scanner({ data }: any) {
                                                 <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
                                             </div>
                                         </div> */}
-                                        <div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select user type</label>
+                                       <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service</label>
+
                                             <div className="col-sm-12">
                                                 <select
-                                                    onChange={(e: any) => setUserType(e.target.value)}
                                                     className="form-select"
                                                     aria-label="Default select example"
-                                                    value={userType}
+                                                    onChange={(e: any) => {
+                                                        setService(e.target.value)
+                                                    }}
+                                                    value={service}
                                                 >
+                                                    <option >Select service</option>
 
-                                                    <option >Select user type</option>
-                                                    {data.userTypes.response.map((userType: any) => {
+                                                    {data?.services?.response?.map((ul: any) => {
                                                         return (
-                                                            <option key={userType.id} value={userType.id}>{userType.name}</option>
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
                                                         )
                                                     })}
                                                 </select>
                                             </div>
                                         </div>
                                         <div className="col-sm-3  mb-3">
-                                            <label className="col-sm-12 col-form-label">Select service area</label>
+                                            <label className="col-sm-12 col-form-label">Select service point</label>
 
                                             <div className="col-sm-12">
                                                 <select
@@ -366,9 +363,9 @@ export default function Scanner({ data }: any) {
                                                     }}
                                                     value={serviceArea}
                                                 >
-                                                    <option >Select area</option>
+                                                    <option >Select service point</option>
 
-                                                    {data.serviceAreas.response.map((ul: any) => {
+                                                    {data?.servicePoints?.response?.map((ul: any) => {
                                                         return (
                                                             <option key={ul.id} value={ul.id}>{ul.name}</option>
                                                         )
@@ -515,7 +512,7 @@ export default function Scanner({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.users?.response.map((user: any) => (
+                                        {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td>{user?.otherNames} {user?.surname}</td>
                                                 <td>{user?.phoneNumber}</td>

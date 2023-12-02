@@ -494,19 +494,20 @@ model Status {
 }
 
 model ServicePoint {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  placeId   String?  @db.VarChar(255)
-  address   String?  @db.VarChar(255)
-  location  String?  @db.VarChar(255)
-  latitude  Decimal? @db.Decimal(10, 6)
-  longitude Decimal? @db.Decimal(10, 6)
-  status    Int?     @default(1)
-  deleted   Int?     @default(0)
-  Service   Service  @relation(fields: [serviceId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  placeId   String?   @db.VarChar(255)
+  address   String?   @db.VarChar(255)
+  location  String?   @db.VarChar(255)
+  latitude  Decimal?  @db.Decimal(10, 6)
+  longitude Decimal?  @db.Decimal(10, 6)
+  status    Int?      @default(1)
+  deleted   Int?      @default(0)
+  Service   Service   @relation(fields: [serviceId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   serviceId Int
+  Scanner   Scanner[]
 }
 
 model Transaction {
@@ -560,7 +561,6 @@ model User {
   password        String        @db.VarChar(255)
   imagePath       String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)
-  // userTypeId      Int
   activated       Int?          @default(0)
   deleted         Int?          @default(0)
   createdAt       DateTime      @default(now())
@@ -570,10 +570,15 @@ model User {
   // operator Transaction[] @relation("operator", fields: [operatorId], references: [id])
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
   // UserType        UserType?     @relation(fields: [userTypeId], references: [id])
-  userTypeId      Int?
+  userTypeId      Int
 
   // UserType UserType @relation(fields: [userTypeId], references: [id])
-  UserType UserType? @relation(fields: [userTypeId], references: [id])
+  UserType UserType @relation(fields: [userTypeId], references: [id])
+  Scanner  Scanner? @relation(fields: [scannerId], references: [id])
+  Vehicle  Vehicle? @relation(fields: [vehicleId], references: [id])
+
+  scannerId Int?
+  vehicleId Int?
 }
 
 // model UserType {
@@ -601,6 +606,7 @@ model Vehicle {
   updatedAt             DateTime            @updatedAt
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
+  User                  User[]
 }
 
 model Withdrawal {
@@ -614,4 +620,14 @@ model Withdrawal {
   deleted          Int?      @default(0)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+}
+
+model Scanner {
+  id             Int          @id @default(autoincrement())
+  ServicePoint   ServicePoint @relation(fields: [servicePointId], references: [id])
+  deleted        Int?         @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  servicePointId Int
+  User           User[]
 }

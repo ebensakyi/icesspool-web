@@ -115,7 +115,7 @@ export default function Header() {
                     </nav>
                 </header> : <></>}
             {session?.user ?
-                <aside id="sidebar" className="sidebar"style={{backgroundColor:"#e3f2fd"}}>
+                <aside id="sidebar" className="sidebar">
                     <ul className="sidebar-nav" id="sidebar-nav">
                         <li className="nav-heading">Main Menu</li>
 

@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     // }
 
     const data = {
-      userTypeId: res.userTypeId,
+      userTypeId: 1,
       surname: res.surname,
       otherNames: res.otherNames,
       email: res.email,

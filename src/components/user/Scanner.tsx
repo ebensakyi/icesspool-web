@@ -10,13 +10,15 @@ import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
 
 export default function Scanner({ data }: any) {
+
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    const loggedInUserRegion = session?.user?.regionId;
-    const loggedInUserDistrict = session?.user?.districtId;
-    const loggedInUserLevel = session?.user?.userLevelId
+    console.log(data);
+    
+
+
 
     const pathname = usePathname()
 
@@ -28,44 +30,27 @@ export default function Scanner({ data }: any) {
     const page = searchParams.get('page');
 
 
-    const [userRole, setUserRole] = useState("");
+    const [userType, setUserType] = useState("");
     const [userId, setUserId] = useState();
-    const [selectedUserLevel, setSelectedUserLevel] = useState("");
+    const [serviceArea, setServiceArea] = useState("");
 
     const [surname, setSurname] = useState("");
     const [otherNames, setOtherNames] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
-    const [selectedRegion, setSelectedRegion] = useState("");
-    const [selectedDistrict, setSelectedDistrict] = useState("");
+    // const [region, setRegion] = useState("");
 
-    const [districts, setDistricts] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
 
-    const [electoralArea, setElectoralArea] = useState();
-    const [showRegion, setShowRegion] = useState(false);
-    const [showDistrict, setShowDistrict] = useState(false);
+
     const [showOtp, setShowOtp] = useState(false);
 
     // const [searchText, setSearchText] = useState();
 
 
 
-    const getDistrictsByRegion = async (regionId: number) => {
-        try {
 
-
-            const response = await axios.get(
-                `/api/primary-data/district?regionId= ${regionId} &get_all=1`
-            );
-
-
-            setDistricts(response.data.response);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     // const handleExportAll = async () => {
     //     try {
@@ -130,114 +115,29 @@ export default function Scanner({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-            if (designation == "") {
-                return toast.error("Designation cannot be empty");
-            }
-            if (userRole == "") {
+            // if (designation == "") {
+            //     return toast.error("Designation cannot be empty");
+            // }
+            if (userType == "") {
                 return toast.error("User role cannot be empty");
             }
-            if (selectedUserLevel == "2") {
-                // if (selectedRegion == null || selectedRegion == "") {
-                //     return toast.error("Region cannot be empty");
-                // }
-            }
-            if (selectedUserLevel == "3") {
-
-                if (selectedDistrict == null || selectedDistrict == "") {
-                    return toast.error("District cannot be empty");
-                }
-            }
-
-            let data = {}
-            if (loggedInUserLevel == 1) {
-                if (selectedUserLevel == "1") {
-                    data = {
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: null,
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "2") {
-                    data = {
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(selectedRegion),
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "3") {
-
-                    data = {
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: null,
-                        district: Number(selectedDistrict),
-                    };
-                }
-            }
-
-            if (loggedInUserLevel == 2) {
-                if (selectedUserLevel == "2") {
-                    data = {
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(loggedInUserRegion),
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "3") {
-                    data = {
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(loggedInUserRegion),
-                        district: Number(selectedDistrict),
-                    };
-                }
-            }
-
-            if (loggedInUserLevel == 3) {
-                data = {
-                    userRoleId: Number(userRole),
-                    userLevelId: Number(selectedUserLevel),
-                    surname,
-                    otherNames,
-                    email,
-                    phoneNumber,
-                    designation,
-                    region: loggedInUserRegion,
-                    district: loggedInUserDistrict,
-                };
-            }
 
 
+            let data = {
+                userTypeId: Number(userType),
+                surname,
+                otherNames,
+                email,
+                phoneNumber,
+                designation,
+                // region: Number(region),
+                serviceArea: Number(serviceArea),
+            };
 
-            const response = await axios.post("/api/user", data);
+            
+
+
+            const response = await axios.post("/api/user/admin", data);
 
             if (response.status == 201) {
                 return toast.error("User's phone number already used.\nChange number and try again");
@@ -250,11 +150,9 @@ export default function Scanner({ data }: any) {
                 setEmail("");
                 setPhoneNumber("");
                 setDesignation("");
-                setUserRole("");
-                setSelectedRegion("");
-                setSelectedDistrict("");
+                setUserType("");
+                // setRegion("");
 
-                setSelectedUserLevel("");
                 router.refresh()
                 return toast.success("User added successfully");
 
@@ -285,132 +183,26 @@ export default function Scanner({ data }: any) {
             if (designation == "") {
                 return toast.error("Designation cannot be empty");
             }
-            if (userRole == "") {
+            if (userType == "") {
                 return toast.error("User role cannot be empty");
             }
-            if (selectedUserLevel == "2") {
-                if (selectedRegion == null || selectedRegion == "") {
-                    return toast.error("Region cannot be empty");
-                }
-            }
-            if (selectedUserLevel == "3") {
 
-                if (selectedDistrict == null || selectedDistrict == "") {
-                    return toast.error("District cannot be empty");
-                }
-            }
             let data = {}
 
 
 
-            if (loggedInUserLevel == 1) {
-                if (selectedUserLevel == "1") {
-                    data = {
-                        userId: Number(userId),
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: null,
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "2") {
-                    data = {
-                        userId: Number(userId),
 
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(selectedRegion),
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "3") {
 
-                    data = {
-                        userId: Number(userId),
-
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: null,
-                        district: Number(selectedDistrict),
-                    };
-                }
-            }
-
-            if (loggedInUserLevel == 2) {
-                if (selectedUserLevel == "2") {
-                    data = {
-                        userId: Number(userId),
-
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(loggedInUserRegion),
-                        district: null,
-                    };
-                }
-                if (selectedUserLevel == "3") {
-                    data = {
-                        userId: Number(userId),
-
-                        userRoleId: Number(userRole),
-                        userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
-                        email,
-                        phoneNumber,
-                        designation,
-                        region: Number(loggedInUserRegion),
-                        district: Number(selectedDistrict),
-                    };
-                }
-            }
-
-            if (loggedInUserLevel == 3) {
-                data = {
-                    userId: Number(userId),
-
-                    userRoleId: Number(userRole),
-                    userLevelId: Number(selectedUserLevel),
-                    surname,
-                    otherNames,
-                    email,
-                    phoneNumber,
-                    designation,
-                    region: loggedInUserRegion,
-                    district: loggedInUserDistrict,
-                };
-            }
             const response = await axios.put("/api/user", data);
             if (response.status == 200) {
                 setSurname("");
                 setOtherNames("");
                 setEmail("");
                 setPhoneNumber("");
-                setDesignation("");
-                setUserRole("");
-                setSelectedRegion("");
-                setSelectedDistrict("");
+                setServiceArea("");
+                setUserType("");
+                // setRegion("");
                 setIsEditing(false);
-                setSelectedUserLevel("");
 
                 router.refresh()
                 return toast.success("User updated successfully");
@@ -535,120 +327,56 @@ export default function Scanner({ data }: any) {
                                     </div>
 
                                     <div className="row">
-                                        <div className="col-sm-3  mb-3">
+                                        {/* <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Designation/Role
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select role</label>
+                                            <label className="col-sm-12 col-form-label">Select user type</label>
                                             <div className="col-sm-12">
                                                 <select
-                                                    onChange={(e: any) => setUserRole(e.target.value)}
+                                                    onChange={(e: any) => setUserType(e.target.value)}
                                                     className="form-select"
                                                     aria-label="Default select example"
-                                                    value={userRole}
+                                                    value={userType}
                                                 >
 
                                                     <option >Select user type</option>
-                                                    {data.userTypes.map((role: any) => {
+                                                    {data.userTypes.response.map((userType: any) => {
                                                         return (
-                                                            <option key={role.id} value={role.id}>{role.name}</option>
+                                                            <option key={userType.id} value={userType.id}>{userType.name}</option>
                                                         )
                                                     })}
                                                 </select>
                                             </div>
-                                        </div>  {loggedInUserLevel != "3" ?
-                                            <div className="col-sm-3  mb-3">
-                                                <label className="col-sm-12 col-form-label">Select user level</label>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area</label>
 
-                                                <div className="col-sm-12">
-                                                    <select
-                                                        className="form-select"
-                                                        aria-label="Default select example"
-                                                        onChange={(e: any) => {
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option >Select area</option>
 
+                                                    {data.serviceAreas.response.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                                            setSelectedUserLevel(e.target.value);
-                                                            setSelectedRegion("");
-                                                            setSelectedDistrict("");
-                                                            if (selectedUserLevel == "1") {
-                                                                setSelectedRegion("");
-                                                                setSelectedDistrict("");
-                                                            }
-                                                            // if (selectedUserLevel == "2") {
-                                                            //     setDistrict("");
-                                                            // }
-
-
-                                                            if (selectedUserLevel == "2") {
-                                                                //console.log("selectedUserLevel...", selectedUserLevel);
-
-                                                                // getDistrictsByRegion(loggedInUserRegion);
-
-                                                                setSelectedRegion("");
-                                                            }
-
-                                                            if (selectedUserLevel == "3") {
-                                                                console.log("selectedUserLevel...", selectedUserLevel);
-
-                                                                // getDistrictsByRegion(loggedInUserRegion);
-
-                                                                setSelectedRegion("");
-                                                            }
-
-                                                        }}
-                                                        value={selectedUserLevel}
-                                                    >
-                                                        <option >Select user level</option>
-                                                        <option hidden={loggedInUserLevel != 1} value="1">
-                                                            National
-                                                        </option>
-                                                        <option hidden={loggedInUserLevel != 1 && loggedInUserLevel != 2} value="2">
-                                                            Region
-                                                        </option>
-                                                        <option
-                                                            hidden={loggedInUserLevel != 1 && loggedInUserLevel != 2}
-                                                            value="3"
-                                                        >
-                                                            District
-                                                        </option>
-                                                        {/* {data.userLevels.map((ul: any) => {
-                                                    return (
-                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                    )
-                                                })} */}
-                                                    </select>
-                                                </div>
-                                            </div> : <></>}
-                                        {(selectedUserLevel == "2" && loggedInUserLevel == "1") ?
-                                            <div className="col-sm-3 mb-3">
-                                                <label className="col-sm-12 col-form-label">Select region</label>
-
-                                                <div className="col-sm-12">
-                                                    <select
-                                                        className="form-select"
-                                                        aria-label="Default select example"
-                                                        onChange={async (e: any) => {
-                                                            //setFilterValue(e.target.value);
-                                                            setSelectedRegion(e.target.value);
-
-                                                            await getDistrictsByRegion(e.target.value);
-                                                        }}
-                                                        value={selectedRegion}
-                                                    >
-                                                        <option >Select region</option>
-                                                        {data.regions.map((rg: any) => {
-                                                            return (
-                                                                <option key={rg.id} value={rg.id}>{rg.name}</option>
-                                                            )
-                                                        })}
-                                                    </select>
-                                                </div>
-                                            </div> : <></>}
                                         {/* {selectedUserLevel == "3" ?
                                     <div className=" mb-3">
                                         <div className="col-sm-12">
@@ -665,10 +393,8 @@ export default function Scanner({ data }: any) {
                                             </select>
                                         </div>
                                     </div>:<></>} */}
-                                        {selectedUserLevel == "3" ? (
-                                            <>
-                                                {loggedInUserLevel == "1" ? (
-                                                    <div className="col-sm-3  mb-3">
+
+                                        {/* <div className="col-sm-3  mb-3">
                                                         <label className="col-sm-12 col-form-label">Select region</label>
 
                                                         <div className="col-sm-12">
@@ -677,11 +403,10 @@ export default function Scanner({ data }: any) {
                                                                 aria-label="Default select example"
                                                                 onChange={async (e: any) => {
                                                                     //setFilterValue(e.target.value);
-                                                                    setSelectedRegion(e.target.value);
+                                                                    setRegion(e.target.value);
 
-                                                                    await getDistrictsByRegion(e.target.value);
                                                                 }}
-                                                                value={selectedRegion}
+                                                                value={region}
                                                             >
                                                                 {" "}
                                                                 <option >Select region </option>
@@ -692,35 +417,10 @@ export default function Scanner({ data }: any) {
                                                                 ))}
                                                             </select>
                                                         </div>
-                                                    </div>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                <div className="col-sm-3  mb-3">
-                                                    <label className="col-sm-12 col-form-label">Select district</label>
+                                                    </div> */}
 
-                                                    <div className="col-sm-12">
-                                                        <select
-                                                            className="form-control"
-                                                            aria-label="Default select example"
-                                                            onChange={(e: any) => {
-                                                                setSelectedDistrict(e.target.value);
-                                                            }}
-                                                            value={selectedDistrict}
-                                                        >
-                                                            <option >Select district </option>
-                                                            {districts?.map((data: any) => (
-                                                                <option key={data.id} value={data.id}>
-                                                                    {data.name}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <></>
-                                        )}</div>
+
+                                    </div>
 
 
                                     <div className=" mb-3">
@@ -739,10 +439,8 @@ export default function Scanner({ data }: any) {
                                                             setEmail("");
                                                             setPhoneNumber("");
                                                             setDesignation("");
-                                                            setUserRole("");
-                                                            setSelectedUserLevel("");
-                                                            setSelectedRegion("");
-                                                            setSelectedDistrict("");
+                                                            setUserType("");
+                                                            setServiceArea("");
                                                         }}
                                                     >
                                                         Cancel
@@ -805,9 +503,9 @@ export default function Scanner({ data }: any) {
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">E-mail</th>
-                                            <th scope="col">Level</th>
+                                            {/* <th scope="col">Level</th>
                                             <th scope="col">Region</th>
-                                            <th scope="col">District</th>
+                                            <th scope="col">District</th> */}
                                             <th scope="col">OTP</th>
 
                                             <th scope="col">Status</th>
@@ -817,14 +515,14 @@ export default function Scanner({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.users.response.map((user: any) => (
+                                        {data?.users?.response.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td>{user?.otherNames} {user?.surname}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
-                                                <td>{user?.UserLevel?.name}</td>
+                                                {/* <td>{user?.UserLevel?.name}</td>
                                                 <td>{user?.Region?.name}</td>
-                                                <td>{user?.District?.name}</td>
+                                                <td>{user?.District?.name}</td> */}
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
@@ -858,7 +556,7 @@ export default function Scanner({ data }: any) {
 
                                                                 <button
                                                                     className="dropdown-item btn btn-sm "
-                                                                    onClick={async(e) =>  {
+                                                                    onClick={async (e) => {
                                                                         e.preventDefault();
                                                                         setIsEditing(true);
 
@@ -869,21 +567,14 @@ export default function Scanner({ data }: any) {
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
                                                                         setDesignation(user.designation);
-                                                                        setUserRole(user.userRoleId);
-                                                                        setSelectedUserLevel(user.userLevelId);
+                                                                        setUserType(user.userTypeId);
                                                                         setUserId(user.id);
-                                                                        setSelectedRegion(user.regionId);
-                                                                        setSelectedDistrict(user.districtId);
+                                                                        setServiceArea(user.districtId);
 
-                                                                     await   getDistrictsByRegion(user.regionId)
+                                                                        // await getDistrictsByRegion(user.regionId)
 
 
-                                                                        // let phoneNumber = user.phoneNumber;
-                                                                        // const response = await axios.put(
-                                                                        //     `/api/user`,
-                                                                        //     { phoneNumber }
-                                                                        // );
-                                                                        // router.refresh()
+
                                                                     }}
                                                                 >
                                                                     Edit
@@ -979,7 +670,7 @@ export default function Scanner({ data }: any) {
 
                                     </tbody>
                                 </table>
-                                <ReactPaginate
+                                {/* <ReactPaginate
                                     marginPagesDisplayed={2}
                                     pageRangeDisplayed={5}
                                     previousLabel={"Previous"}
@@ -998,7 +689,7 @@ export default function Scanner({ data }: any) {
                                     nextClassName={"page-item"}
                                     nextLinkClassName={"page-link"}
                                     activeClassName={"active"}
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,6 @@ import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import Scanner from "../../../../components/user/Scanner";
 
 const XLSX = require("xlsx");
 export async function POST(request: Request) {
@@ -62,7 +61,7 @@ export async function POST(request: Request) {
 
     await prisma.scannerUser.create({
       data: {
-        servicePointId: Number(res.servicePointId),
+        servicePointId: Number(res.servicePoint),
         userId: user.Id,
       },
     });

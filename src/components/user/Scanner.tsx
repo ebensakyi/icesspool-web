@@ -128,10 +128,11 @@ export default function Scanner({ data }: any) {
                 phoneNumber,
                 designation,
                 // region: Number(region),
-                serviceArea: Number(serviceArea),
+                // serviceArea: Number(serviceArea),
                 servicePoint:  Number(servicePoint),
             };
 
+            console.log(data);
             
 
 
@@ -365,7 +366,7 @@ export default function Scanner({ data }: any) {
                                                     onChange={(e: any) => {
                                                         setServicePoint(e.target.value)
                                                     }}
-                                                    value={serviceArea}
+                                                    value={servicePoint}
                                                 >
                                                     <option >Select service point</option>
 

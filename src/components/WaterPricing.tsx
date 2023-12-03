@@ -72,7 +72,7 @@ export const WaterPricing = ({ data }: any) => {
                 hoseDepreciation: Number(hoseDepreciation),
                 status: Number(status),
             };
-            const response = await axios.post("/api/pricing/desludging", data);
+            const response = await axios.post("/api/pricing/emptying", data);
             toast.success(response.data.message);
             setId("")
             // setRepairCost("")
@@ -123,7 +123,7 @@ export const WaterPricing = ({ data }: any) => {
             };
 
 
-            response = await axios.put("/api/pricing/desludging", data);
+            response = await axios.put("/api/pricing/emptying", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -505,7 +505,7 @@ export const WaterPricing = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.desludgingPricings?.response.map((data: any) => {
+                                        {data?.emptyingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Region?.name}</td>

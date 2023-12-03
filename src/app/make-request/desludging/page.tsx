@@ -1,5 +1,5 @@
 import { getServicePoints, getServices } from '@/src/api-services';
-import { MakeDesludgingRequest } from '@/src/components/MakeDesludgingRequest';
+import { MakeEmptyingRequest } from '@/src/components/MakeEmptyingRequest';
 
 
 
@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <MakeDesludgingRequest data={data} />
+    return <MakeEmptyingRequest data={data} />
 
 
 }

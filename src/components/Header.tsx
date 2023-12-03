@@ -166,9 +166,9 @@ export default function Header() {
                                 data-bs-parent="#mq-nav"
                             >
                                 <li>
-                                    <Link href="/make-request/desludging">
+                                    <Link href="/make-request/emptying">
                                         <i className="bi bi-circle" />
-                                        <span>Desludging toilet </span>
+                                        <span>Emptying toilet </span>
                                     </Link>
                                 </li>
                                 <li>
@@ -215,9 +215,9 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/offers/desludging">
+                                    <Link href="/offers/emptying">
                                         <i className="bi bi-circle" />
-                                        <span>Desludging</span>
+                                        <span>Emptying</span>
                                     </Link>
                                 </li>
                                 <li>
@@ -329,7 +329,7 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/pricing/desludging">
+                                    <Link href="/pricing/emptying">
                                         <i className="bi bi-circle" />
                                         <span>Desluging </span>
                                     </Link>

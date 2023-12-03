@@ -1,6 +1,6 @@
 export const services = [
     {
-      name: "Desludging",
+      name: "Emptying",
     },
     {
       name: "Water Request",

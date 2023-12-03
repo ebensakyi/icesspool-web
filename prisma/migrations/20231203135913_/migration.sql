@@ -235,7 +235,7 @@ CREATE TABLE `Payment` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `DesludgingServicePricing` (
+CREATE TABLE `EmptyingServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `fuelDistanceConst` DECIMAL(10, 2) NOT NULL,
     `insurance` DECIMAL(10, 2) NOT NULL,
@@ -440,19 +440,6 @@ CREATE TABLE `RatingBreakdown` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ScannerUser` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userId` INTEGER NULL,
-    `tipoffPointId` INTEGER NULL,
-    `activated` INTEGER NULL DEFAULT 0,
-    `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Status` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `state` VARCHAR(255) NOT NULL,
@@ -540,8 +527,6 @@ CREATE TABLE `User` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userTypeId` INTEGER NOT NULL,
-    `scannerId` INTEGER NULL,
-    `vehicleId` INTEGER NULL,
 
     UNIQUE INDEX `User_phoneNumber_key`(`phoneNumber`),
     PRIMARY KEY (`id`)
@@ -550,7 +535,7 @@ CREATE TABLE `User` (
 -- CreateTable
 CREATE TABLE `Vehicle` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userId` INTEGER NULL,
+    `userId` INTEGER NOT NULL,
     `vehicleNumber` VARCHAR(255) NULL,
     `owner` VARCHAR(255) NULL,
     `ownerNumber` VARCHAR(255) NULL,
@@ -584,12 +569,13 @@ CREATE TABLE `Withdrawal` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Scanner` (
+CREATE TABLE `ScannerUser` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `servicePointId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -616,16 +602,16 @@ ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceId_fkey` FORE
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `EmptyingServicePricing` ADD CONSTRAINT `EmptyingServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `EmptyingServicePricing` ADD CONSTRAINT `EmptyingServicePricing_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `EmptyingServicePricing` ADD CONSTRAINT `EmptyingServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `DesludgingServicePricing` ADD CONSTRAINT `DesludgingServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `EmptyingServicePricing` ADD CONSTRAINT `EmptyingServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -676,13 +662,13 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY
 ALTER TABLE `User` ADD CONSTRAINT `User_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `User` ADD CONSTRAINT `User_scannerId_fkey` FOREIGN KEY (`scannerId`) REFERENCES `Scanner`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `User` ADD CONSTRAINT `User_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Scanner` ADD CONSTRAINT `Scanner_servicePointId_fkey` FOREIGN KEY (`servicePointId`) REFERENCES `ServicePoint`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ScannerUser` ADD CONSTRAINT `ScannerUser_servicePointId_fkey` FOREIGN KEY (`servicePointId`) REFERENCES `ServicePoint`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ScannerUser` ADD CONSTRAINT `ScannerUser_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

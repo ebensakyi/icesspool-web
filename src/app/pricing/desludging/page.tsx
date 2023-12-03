@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
-import { getRegions, getDesludgingPricing, getServices, getTruckClasses } from '@/src/api-services';
-import { DesludgingPricing } from '@/src/components/DesludgingPricing';
+import { getRegions, getEmptyingPricing, getServices, getTruckClasses } from '@/src/api-services';
+import { EmptyingPricing } from '@/src/components/EmptyingPricing';
 
 
 
@@ -10,17 +10,17 @@ import { DesludgingPricing } from '@/src/components/DesludgingPricing';
 export default async function Page({ searchParams }: any) {
     const truckClassifications = await getTruckClasses(searchParams, 1)
     const regions = await getRegions(searchParams)
-    const desludgingPricings = await getDesludgingPricing(searchParams)
+    const emptyingPricings = await getEmptyingPricing(searchParams)
 
     
 
 
 
-    let data = { truckClassifications, regions,desludgingPricings }
+    let data = { truckClassifications, regions,emptyingPricings }
 
 
 
-    return <DesludgingPricing data={data} />
+    return <EmptyingPricing data={data} />
 
 
 }

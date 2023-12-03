@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
     
 
-    const response = await prisma.desludgingServicePricing.create({ data });
+    const response = await prisma.emptyingServicePricing.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {
@@ -82,7 +82,7 @@ export async function PUT(request: Request) {
       };
 
       
-    await prisma.desludgingServicePricing.update({
+    await prisma.emptyingServicePricing.update({
       where: {
         id: Number(res?.id),
       },
@@ -107,7 +107,7 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.desludgingServicePricing.findMany({
+    const response = await prisma.emptyingServicePricing.findMany({
       where: { deleted: 0 },
       include:{
         Region:true,

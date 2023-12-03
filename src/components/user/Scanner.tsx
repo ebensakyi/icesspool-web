@@ -134,7 +134,7 @@ export default function Scanner({ data }: any) {
             
 
 
-            const response = await axios.post("/api/user/admin", data);
+            const response = await axios.post("/api/user/scanner", data);
 
             if (response.status == 201) {
                 return toast.error("User's phone number already used.\nChange number and try again");
@@ -519,7 +519,7 @@ export default function Scanner({ data }: any) {
                                                 <td>{user?.otherNames} {user?.surname}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
-                                                <td>{user?.ServiceArea?.name}</td>
+                                                <td>{user?.ScannerUser?.ServiceArea?.name}</td>
                                                 <td>{user?.ServicePoint?.name}</td>
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {

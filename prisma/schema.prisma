@@ -28,7 +28,7 @@ model TruckClassification {
   updatedAt                 DateTime                    @updatedAt
   Service                   Service                     @relation(fields: [serviceId], references: [id])
   Vehicle                   Vehicle[]
-  DesludgingServicePricing  DesludgingServicePricing[]
+  EmptyingServicePricing  EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
@@ -45,7 +45,7 @@ model Service {
   ServicePoint        ServicePoint[]
   TruckClassification TruckClassification[]
 
-  DesludgingServicePricing  DesludgingServicePricing[]
+  EmptyingServicePricing  EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServicesInArea            ServicesInArea[]
@@ -71,7 +71,7 @@ model Balance {
 //   createdAt                 DateTime                    @default(now())
 //   updatedAt                 DateTime                    @updatedAt
 //   PricingModel              PricingModel[]
-//   DesludgingServicePricing  DesludgingServicePricing[]
+//   EmptyingServicePricing  EmptyingServicePricing[]
 //   WaterServicePricing       WaterServicePricing[]
 //   BiodigesterServicePricing BiodigesterServicePricing[]
 // }
@@ -109,7 +109,7 @@ model Region {
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
-  DesludgingServicePricing  DesludgingServicePricing[]
+  EmptyingServicePricing  EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServiceArea               ServiceArea[]
@@ -138,7 +138,7 @@ model ServiceArea {
   TruckClassification       TruckClassification[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  DesludgingServicePricing  DesludgingServicePricing[]
+  EmptyingServicePricing  EmptyingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
 }
@@ -277,7 +277,7 @@ model Payment {
 //   serviceId Int
 // }
 
-model DesludgingServicePricing {
+model EmptyingServicePricing {
   id Int @id @default(autoincrement())
 
   fuelDistanceConst     Decimal             @db.Decimal(10, 2)
@@ -573,12 +573,10 @@ model User {
   userTypeId      Int
 
   // UserType UserType @relation(fields: [userTypeId], references: [id])
-  UserType    UserType     @relation(fields: [userTypeId], references: [id])
-  ScannerUser ScannerUser? @relation(fields: [scannerUserId], references: [id])
-  Vehicle     Vehicle?     @relation(fields: [vehicleId], references: [id])
+  UserType UserType @relation(fields: [userTypeId], references: [id])
 
-  scannerUserId Int?
-  vehicleId     Int?
+  ScannerUser ScannerUser[]
+  Vehicle     Vehicle[]
 }
 
 // model UserType {
@@ -592,7 +590,7 @@ model User {
 
 model Vehicle {
   id                    Int                 @id @default(autoincrement())
-  userId                Int?
+  userId                Int
   vehicleNumber         String?             @db.VarChar(255)
   owner                 String?             @db.VarChar(255)
   ownerNumber           String?             @db.VarChar(255)
@@ -606,7 +604,7 @@ model Vehicle {
   updatedAt             DateTime            @updatedAt
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
-  User                  User[]
+  User                  User                @relation(fields: [userId], references: [id])
 }
 
 model Withdrawal {
@@ -629,5 +627,6 @@ model ScannerUser {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   servicePointId Int
-  User           User[]
+  User           User         @relation(fields: [userId], references: [id])
+  userId         Int
 }

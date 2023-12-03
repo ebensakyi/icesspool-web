@@ -38,7 +38,7 @@ import { isServiceAvailableInUserLocation } from "@/libs/is-in-city";
 
 //     };
 
-//     const response = await prisma.desludgingServicePricing.create({ data });
+//     const response = await prisma.emptyingServicePricing.create({ data });
 
 //     return NextResponse.json(response);
 //   } catch (error: any) {
@@ -76,7 +76,7 @@ import { isServiceAvailableInUserLocation } from "@/libs/is-in-city";
 
 //       };
 
-//     await prisma.desludgingServicePricing.update({
+//     await prisma.emptyingServicePricing.update({
 //       where: {
 //         id: Number(res?.id),
 //       },
@@ -102,7 +102,7 @@ export async function GET(request: Request) {
 
     let price;
 
-    const pricingModel = await prisma.desludgingServicePricing.findMany({
+    const pricingModel = await prisma.emptyingServicePricing.findMany({
       where: {
         deleted: 0,
         // TruckClassification: {

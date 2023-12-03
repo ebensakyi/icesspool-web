@@ -7,7 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export const MakeDesludgingRequest = ({ data }: any) => {
+export const MakeEmptyingRequest = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
@@ -39,7 +39,7 @@ export const MakeDesludgingRequest = ({ data }: any) => {
 
     const getPricing = async () => {
 
-        const response = await axios.get(`/api/pricing/desludging/calculate?latitude=${customerLat}&longitude=${customerLng}&tripsNumber=${tripsNumber}`);
+        const response = await axios.get(`/api/pricing/emptying/calculate?latitude=${customerLat}&longitude=${customerLng}&tripsNumber=${tripsNumber}`);
 
         setPricing(response.data.price)
 

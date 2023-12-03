@@ -475,15 +475,15 @@ model RatingBreakdown {
   updatedAt        DateTime @updatedAt
 }
 
-model ScannerUser {
-  id            Int      @id @default(autoincrement())
-  userId        Int?
-  tipoffPointId Int?
-  activated     Int?     @default(0)
-  deleted       Int?     @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
+// model ScannerUser {
+//   id            Int      @id @default(autoincrement())
+//   userId        Int?
+//   tipoffPointId Int?
+//   activated     Int?     @default(0)
+//   deleted       Int?     @default(0)
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
 
 model Status {
   id        Int      @id @default(autoincrement())
@@ -494,20 +494,20 @@ model Status {
 }
 
 model ServicePoint {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(255)
-  placeId   String?   @db.VarChar(255)
-  address   String?   @db.VarChar(255)
-  location  String?   @db.VarChar(255)
-  latitude  Decimal?  @db.Decimal(10, 6)
-  longitude Decimal?  @db.Decimal(10, 6)
-  status    Int?      @default(1)
-  deleted   Int?      @default(0)
-  Service   Service   @relation(fields: [serviceId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  serviceId Int
-  Scanner   Scanner[]
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  placeId     String?       @db.VarChar(255)
+  address     String?       @db.VarChar(255)
+  location    String?       @db.VarChar(255)
+  latitude    Decimal?      @db.Decimal(10, 6)
+  longitude   Decimal?      @db.Decimal(10, 6)
+  status      Int?          @default(1)
+  deleted     Int?          @default(0)
+  Service     Service       @relation(fields: [serviceId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  serviceId   Int
+  ScannerUser ScannerUser[]
 }
 
 model Transaction {
@@ -573,12 +573,12 @@ model User {
   userTypeId      Int
 
   // UserType UserType @relation(fields: [userTypeId], references: [id])
-  UserType UserType @relation(fields: [userTypeId], references: [id])
-  Scanner  Scanner? @relation(fields: [scannerId], references: [id])
-  Vehicle  Vehicle? @relation(fields: [vehicleId], references: [id])
+  UserType    UserType     @relation(fields: [userTypeId], references: [id])
+  ScannerUser ScannerUser? @relation(fields: [scannerUserId], references: [id])
+  Vehicle     Vehicle?     @relation(fields: [vehicleId], references: [id])
 
-  scannerId Int?
-  vehicleId Int?
+  scannerUserId Int?
+  vehicleId     Int?
 }
 
 // model UserType {
@@ -622,7 +622,7 @@ model Withdrawal {
   updatedAt        DateTime  @updatedAt
 }
 
-model Scanner {
+model ScannerUser {
   id             Int          @id @default(autoincrement())
   ServicePoint   ServicePoint @relation(fields: [servicePointId], references: [id])
   deleted        Int?         @default(0)

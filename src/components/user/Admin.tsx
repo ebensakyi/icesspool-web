@@ -5,18 +5,22 @@ import { useRef, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
+import { LOGIN_URL } from '@/config';
 
 export default function Admin({ data }: any) {
 
     const searchParams = useSearchParams();
     const router = useRouter();
-    const { data: session }: any = useSession()
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+          redirect(LOGIN_URL);
+        }
+      })
 
-    console.log(data);
-    
 
 
 

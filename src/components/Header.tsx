@@ -1,17 +1,17 @@
 'use client'
 
+import { LOGIN_URL } from '@/config';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link'
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import React, { useState } from 'react'
 
 export default function Header() {
     const pathname = usePathname()
     const [showDrawer, setShowDrawer] = useState(false)
 
-    const { data: session }: any = useSession()
 
-
+    const { data: session } = useSession()
 
 
     return (
@@ -74,10 +74,10 @@ export default function Header() {
                                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                     <li className="dropdown-header">
                                         <h5>  {session?.user?.email}</h5>
-                                        <h6>  {session?.user?.Region?.name}</h6>
-                                        <h6>  {session?.user?.District?.name}</h6>
+                                        {/* <h6>  {session?.user?.Region?.name}</h6>
+                                        <h6>  {session?.user?.District?.name}</h6> */}
 
-                                        <span> {session?.user?.designation}</span>
+                                        {/* <span> {session?.user?.designation}</span> */}
                                     </li>
                                     <li>
                                         <hr className="dropdown-divider" />

@@ -503,9 +503,8 @@ export default function Scanner({ data }: any) {
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">E-mail</th>
-                                            {/* <th scope="col">Level</th>
-                                            <th scope="col">Region</th>
-                                            <th scope="col">District</th> */}
+                                            <th scope="col">Service Area</th>
+                                            <th scope="col">Service Point</th>
                                             <th scope="col">OTP</th>
 
                                             <th scope="col">Status</th>
@@ -520,9 +519,8 @@ export default function Scanner({ data }: any) {
                                                 <td>{user?.otherNames} {user?.surname}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
-                                                {/* <td>{user?.UserLevel?.name}</td>
-                                                <td>{user?.Region?.name}</td>
-                                                <td>{user?.District?.name}</td> */}
+                                                <td>{user?.ServiceArea?.name}</td>
+                                                <td>{user?.ServicePoint?.name}</td>
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)

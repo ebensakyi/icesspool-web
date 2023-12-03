@@ -138,7 +138,8 @@ export async function GET(request: Request) {
         //     : { districtId: Number(districtId), deleted: 0 },
         include: {
           UserType: true,
-         // Scanner:true
+          Scanner:true,
+          
         },
         orderBy: {
           id: "desc",

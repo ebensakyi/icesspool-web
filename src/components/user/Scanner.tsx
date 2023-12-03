@@ -42,7 +42,7 @@ export default function Scanner({ data }: any) {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
-    // const [region, setRegion] = useState("");
+     const [servicePoint, setServicePoint] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -129,6 +129,7 @@ export default function Scanner({ data }: any) {
                 designation,
                 // region: Number(region),
                 serviceArea: Number(serviceArea),
+                servicePoint:  Number(servicePoint),
             };
 
             
@@ -362,7 +363,7 @@ export default function Scanner({ data }: any) {
                                                     className="form-select"
                                                     aria-label="Default select example"
                                                     onChange={(e: any) => {
-                                                        setServiceArea(e.target.value)
+                                                        setServicePoint(e.target.value)
                                                     }}
                                                     value={serviceArea}
                                                 >

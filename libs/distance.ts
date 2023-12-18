@@ -4,8 +4,6 @@ import axios from "axios";
 export const getShortestDistanceBtnUserServicePoint = async (
   userLocation: any
 ) => {
-  console.log("getShortestDistanceBetweenUserServicePoint ", userLocation);
-
   let servicePoints = await prisma.servicePoint.findMany({
     where: {
       serviceId: 1,
@@ -21,50 +19,48 @@ export const getShortestDistanceBtnUserServicePoint = async (
     url: process.env.DISTANCE_MATRIX_API_URL,
     params: {
       destinations: latLngString,
-      origins: "5.5630081,-0.2141458",
+      origins: `${userLocation[0]},${userLocation[1]}`,
       key: process.env.GOOGLE_API_KEY,
     },
   };
 
-//   axios
-//     .request(options)
-//     .then(function (response) {
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
 
-//       let distances:any = [];
-//             response.data.rows.map((d:any) => {
-//               let e = d.elements;
-//               if (e[0].status != "OK") {
-//                 return;
-//               }
-//               e.map((f:any) => {
-//                 distances.push(f.distance.value / 1000);
-//               });
-//             });
-//             console.log(distances);
-//             console.log(Math.min.apply(null, distances));
-            
-    
-//             //return resolve(Math.min.apply(null, distances));
-//     })
-//     .catch(function (error) {
-//       console.error(error);
-//     });
+  //       let distances:any = [];
+  //             response.data.rows.map((d:any) => {
+  //               let e = d.elements;
+  //               if (e[0].status != "OK") {
+  //                 return;
+  //               }
+  //               e.map((f:any) => {
+  //                 distances.push(f.distance.value / 1000);
+  //               });
+  //             });
+  //             console.log(distances);
+  //             console.log(Math.min.apply(null, distances));
+
+  //             //return resolve(Math.min.apply(null, distances));
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
 
   const response = await axios.request(options);
 
-      let distances:any = [];
-            response.data.rows.map((d:any) => {
-              let e = d.elements;
-              if (e[0].status != "OK") {
-                return;
-              }
-              e.map((f:any) => {
-                distances.push(f.distance.value / 1000);
-              });
-            });
-           
-    
-            //return resolve(Math.min.apply(null, distances));  
+  let distances: any = [];
+  response.data.rows.map((d: any) => {
+    let e = d.elements;
+    if (e[0].status != "OK") {
+      return;
+    }
+    e.map((f: any) => {
+      distances.push(f.distance.value / 1000);
+    });
+  });
+
+  //return resolve(Math.min.apply(null, distances));
 
   //   let processedServicePoints = await buildTipOffPoints(servicePoints)
   //   console.log("processedServicePoints<====> ",processedServicePoints);
@@ -108,7 +104,7 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
   //   });
 
-  return  Math.min.apply(null, distances);
+  return Math.min.apply(null, distances);
 };
 
 const convertToString = async (servicePoints: any) => {

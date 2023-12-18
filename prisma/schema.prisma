@@ -28,7 +28,7 @@ model TruckClassification {
   updatedAt                 DateTime                    @updatedAt
   Service                   Service                     @relation(fields: [serviceId], references: [id])
   Vehicle                   Vehicle[]
-  EmptyingServicePricing  EmptyingServicePricing[]
+  EmptyingServicePricing    EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
@@ -45,7 +45,7 @@ model Service {
   ServicePoint        ServicePoint[]
   TruckClassification TruckClassification[]
 
-  EmptyingServicePricing  EmptyingServicePricing[]
+  EmptyingServicePricing    EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServicesInArea            ServicesInArea[]
@@ -109,7 +109,7 @@ model Region {
   deleted                   Int?                        @default(0)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
-  EmptyingServicePricing  EmptyingServicePricing[]
+  EmptyingServicePricing    EmptyingServicePricing[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ServiceArea               ServiceArea[]
@@ -138,7 +138,7 @@ model ServiceArea {
   TruckClassification       TruckClassification[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  EmptyingServicePricing  EmptyingServicePricing[]
+  EmptyingServicePricing    EmptyingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
 }

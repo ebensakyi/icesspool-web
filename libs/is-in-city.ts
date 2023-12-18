@@ -9,7 +9,6 @@ const getCityBoundaries = async () => {
   });
 
   let cityBoundaries = await prepareCityBoundaries(boundaries);
-  console.log(cityBoundaries);
 
   //ACCRA POINT 5.601454,-0.169431
 
@@ -17,6 +16,7 @@ const getCityBoundaries = async () => {
 };
 
 const prepareCityBoundaries = async (data: any) => {
+  
   for (let i = 0; i <= data.length; i++) {
     return [
       [Number(data[i].lat1), Number(data[i].lng1)],

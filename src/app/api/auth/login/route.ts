@@ -22,6 +22,8 @@ export async function POST(request: Request) {
     });
 
     
+    console.log(user);
+    
 
     // const pageAccess = await prisma.pageAccess.findMany({
     //   where: {

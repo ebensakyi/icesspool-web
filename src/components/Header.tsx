@@ -68,7 +68,7 @@ export default function Header() {
                                         className="rounded-circle"
                                     />
                                     <span className="d-none d-md-block dropdown-toggle ps-2">
-                                        {session?.user?.otherNames } {session?.user?.surname}
+                                        {/* {session?.user?.otherNames } {session?.user?.surname} */}
                                     </span>
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -329,7 +329,7 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/pricing/emptying">
+                                    <Link href="/pricing/tanker-emptying">
                                         <i className="bi bi-circle" />
                                         <span>Desluging </span>
                                     </Link>

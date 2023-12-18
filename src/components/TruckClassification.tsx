@@ -18,7 +18,7 @@ export const TruckClassification = ({ data }: any) => {
     const [status, setStatus] = useState("");
     const [tankCapacity, setTankCapacity] = useState("");
     const [name, setName] = useState("");
-
+    const [image, setImage] = useState("");
     const { data: session } = useSession({
         required: true,
         onUnauthenticated() {
@@ -41,6 +41,7 @@ export const TruckClassification = ({ data }: any) => {
 
             let data = {
                 name: name,
+                image:image,
                 status: status,
                 serviceArea: serviceArea,
                 tankCapacity: tankCapacity,
@@ -78,6 +79,7 @@ export const TruckClassification = ({ data }: any) => {
             let data = {
                 id: Number(id),
                 name: name,
+                image:image,
                 status: status,
                 serviceArea: serviceArea,
                 tankCapacity: tankCapacity,

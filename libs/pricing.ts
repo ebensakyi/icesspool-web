@@ -66,6 +66,7 @@ export const calculateDeludgingPrice = async (
     pricing.push({
       id: d.TruckClassification.id,
       name: d.TruckClassification.name,
+      image: d.TruckClassification.image,
       price: cost,
     });
   });

@@ -7,10 +7,8 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { serviceAreas } from '../../prisma/seeds/service_area';
 export const TruckClassification = ({ data }: any) => {
 
-    console.log(data);
 
     const [id, setId] = useState("");
     const [serviceArea, setServiceArea] = useState("");
@@ -154,6 +152,17 @@ export const TruckClassification = ({ data }: any) => {
                                         <input type="number" className="form-control" placeholder='Enter capacity' onChange={(e: any) => {
                                             setTankCapacity(e.target.value);
                                         }} value={tankCapacity} />
+                                    </div>
+                                </div>
+
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                       Image *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="file" className="form-control"  onChange={(e: any) => {
+                                            setImage(e.target.value);
+                                        }} value={image} />
                                     </div>
                                 </div>
 

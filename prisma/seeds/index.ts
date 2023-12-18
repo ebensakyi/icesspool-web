@@ -10,6 +10,7 @@ import { userTypes } from "./user_types";
 import { users } from "./users";
 import { regions } from "./regions";
 import { serviceAreas } from "./service_area";
+import { truckEmptying } from "./truck_emptying_pricing";
 
 async function main() {
 
@@ -45,7 +46,10 @@ async function main() {
       data: users,
     });
 
-  
+    await prisma.emptyingServicePricing.createMany({
+      data: truckEmptying,
+    });
+
 }
 
 main()

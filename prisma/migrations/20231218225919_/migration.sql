@@ -14,6 +14,7 @@ CREATE TABLE `Otp` (
 CREATE TABLE `TruckClassification` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
+    `image` VARCHAR(255) NULL,
     `serviceId` INTEGER NOT NULL,
     `tankCapacity` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     `serviceAreaId` INTEGER NOT NULL,
@@ -249,6 +250,8 @@ CREATE TABLE `EmptyingServicePricing` (
     `toolsCost` DECIMAL(10, 2) NOT NULL,
     `profitPercentage` DECIMAL(10, 2) NOT NULL,
     `pumpDepreciation` DECIMAL(10, 2) NOT NULL,
+    `elevy` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `otherServiceCharges` DECIMAL(10, 2) NOT NULL DEFAULT 0,
     `truckClassificationId` INTEGER NOT NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,

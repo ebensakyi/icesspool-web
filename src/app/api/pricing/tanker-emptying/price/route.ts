@@ -4,7 +4,6 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { calculateDeludgingPrice } from "@/libs/pricing";
-import { isServiceAvailableInUserLocation } from "@/libs/is-in-city";
 // import { authOptions } from "../../auth/[...nextauth]/options";
 
 // export async function POST(request: Request) {
@@ -98,16 +97,16 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let userLatitude = 5.601454; // Number(searchParams.get("latitude"));
     let userLongitude = -0.169431; //Number(searchParams.get("longitude"));
-    let tripsNumber = Number(searchParams.get("userId"));
+    let tripsNumber = Number(searchParams.get("tripsNumber"));
+    let regionId = Number(searchParams.get("regionId"));
 
-    let price;
+    let userLocation = [userLatitude, userLongitude];
+
 
     const pricingModel = await prisma.emptyingServicePricing.findMany({
       where: {
         deleted: 0,
-        // TruckClassification: {
-        //   status: 1,
-        // },
+        regionId:Number(regionId)
       },
       include: {
         Region: true,
@@ -115,33 +114,13 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log("pricingModel=====> ", pricingModel);
 
-    console.log("pricingModel=====> ",pricingModel);
-    
-
-    ////////////////check if icesspool is available at users location
-
-    // const cityCoordinates = [5.736477, -0.104436];
-
-    // Example GPS coordinates
-    // const gpsCoordinatesInsideCity = [5.606564, -0.158467]; // Coordinates inside New York
-    // const gpsCoordinatesOutsideCity = [5.692319, -0.466085]; // Coordinates outside New York
-
-    const userLocation = [Number(userLatitude), Number(userLongitude)];
-
-    let isInWhichServiceArea = await isServiceAvailableInUserLocation(
-      userLocation
+   let price = await calculateDeludgingPrice(
+      pricingModel,
+      userLocation,
+      tripsNumber
     );
-    if (isInWhichServiceArea) {
-      //consider type of service
-      //if is in one of icesspool service area, get pricing using closest service point in service area from user locatoin
-      console.log("The GPS coordinates are within the specified city.");
-
-      price = await calculateDeludgingPrice(pricingModel,userLocation, tripsNumber);
-
-    } else {
-      console.log("The GPS coordinates are outside the specified city.");
-    }
 
     return NextResponse.json({ price });
   } catch (error) {

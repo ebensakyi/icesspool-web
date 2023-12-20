@@ -6,12 +6,15 @@ export const calculateDeludgingPrice = async (
   tripNumber: any
 ) => {
   let distance = await getShortestDistanceBtnUserServicePoint(userLocation);
-        console.log("userLocation-->",userLocation);
+        console.log("distance-->",distance);
 
 
   let pricing: any = [];
 
   pricingModel.map((d: any) => {
+
+    // console.log("d-->",d);
+
     const pumpDepreciation = parseFloat(d.pumpDepreciation);
     const fuelUnitCost = parseFloat(d.unitFuelCost);
     const fuelDistanceConstant = parseFloat(d.fuelDistanceConst);

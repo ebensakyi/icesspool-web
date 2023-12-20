@@ -11,6 +11,7 @@ import { users } from "./users";
 import { regions } from "./regions";
 import { serviceAreas } from "./service_area";
 import { truckEmptying } from "./truck_emptying_pricing";
+import { servicePoints } from "./service_point";
 
 async function main() {
 
@@ -48,6 +49,11 @@ async function main() {
 
     await prisma.emptyingServicePricing.createMany({
       data: truckEmptying,
+    });
+
+
+    await prisma.servicePoint.createMany({
+      data: servicePoints,
     });
 
 }

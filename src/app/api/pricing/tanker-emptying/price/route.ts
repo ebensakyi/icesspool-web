@@ -95,8 +95,8 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
     // 5.601454,-0.169431
     let userId = Number(searchParams.get("userId"));
-    let userLatitude = 5.601454; // Number(searchParams.get("latitude"));
-    let userLongitude = -0.169431; //Number(searchParams.get("longitude"));
+    let userLatitude =  Number(searchParams.get("lat"));
+    let userLongitude = Number(searchParams.get("lng"));
     let tripsNumber = Number(searchParams.get("tripsNumber"));
     let regionId = Number(searchParams.get("regionId"));
 

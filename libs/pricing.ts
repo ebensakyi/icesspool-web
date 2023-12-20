@@ -6,7 +6,7 @@ export const calculateDeludgingPrice = async (
   tripNumber: any
 ) => {
   let distance = await getShortestDistanceBtnUserServicePoint(userLocation);
-        console.log("distance-->",distance);
+        console.log("pricingModel-->",pricingModel);
 
 
   let pricing: any = [];
@@ -54,10 +54,15 @@ export const calculateDeludgingPrice = async (
       
 
     const totalCost = totalCostService  * profitPercentage;
+
+    console.log("totalcost ",totalCost);
+    console.log("tankVolume ",tankVolume);
+
    
 
     const sludgeVolume = tankVolume * workingDays;
 
+    console.log("sludgeVolume ",sludgeVolume);
 
 
     //COST

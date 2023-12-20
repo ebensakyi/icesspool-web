@@ -122,14 +122,14 @@ model ServiceArea {
   name String @unique @db.VarChar(255)
 
   // cityPolygon String @db.VarChar(255)
-  lat1 Decimal @db.Decimal(10, 2)
-  lng1 Decimal @db.Decimal(10, 2)
-  lat2 Decimal @db.Decimal(10, 2)
-  lng2 Decimal @db.Decimal(10, 2)
-  lat3 Decimal @db.Decimal(10, 2)
-  lng3 Decimal @db.Decimal(10, 2)
-  lat4 Decimal @db.Decimal(10, 2)
-  lng4 Decimal @db.Decimal(10, 2)
+  lat1 Decimal @db.Decimal(10, 6)
+  lng1 Decimal @db.Decimal(10, 6)
+  lat2 Decimal @db.Decimal(10, 6)
+  lng2 Decimal @db.Decimal(10, 6)
+  lat3 Decimal @db.Decimal(10, 6)
+  lng3 Decimal @db.Decimal(10, 6)
+  lat4 Decimal @db.Decimal(10, 6)
+  lng4 Decimal @db.Decimal(10, 6)
 
   regionId Int
   status   Int? @default(0)

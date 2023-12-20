@@ -20,21 +20,21 @@ const getServiceAreaBoundaries = async () => {
   });
 
   console.log(boundaries);
-  
+
   const regions = boundaries.map((entry) => {
     const { regionId, lat1, lat2, lat3, lat4, lng1, lng2, lng3, lng4 } = entry;
 
     return {
       regionId,
       points: [
-        { lat: lat1, lng: lng1 },
-        { lat: lat2, lng: lng2 },
-        { lat: lat3, lng: lng3 },
-        { lat: lat4, lng: lng4 },
+        { lat: Number(lat1), lng: Number(lng1) },
+        { lat: Number(lat2), lng: Number(lng2) },
+        { lat: Number(lat3), lng: Number(lng3) },
+        { lat: Number(lat4), lng: Number(lng4) },
       ],
     };
   });
-  console.log("regions ", regions);
+  console.log("regions ", regions[0]);
 
   // let cityBoundaries = await prepareCityBoundaries(boundaries);
 
@@ -71,10 +71,10 @@ export const getUserRegion = async (userPoint: any) => {
     console.log(
       `The point is inside the region with regionId: ${foundRegion.regionId}`
     );
-    //return foundRegion
+    return foundRegion
   } else {
     console.log("The point is not inside any region");
-    // return 0
+     return null
   }
 };
 

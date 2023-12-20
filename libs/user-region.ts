@@ -1,0 +1,103 @@
+import { prisma } from "@/prisma/db";
+
+const getServiceAreaBoundaries = async () => {
+  let boundaries = await prisma.serviceArea.findMany({
+    where: {
+      deleted: 0,
+      status: 1,
+    },
+    select: {
+      regionId: true,
+      lat1: true,
+      lat2: true,
+      lat3: true,
+      lat4: true,
+      lng1: true,
+      lng2: true,
+      lng3: true,
+      lng4: true,
+    },
+  });
+
+  console.log(boundaries);
+  
+  const regions = boundaries.map((entry) => {
+    const { regionId, lat1, lat2, lat3, lat4, lng1, lng2, lng3, lng4 } = entry;
+
+    return {
+      regionId,
+      points: [
+        { lat: lat1, lng: lng1 },
+        { lat: lat2, lng: lng2 },
+        { lat: lat3, lng: lng3 },
+        { lat: lat4, lng: lng4 },
+      ],
+    };
+  });
+  console.log("regions ", regions);
+
+  // let cityBoundaries = await prepareCityBoundaries(boundaries);
+
+  //ACCRA POINT 5.601454,-0.169431
+
+  return regions;
+};
+
+// const prepareCityBoundaries = async (coordinatesData: any) => {
+//   // for (let i = 0; i <= data.length; i++) {
+//   //   return [
+//   //     [Number(data[i].lat1), Number(data[i].lng1)],
+//   //     [Number(data[i].lat2), Number(data[i].lng2)],
+//   //     [Number(data[i].lat3), Number(data[i].lng3)],
+//   //     [Number(data[i].lat4), Number(data[i].lng4)],
+//   //   ];
+//   // }
+//   const formattedCoordinates = coordinatesData.map((data: { [x: string]: any; }) => {
+//     return Array.from({ length: 4 }, (_, i) => [data['lat' + (i + 1)], data['lng' + (i + 1)]]);
+//   });
+//   return formattedCoordinates
+// };
+
+export const getUserRegion = async (userPoint: any) => {
+  let polygons = await getServiceAreaBoundaries();
+  //let whereIsUser = await isPointInsidePolygon(userPoint, polygons);
+  console.log("whereIsUseruserPointx==> ", userPoint);
+
+  const foundRegion = polygons.find((region) =>
+    isPointInsidePolygon(userPoint, region.points)
+  );
+
+  if (foundRegion) {
+    console.log(
+      `The point is inside the region with regionId: ${foundRegion.regionId}`
+    );
+    //return foundRegion
+  } else {
+    console.log("The point is not inside any region");
+    // return 0
+  }
+};
+
+const isPointInsidePolygon = (userPoint: any, polygon: any) => {
+  const x = userPoint[0];
+  const y = userPoint[1];
+
+  let isInside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const xi = polygon[i].lat;
+    const yi = polygon[i].lng;
+    const xj = polygon[j].lat;
+    const yj = polygon[j].lng;
+
+    console.log("xi ", xi);
+
+    const intersect =
+      yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+
+    if (intersect) {
+      isInside = !isInside;
+    }
+  }
+
+  return isInside;
+};

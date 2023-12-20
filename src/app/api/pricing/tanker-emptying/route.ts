@@ -4,6 +4,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { getUserRegion } from "@/libs/user-region";
 
 export async function POST(request: Request) {
   try {
@@ -102,8 +103,17 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
+    let lat = Number(searchParams.get("lat"));
+    let lng = Number(searchParams.get("lng"));
 
     const session: any = await getServerSession(authOptions);
+
+
+    
+
+
+    //get region of user
+
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 

@@ -4,7 +4,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { getUserRegion } from "@/libs/user-region";
+import { getUserRegion } from "@/libs/user-area";
 
 export async function POST(request: Request) {
   try {

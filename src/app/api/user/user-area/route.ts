@@ -1,4 +1,4 @@
-import { getUserRegion } from "@/libs/user-region";
+import { getUserRegion } from "@/libs/user-area";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

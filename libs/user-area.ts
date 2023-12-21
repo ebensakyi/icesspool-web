@@ -34,7 +34,6 @@ const getServiceAreaBoundaries = async () => {
       ],
     };
   });
-  console.log("regions ", regions[0]);
 
   // let cityBoundaries = await prepareCityBoundaries(boundaries);
 

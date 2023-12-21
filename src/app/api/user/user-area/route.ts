@@ -9,7 +9,6 @@ export async function GET(request: Request) {
         let lat = Number(searchParams.get("lat"));
         let lng = Number(searchParams.get("lng"));
 
-        console.log(userId, lat, lng);
       let response = await getUserRegion([lat, lng]);
 
         return NextResponse.json({ response });

@@ -14,11 +14,15 @@ export async function GET(request: Request) {
 
     const response = await prisma.servicesInArea.findMany({
       where: { deleted: 0, serviceAreaId: serviceAreaId},
+      select:{
+        serviceId:true
+      }
     });
 
+    let res = response.map(res => res.serviceId)
 
 
-    return NextResponse.json({ response });
+    return NextResponse.json(res);
   } catch (error) {
     console.log(error);
 

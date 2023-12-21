@@ -114,7 +114,6 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log("pricingModel=====> ", pricingModel);
 
    let price = await calculateDeludgingPrice(
       pricingModel,

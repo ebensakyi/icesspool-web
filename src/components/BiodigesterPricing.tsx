@@ -241,7 +241,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Unit Fuel Cost *
+                                                Biodigester only *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
@@ -251,7 +251,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                No. of Working days *
+                                            Biodigester with seat *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  no. of Working days' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
@@ -261,7 +261,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Truck Depreciation *
+                                                Standalone toilet *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />

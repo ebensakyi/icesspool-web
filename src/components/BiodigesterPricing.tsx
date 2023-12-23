@@ -209,30 +209,30 @@ export const BiodigesterPricing = ({ data }: any) => {
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Insurance *
+                                                Digester Emptying *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter insurance' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter Digester Emptying cost' value={insurance} onChange={(e: any) => setInsurance(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Repair cost *
+                                                Soakaway servicing *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter repair cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter Soakaway servicing cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Road worthy *
+                                               Drainfield servicing cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter road worthy' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter drainfield servicing cost' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>

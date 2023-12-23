@@ -121,7 +121,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                 status: Number(status),
             };
 
-            
+
             response = await axios.put("/api/pricing/emptying", data);
             toast.success(response.data.message);
             setId("")
@@ -216,6 +216,28 @@ export const BiodigesterPricing = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div className="col-lg-4 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -223,61 +245,6 @@ export const BiodigesterPricing = ({ data }: any) => {
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter Soakaway servicing cost' value={repairCost} onChange={(e: any) => setRepairCost(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-6">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                               Drainfield servicing cost *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter drainfield servicing cost' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Biodigester only *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Biodigester with seat *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter  no. of Working days' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Standalone toilet *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                             
-                                <div className="row">
-                                    <div className="col-lg-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Fuel Distance Constant *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter Fuel Distance Constant' value={fuelDistanceConst} onChange={(e: any) => setFuelDistanceConst(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -299,11 +266,163 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 <option value={1}>Active </option>
                                                 <option value={2}>Inactive </option>
 
-                                                {/* {data?.sendingTypes?.map((data: any) => (
-                                            <option key={data.id} value={data.id}>
-                                                {data.name}
-                                            </option>
-                                        ))} */}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Drainfield servicing cost *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter drainfield servicing cost' value={roadWorthy} onChange={(e: any) => setRoadWorthy(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Biodigester only *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter unit fuel cost' value={unitFuelCost} onChange={(e: any) => setUnitFuelCost(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Biodigester with seat *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter  no. of Working days' value={workingDays} onChange={(e: any) => setWorkingDays(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Standalone toilet *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Enter truck depreciation' value={truckDepreciation} onChange={(e: any) => setTruckDepreciation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+
+                                    <div className="col-lg-4">
+
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Status *
+                                            </label>
+                                            <select
+                                                className="form-control"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setStatus(e.target.value);
+                                                }}
+                                                value={status}
+                                            >
+                                                <option value={""}>Select status * </option>
+                                                <option value={1}>Active </option>
+                                                <option value={2}>Inactive </option>
+
+
                                             </select>
                                         </div>
                                     </div>

@@ -8,13 +8,12 @@ import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
 
 
 export default async function Page({ searchParams }: any) {
-    const servicePoints = await getServicePoints(searchParams)
     const services = await getServices(searchParams)
     const serviceAreas = await getServiceAreas(searchParams)
 
 
 
-    let data = { servicePoints, services,serviceAreas }
+    let data = { services,serviceAreas }
 
 
 

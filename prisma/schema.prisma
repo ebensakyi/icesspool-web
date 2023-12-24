@@ -21,20 +21,19 @@ model TruckClassification {
   name  String  @unique(map: "axleClass") @db.VarChar(255)
   image String? @db.VarChar(255)
 
-  serviceId                 Int
-  tankCapacity              Decimal                     @default(0.00) @db.Decimal(10, 2)
-  serviceAreaId             Int
-  deleted                   Int?                        @default(0)
-  status                    Int?                        @default(0)
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  Service                   Service                     @relation(fields: [serviceId], references: [id])
-  Vehicle                   Vehicle[]
-  EmptyingServicePricing    EmptyingServicePricing[]
-  WaterServicePricing       WaterServicePricing[]
-  BiodigesterServicePricing BiodigesterServicePricing[]
-  ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
-  Transaction               Transaction[]
+  serviceId              Int
+  tankCapacity           Decimal                  @default(0.00) @db.Decimal(10, 2)
+  serviceAreaId          Int
+  deleted                Int?                     @default(0)
+  status                 Int?                     @default(0)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  Service                Service                  @relation(fields: [serviceId], references: [id])
+  Vehicle                Vehicle[]
+  EmptyingServicePricing EmptyingServicePricing[]
+  WaterServicePricing    WaterServicePricing[]
+  ServiceArea            ServiceArea?             @relation(fields: [serviceAreaId], references: [id])
+  Transaction            Transaction[]
 }
 
 model Service {
@@ -47,11 +46,10 @@ model Service {
   ServicePoint        ServicePoint[]
   TruckClassification TruckClassification[]
 
-  EmptyingServicePricing    EmptyingServicePricing[]
-  WaterServicePricing       WaterServicePricing[]
-  BiodigesterServicePricing BiodigesterServicePricing[]
-  ServicesInArea            ServicesInArea[]
-  Transaction               Transaction[]
+  EmptyingServicePricing EmptyingServicePricing[]
+  WaterServicePricing    WaterServicePricing[]
+  ServicesInArea         ServicesInArea[]
+  Transaction            Transaction[]
 }
 
 model Balance {
@@ -104,17 +102,16 @@ model Discount {
 }
 
 model Region {
-  id                        Int                         @id @default(autoincrement())
-  name                      String                      @db.VarChar(255)
-  latitude                  Decimal?                    @db.Decimal(10, 6)
-  longitude                 Decimal?                    @db.Decimal(10, 6)
-  deleted                   Int?                        @default(0)
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  EmptyingServicePricing    EmptyingServicePricing[]
-  WaterServicePricing       WaterServicePricing[]
-  BiodigesterServicePricing BiodigesterServicePricing[]
-  ServiceArea               ServiceArea[]
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @db.VarChar(255)
+  latitude               Decimal?                 @db.Decimal(10, 6)
+  longitude              Decimal?                 @db.Decimal(10, 6)
+  deleted                Int?                     @default(0)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  EmptyingServicePricing EmptyingServicePricing[]
+  WaterServicePricing    WaterServicePricing[]
+  ServiceArea            ServiceArea[]
 }
 
 model ServiceArea {
@@ -143,7 +140,6 @@ model ServiceArea {
   EmptyingServicePricing    EmptyingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
-  BiodigesterPricing        BiodigesterPricing[]
 }
 
 model ServicesInArea {
@@ -168,10 +164,10 @@ model BiodigesterService {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  BiodigesterPricing BiodigesterPricing[]
+  BiodigesterServicePricing BiodigesterServicePricing[]
 }
 
-model BiodigesterPricing {
+model BiodigesterServicePricing {
   id                   Int         @id @default(autoincrement())
   biodigesterServiceId Int
   cost                 Int
@@ -330,13 +326,13 @@ model EmptyingServicePricing {
   deleted               Int?                @default(0)
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
-  Region                Region ?             @relation(fields: [regionId], references: [id])
+  Region                Region?             @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
 
   // locationId String @db.VarChar(255)
   regionId Int?
 
-  Service       Service      @relation(fields: [serviceId], references: [id])
+  Service       Service     @relation(fields: [serviceId], references: [id])
   serviceId     Int
   ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId Int
@@ -373,36 +369,36 @@ model WaterServicePricing {
   serviceAreaId Int?
 }
 
-model BiodigesterServicePricing {
-  id Int @id @default(autoincrement())
+// model BiodigesterServicePricing {
+//   id Int @id @default(autoincrement())
 
-  fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
-  insurance             Decimal?            @db.Decimal(10, 2)
-  repairCost            Decimal?            @db.Decimal(10, 2)
-  roadWorthy            Decimal?            @db.Decimal(10, 2)
-  unitFuelCost          Decimal?            @db.Decimal(10, 2)
-  workingDays           Int?
-  truckDepreciation     Int?
-  adminCost             Decimal?            @db.Decimal(10, 2)
-  overheadCost          Decimal?            @db.Decimal(10, 2)
-  toolsCost             Decimal?            @db.Decimal(10, 2)
-  profitPercentage      Decimal?            @db.Decimal(10, 2)
-  pumpDepreciation      Decimal?            @db.Decimal(10, 2)
-  TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
-  truckClassificationId Int
-  deleted               Int?                @default(0)
-  createdAt             DateTime            @default(now())
-  updatedAt             DateTime            @updatedAt
-  Region                Region              @relation(fields: [regionId], references: [id])
-  // Location               Location            @relation(fields: [locationId], references: [id])
-  // locationId             String              @db.VarChar(255)
-  regionId              Int
-  Service               Service             @relation(fields: [serviceId], references: [id])
+//   fuelDistanceConst     Decimal?            @db.Decimal(10, 2)
+//   insurance             Decimal?            @db.Decimal(10, 2)
+//   repairCost            Decimal?            @db.Decimal(10, 2)
+//   roadWorthy            Decimal?            @db.Decimal(10, 2)
+//   unitFuelCost          Decimal?            @db.Decimal(10, 2)
+//   workingDays           Int?
+//   truckDepreciation     Int?
+//   adminCost             Decimal?            @db.Decimal(10, 2)
+//   overheadCost          Decimal?            @db.Decimal(10, 2)
+//   toolsCost             Decimal?            @db.Decimal(10, 2)
+//   profitPercentage      Decimal?            @db.Decimal(10, 2)
+//   pumpDepreciation      Decimal?            @db.Decimal(10, 2)
+//   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
+//   truckClassificationId Int
+//   deleted               Int?                @default(0)
+//   createdAt             DateTime            @default(now())
+//   updatedAt             DateTime            @updatedAt
+//   Region                Region              @relation(fields: [regionId], references: [id])
+//   // Location               Location            @relation(fields: [locationId], references: [id])
+//   // locationId             String              @db.VarChar(255)
+//   regionId              Int
+//   Service               Service             @relation(fields: [serviceId], references: [id])
 
-  serviceId     Int
-  ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
-  serviceAreaId Int?
-}
+//   serviceId     Int
+//   ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
+//   serviceAreaId Int?
+// }
 
 model UserType {
   id                        Int          @id @default(autoincrement())

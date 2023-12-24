@@ -166,7 +166,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 onChange={(e: any) => {
                                                     setBiodigesterService(e.target.value);
                                                 }}
-                                                value={biodigesterServices}
+                                                value={biodigesterService}
                                             >
                                                 <option value={""}>Select service * </option>
 
@@ -176,6 +176,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                     </option>
                                                 ))}
                                             </select>
+                                        </div>
                                         </div>
                                         <div className="col-lg-3 col-md-4">
                                             <div className=" mb-3">
@@ -384,6 +385,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                         </table>
                                     </div>
                                 </div>
+                          
                             </div>
                         </div>
                     </div>

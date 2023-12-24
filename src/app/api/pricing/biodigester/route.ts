@@ -1,10 +1,8 @@
-
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { getUserRegion } from "@/libs/user-area";
 
 export async function POST(request: Request) {
   try {
@@ -19,29 +17,17 @@ export async function POST(request: Request) {
 
     const data = {
       status: Number(res?.status),
-      insurance: Number(res?.insurance),
-      repairCost: Number(res?.repairCost),
-      roadWorthy: Number(res?.roadWorthy),
-      unitFuelCost: Number(res?.unitFuelCost),
-      workingDays: Number(res?.workingDays),
-      truckDepreciation: Number(res?.truckDepreciation),
-      adminCost: Number(res?.adminCost),
-      overheadCost: Number(res?.overheadCost),
-      toolsCost: Number(res?.toolsCost),
-      profitPercentage: Number(res?.profitPercentage),
-      pumpDepreciation: Number(res?.pumpDepreciation),
-
-      truckClassificationId: Number(res?.truckClassification),
-      fuelDistanceConst: Number(res?.fuelDistanceConst),
-
-      serviceId: 1,
-      regionId:Number(res?.region),
+      cost: Number(res?.cost),
+      biodigesterServiceId: Number(res?.biodigesterServiceId),
+      serviceAreaId: Number(res?.serviceAreaId),
+     
 
     };
     
+
     
 
-    const response = await prisma.emptyingServicePricing.create({ data });
+    const response = await prisma.biodigesterPricing.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {
@@ -80,7 +66,7 @@ export async function PUT(request: Request) {
       };
 
       
-    await prisma.emptyingServicePricing.update({
+    await prisma.waterServicePricing.update({
       where: {
         id: Number(res?.id),
       },
@@ -100,21 +86,12 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
-    let lat = Number(searchParams.get("lat"));
-    let lng = Number(searchParams.get("lng"));
 
     const session: any = await getServerSession(authOptions);
 
-
-    
-
-
-    //get region of user
-
-
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.emptyingServicePricing.findMany({
+    const response = await prisma.waterServicePricing.findMany({
       where: { deleted: 0 },
       include:{
         Region:true,

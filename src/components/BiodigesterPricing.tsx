@@ -8,18 +8,12 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const BiodigesterPricing = ({ data }: any) => {
-
-    console.log(data);
     
 
-
     const [id, setId] = useState("");
-    const [service, setService] = useState("");
-    const [cost, setCost] = useState("");
- 
+    const [biodigesterService, setBiodigesterService] = useState("");
+    const [cost, setCost] = useState(""); 
     const [region, setRegion] = useState("");
-
-
     const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
@@ -43,15 +37,15 @@ export const BiodigesterPricing = ({ data }: any) => {
             // }
 
             let data = {
-                service: Number(service),
+                biodigesterService: Number(biodigesterService),
                 cost: Number(cost),
                 region: Number(region),
                 status: Number(status),
             };
-            const response = await axios.post("/api/pricing/emptying", data);
+            const response = await axios.post("/api/pricing/biodigester", data);
             toast.success(response.data.message);
             setId("")
-            setService("")
+            setBiodigesterService("")
             setCost("");
 
             setRegion("");
@@ -77,7 +71,7 @@ export const BiodigesterPricing = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-                service: Number(service),
+                biodigesterService: Number(biodigesterService),
                 cost: Number(cost),
                 region: Number(region),
                 status: Number(status),
@@ -87,7 +81,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             response = await axios.put("/api/pricing/emptying", data);
             toast.success(response.data.message);
             setId("")
-            setService("")
+            setBiodigesterService("")
             setCost("");
 
             setRegion("");
@@ -166,7 +160,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 Service *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Enter service' value={service} onChange={(e: any) => setService(e.target.value)} />
+                                                <input type="text" className="form-control" placeholder='Enter service' value={biodigesterService} onChange={(e: any) => setBiodigesterService(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -254,7 +248,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 setId("")
                                              
                                                 setRegion("");
-                                                setService("");
+                                                setBiodigesterService("");
                                                 setStatus("");
                                                 setCost("");
                                               
@@ -339,7 +333,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                                                     setId(data.id);
 
                                                                                     setCost(data.repairCost)
-                                                                                    setService(data.roadWorthy);
+                                                                                    setBiodigesterService(data.roadWorthy);
                                                                                    
                                                                                  
                                                                                   

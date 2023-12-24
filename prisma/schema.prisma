@@ -143,6 +143,7 @@ model ServiceArea {
   EmptyingServicePricing    EmptyingServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
+  BiodigesterPricing        BiodigesterPricing[]
 }
 
 model ServicesInArea {
@@ -157,6 +158,32 @@ model ServicesInArea {
   Service       Service     @relation(fields: [serviceId], references: [id])
 
   @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
+}
+
+model BiodigesterService {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(255)
+  status    Int?     @default(0)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  BiodigesterPricing BiodigesterPricing[]
+}
+
+model BiodigesterPricing {
+  id                   Int         @id @default(autoincrement())
+  biodigesterServiceId Int
+  cost                 Int
+  ServiceArea          ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  status               Int?        @default(0)
+  deleted              Int?        @default(0)
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  BiodigesterService BiodigesterService @relation(fields: [biodigesterServiceId], references: [id])
+
+  serviceAreaId Int
 }
 
 // model ServiceLocation {

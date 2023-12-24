@@ -10,6 +10,7 @@ export async function POST(request: Request) {
     const session: any = await getServerSession(authOptions);
 
 
+console.log(res);
 
     // const userId = session?.user?.id;
 
@@ -18,8 +19,8 @@ export async function POST(request: Request) {
     const data = {
       status: Number(res?.status),
       cost: Number(res?.cost),
-      biodigesterServiceId: Number(res?.biodigesterServiceId),
-      serviceAreaId: Number(res?.serviceAreaId),
+      biodigesterServiceId: Number(res?.biodigesterService),
+      serviceAreaId: Number(res?.serviceArea),
      
 
     };

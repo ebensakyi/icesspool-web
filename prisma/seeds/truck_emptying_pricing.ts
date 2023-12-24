@@ -15,7 +15,7 @@ export const truckEmptying = [
     pumpDepreciation: 5000.0,
     truckDepreciation: 7500,
     elevy: 1.5,
-    regionId: 1,
+    serviceAreaId: 1,
     serviceId: 1,
   },
 
@@ -34,7 +34,7 @@ export const truckEmptying = [
     pumpDepreciation: 5000.0,
     truckDepreciation: 12000,
     elevy: 1.5,
-    regionId: 1,
+    serviceAreaId: 1,
     serviceId: 1,
   },
 ];

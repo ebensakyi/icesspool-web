@@ -330,16 +330,16 @@ model EmptyingServicePricing {
   deleted               Int?                @default(0)
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
-  Region                Region              @relation(fields: [regionId], references: [id])
+  Region                Region ?             @relation(fields: [regionId], references: [id])
   // Location               Location            @relation(fields: [locationId], references: [id])
 
   // locationId String @db.VarChar(255)
-  regionId Int
+  regionId Int?
 
   Service       Service      @relation(fields: [serviceId], references: [id])
   serviceId     Int
-  ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
-  serviceAreaId Int?
+  ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  serviceAreaId Int
 }
 
 model WaterServicePricing {

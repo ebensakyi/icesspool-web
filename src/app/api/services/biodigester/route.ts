@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       status: Number(res?.status),
     };
 
-    const response = await prisma.service.create({ data });
+    const response = await prisma.biodigesterService.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {
@@ -40,7 +40,7 @@ export async function PUT(request: Request) {
       name: res?.name,
       status: Number(res?.status),
     };
-    await prisma.service.update({
+    await prisma.biodigesterService.update({
       where: {
         id: Number(res?.id),
       },

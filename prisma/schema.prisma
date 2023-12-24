@@ -157,8 +157,10 @@ model ServicesInArea {
 }
 
 model BiodigesterService {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique @db.VarChar(255)
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(255)
+  type Int?
+
   status    Int?     @default(0)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())

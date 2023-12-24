@@ -4,7 +4,6 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { getUserRegion } from "@/libs/user-area";
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +34,7 @@ export async function POST(request: Request) {
       fuelDistanceConst: Number(res?.fuelDistanceConst),
 
       serviceId: 1,
-      regionId:Number(res?.region),
+      serviceAreaId:Number(res?.serviceArea),
 
     };
     
@@ -117,7 +116,7 @@ export async function GET(request: Request) {
     const response = await prisma.emptyingServicePricing.findMany({
       where: { deleted: 0 },
       include:{
-        Region:true,
+        ServiceArea:true,
         TruckClassification:true
       }
     });

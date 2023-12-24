@@ -202,7 +202,7 @@ export const BiodigesterPricing = ({ data }: any) => {
 
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Serice Area *
+                                                Service Area *
                                             </label>
                                             <select
                                                 className="form-control"

@@ -7,6 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 export const EmptyingPricing = ({ data }: any) => {
 
 
@@ -27,7 +28,7 @@ export const EmptyingPricing = ({ data }: any) => {
     const [fuelDistanceConst, setFuelDistanceConst] = useState("");
 
 
-    const [region, setRegion] = useState("");
+    const [serviceArea, setServiceArea] = useState("");
 
 
     const [status, setStatus] = useState("");
@@ -64,7 +65,7 @@ export const EmptyingPricing = ({ data }: any) => {
                 toolsCost: Number(toolsCost),
                 profitPercentage: Number(profitPercentage),
                 pumpDepreciation: Number(pumpDepreciation),
-                region: Number(region),
+                serviceArea: Number(serviceArea),
                 truckClassification: Number(truckClassification),
                 fuelDistanceConst: Number(fuelDistanceConst),
                 status: Number(status),
@@ -118,7 +119,7 @@ export const EmptyingPricing = ({ data }: any) => {
                 profitPercentage: Number(profitPercentage),
                 pumpDepreciation: Number(pumpDepreciation),
                 fuelDistanceConst: Number(fuelDistanceConst),
-                region: Number(region),
+                serviceArea: Number(serviceArea),
 
                 truckClassification: Number(truckClassification),
                 status: Number(status),
@@ -393,19 +394,19 @@ export const EmptyingPricing = ({ data }: any) => {
 
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Region *
+                                                Service Area *
                                             </label>
                                             <select
                                                 className="form-control"
                                                 aria-label="Default select example"
                                                 onChange={(e: any) => {
-                                                    setRegion(e.target.value);
+                                                    setServiceArea(e.target.value);
                                                 }}
-                                                value={region}
+                                                value={serviceArea}
                                             >
-                                                <option value={""}>Select region * </option>
+                                                <option value={""}>Select area * </option>
 
-                                                {data?.regions?.response?.map((data: any) => (
+                                                {data?.serviceAreas?.response?.map((data: any) => (
                                                     <option key={data.id} value={data.id}>
                                                         {data.name}
                                                     </option>
@@ -477,7 +478,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Region</th>
+                                            <th scope="col">Service Area</th>
                                             <th scope="col">Truck Classification</th>
 
                                             <th scope="col">Insurance</th>
@@ -504,7 +505,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                         {data?.emptyingPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.ServiceArea?.name}</td>
                                                     <td>{data?.TruckClassification?.name}</td>
 
                                                     <td>{data?.insurance}</td>
@@ -566,7 +567,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                                                                 setFuelDistanceConst(data.fuelDistanceConst)
                                                                                 setToolsCost(data.toolsCost)
                                                                                 setTruckClassification(data.truckClassificationId)
-                                                                                setRegion(data.regionId)
+                                                                                setServiceArea(data.serviceAreaId)
                                                                                 setStatus(data.status)
                                                                             }}
                                                                         >

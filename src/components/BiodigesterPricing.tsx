@@ -13,7 +13,7 @@ export const BiodigesterPricing = ({ data }: any) => {
     const [id, setId] = useState("");
     const [biodigesterService, setBiodigesterService] = useState("");
     const [cost, setCost] = useState(""); 
-    const [region, setRegion] = useState("");
+    const [serviceArea, setServiceArea] = useState("");
     const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
@@ -39,7 +39,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             let data = {
                 biodigesterService: Number(biodigesterService),
                 cost: Number(cost),
-                region: Number(region),
+                serviceArea: Number(serviceArea),
                 status: Number(status),
             };
             const response = await axios.post("/api/pricing/biodigester", data);
@@ -48,7 +48,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             setBiodigesterService("")
             setCost("");
 
-            setRegion("");
+            setServiceArea("");
             setStatus("");
           
 
@@ -73,7 +73,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                 id: Number(id),
                 biodigesterService: Number(biodigesterService),
                 cost: Number(cost),
-                region: Number(region),
+                serviceArea: Number(serviceArea),
                 status: Number(status),
             };
 
@@ -84,7 +84,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             setBiodigesterService("")
             setCost("");
 
-            setRegion("");
+            setServiceArea("");
             setStatus("");
             router.refresh()
 
@@ -202,19 +202,19 @@ export const BiodigesterPricing = ({ data }: any) => {
 
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Region *
+                                                Serice Area *
                                             </label>
                                             <select
                                                 className="form-control"
                                                 aria-label="Default select example"
                                                 onChange={(e: any) => {
-                                                    setRegion(e.target.value);
+                                                    setServiceArea(e.target.value);
                                                 }}
-                                                value={region}
+                                                value={serviceArea}
                                             >
-                                                <option value={""}>Select region * </option>
+                                                <option value={""}>Select area * </option>
 
-                                                {data?.regions?.response?.map((data: any) => (
+                                                {data?.serviceAreas?.response?.map((data: any) => (
                                                     <option key={data.id} value={data.id}>
                                                         {data.name}
                                                     </option>
@@ -247,7 +247,7 @@ export const BiodigesterPricing = ({ data }: any) => {
 
                                                 setId("")
                                              
-                                                setRegion("");
+                                                setServiceArea("");
                                                 setBiodigesterService("");
                                                 setStatus("");
                                                 setCost("");
@@ -337,7 +337,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                                                    
                                                                                  
                                                                                   
-                                                                                    setRegion(data.regionId)
+                                                                                    setServiceArea(data.serviceAreaId)
                                                                                     setStatus(data.status)
                                                                                 }}
                                                                             >

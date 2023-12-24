@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
     
 
-    const response = await prisma.biodigesterPricing.create({ data });
+    const response = await prisma.biodigesterServicePricing.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {

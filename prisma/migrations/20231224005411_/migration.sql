@@ -135,6 +135,7 @@ CREATE TABLE `ServicesInArea` (
 CREATE TABLE `BiodigesterService` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
+    `type` INTEGER NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -145,7 +146,7 @@ CREATE TABLE `BiodigesterService` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `BiodigesterPricing` (
+CREATE TABLE `BiodigesterServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `biodigesterServiceId` INTEGER NOT NULL,
     `cost` INTEGER NOT NULL,
@@ -306,32 +307,6 @@ CREATE TABLE `WaterServicePricing` (
     `toolsCost` DECIMAL(10, 2) NOT NULL,
     `profitPercentage` DECIMAL(10, 2) NOT NULL,
     `pumpDepreciation` DECIMAL(10, 2) NOT NULL,
-    `truckClassificationId` INTEGER NOT NULL,
-    `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-    `regionId` INTEGER NOT NULL,
-    `serviceId` INTEGER NOT NULL,
-    `serviceAreaId` INTEGER NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `BiodigesterServicePricing` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `fuelDistanceConst` DECIMAL(10, 2) NULL,
-    `insurance` DECIMAL(10, 2) NULL,
-    `repairCost` DECIMAL(10, 2) NULL,
-    `roadWorthy` DECIMAL(10, 2) NULL,
-    `unitFuelCost` DECIMAL(10, 2) NULL,
-    `workingDays` INTEGER NULL,
-    `truckDepreciation` INTEGER NULL,
-    `adminCost` DECIMAL(10, 2) NULL,
-    `overheadCost` DECIMAL(10, 2) NULL,
-    `toolsCost` DECIMAL(10, 2) NULL,
-    `profitPercentage` DECIMAL(10, 2) NULL,
-    `pumpDepreciation` DECIMAL(10, 2) NULL,
     `truckClassificationId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -629,10 +604,10 @@ ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceAreaId_fkey` 
 ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `BiodigesterPricing` ADD CONSTRAINT `BiodigesterPricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `BiodigesterPricing` ADD CONSTRAINT `BiodigesterPricing_biodigesterServiceId_fkey` FOREIGN KEY (`biodigesterServiceId`) REFERENCES `BiodigesterService`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_biodigesterServiceId_fkey` FOREIGN KEY (`biodigesterServiceId`) REFERENCES `BiodigesterService`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -660,18 +635,6 @@ ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceId_
 
 -- AddForeignKey
 ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_pageId_fkey` FOREIGN KEY (`pageId`) REFERENCES `Page`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

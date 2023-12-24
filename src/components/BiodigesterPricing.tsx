@@ -292,7 +292,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                         <table className="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Region</th>
+                                                    <th scope="col">Area</th>
                                                     <th scope="col">Service</th>
 
                                                     <th scope="col">Cost</th>
@@ -305,14 +305,14 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data?.emptyingPricings?.response.map((data: any) => {
+                                                {data?.pricing?.response.map((data: any) => {
                                                     return (
                                                         <tr key={data?.id}>
-                                                            <td>{data?.Region?.name}</td>
+                                                            <td>{data?.ServiceArea?.name}</td>
 
 
-                                                            <td>{data?.pumpDepreciation}</td>
-                                                            <td>{data?.fuelDistanceConst}</td>
+                                                            <td>{data?.BiodigesterService?.name}</td>
+                                                            <td>{data?.cost}</td>
 
                                                             <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                             <td>  {moment(data?.createdAt).format(

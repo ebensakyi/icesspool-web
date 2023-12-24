@@ -9,9 +9,6 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
-console.log(res);
-
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
@@ -21,12 +18,7 @@ console.log(res);
       cost: Number(res?.cost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
-     
-
     };
-    
-
-    
 
     const response = await prisma.biodigesterServicePricing.create({ data });
 
@@ -45,29 +37,12 @@ export async function PUT(request: Request) {
 
     const userId = session?.user?.id;
     const data = {
-        status: Number(res?.status),
-        insurance: Number(res?.insurance),
-        repairCost: Number(res?.repairCost),
-        roadWorthy: Number(res?.roadWorthy),
-        unitFuelCost: Number(res?.unitFuelCost),
-        workingDays: Number(res?.workingDays),
-        truckDepreciation: Number(res?.truckDepreciation),
-        adminCost: Number(res?.adminCost),
-        overheadCost: Number(res?.overheadCost),
-        toolsCost: Number(res?.toolsCost),
-        profitPercentage: Number(res?.profitPercentage),
-        pumpDepreciation: Number(res?.pumpDepreciation),
-  
-        truckClassificationId: Number(res?.truckClassification),
-        fuelDistanceConst: Number(res?.fuelDistanceConst),
-  
-        serviceId: 1,
-        regionId:Number(res?.region),
-  
-      };
+      cost: Number(res?.cost),
+      biodigesterServiceId: Number(res?.biodigesterService),
+      serviceAreaId: Number(res?.serviceArea),
+    };
 
-      
-    await prisma.waterServicePricing.update({
+    await prisma.biodigesterServicePricing.update({
       where: {
         id: Number(res?.id),
       },
@@ -92,15 +67,13 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.waterServicePricing.findMany({
+    const response = await prisma.biodigesterServicePricing.findMany({
       where: { deleted: 0 },
-      include:{
-        Region:true,
-        TruckClassification:true
-      }
+      include: {
+        ServiceArea: true,
+        BiodigesterService: true,
+      },
     });
-
-
 
     return NextResponse.json({ response });
   } catch (error) {

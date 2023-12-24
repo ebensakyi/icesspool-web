@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { getBiodigesterServices, getServiceAreas } from '@/src/api-services';
+import { getBiodigesterPricing, getBiodigesterServices, getServiceAreas } from '@/src/api-services';
 import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
 
 
@@ -10,10 +10,11 @@ import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
 export default async function Page({ searchParams }: any) {
     const biodigesterServices = await getBiodigesterServices(searchParams)
     const serviceAreas = await getServiceAreas(searchParams)
+    const pricing = await getBiodigesterPricing(searchParams)
 
 
 
-    let data = { biodigesterServices,serviceAreas }
+    let data = { biodigesterServices,serviceAreas ,pricing}
 
 
 

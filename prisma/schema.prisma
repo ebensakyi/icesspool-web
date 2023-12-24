@@ -182,6 +182,9 @@ model BiodigesterServicePricing {
   BiodigesterService BiodigesterService @relation(fields: [biodigesterServiceId], references: [id])
 
   serviceAreaId Int
+
+    @@unique([serviceAreaId, biodigesterServiceId], name: "areaBiodigesterServiceIdKey")
+
 }
 
 // model ServiceLocation {

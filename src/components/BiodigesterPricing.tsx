@@ -346,8 +346,8 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                                                         e.preventDefault();
                                                                                         setId(data.id);
 
-                                                                                        setCost(data.repairCost)
-                                                                                        setBiodigesterService(data.roadWorthy);
+                                                                                        setCost(data.cost)
+                                                                                        setBiodigesterService(data.biodigesterServiceId);
 
 
 

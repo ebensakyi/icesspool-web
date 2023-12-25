@@ -50,6 +50,7 @@ model Service {
   WaterServicePricing    WaterServicePricing[]
   ServicesInArea         ServicesInArea[]
   Transaction            Transaction[]
+  BiodigesterService     BiodigesterService[]
 }
 
 model Balance {
@@ -157,17 +158,19 @@ model ServicesInArea {
 }
 
 model BiodigesterService {
-  id   Int    @id @default(autoincrement())
-  name String @unique @db.VarChar(255)
-  type Int?
-  image String?  @db.VarChar(255)
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(255)
+  type  Int?
+  image String? @db.VarChar(255)
 
   status    Int?     @default(0)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Service   Service  @relation(fields: [serviceId], references: [id])
 
   BiodigesterServicePricing BiodigesterServicePricing[]
+  serviceId                 Int
 }
 
 model BiodigesterServicePricing {
@@ -184,8 +187,7 @@ model BiodigesterServicePricing {
 
   serviceAreaId Int
 
-    @@unique([serviceAreaId, biodigesterServiceId], name: "areaBiodigesterServiceIdKey")
-
+  @@unique([serviceAreaId, biodigesterServiceId], name: "areaBiodigesterServiceIdKey")
 }
 
 // model ServiceLocation {

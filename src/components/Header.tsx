@@ -331,7 +331,7 @@ export default function Header() {
                                 <li>
                                     <Link href="/pricing/tanker-emptying">
                                         <i className="bi bi-circle" />
-                                        <span>Desluging </span>
+                                        <span>Desludging </span>
                                     </Link>
                                 </li>
                                 <li>

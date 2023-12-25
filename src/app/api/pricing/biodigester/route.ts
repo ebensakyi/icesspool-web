@@ -37,6 +37,7 @@ export async function PUT(request: Request) {
 
     const userId = session?.user?.id;
     const data = {
+      status: Number(res?.status),
       cost: Number(res?.cost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),

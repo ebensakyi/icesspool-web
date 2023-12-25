@@ -78,7 +78,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             };
 
 
-            response = await axios.put("/api/pricing/emptying", data);
+            response = await axios.put("/api/pricing/biodigester", data);
             toast.success(response.data.message);
             setId("")
             setBiodigesterService("")

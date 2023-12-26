@@ -74,9 +74,19 @@ export async function GET(request: Request) {
         ServiceArea: true,
         BiodigesterService: true,
       },
+      // select: {
+      //   cost: true,
+      //   BiodigesterService: true,
+      // },
     });
 
-    return NextResponse.json({ response });
+    let res = await response.map((data) => ({
+      name: data.BiodigesterService.name,
+      cost: data.cost,
+      type: data.BiodigesterService.type
+    }));
+
+    return NextResponse.json({ response:res });
   } catch (error) {
     console.log(error);
 

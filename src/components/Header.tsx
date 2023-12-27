@@ -285,6 +285,16 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link href="/services/biodigester-services" className={
+                                        pathname == "/services/biodigester-services"
+                                            ? "nav-link"
+                                            : "nav-link collapsed"
+                                    }>
+                                        <i className="bi bi-circle" />
+                                        <span>Biodigester Services</span>
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="/service-area">
                                         <i className="bi bi-circle" />
                                         <span>Areas</span>

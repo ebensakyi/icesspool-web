@@ -63,7 +63,7 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
-    
+
     let userId = Number(searchParams.get("userId"));
     let platform = Number(searchParams.get("platform"));
 
@@ -72,14 +72,12 @@ export async function GET(request: Request) {
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.biodigesterServicePricing.findMany({
-      where: { deleted: 0,serviceAreaId:Number(serviceAreaId) },
+      where: { deleted: 0, serviceAreaId: Number(serviceAreaId) },
       include: {
         ServiceArea: true,
         BiodigesterService: true,
       },
     });
-
-    
 
     if (platform == 2) {
       let res = await response.map((data) => ({

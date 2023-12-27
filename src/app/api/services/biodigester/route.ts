@@ -17,6 +17,7 @@ export async function POST(request: Request) {
 
     const data = {
       name: res?.name,
+      serviceId:Number(res?.serviceId),
       status: Number(res?.status),
     };
 
@@ -67,6 +68,9 @@ export async function GET(request: Request) {
 
     const response = await prisma.biodigesterService.findMany({
       where: { deleted: 0 },
+      include:{
+        Service:true
+      }
     });
 
 

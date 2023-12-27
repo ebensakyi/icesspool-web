@@ -62,31 +62,35 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
+    let serviceAreaId = Number(searchParams.get("serviceAreaId"));
+    
     let userId = Number(searchParams.get("userId"));
+    let platform = Number(searchParams.get("platform"));
 
     const session: any = await getServerSession(authOptions);
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.biodigesterServicePricing.findMany({
-      where: { deleted: 0 },
+      where: { deleted: 0,serviceAreaId:Number(serviceAreaId) },
       include: {
         ServiceArea: true,
         BiodigesterService: true,
       },
-      // select: {
-      //   cost: true,
-      //   BiodigesterService: true,
-      // },
     });
 
-    let res = await response.map((data) => ({
-      name: data.BiodigesterService.name,
-      cost: data.cost,
-      type: data.BiodigesterService.type
-    }));
+    
 
-    return NextResponse.json({ response:res });
+    if (platform == 2) {
+      let res = await response.map((data) => ({
+        name: data.BiodigesterService.name,
+        cost: data.cost,
+        type: data.BiodigesterService.type,
+      }));
+      return NextResponse.json(res);
+    }
+
+    return NextResponse.json({ response });
   } catch (error) {
     console.log(error);
 

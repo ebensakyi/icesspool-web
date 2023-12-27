@@ -26,30 +26,30 @@ export const BiodigesterService = ({ data }: any) => {
 
 
 
-    const add = async (e: any) => {
-        try {
-            e.preventDefault();
-            if (name == "" || status == 0) {
-                return toast.error("Please fill form");
-            }
+    // const add = async (e: any) => {
+    //     try {
+    //         e.preventDefault();
+    //         if (name == "" || status == 0) {
+    //             return toast.error("Please fill form");
+    //         }
 
-            let data = {
-                name,
-                status,
-            };
-            const response = await axios.post("/api/services", data);
-            toast.success(response.data.message);
-            setName("")
-            setStatus(2);
+    //         let data = {
+    //             name,
+    //             status,
+    //         };
+    //         const response = await axios.post("/api/services", data);
+    //         toast.success(response.data.message);
+    //         setName("")
+    //         setStatus(2);
 
-            router.refresh()
+    //         router.refresh()
 
-        } catch (error: any) {
-            if (error.response.status == 401) {
-                toast.error(error.response.data.message);
-            }
-        }
-    };
+    //     } catch (error: any) {
+    //         if (error.response.status == 401) {
+    //             toast.error(error.response.data.message);
+    //         }
+    //     }
+    // };
 
     const update = async (e: any) => {
         try {
@@ -63,7 +63,7 @@ export const BiodigesterService = ({ data }: any) => {
                 name,
                 status,
             };
-            const response = await axios.put("/api/services", data);
+            const response = await axios.put("/api/services/biodigester", data);
             toast.success(response.data.message);
             setId(null)
             setName("")
@@ -101,7 +101,7 @@ export const BiodigesterService = ({ data }: any) => {
                     <div className="col-lg-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Add</h5>
+                                <h5 className="card-title">Update</h5>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Name *
@@ -150,7 +150,7 @@ export const BiodigesterService = ({ data }: any) => {
                                                         if (id) {
                                                             return update(e)
                                                         }
-                                                        add(e)
+                                                       // add(e)
 
                                                     }}
 
@@ -175,6 +175,9 @@ export const BiodigesterService = ({ data }: any) => {
                                         <tr>
                                             <th scope="col">Name</th>
 
+                                            <th scope="col">Service</th>
+
+                                            <th scope="col">Type</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
 
@@ -187,6 +190,9 @@ export const BiodigesterService = ({ data }: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
+                                                    <td>{data?.Service?.name}</td>
+
+                                                    <td>{data?.type}</td>
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"

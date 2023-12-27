@@ -136,10 +136,12 @@ CREATE TABLE `BiodigesterService` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `type` INTEGER NULL,
+    `image` VARCHAR(255) NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `serviceId` INTEGER NOT NULL,
 
     UNIQUE INDEX `BiodigesterService_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -156,6 +158,7 @@ CREATE TABLE `BiodigesterServicePricing` (
     `updatedAt` DATETIME(3) NOT NULL,
     `serviceAreaId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `BiodigesterServicePricing_serviceAreaId_biodigesterServiceId_key`(`serviceAreaId`, `biodigesterServiceId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -602,6 +605,9 @@ ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceAreaId_fkey` 
 
 -- AddForeignKey
 ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `BiodigesterService` ADD CONSTRAINT `BiodigesterService_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterServicePricing` ADD CONSTRAINT `BiodigesterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

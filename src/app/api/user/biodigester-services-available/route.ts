@@ -6,21 +6,20 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-   // let serviceAreaId = Number(searchParams.get("serviceAreaId"));
+    // let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.biodigesterService.findMany({
       where: { deleted: 0, status: 1 },
-      select:{
-        id:true
-      }
+      select: {
+        id: true,
+      },
     });
 
-    
+    let res = response.map((res) => res.id);
 
-
-    return NextResponse.json(response);
+    return NextResponse.json(res);
   } catch (error) {
     console.log(error);
 

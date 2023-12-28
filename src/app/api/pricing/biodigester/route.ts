@@ -3,6 +3,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { BiodigesterService } from "../../../../components/BiodigesterService";
 
 export async function POST(request: Request) {
   try {
@@ -75,7 +76,11 @@ export async function GET(request: Request) {
       where: { deleted: 0, serviceAreaId: Number(serviceAreaId) },
       include: {
         ServiceArea: true,
-        BiodigesterService: true,
+        BiodigesterService: {
+          include: {
+            BiodigesterType: true,
+          },
+        },
       },
     });
 
@@ -84,7 +89,7 @@ export async function GET(request: Request) {
         id: data.id,
         name: data.BiodigesterService.name,
         cost: data.cost,
-        //type: data.BiodigesterService.type,
+        type: data.BiodigesterType.name,
       }));
       return NextResponse.json(res);
     }

@@ -15,12 +15,17 @@ export const bservices = [
     serviceId: 3,
   },
   {
-    name: "Biodigester Maintenance",
+    name: "Biodigester Only",
     type: 2,
     serviceId: 3,
   },
   {
-    name: "New Toilet Construction",
+    name: "Biodigester With Seat",
+    type: 2,
+    serviceId: 3,
+  },
+  {
+    name: "Standalone Toilet",
     type: 2,
     serviceId: 3,
   },

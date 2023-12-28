@@ -89,7 +89,7 @@ export async function GET(request: Request) {
         id: data.id,
         name: data.BiodigesterService.name,
         cost: data.cost,
-        type: data.BiodigesterType.name,
+        type: data.BiodigesterService.BiodigesterType.name,
       }));
       return NextResponse.json(res);
     }

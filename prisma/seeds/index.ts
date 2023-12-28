@@ -13,15 +13,13 @@ import { serviceAreas } from "./service_area";
 import { truckEmptying } from "./truck_emptying_pricing";
 import { servicePoints } from "./service_point";
 import { bservices } from "./biodigester_services";
+import { biodigesterTypes } from "./biodigester_type";
 
 async function main() {
 
-
-
-
-
-
-
+  await prisma.biodigesterType.createMany({
+    data: biodigesterTypes,
+  });
  await prisma.region.createMany({
       data: regions,
     });

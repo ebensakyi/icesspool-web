@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     const data = {
       name: res?.name,
       serviceId:Number(res?.serviceId),
+      biodigesterTypeId: Number(res?.biodigesterTypeId),
       status: Number(res?.status),
     };
 

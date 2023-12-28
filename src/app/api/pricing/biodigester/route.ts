@@ -81,9 +81,10 @@ export async function GET(request: Request) {
 
     if (platform == 2) {
       let res = await response.map((data) => ({
+        id: data.id,
         name: data.BiodigesterService.name,
         cost: data.cost,
-        type: data.BiodigesterService.type,
+        //type: data.BiodigesterService.type,
       }));
       return NextResponse.json(res);
     }

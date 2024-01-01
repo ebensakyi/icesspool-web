@@ -70,7 +70,8 @@ export async function GET(request: Request) {
     const response = await prisma.biodigesterService.findMany({
       where: { deleted: 0 },
       include:{
-        Service:true
+        Service:true,
+        BiodigesterType:true
       }
     });
 

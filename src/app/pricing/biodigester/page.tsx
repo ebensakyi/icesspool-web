@@ -12,6 +12,9 @@ export default async function Page({ searchParams }: any) {
     const serviceAreas = await getServiceAreas(searchParams)
     const pricing = await getBiodigesterPricing(searchParams)
 
+    console.log(pricing);
+    
+
 
 
     let data = { biodigesterServices,serviceAreas ,pricing}

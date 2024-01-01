@@ -9,6 +9,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const BiodigesterPricing = ({ data }: any) => {
 
+    console.log(data);
+    
+
 
     const [id, setId] = useState("");
     const [biodigesterService, setBiodigesterService] = useState("");

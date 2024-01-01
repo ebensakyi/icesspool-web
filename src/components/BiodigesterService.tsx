@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const BiodigesterService = ({ data }: any) => {
+    
     const [id, setId] = useState(null);
     const [name, setName] = useState("");
     const [status, setStatus] = useState(2);
@@ -192,7 +193,7 @@ export const BiodigesterService = ({ data }: any) => {
                                                     <td>{data?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
-                                                    <td>{data?.type}</td>
+                                                    <td>{data?.BiodigesterType.name}</td>
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"

@@ -13,6 +13,8 @@ export const BiodigesterService = ({ data }: any) => {
     const [id, setId] = useState(null);
     const [name, setName] = useState("");
     const [status, setStatus] = useState(2);
+    const [shortDesc, setShortDesc] = useState("");
+    const [longDesc, setLongDesc] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -62,12 +64,16 @@ export const BiodigesterService = ({ data }: any) => {
             let data = {
                 id:Number(id),
                 name,
+                shortDesc,
+                longDesc,
                 status,
             };
             const response = await axios.put("/api/services/biodigester", data);
             toast.success(response.data.message);
             setId(null)
             setName("")
+            setLongDesc("")
+            setShortDesc("")
             setStatus(2);
 
             router.refresh()
@@ -109,6 +115,22 @@ export const BiodigesterService = ({ data }: any) => {
                                     </label>
                                     <div className="col-sm-12">
                                         <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Short Description *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter short desc' value={shortDesc} onChange={(e: any) => setShortDesc(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Long Description *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter long desc(url to a page)' value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">

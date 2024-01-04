@@ -339,19 +339,19 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/pricing/tanker-emptying">
+                                    <Link href="/services/tanker-emptying/pricing">
                                         <i className="bi bi-circle" />
                                         <span>Desludging </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/pricing/water">
+                                    <Link href="/services/water/pricing">
                                         <i className="bi bi-circle" />
                                         <span>Water </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/pricing/biodigester">
+                                    <Link href="/services/biodigester/pricing">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>

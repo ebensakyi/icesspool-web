@@ -16,14 +16,14 @@ export async function POST(request: Request) {
       // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
   
       
-    //   const data = {
-    //     status: Number(res?.status),
-    //     cost: Number(res?.cost),
-    //     biodigesterServiceId: Number(res?.biodigesterService),
-    //     serviceAreaId: Number(res?.serviceArea),
-    //   };
+      const data = {
+        userId: Number(res?.userId),
+        cost: Number(res?.cost),
+        biodigesterServiceId: Number(res?.biodigesterService),
+        serviceAreaId: Number(res?.serviceArea),
+      };
   
-    //   const response = await prisma.biodigesterServicePricing.create({ data });
+      const response = await prisma.biodigesterServicePricing.create({ data });
   
       return NextResponse.json({});
     } catch (error: any) {

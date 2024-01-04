@@ -136,6 +136,8 @@ CREATE TABLE `BiodigesterService` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `image` VARCHAR(255) NULL,
+    `shortDesc` VARCHAR(255) NULL,
+    `fullDesc` VARCHAR(255) NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -490,11 +492,8 @@ CREATE TABLE `ServicePoint` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Transaction` (
+CREATE TABLE `TruckEmptyingTransaction` (
     `id` VARCHAR(255) NOT NULL,
-    `unitCost` DECIMAL(10, 2) NOT NULL,
-    `discountedCost` DECIMAL(10, 2) NOT NULL,
-    `actualCost` DECIMAL(10, 2) NOT NULL,
     `community` VARCHAR(255) NULL,
     `gpsAccuracy` DECIMAL(10, 2) NULL,
     `lat` DECIMAL(10, 8) NOT NULL,
@@ -510,10 +509,49 @@ CREATE TABLE `Transaction` (
     `requestSource` INTEGER NULL,
     `customerName` VARCHAR(100) NULL,
     `customerPhoneNumber` VARCHAR(100) NULL,
-    `serviceId` INTEGER NOT NULL,
     `truckClassificationId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Transaction` (
+    `id` VARCHAR(255) NOT NULL,
+    `unitCost` DECIMAL(10, 2) NOT NULL,
+    `discountedCost` DECIMAL(10, 2) NOT NULL,
+    `actualCost` DECIMAL(10, 2) NOT NULL,
+    `community` VARCHAR(255) NULL,
+    `gpsAccuracy` DECIMAL(10, 2) NULL,
+    `lat` DECIMAL(10, 8) NOT NULL,
+    `lng` DECIMAL(10, 8) NOT NULL,
+    `trips` INTEGER NOT NULL,
+    `paymentStatus` INTEGER NULL DEFAULT 0,
+    `currentStatus` INTEGER NOT NULL DEFAULT 1,
+    `requestTypeId` INTEGER NULL DEFAULT 1,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `requestSource` INTEGER NULL,
+    `customerName` VARCHAR(100) NULL,
+    `customerPhoneNumber` VARCHAR(100) NULL,
+    `serviceId` INTEGER NOT NULL,
     `operatorId` INTEGER NOT NULL,
     `clientId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `BiodigesterTransaction` (
+    `id` VARCHAR(255) NOT NULL,
+    `transactionId` VARCHAR(255) NOT NULL,
+    `biodigesterTypeId` INTEGER NOT NULL,
+    `requestSource` INTEGER NULL,
+    `customerName` VARCHAR(100) NULL,
+    `customerPhoneNumber` VARCHAR(100) NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -668,7 +706,7 @@ ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_userTypeId_fkey` FOREIGN KEY
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `TruckEmptyingTransaction` ADD CONSTRAINT `TruckEmptyingTransaction_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -678,6 +716,12 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_operatorId_fkey` FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biodigesterTypeId_fkey` FOREIGN KEY (`biodigesterTypeId`) REFERENCES `BiodigesterType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `User` ADD CONSTRAINT `User_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -21,6 +21,9 @@ export async function POST(request: Request) {
       serviceAreaId: Number(res?.serviceArea),
     };
 
+    console.log(data);
+    
+
     const response = await prisma.biodigesterServicePricing.create({ data });
 
     return NextResponse.json(response);

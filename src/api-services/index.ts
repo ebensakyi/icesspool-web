@@ -90,7 +90,7 @@ export async function getTruckClasses(searchParams: any, service?: number) {
 
 export async function getEmptyingPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/pricing/tanker-emptying?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/services/tanker-emptying/pricing?serviceId=${service}`,
       { cache: "no-store" }
     );
   
@@ -102,7 +102,7 @@ export async function getEmptyingPricing(searchParams: any, service?: number) {
 
   export async function getWaterPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/pricing/water?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/services/water/pricing?serviceId=${service}`,
       { cache: "no-store" }
     );
   
@@ -115,7 +115,7 @@ export async function getEmptyingPricing(searchParams: any, service?: number) {
 
   export async function getBiodigesterPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/pricing/biodigester`,
+      `${SERVER_BASE_URL}/api/services/biodigester/pricing`,
       { cache: "no-store" }
     );
   

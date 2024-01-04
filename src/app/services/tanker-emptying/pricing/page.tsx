@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { getRegions, getEmptyingPricing, getServices, getTruckClasses, getServiceAreas } from '@/src/api-services';
+import { getRegions, getEmptyingPricing, getTruckClasses, getServiceAreas } from '@/src/api-services';
 import { EmptyingPricing } from '@/src/components/DesludgingPricing';
 
 

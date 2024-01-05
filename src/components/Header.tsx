@@ -285,7 +285,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/biodigester-services" className={
+                                    <Link href="/services/biodigester/biodigester-services" className={
                                         pathname == "/services/biodigester-services"
                                             ? "nav-link"
                                             : "nav-link collapsed"

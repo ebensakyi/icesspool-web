@@ -1,9 +1,9 @@
 export const services = [
     {
-      name: "Emptying",
+      name: "Septic Tank",
     },
     {
-      name: "Water Request",
+      name: "Tanker Water",
     },
     {
       name: "Bio-digester",

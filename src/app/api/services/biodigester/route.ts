@@ -75,6 +75,7 @@ export async function GET(request: Request) {
       }
     });
 
+console.log(response);
 
 
     return NextResponse.json({ response });

@@ -70,7 +70,7 @@ export const EmptyingPricing = ({ data }: any) => {
                 fuelDistanceConst: Number(fuelDistanceConst),
                 status: Number(status),
             };
-            const response = await axios.post("/api/pricing/tanker-emptying", data);
+            const response = await axios.post("/api/services/tanker-emptying/pricing", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -126,7 +126,7 @@ export const EmptyingPricing = ({ data }: any) => {
             };
 
             
-            response = await axios.put("/api/pricing/tanker-emptying", data);
+            response = await axios.put("/api/services/tanker-emptying/pricing", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")

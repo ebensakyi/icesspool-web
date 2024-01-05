@@ -1,6 +1,6 @@
 export const serviceAreas = [
   {
-    name: "Greater Accra Area",
+    name: "Accra",
     lat1:5.472543,
     lng1: -0.420407,
     lat2:5.797806,
@@ -14,7 +14,7 @@ export const serviceAreas = [
   },
 
   {
-    name: "Tamale",
+    name: "Tamale/Sanerigu",
     lat1:9.498454,
     lng1:  -0.923202,
     lat2:9.503872,
@@ -27,18 +27,6 @@ export const serviceAreas = [
     regionId: 2,
   },
 
-  {
-    name: "Sanerigu",
-    lat1:5.472543,
-    lng1: -0.420407,
-    lat2:5.797806,
-    lng2:-0.549497,
-    lat3:6.116055,
-    lng3: 0.216800,
-    lat4:5.781411,
-    lng4:0.694705,
-   
-    regionId: 2,
-  },
+  
  
 ];

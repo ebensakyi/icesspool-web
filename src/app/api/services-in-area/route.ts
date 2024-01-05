@@ -41,6 +41,9 @@ export async function PUT(request: Request) {
     const session: any = await getServerSession(authOptions);
 
     const userId = session?.user?.id;
+
+    console.log(res);
+    
     const data = {
       serviceId: Number(res?.service),
       serviceAreaId: Number(res?.serviceArea),

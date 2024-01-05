@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const ServicesInArea = ({ data }: any) => {
 
-    
+
     const [id, setId] = useState("");
     const [serviceArea, setServiceArea] = useState("");
     const [service, setService] = useState("");
@@ -31,7 +31,7 @@ export const ServicesInArea = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (service == "" || status == ""||serviceArea =="") {
+            if (service == "" || status == "" || serviceArea == "") {
                 return toast.error("Please fill form");
             }
 
@@ -50,22 +50,23 @@ export const ServicesInArea = ({ data }: any) => {
 
         } catch (error: any) {
             console.log(error);
-            
-                toast.error(error.response.data.message);
-            
+
+            toast.error(error.response.data.message);
+
         }
     };
 
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (serviceArea == "" || status == ""||service=="") {
+            if (serviceArea == "" || status == "" || service == "") {
                 return toast.error("Please fill form");
             }
 
             let data = {
-                id:Number(id),
-                name,
+                id: Number(id),
+                serviceArea,
+                service,
                 status,
             };
             const response = await axios.put("/api/services-in-area", data);
@@ -119,7 +120,7 @@ export const ServicesInArea = ({ data }: any) => {
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Add</h5>
-                               
+
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Service *
@@ -133,7 +134,7 @@ export const ServicesInArea = ({ data }: any) => {
                                         value={service}
                                     >
                                         <option value={0}>Select service * </option>
-                                      
+
                                         {data?.services?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
                                                 {data.name}
@@ -155,7 +156,7 @@ export const ServicesInArea = ({ data }: any) => {
                                         value={serviceArea}
                                     >
                                         <option value={0}>Select area * </option>
-                                      
+
 
                                         {data?.serviceAreas?.response?.map((data: any) => (
                                             <option key={data.id} value={data.id}>
@@ -271,13 +272,12 @@ export const ServicesInArea = ({ data }: any) => {
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
+
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setServiceArea(data.Region.name)
-                                                                                setService(data.Service.name)
+                                                                                setServiceArea(data.serviceAreaId)
+                                                                                setService(data.serviceId)
                                                                                 setStatus(data.status)
-                                                                                // setSendingType(data.sendingType)
-                                                                                // setDistrictId(data.districtId);
 
 
 
@@ -288,7 +288,7 @@ export const ServicesInArea = ({ data }: any) => {
                                                                             Edit
                                                                         </button>
                                                                     </li>
-                                                                  
+
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

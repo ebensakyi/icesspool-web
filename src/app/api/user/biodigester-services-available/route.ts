@@ -17,6 +17,9 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log(response);
+    
+
     let res = response.map((res) => res.id);
 
     return NextResponse.json(res);

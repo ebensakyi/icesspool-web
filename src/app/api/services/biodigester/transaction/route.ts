@@ -18,14 +18,15 @@ export async function POST(request: Request) {
       id: res.transactionId,
       clientId: Number(res?.userId),
       lat: Number(res?.lat),
-      lng: Number(res?.lng),
+      lng: Number(res?.lng),  
+          gpsAccuracy: Number(res?.accuracy),
+
       cost: Number(res[0]?.cost),
       // biodigesterServiceId: Number(res[0]?.biodigesterService),
       serviceAreaId: Number(res[0]?.serviceArea),
       unitCost: Number(res[0]?.unitCost),
       discountedCost: Number(res[0]?.discountedCost),
       actualCost: Number(res[0]?.actualCost),
-      gpsAccuracy: Number(res[0]?.gpsAccuracy),
 
       // trips: Number(res[0]?.trips),
       // paymentStatus: Number(res[0]?.paymentStatus),
@@ -35,6 +36,10 @@ export async function POST(request: Request) {
     };
 
     const response = await prisma.transaction.create({ data });
+
+
+ await prisma.biodigesterTransaction.createMany({ data:requestDetails });
+
 
     return NextResponse.json({});
   } catch (error: any) {

@@ -339,9 +339,9 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/services/tanker-emptying/pricing">
+                                    <Link href="/services/septic-tank/pricing">
                                         <i className="bi bi-circle" />
-                                        <span>Desludging </span>
+                                        <span>Septic Tank </span>
                                     </Link>
                                 </li>
                                 <li>
@@ -407,7 +407,7 @@ export default function Header() {
                                         <span> Client</span>
                                     </Link>
                                 </li>
-                              
+
 
                             </ul>
                         </li>

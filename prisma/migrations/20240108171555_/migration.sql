@@ -517,9 +517,8 @@ CREATE TABLE `TruckEmptyingTransaction` (
 -- CreateTable
 CREATE TABLE `Transaction` (
     `id` VARCHAR(255) NOT NULL,
-    `unitCost` DECIMAL(10, 2) NOT NULL,
-    `discountedCost` DECIMAL(10, 2) NOT NULL,
-    `actualCost` DECIMAL(10, 2) NOT NULL,
+    `discountedCost` DECIMAL(10, 2) NULL,
+    `cost` DECIMAL(10, 2) NOT NULL,
     `community` VARCHAR(255) NULL,
     `gpsAccuracy` DECIMAL(10, 2) NULL,
     `lat` DECIMAL(10, 8) NOT NULL,
@@ -550,6 +549,7 @@ CREATE TABLE `BiodigesterTransaction` (
     `requestSource` INTEGER NULL,
     `customerName` VARCHAR(100) NULL,
     `customerPhoneNumber` VARCHAR(100) NULL,
+    `unitCost` DECIMAL(10, 2) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

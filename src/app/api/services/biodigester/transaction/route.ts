@@ -17,10 +17,8 @@ export async function POST(request: Request) {
     const data = {
       id: res.transactionId,
       clientId: Number(res?.userId),
-       lat: Number(res?.lat),
+      lat: Number(res?.lat),
       lng: Number(res?.lng),
-      totalCost: Number(res?.totalCost),
-
       cost: Number(res[0]?.cost),
       // biodigesterServiceId: Number(res[0]?.biodigesterService),
       serviceAreaId: Number(res[0]?.serviceArea),
@@ -28,7 +26,7 @@ export async function POST(request: Request) {
       discountedCost: Number(res[0]?.discountedCost),
       actualCost: Number(res[0]?.actualCost),
       gpsAccuracy: Number(res[0]?.gpsAccuracy),
-     
+
       // trips: Number(res[0]?.trips),
       // paymentStatus: Number(res[0]?.paymentStatus),
       serviceId: 3,

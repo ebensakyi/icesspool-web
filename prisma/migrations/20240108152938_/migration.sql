@@ -524,7 +524,7 @@ CREATE TABLE `Transaction` (
     `gpsAccuracy` DECIMAL(10, 2) NULL,
     `lat` DECIMAL(10, 8) NOT NULL,
     `lng` DECIMAL(10, 8) NOT NULL,
-    `trips` INTEGER NOT NULL,
+    `trips` INTEGER NOT NULL DEFAULT 1,
     `paymentStatus` INTEGER NULL DEFAULT 0,
     `currentStatus` INTEGER NOT NULL DEFAULT 1,
     `requestTypeId` INTEGER NULL DEFAULT 1,
@@ -535,8 +535,9 @@ CREATE TABLE `Transaction` (
     `customerName` VARCHAR(100) NULL,
     `customerPhoneNumber` VARCHAR(100) NULL,
     `serviceId` INTEGER NOT NULL,
-    `operatorId` INTEGER NOT NULL,
+    `operatorId` INTEGER NULL,
     `clientId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -712,10 +713,13 @@ ALTER TABLE `TruckEmptyingTransaction` ADD CONSTRAINT `TruckEmptyingTransaction_
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_operatorId_fkey` FOREIGN KEY (`operatorId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_operatorId_fkey` FOREIGN KEY (`operatorId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biodigesterTypeId_fkey` FOREIGN KEY (`biodigesterTypeId`) REFERENCES `BiodigesterType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

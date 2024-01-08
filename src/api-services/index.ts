@@ -90,7 +90,7 @@ export async function getTruckClasses(searchParams: any, service?: number) {
 
 export async function getEmptyingPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/services/septic-tank-emptying/pricing?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/services/septic-tank/pricing?serviceId=${service}`,
       { cache: "no-store" }
     );
   

@@ -57,7 +57,7 @@ const getServiceAreaBoundaries = async () => {
 //   return formattedCoordinates
 // };
 
-export const getUserRegion = async (userPoint: any) => {
+export const getUserArea = async (userPoint: any) => {
   let polygons = await getServiceAreaBoundaries();
   //let whereIsUser = await isPointInsidePolygon(userPoint, polygons);
   // console.log("whereIsUseruserPointx==> ", userPoint);

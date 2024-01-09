@@ -37,8 +37,14 @@ export async function POST(request: Request) {
 
     const response = await prisma.transaction.create({ data });
 
+    // transactionId       String          @db.VarChar(255)
+    // biodigesterTypeId   Int
+    // customerName        String?         @db.VarChar(100)
+    // customerPhoneNumber String?         @db.VarChar(100)
+    // unitCost               Decimal                  @db.Decimal(10, 2)
 
- await prisma.biodigesterTransaction.createMany({ data:requestDetails });
+
+ //await prisma.biodigesterTransaction.createMany({ data:requestDetails });
 
 
     return NextResponse.json({});

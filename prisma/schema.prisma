@@ -623,9 +623,6 @@ model BiodigesterTransaction {
   id                  String          @id @db.VarChar(255)
   transactionId       String          @db.VarChar(255)
   biodigesterTypeId   Int
-  requestSource       Int?
-  customerName        String?         @db.VarChar(100)
-  customerPhoneNumber String?         @db.VarChar(100)
   unitCost               Decimal                  @db.Decimal(10, 2)
   BiodigesterType     BiodigesterType @relation(fields: [biodigesterTypeId], references: [id])
   // unitCost              Decimal             @db.Decimal(10, 2)

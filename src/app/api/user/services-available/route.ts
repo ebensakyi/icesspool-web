@@ -5,10 +5,10 @@ import { logActivity } from "@/libs/log";
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
+    console.log("searchParams ",searchParams);
 
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
-    console.log(searchParams);
     
 
     // await logActivity("Visited data assignment page", session?.user?.id);

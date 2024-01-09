@@ -4,10 +4,11 @@ import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  try {
+//  try {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
+    console.log(res);
 
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
@@ -28,12 +29,10 @@ export async function POST(request: Request) {
       lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy),
 
-      cost: Number(res[0]?.cost),
       discountedCost: 1000, //Number(res[0]?.discountedCost),
-      actualCost: Number(res[0]?.totalCost),
+      cost: Number(res?.totalCost),
 
       // trips: Number(res[0]?.trips),
-      // paymentStatus: Number(res[0]?.paymentStatus),
       serviceId: 3,
       serviceAreaId: Number(res?.serviceAreaId),
 
@@ -42,18 +41,12 @@ export async function POST(request: Request) {
 
     const response = await prisma.transaction.create({ data });
 
-    // transactionId       String          @db.VarChar(255)
-    // biodigesterTypeId   Int
-    // customerName        String?         @db.VarChar(100)
-    // customerPhoneNumber String?         @db.VarChar(100)
-    // unitCost               Decimal                  @db.Decimal(10, 2)
-
     await prisma.biodigesterTransaction.createMany({ data: requestDetails });
 
     return NextResponse.json({});
-  } catch (error: any) {
-    console.log(error);
+  // } catch (error: any) {
+  //   console.log(error);
 
-    return NextResponse.json(error, { status: 500 });
-  }
+  //   return NextResponse.json(error, { status: 500 });
+  // }
 }

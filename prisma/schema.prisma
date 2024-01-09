@@ -620,11 +620,11 @@ model Transaction {
 }
 
 model BiodigesterTransaction {
-  id                  String          @id @db.VarChar(255)
-  transactionId       String          @db.VarChar(255)
-  biodigesterTypeId   Int
-  unitCost               Decimal                  @db.Decimal(10, 2)
-  BiodigesterType     BiodigesterType @relation(fields: [biodigesterTypeId], references: [id])
+  id                Int             @id @default(autoincrement())
+  transactionId     String          @db.VarChar(255)
+  biodigesterTypeId Int
+  unitCost          Decimal         @db.Decimal(10, 2)
+  BiodigesterType   BiodigesterType @relation(fields: [biodigesterTypeId], references: [id])
   // unitCost              Decimal             @db.Decimal(10, 2)
   // discountedCost        Decimal             @db.Decimal(10, 2)
   // actualCost            Decimal             @db.Decimal(10, 2)
@@ -637,9 +637,9 @@ model BiodigesterTransaction {
   // currentStatus         Int
   // requestTypeId         Int?                @default(1)
   // toiletType            String?             @db.VarChar(255)
-  deleted             Int?            @default(0)
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
 
   Transaction Transaction @relation(fields: [transactionId], references: [id])
 }

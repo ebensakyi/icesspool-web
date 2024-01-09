@@ -543,7 +543,7 @@ CREATE TABLE `Transaction` (
 
 -- CreateTable
 CREATE TABLE `BiodigesterTransaction` (
-    `id` VARCHAR(255) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `transactionId` VARCHAR(255) NOT NULL,
     `biodigesterTypeId` INTEGER NOT NULL,
     `unitCost` DECIMAL(10, 2) NOT NULL,

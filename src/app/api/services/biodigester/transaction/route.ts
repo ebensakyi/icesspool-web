@@ -11,14 +11,13 @@ export async function POST(request: Request) {
 
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
-        biodigesterServiceId: item.id,
+        biodigesterTypeId: item.id,
         unitCost: item.unitCost,
         name: item.name,
         transactionId: res.transactionId,
       })
     );   
     
-    console.log(requestDetails);
 
     // const userId = session?.user?.id;
 

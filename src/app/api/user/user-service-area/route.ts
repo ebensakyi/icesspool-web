@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let lat = Number(searchParams.get("lat"));
     let lng = Number(searchParams.get("lng"));
+    
 
     let response = await getUserArea([lat, lng]);
 

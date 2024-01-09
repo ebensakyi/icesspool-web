@@ -8,6 +8,9 @@ export async function GET(request: Request) {
 
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
+    console.log(searchParams);
+    
+
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.servicesInArea.findMany({

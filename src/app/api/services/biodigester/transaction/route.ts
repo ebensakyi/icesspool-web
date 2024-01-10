@@ -20,9 +20,7 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
-    console.log(res);
-    
+    console.log(res.requestDetails);
 
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
@@ -33,8 +31,10 @@ export async function POST(request: Request) {
       })
     );
 
-    console.log(requestDetails);
-    
+    const requestDetails1 = res.requestDetails.map(
+      (item: { id: any; unitCost: any; name: any }) =>
+        item.name + " : " + item.unitCost
+    );
 
     // const userId = session?.user?.id;
 
@@ -65,6 +65,10 @@ export async function POST(request: Request) {
       where: { id: Number(res?.userId) },
     });
 
+    // let service = await prisma.service.findFirst({
+    //   where: { id: Number(res?.serviceId) },
+    // });
+
     let transactionId = res.transactionId;
 
     await setDoc(doc(db, "transaction", transactionId), {
@@ -75,8 +79,8 @@ export async function POST(request: Request) {
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
       // trips: Number(res[0]?.trips),
-      serviceType: 3,
-      transactionDetails: "",
+      service: "Biodigester",
+      transactionDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
 
       //clientId: tr,

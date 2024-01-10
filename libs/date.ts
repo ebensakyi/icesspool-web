@@ -1,4 +1,4 @@
-const getCurrentDate = ()=> {
+export const getCurrentDate = ()=> {
     const today = new Date();
     
     const day = String(today.getDate()).padStart(2, '0');
@@ -8,7 +8,7 @@ const getCurrentDate = ()=> {
     return day +"/"+ month +"/"+ year;
   }
 
-  const getCurrentTime = ()=> {
+ export const getCurrentTime = ()=> {
     const today = new Date();
   
     const hours = String(today.getHours()).padStart(2, '0');

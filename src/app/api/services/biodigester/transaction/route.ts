@@ -10,6 +10,7 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
+import { getCurrentDate, getCurrentTime } from "@/libs/date";
 
 export async function POST(request: Request) {
   try {

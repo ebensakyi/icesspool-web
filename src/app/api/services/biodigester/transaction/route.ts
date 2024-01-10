@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       (item: { id: any; unitCost: any; name: any }) => ({
         biodigesterTypeId: item.id,
         unitCost: item.unitCost,
-        name: item.name,
+       // name: item.name,
         transactionId: res.transactionId,
       })
     );   
@@ -22,13 +22,14 @@ export async function POST(request: Request) {
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res[0]?.assignedFromUser} to ${res[0]?.assignedToUser}`, userId);
+console.log(res);
 
     const data = {
       id: res.transactionId,
       clientId: Number(res?.userId),
       lat: Number(res?.lat),
       lng: Number(res?.lng),
-      gpsAccuracy: Number(res?.accuracy),
+      gpsAccuracy: Number(res?.accuracy).toFixed(),
 
       discountedCost: 0, //Number(res[0]?.discountedCost),
       cost: Number(res?.totalCost),

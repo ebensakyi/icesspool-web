@@ -2,29 +2,38 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore/lite";
+import { app } from "@/libs/firebase-config";
 
 export async function POST(request: Request) {
- try {
+  try {
+    // const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
-
 
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
         biodigesterTypeId: item.id,
         unitCost: item.unitCost,
-       // name: item.name,
+        // name: item.name,
         transactionId: res.transactionId,
       })
-    );   
-    
+    );
 
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res[0]?.assignedFromUser} to ${res[0]?.assignedToUser}`, userId);
-console.log(res);
 
     const data = {
+      userId: Number(res?.userId),
       id: res.transactionId,
       clientId: Number(res?.userId),
       lat: Number(res?.lat),
@@ -45,6 +54,46 @@ console.log(res);
 
     await prisma.biodigesterTransaction.createMany({ data: requestDetails });
 
+    let user = await prisma.user.findFirst({
+      where: { id: Number(res?.userId) },
+    });
+
+    let transactionId = res.transactionId;
+
+    await setDoc(doc(db, "transaction", transactionId), {
+      transactionId: res.transactionId,
+      clientId: Number(res?.userId),
+      lat: Number(res?.lat),
+      lng: Number(res?.lng),
+      gpsAccuracy: Number(res?.accuracy).toFixed(),
+
+      // trips: Number(res[0]?.trips),
+      serviceType: 3,
+      transactionDetails: "",
+      serviceAreaId: Number(res?.serviceAreaId),
+
+      //clientId: tr,
+      txStatusCode: 1,
+      requestType: 1,
+      offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
+      customerName: user?.surname + " " + user?.otherNames,
+      customerPhone: user?.phoneNumber,
+      customerEmail: user?.email,
+
+      // toiletType: req.body.toiletType,
+      totalCost: Number(res?.totalCost),
+
+      unitCost: Number(res?.totalCost),
+      discountedTotalCost: Number(res?.totalCost),
+      createdDate: getCurrentDate() + " at " + getCurrentTime(),
+      deleted: false,
+    });
+
+    // await db
+    // .collection(process.env.TRANSACTION_STORE)
+    // .doc(res.transactionId)
+    // .set(data);
+
     return NextResponse.json({});
   } catch (error: any) {
     console.log(error);
@@ -52,3 +101,28 @@ console.log(res);
     return NextResponse.json(error, { status: 500 });
   }
 }
+
+const saveToFirestore = async (transaction: {}) => {
+  // let transaction = {
+  //   clientId: tr,
+  //   txStatusCode: 1,
+  //   requestType: 1,
+  //   offerMadeTime: date + " at " + time,
+  //   customerName: tx.customerName,
+  //   customerPhone: tx.customerPhoneNumber,
+  //   customerEmail: "",
+  //   gpsAccuracy: 0,
+  //   community: tx.community,
+  //   axle: Number(axle),
+  //   axleName: axleName,
+  //   tripsNumber: 1,
+  //   lat: tx.lat,
+  //   lng: tx.lng,
+  //   toiletType: req.body.toiletType,
+  //   unitCost: tx.unitCost,
+  //   actualTotalCost: tx.actualTotalCost,
+  //   discountedTotalCost: tx.discountedTotalCost,
+  //   createdDate: date + " at " + time,
+  //   deleted: false,
+  // };
+};

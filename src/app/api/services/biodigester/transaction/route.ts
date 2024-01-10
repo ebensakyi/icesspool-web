@@ -19,21 +19,27 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
+
+    console.log(res);
+    
+
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
-        biodigesterTypeId: item.id,
+        biodigesterServiceId: item.id,
         unitCost: item.unitCost,
         // name: item.name,
         transactionId: res.transactionId,
       })
     );
 
+    console.log(requestDetails);
+    
+
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res[0]?.assignedFromUser} to ${res[0]?.assignedToUser}`, userId);
 
     const data = {
-      userId: Number(res?.userId),
       id: res.transactionId,
       clientId: Number(res?.userId),
       lat: Number(res?.lat),

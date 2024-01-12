@@ -20,8 +20,6 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    console.log(res.requestDetails);
-
     const requestDetails = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
         biodigesterServiceId: item.id,
@@ -31,10 +29,23 @@ export async function POST(request: Request) {
       })
     );
 
+    console.log(requestDetails);
+
+    let biodigesterServices = await prisma.biodigesterService.findMany({});
+
+    console.log("biodigesterServices ", biodigesterServices);
+
     const requestDetails1 = res.requestDetails.map(
-      (item: { id: any; unitCost: any; name: any }) =>
-        item.name + " : " + item.unitCost
+      (item: { id: any; unitCost: any; name: any }) => ({
+        name: getNameById(biodigesterServices, item.id),
+        cost: item.unitCost,
+      })
+      // item.name + " : " + item.unitCost
     );
+
+
+
+    console.log(requestDetails1);
 
     // const userId = session?.user?.id;
 
@@ -137,3 +148,7 @@ const saveToFirestore = async (transaction: {}) => {
   //   deleted: false,
   // };
 };
+function getNameById(arr: any[], id: any) {
+  const foundObject = arr.find((item: { id: any }) => item.id === id);
+  return foundObject ? foundObject.name : null;
+}

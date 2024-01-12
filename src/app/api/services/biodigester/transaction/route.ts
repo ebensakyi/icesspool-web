@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 
       // trips: Number(res[0]?.trips),
       service: "Biodigester",
-      transactionDetails: requestDetails1,
+      biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
 
       //clientId: tr,

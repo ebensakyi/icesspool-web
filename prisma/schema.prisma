@@ -113,6 +113,7 @@ model Region {
   EmptyingServicePricing EmptyingServicePricing[]
   WaterServicePricing    WaterServicePricing[]
   ServiceArea            ServiceArea[]
+  District               District[]
 }
 
 model ServiceArea {
@@ -225,12 +226,16 @@ model BiodigesterServicePricing {
 // }
 
 model District {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.VarChar(255)
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(255)
+  abbrv String @db.VarChar(255)
+  regionId            Int
+
   deleted             Int?                  @default(0)
   createdAt           DateTime?
   updatedAt           DateTime?
   DistrictCoordinates DistrictCoordinates[]
+  Region              Region                @relation(fields: [regionId], references: [id])
 }
 
 model DistrictCoordinates {

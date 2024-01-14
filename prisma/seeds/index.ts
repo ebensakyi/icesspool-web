@@ -14,6 +14,7 @@ import { truckEmptying } from "./truck_emptying_pricing";
 import { servicePoints } from "./service_point";
 import { bservices } from "./biodigester_services";
 import { biodigesterTypes } from "./biodigester_type";
+import { districts } from './districts';
 
 async function main() {
 
@@ -58,6 +59,10 @@ async function main() {
 
     await prisma.biodigesterService.createMany({
       data: bservices,
+    });
+
+    await prisma.district.createMany({
+      data: districts,
     });
 
 }

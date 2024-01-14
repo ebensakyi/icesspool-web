@@ -224,14 +224,25 @@ model BiodigesterServicePricing {
 //   serviceId Int?
 // }
 
-// model District {
-//   id           Int       @id @default(autoincrement())
-//   regionId     Int
-//   districtName String    @db.VarChar(255)
-//   deleted      Int?      @default(0)
-//   createdAt    DateTime?
-//   updatedAt    DateTime?
-// }
+model District {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(255)
+  deleted             Int?                  @default(0)
+  createdAt           DateTime?
+  updatedAt           DateTime?
+  DistrictCoordinates DistrictCoordinates[]
+}
+
+model DistrictCoordinates {
+  id         Int       @id @default(autoincrement())
+  lat        Decimal   @db.Decimal(10, 8)
+  lng        Decimal   @db.Decimal(10, 8)
+  District   District  @relation(fields: [districtId], references: [id])
+  deleted    Int?      @default(0)
+  createdAt  DateTime?
+  updatedAt  DateTime?
+  districtId Int
+}
 
 model MainEntity {
   id   Int    @id @default(autoincrement())

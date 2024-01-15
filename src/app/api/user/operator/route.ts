@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     company: company,
     officeLocation: officeLocation,
     ghanaPostGPS: ghanaPostGPS,
-    licenseClassification: licenseClassification,
+    licenseClassification: Number(licenseClassification),
     licenseNumber: licenseNumber,
   }
     

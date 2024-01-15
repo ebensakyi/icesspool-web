@@ -83,14 +83,7 @@ export async function POST(request: Request) {
     // });
 
     await prisma.provider.create({
-      data: {
-        userId:user.id,
-        company: company,
-        officeLocation: officeLocation,
-        ghanaPostGPS: ghanaPostGPS,
-        licenseClassification: licenseClassification,
-        licenseNumber: licenseNumber,
-      },
+      data:operatorData
     });
     return NextResponse.json(user);
   } catch (error: any) {

@@ -371,11 +371,11 @@ export default function Operator({ data }: any) {
                                                 >
 
                                                     <option >Select classification</option>
-                                                    <option value="A" >A</option>
-                                                    <option value="B" >B</option>
-                                                    <option value="C">C</option>
-                                                    <option value="D">D</option>
-                                                    <option value="E">E</option>
+                                                    <option value="1" >A</option>
+                                                    <option value="2" >B</option>
+                                                    <option value="3">C</option>
+                                                    <option value="4">D</option>
+                                                    <option value="5">E</option>
 
                                                     {/* {data.userTypes.response.map((userType: any) => {
                                                         return (

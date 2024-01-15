@@ -481,16 +481,16 @@ model Page {
   // PageAction PageAction[] @relation("PageToPageAction")
 }
 
-model Operator {
-  id                    String   @id @db.VarChar(255)
+model Provider {
+  id                    Int          @id @default(autoincrement())
   userId                Int
-  idCardPicture         String?  @db.Text
+  idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)
   officeLocation        String?  @db.VarChar(255)
   ghanaPostGPS          String?  @db.VarChar(255)
   licenseNumber         String?  @db.VarChar(255)
   licenseClassification Int?
-  driversLicense        String?  @db.VarChar(255)
+  driversLicenseImg     String?  @db.VarChar(255)
   deleted               Int?     @default(0)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
@@ -508,7 +508,7 @@ model ProviderEarning {
   updatedAt      DateTime @updatedAt
 }
 
-model OperatorRating {
+model ProviderRating {
   id         Int      @id @default(autoincrement())
   operatorId String   @db.VarChar(255)
   rating     Decimal? @default(0.0) @db.Decimal(2, 1)
@@ -600,7 +600,7 @@ model TruckEmptyingTransaction {
   customerName          String?             @db.VarChar(100)
   customerPhoneNumber   String?             @db.VarChar(100)
   truckClassificationId Int
-  // Operator              User                @relation("operator", fields: [operatorId], references: [id])
+  // Provider              User                @relation("operator", fields: [operatorId], references: [id])
   // operatorId            Int
   // Client                User                @relation("client", fields: [clientId], references: [id])
   // clientId              Int
@@ -627,7 +627,7 @@ model Transaction {
   customerPhoneNumber    String?                  @db.VarChar(100)
   Service                Service                  @relation(fields: [serviceId], references: [id])
   serviceId              Int
-  Operator               User?                    @relation("operator", fields: [operatorId], references: [id])
+  Provider               User?                    @relation("operator", fields: [operatorId], references: [id])
   operatorId             Int?
   Client                 User                     @relation("client", fields: [clientId], references: [id])
   clientId               Int
@@ -703,7 +703,7 @@ model User {
 
   ScannerUser ScannerUser[]
   Vehicle     Vehicle[]
-  Operator    Operator[]
+  Provider    Provider[]
 }
 
 // model UserType {

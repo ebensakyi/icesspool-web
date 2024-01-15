@@ -68,8 +68,23 @@ export async function POST(request: Request) {
     let licenseClassification = res.licenseClassification;
     let licenseNumber = res.licenseNumber;
 
-    const operator = await prisma.operator.create({
+   let operatorData =  {
+    userId:user.id,
+    company: company,
+    officeLocation: officeLocation,
+    ghanaPostGPS: ghanaPostGPS,
+    licenseClassification: licenseClassification,
+    licenseNumber: licenseNumber,
+  }
+    
+
+    // const operator = await prisma.provider.create({
+    //   data: operatorData
+    // });
+
+    await prisma.provider.create({
       data: {
+        userId:user.id,
         company: company,
         officeLocation: officeLocation,
         ghanaPostGPS: ghanaPostGPS,

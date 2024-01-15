@@ -15,7 +15,7 @@ export default function Operator({ data }: any) {
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    
+
 
 
 
@@ -38,7 +38,12 @@ export default function Operator({ data }: any) {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
-    // const [region, setRegion] = useState("");
+    const [company, setCompany] = useState("");
+    const [officeLocation, setOfficeLocation] = useState("");
+    const [licenseClassification, setLicenseClassification] = useState("");
+    const [driversLicence, setDriversLicence] = useState("");
+    const [ghanaPostGPS, setGhanaPostGPS] = useState("");
+    const [licenseNumber, setLicenseNumber] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -117,7 +122,7 @@ export default function Operator({ data }: any) {
             // if (designation == "") {
             //     return toast.error("Designation cannot be empty");
             // }
-          
+
 
 
             let data = {
@@ -126,11 +131,15 @@ export default function Operator({ data }: any) {
                 email,
                 phoneNumber,
                 designation,
+                company,
+                officeLocation,
+                ghanaPostGPS,
+                licenseClassification,licenseNumber,
                 // region: Number(region),
                 serviceArea: Number(serviceArea),
             };
 
-            
+
 
 
             const response = await axios.post("/api/user/operator", data);
@@ -323,33 +332,75 @@ export default function Operator({ data }: any) {
                                     </div>
 
                                     <div className="row">
-                                        {/* <div className="col-sm-3  mb-3">
+                                        <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Designation/Role
-                                            </label>
+                                                Company name                                            </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
+                                                <input type="text" className="form-control" placeholder='Company' onChange={(e) => setCompany(e.target.value)} value={company} />
                                             </div>
-                                        </div> */}
-                                        {/* <div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select user type</label>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Office location                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Ghana Post GPS                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='Ghana Post GPS' onChange={(e) => setGhanaPostGPS(e.target.value)} value={ghanaPostGPS} />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                License Number                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-3 mb-3">
+                                            <label className="col-sm-12 col-form-label">Select licence classification</label>
                                             <div className="col-sm-12">
                                                 <select
-                                                    onChange={(e: any) => setUserType(e.target.value)}
+                                                    onChange={(e: any) => setLicenseClassification(e.target.value)}
                                                     className="form-select"
                                                     aria-label="Default select example"
-                                                    value={userType}
+                                                    value={licenseClassification}
                                                 >
 
-                                                    <option >Select user type</option>
-                                                    {data.userTypes.response.map((userType: any) => {
+                                                    <option >Select classification</option>
+                                                    <option value="A" >A</option>
+                                                    <option value="B" >B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                    <option value="E">E</option>
+
+                                                    {/* {data.userTypes.response.map((userType: any) => {
                                                         return (
                                                             <option key={userType.id} value={userType.id}>{userType.name}</option>
                                                         )
-                                                    })}
+                                                    })} */}
                                                 </select>
                                             </div>
-                                        </div> */}
+                                        </div>
+
+                                        <div className="col-sm-3  mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                               Driver's Passport picture                                           </label>
+                                            <div className="col-sm-12">
+                                                <input className="form-control" type="file" id="formFile" onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
+                                                {/* <input type="file" className="form-control" placeholder='Passport picture' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} /> */}
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Drivers license                                           </label>
+                                            <div className="col-sm-12">
+                                                <input type="file" className="form-control" placeholder='Drivers license ' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
+                                            </div>
+                                        </div>
                                         <div className="col-sm-3  mb-3">
                                             <label className="col-sm-12 col-form-label">Select service area</label>
 

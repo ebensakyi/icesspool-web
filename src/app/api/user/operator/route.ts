@@ -10,7 +10,6 @@ import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import Scanner from '../../../../components/user/Scanner';
 
 const XLSX = require("xlsx");
 export async function POST(request: Request) {
@@ -42,11 +41,7 @@ export async function POST(request: Request) {
       email: res.email,
       phoneNumber: res.phoneNumber,
       password: hashedPassword,
-     
     };
-
-    console.log("data====> ",data);
-    
 
     let count = await prisma.user.count({
       where: {
@@ -66,6 +61,22 @@ export async function POST(request: Request) {
       res.phoneNumber,
       `The temporal password for iCesspool App is ${password}`
     );
+
+    let company = res.company;
+    let officeLocation = res.officeLocation;
+    let ghanaPostGPS = res.ghanaPostGPS;
+    let licenseClassification = res.licenseClassification;
+    let licenseNumber = res.licenseNumber;
+
+    const operator = await prisma.operator.create({
+      data: {
+        company: company,
+        officeLocation: officeLocation,
+        ghanaPostGPS: ghanaPostGPS,
+        licenseClassification: licenseClassification,
+        licenseNumber: licenseNumber,
+      },
+    });
     return NextResponse.json(user);
   } catch (error: any) {
     console.log(error);
@@ -135,7 +146,7 @@ export async function GET(request: Request) {
         //     : { districtId: Number(districtId), deleted: 0 },
         include: {
           UserType: true,
-        //  Scanner:true
+          //  Scanner:true
         },
         orderBy: {
           id: "desc",
@@ -229,7 +240,6 @@ export async function GET(request: Request) {
       //       }
       //     : { deleted: 0 },
       include: {
-      
         UserType: true,
       },
       orderBy: {
@@ -268,7 +278,7 @@ export async function GET(request: Request) {
       //               mode: "insensitive",
       //             },
       //           },
-              
+
       //         ],
       //         deleted: 0,
       //       }
@@ -349,7 +359,7 @@ export async function DELETE(request: Request) {
       where: { id: Number(userId) },
     });
 
-    let updatedPhoneNumber = user?.phoneNumber+"-deleted-" + uuidv4();
+    let updatedPhoneNumber = user?.phoneNumber + "-deleted-" + uuidv4();
     await prisma.user.update({
       where: { id: Number(userId) },
       data: {

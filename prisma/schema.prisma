@@ -143,6 +143,7 @@ model ServiceArea {
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
+  User                      User[]
 }
 
 model ServicesInArea {
@@ -482,7 +483,7 @@ model Page {
 }
 
 model Provider {
-  id                    Int          @id @default(autoincrement())
+  id                    Int      @id @default(autoincrement())
   userId                Int
   idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)
@@ -704,6 +705,9 @@ model User {
   ScannerUser ScannerUser[]
   Vehicle     Vehicle[]
   Provider    Provider[]
+
+  ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
+  serviceAreaId Int?
 }
 
 // model UserType {

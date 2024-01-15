@@ -40,6 +40,7 @@ export async function POST(request: Request) {
       otherNames: res.otherNames,
       email: res.email,
       phoneNumber: res.phoneNumber,
+      serviceAreaId: res.serviceAreaId,
       password: hashedPassword,
     };
 

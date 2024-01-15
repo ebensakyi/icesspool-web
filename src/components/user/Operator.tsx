@@ -15,7 +15,6 @@ export default function Operator({ data }: any) {
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    console.log(data);
     
 
 
@@ -134,7 +133,7 @@ export default function Operator({ data }: any) {
             
 
 
-            const response = await axios.post("/api/user/admin", data);
+            const response = await axios.post("/api/user/operator", data);
 
             if (response.status == 201) {
                 return toast.error("User's phone number already used.\nChange number and try again");

@@ -362,7 +362,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                                                 </button>
                                                                             </li>
 
-                                                                            <li>
+                                                                            {/* <li>
                                                                                 <button
                                                                                     className="dropdown-item btn btn-sm "
                                                                                     onClick={(e) => {
@@ -374,7 +374,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                                                     Delete
                                                                                 </button>
 
-                                                                            </li>
+                                                                            </li> */}
                                                                         </ul>
                                                                     </div>
                                                                 </div>

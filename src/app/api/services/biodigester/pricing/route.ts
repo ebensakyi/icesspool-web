@@ -13,15 +13,12 @@ export async function POST(request: Request) {
 
     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
-    
     const data = {
       status: Number(res?.status),
       cost: Number(res?.cost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
     };
-
-    
 
     const response = await prisma.biodigesterServicePricing.create({ data });
 
@@ -63,8 +60,6 @@ export async function PUT(request: Request) {
 
 export async function GET(request: Request) {
   try {
-
-    
     let { searchParams } = new URL(request.url);
 
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
@@ -72,17 +67,15 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let platform = Number(searchParams.get("platform"));
 
-
     console.log(serviceAreaId);
     console.log(platform);
-
 
     const session: any = await getServerSession(authOptions);
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const response = await prisma.biodigesterServicePricing.findMany({
-      where: { deleted: 0, },
+      where: { deleted: 0 },
       include: {
         ServiceArea: true,
         BiodigesterService: {
@@ -91,13 +84,11 @@ export async function GET(request: Request) {
           },
         },
       },
-    });    
-
+    });
 
     if (platform == 2) {
-
       const response = await prisma.biodigesterServicePricing.findMany({
-        where: { deleted: 0, serviceAreaId: Number(serviceAreaId) },
+        where: { deleted: 0, status: 1, serviceAreaId: Number(serviceAreaId) },
         include: {
           ServiceArea: true,
           BiodigesterService: {
@@ -106,9 +97,10 @@ export async function GET(request: Request) {
             },
           },
         },
-      });    
+      });
       let res = await response.map((data) => ({
         id: data.id,
+        biodigesterServiceId:data.biodigesterServiceId,
         name: data.BiodigesterService.name,
         cost: data.cost,
         type: data.BiodigesterService.BiodigesterType.name,
@@ -118,7 +110,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ response });
   } catch (error) {
-    console.log("----",error);
+    console.log("----", error);
 
     return NextResponse.json(error);
   }

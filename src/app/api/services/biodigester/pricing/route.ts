@@ -21,7 +21,6 @@ export async function POST(request: Request) {
       serviceAreaId: Number(res?.serviceArea),
     };
 
-    console.log(data);
     
 
     const response = await prisma.biodigesterServicePricing.create({ data });
@@ -72,6 +71,11 @@ export async function GET(request: Request) {
 
     let userId = Number(searchParams.get("userId"));
     let platform = Number(searchParams.get("platform"));
+
+
+    console.log(serviceAreaId);
+    console.log(platform);
+
 
     const session: any = await getServerSession(authOptions);
 

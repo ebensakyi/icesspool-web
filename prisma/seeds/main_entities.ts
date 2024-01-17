@@ -6,7 +6,7 @@ export const entities = [
     name: "MMDA",
   },
   {
-    name: "Operators",
+    name: "Service Providers",
   },
 
 ];

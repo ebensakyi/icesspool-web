@@ -6,7 +6,7 @@ export const userTypes = [
     name: "Scanners",
   },
   {
-    name: "Operators",
+    name: "Service Providers",
   },
   {
     name: "Customer",

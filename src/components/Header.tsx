@@ -396,9 +396,9 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/user/operator">
+                                    <Link href="/user/service-provider">
                                         <i className="bi bi-circle" />
-                                        <span> Operators</span>
+                                        <span> Service Provider</span>
                                     </Link>
                                 </li>
                                 <li>
@@ -453,7 +453,7 @@ export default function Header() {
                                 <li>
                                     <Link href="/finance/operate">
                                         <i className="bi bi-circle" />
-                                        <span>Operator</span>
+                                        <span>Service Provider</span>
                                     </Link>
                                 </li>
                                 <li>
@@ -492,9 +492,9 @@ export default function Header() {
 
 
                                 <li>
-                                    <Link href="/finance/withdrawal/operator">
+                                    <Link href="/finance/withdrawal/service-provider">
                                         <i className="bi bi-circle" />
-                                        <span>Operator</span>
+                                        <span>Service provider</span>
                                     </Link>
                                 </li>
                                 <li>

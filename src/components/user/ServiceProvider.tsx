@@ -9,7 +9,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
 
-export default function Operator({ data }: any) {
+export default function ServiceProvider({ data }: any) {
 
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -271,7 +271,7 @@ export default function Operator({ data }: any) {
                 pauseOnHover
             /> */}
             <div className="pagetitle">
-                <h1>OPERATORS</h1>
+                <h1>SERVICE PROVIDERS</h1>
                 {/* <nav>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

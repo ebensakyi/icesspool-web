@@ -211,6 +211,9 @@ export async function GET(request: Request) {
     }
 
     const response = await prisma.user.findMany({
+      where:{
+        userTypeId:3
+      },
       // where:
       //   searchText != ""
       //     ? {

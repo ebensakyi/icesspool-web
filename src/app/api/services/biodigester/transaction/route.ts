@@ -18,6 +18,9 @@ export async function POST(request: Request) {
     const db = getFirestore(app);
 
     const res = await request.json();
+
+    console.log(res);
+    
     const session: any = await getServerSession(authOptions);
 
     const requestDetails = res.requestDetails.map(
@@ -88,6 +91,7 @@ export async function POST(request: Request) {
 
       // trips: Number(res[0]?.trips),
       service: "Biodigester",
+      serviceId:3,
       biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
 

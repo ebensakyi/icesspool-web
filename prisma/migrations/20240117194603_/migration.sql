@@ -270,14 +270,14 @@ CREATE TABLE `Notification` (
 -- CreateTable
 CREATE TABLE `MomoAccount` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `operatorId` VARCHAR(255) NOT NULL,
+    `serviceProviderId` VARCHAR(255) NOT NULL,
     `momoNumber` VARCHAR(255) NULL,
     `momoNetwork` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `operatorId`(`operatorId`),
+    UNIQUE INDEX `serviceProviderId`(`serviceProviderId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -428,7 +428,7 @@ CREATE TABLE `Provider` (
 CREATE TABLE `ProviderEarning` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `transactionId` VARCHAR(255) NOT NULL,
-    `operatorId` VARCHAR(255) NULL,
+    `serviceProviderId` VARCHAR(255) NULL,
     `amount` DECIMAL(10, 2) NOT NULL,
     `completionDate` VARCHAR(255) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
@@ -442,7 +442,7 @@ CREATE TABLE `ProviderEarning` (
 -- CreateTable
 CREATE TABLE `ProviderRating` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `operatorId` VARCHAR(255) NOT NULL,
+    `serviceProviderId` VARCHAR(255) NOT NULL,
     `rating` DECIMAL(2, 1) NULL DEFAULT 0.0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -521,8 +521,8 @@ CREATE TABLE `TruckEmptyingTransaction` (
     `id` VARCHAR(255) NOT NULL,
     `community` VARCHAR(255) NULL,
     `gpsAccuracy` DECIMAL(10, 2) NULL,
-    `lat` DECIMAL(10, 8) NOT NULL,
-    `lng` DECIMAL(10, 8) NOT NULL,
+    `lat` DECIMAL(65, 30) NOT NULL,
+    `lng` DECIMAL(65, 30) NOT NULL,
     `trips` INTEGER NOT NULL,
     `paymentStatus` INTEGER NULL DEFAULT 0,
     `currentStatus` INTEGER NOT NULL,
@@ -550,6 +550,7 @@ CREATE TABLE `Transaction` (
     `lng` DECIMAL(10, 8) NOT NULL,
     `trips` INTEGER NOT NULL DEFAULT 1,
     `paymentStatus` INTEGER NULL DEFAULT 0,
+    `transactionSchedule` INTEGER NULL DEFAULT 0,
     `currentStatus` INTEGER NOT NULL DEFAULT 1,
     `requestTypeId` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
@@ -559,7 +560,7 @@ CREATE TABLE `Transaction` (
     `customerName` VARCHAR(100) NULL,
     `customerPhoneNumber` VARCHAR(100) NULL,
     `serviceId` INTEGER NOT NULL,
-    `operatorId` INTEGER NULL,
+    `serviceProviderId` INTEGER NULL,
     `clientId` INTEGER NOT NULL,
     `serviceAreaId` INTEGER NOT NULL,
 
@@ -610,6 +611,7 @@ CREATE TABLE `User` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userTypeId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     UNIQUE INDEX `User_phoneNumber_key`(`phoneNumber`),
     PRIMARY KEY (`id`)
@@ -638,7 +640,7 @@ CREATE TABLE `Vehicle` (
 -- CreateTable
 CREATE TABLE `Withdrawal` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `operatorId` VARCHAR(255) NOT NULL,
+    `serviceProviderId` VARCHAR(255) NOT NULL,
     `transactionId` VARCHAR(255) NULL,
     `amount` INTEGER NULL,
     `disbursementDate` DATETIME(3) NULL,
@@ -745,7 +747,7 @@ ALTER TABLE `TruckEmptyingTransaction` ADD CONSTRAINT `TruckEmptyingTransaction_
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_operatorId_fkey` FOREIGN KEY (`operatorId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -764,6 +766,9 @@ ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biod
 
 -- AddForeignKey
 ALTER TABLE `User` ADD CONSTRAINT `User_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `User` ADD CONSTRAINT `User_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

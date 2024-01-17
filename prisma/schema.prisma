@@ -586,8 +586,8 @@ model TruckEmptyingTransaction {
 
   community             String?             @db.VarChar(255)
   gpsAccuracy           Decimal?            @db.Decimal(10, 2)
-  lat                   Decimal             @db.Decimal(10, 8)
-  lng                   Decimal             @db.Decimal(10, 8)
+  lat                   Decimal            
+  lng                   Decimal           
   trips                 Int
   paymentStatus         Int?                @default(0)
   currentStatus         Int
@@ -614,8 +614,8 @@ model Transaction {
   cost                   Decimal                  @db.Decimal(10, 2)
   community              String?                  @db.VarChar(255)
   gpsAccuracy            Decimal?                 @db.Decimal(10, 2)
-  lat                    Decimal                  @db.Decimal(10, 8)
-  lng                    Decimal                  @db.Decimal(10, 8)
+  lat                    Decimal                  
+  lng                    Decimal                 
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
   transactionSchedule    Int?                     @default(0)

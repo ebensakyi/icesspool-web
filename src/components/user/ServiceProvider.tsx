@@ -142,7 +142,7 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-            const response = await axios.post("/api/user/operator", data);
+            const response = await axios.post("/api/user/service-provider", data);
 
             if (response.status == 201) {
                 return toast.error("User's phone number already used.\nChange number and try again");

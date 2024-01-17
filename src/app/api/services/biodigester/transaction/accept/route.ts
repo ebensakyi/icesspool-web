@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       data: {
         serviceProviderId: Number(serviceProviderId),
         transactionSchedule: Number(transactionSchedule),
-        currentStatus: 1
+        currentStatus: 2
       },
     });
 

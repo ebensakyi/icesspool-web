@@ -69,22 +69,21 @@ export async function POST(request: Request) {
     let licenseClassification = res.licenseClassification;
     let licenseNumber = res.licenseNumber;
 
-   let operatorData =  {
-    userId:user.id,
-    company: company,
-    officeLocation: officeLocation,
-    ghanaPostGPS: ghanaPostGPS,
-    licenseClassification: Number(licenseClassification),
-    licenseNumber: licenseNumber,
-  }
-    
+    let operatorData = {
+      userId: user.id,
+      company: company,
+      officeLocation: officeLocation,
+      ghanaPostGPS: ghanaPostGPS,
+      licenseClassification: Number(licenseClassification),
+      licenseNumber: licenseNumber,
+    };
 
     // const operator = await prisma.provider.create({
     //   data: operatorData
     // });
 
     await prisma.provider.create({
-      data:operatorData
+      data: operatorData,
     });
     return NextResponse.json(user);
   } catch (error: any) {
@@ -211,8 +210,8 @@ export async function GET(request: Request) {
     }
 
     const response = await prisma.user.findMany({
-      where:{
-        userTypeId:3
+      where: {
+        userTypeId: 3,
       },
       // where:
       //   searchText != ""

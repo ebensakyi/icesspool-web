@@ -21,6 +21,7 @@ export async function POST(request: Request) {
     const session: any = await getServerSession(authOptions);
 
 
+console.log(res);
 
   
 

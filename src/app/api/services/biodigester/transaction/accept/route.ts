@@ -20,18 +20,23 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
+    let serviceProviderId = res.userId;
+    let transactionId = res.transactionId;
+    let transactionSchedule = res.transactionSchedule;
 
-console.log(res);
+    let transaction = await prisma.transaction.update({
+      where: { id: transactionId },
+      data: {
+        serviceProviderId: Number(serviceProviderId),
+        transactionSchedule: Number(transactionSchedule),
+        currentStatus: 1
+      },
+    });
 
-  
+    //Update firestore
 
+    
 
-
-    // const userId = session?.user?.id;
-
-    // await logActivity(`Assigned data from ${res[0]?.assignedFromUser} to ${res[0]?.assignedToUser}`, userId);
-
-  
     return NextResponse.json({});
   } catch (error: any) {
     console.log(error);

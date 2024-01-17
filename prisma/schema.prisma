@@ -304,13 +304,13 @@ model Notification {
 }
 
 model MomoAccount {
-  id          Int      @id @default(autoincrement())
-  operatorId  String   @unique(map: "operatorId") @db.VarChar(255)
-  momoNumber  String?  @db.VarChar(255)
-  momoNetwork Int?
-  deleted     Int?     @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  serviceProviderId String   @unique(map: "serviceProviderId") @db.VarChar(255)
+  momoNumber        String?  @db.VarChar(255)
+  momoNetwork       Int?
+  deleted           Int?     @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model MomoNetwork {
@@ -499,23 +499,23 @@ model Provider {
 }
 
 model ProviderEarning {
-  id             Int      @id @default(autoincrement())
-  transactionId  String   @unique(map: "transactionId") @db.VarChar(255)
-  operatorId     String?  @db.VarChar(255)
-  amount         Decimal  @db.Decimal(10, 2)
-  completionDate String   @db.VarChar(255)
-  deleted        Int?     @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  transactionId     String   @unique(map: "transactionId") @db.VarChar(255)
+  serviceProviderId String?  @db.VarChar(255)
+  amount            Decimal  @db.Decimal(10, 2)
+  completionDate    String   @db.VarChar(255)
+  deleted           Int?     @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model ProviderRating {
-  id         Int      @id @default(autoincrement())
-  operatorId String   @db.VarChar(255)
-  rating     Decimal? @default(0.0) @db.Decimal(2, 1)
-  deleted    Int?     @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  serviceProviderId String   @db.VarChar(255)
+  rating            Decimal? @default(0.0) @db.Decimal(2, 1)
+  deleted           Int?     @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model TransactionRating {
@@ -601,8 +601,8 @@ model TruckEmptyingTransaction {
   customerName          String?             @db.VarChar(100)
   customerPhoneNumber   String?             @db.VarChar(100)
   truckClassificationId Int
-  // Provider              User                @relation("operator", fields: [operatorId], references: [id])
-  // operatorId            Int
+  // Provider              User                @relation("serviceProvider", fields: [serviceProviderId], references: [id])
+  // serviceProviderId            Int
   // Client                User                @relation("client", fields: [clientId], references: [id])
   // clientId              Int
 }
@@ -618,6 +618,7 @@ model Transaction {
   lng                    Decimal                  @db.Decimal(10, 8)
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
+  transactionSchedule    Int?                     @default(0)
   currentStatus          Int                      @default(1)
   requestTypeId          Int?                     @default(1)
   deleted                Int?                     @default(0)
@@ -628,8 +629,8 @@ model Transaction {
   customerPhoneNumber    String?                  @db.VarChar(100)
   Service                Service                  @relation(fields: [serviceId], references: [id])
   serviceId              Int
-  Provider               User?                    @relation("operator", fields: [operatorId], references: [id])
-  operatorId             Int?
+  Provider               User?                    @relation("serviceProvider", fields: [serviceProviderId], references: [id])
+  serviceProviderId      Int?
   Client                 User                     @relation("client", fields: [clientId], references: [id])
   clientId               Int
   BiodigesterTransaction BiodigesterTransaction[]
@@ -692,9 +693,9 @@ model User {
   deleted         Int?          @default(0)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  operator        Transaction[] @relation("operator")
+  serviceProvider Transaction[] @relation("serviceProvider")
   client          Transaction[] @relation("client")
-  // operator Transaction[] @relation("operator", fields: [operatorId], references: [id])
+  // serviceProvider Transaction[] @relation("serviceProvider", fields: [serviceProviderId], references: [id])
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
   // UserType        UserType?     @relation(fields: [userTypeId], references: [id])
   userTypeId      Int
@@ -739,16 +740,16 @@ model Vehicle {
 }
 
 model Withdrawal {
-  id               Int       @id @default(autoincrement())
-  operatorId       String    @db.VarChar(255)
-  transactionId    String?   @db.VarChar(255)
-  amount           Int?
-  disbursementDate DateTime?
-  status           Int?      @default(0)
-  approvedBy       Int?
-  deleted          Int?      @default(0)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id                Int       @id @default(autoincrement())
+  serviceProviderId String    @db.VarChar(255)
+  transactionId     String?   @db.VarChar(255)
+  amount            Int?
+  disbursementDate  DateTime?
+  status            Int?      @default(0)
+  approvedBy        Int?
+  deleted           Int?      @default(0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model ScannerUser {

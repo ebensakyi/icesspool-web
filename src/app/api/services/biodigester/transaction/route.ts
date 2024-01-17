@@ -29,11 +29,9 @@ export async function POST(request: Request) {
       })
     );
 
-    console.log(requestDetails);
 
     let biodigesterServices = await prisma.biodigesterService.findMany({});
 
-    console.log("biodigesterServices ", biodigesterServices);
 
     const requestDetails1 = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({

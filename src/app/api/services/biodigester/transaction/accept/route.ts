@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },
-      include: { Provider: true },
+      include: { ServiceProvider: true },
     });
 
     console.log("SP ",sp);
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
       await updateDoc(transactionRef, {
         txStatusCode: 2,
         spName: sp?.otherNames + " " + sp?.surname,
-        spCompany: sp?.Provider?.company,
+        spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
         spImageUrl: sp?.imagePath,
         transactionSchedule: transactionSchedule

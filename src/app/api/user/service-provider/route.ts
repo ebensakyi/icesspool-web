@@ -82,7 +82,7 @@ export async function POST(request: Request) {
     //   data: operatorData
     // });
 
-    await prisma.provider.create({
+    await prisma.serviceProvider.create({
       data: operatorData,
     });
     return NextResponse.json(user);

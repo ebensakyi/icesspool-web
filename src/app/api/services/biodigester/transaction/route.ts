@@ -13,7 +13,7 @@ import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
 
 export async function POST(request: Request) {
-  try {
+ // try {
     // const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
     const data = {
       id: res.transactionId,
-      clientId: Number(res?.userId),
+      customerId: Number(res?.userId),
       lat: Number(res?.lat),
       lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
 
     await setDoc(doc(db, "transaction", transactionId), {
       transactionId: res.transactionId,
-      clientId: Number(res?.userId),
+      customerId: Number(res?.userId),
       lat: Number(res?.lat),
       lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
@@ -118,37 +118,13 @@ export async function POST(request: Request) {
     // .set(data);
 
     return NextResponse.json({});
-  } catch (error: any) {
-    console.log(error);
+  // } catch (error: any) {
+  //   console.log(error);
 
-    return NextResponse.json(error, { status: 500 });
-  }
+  //   return NextResponse.json(error, { status: 500 });
+  // }
 }
 
-const saveToFirestore = async (transaction: {}) => {
-  // let transaction = {
-  //   clientId: tr,
-  //   txStatusCode: 1,
-  //   requestType: 1,
-  //   offerMadeTime: date + " at " + time,
-  //   customerName: tx.customerName,
-  //   customerPhone: tx.customerPhoneNumber,
-  //   customerEmail: "",
-  //   gpsAccuracy: 0,
-  //   community: tx.community,
-  //   axle: Number(axle),
-  //   axleName: axleName,
-  //   tripsNumber: 1,
-  //   lat: tx.lat,
-  //   lng: tx.lng,
-  //   toiletType: req.body.toiletType,
-  //   unitCost: tx.unitCost,
-  //   actualTotalCost: tx.actualTotalCost,
-  //   discountedTotalCost: tx.discountedTotalCost,
-  //   createdDate: date + " at " + time,
-  //   deleted: false,
-  // };
-};
 function getNameById(arr: any[], id: any) {
   const foundObject = arr.find((item: { id: any }) => item.id === id);
   return foundObject ? foundObject.name : null;

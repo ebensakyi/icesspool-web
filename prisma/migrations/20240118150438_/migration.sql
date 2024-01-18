@@ -407,7 +407,7 @@ CREATE TABLE `Page` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Provider` (
+CREATE TABLE `ServiceProvider` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `idCardImg` VARCHAR(255) NULL,
@@ -421,12 +421,12 @@ CREATE TABLE `Provider` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `Provider_userId_key`(`userId`),
+    UNIQUE INDEX `ServiceProvider_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ProviderEarning` (
+CREATE TABLE `ServiceProviderEarning` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `transactionId` VARCHAR(255) NOT NULL,
     `serviceProviderId` VARCHAR(255) NULL,
@@ -441,7 +441,7 @@ CREATE TABLE `ProviderEarning` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ProviderRating` (
+CREATE TABLE `ServiceProviderRating` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `serviceProviderId` VARCHAR(255) NOT NULL,
     `rating` DECIMAL(2, 1) NULL DEFAULT 0.0,
@@ -562,8 +562,9 @@ CREATE TABLE `Transaction` (
     `customerPhoneNumber` VARCHAR(100) NULL,
     `serviceId` INTEGER NOT NULL,
     `serviceProviderId` INTEGER NULL,
-    `clientId` INTEGER NOT NULL,
+    `customerId` INTEGER NOT NULL,
     `serviceAreaId` INTEGER NOT NULL,
+    `userId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -736,7 +737,7 @@ ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_pageId_fkey` FOREIGN KEY (`p
 ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_userTypeId_fkey` FOREIGN KEY (`userTypeId`) REFERENCES `UserType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Provider` ADD CONSTRAINT `Provider_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceProvider` ADD CONSTRAINT `ServiceProvider_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -751,10 +752,13 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceId_fkey` FOREIGN KE
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biodigesterServiceId_fkey` FOREIGN KEY (`biodigesterServiceId`) REFERENCES `BiodigesterService`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

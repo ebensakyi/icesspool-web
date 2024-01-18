@@ -482,9 +482,9 @@ model Page {
   // PageAction PageAction[] @relation("PageToPageAction")
 }
 
-model Provider {
+model ServiceProvider {
   id                    Int      @id @default(autoincrement())
-  userId                Int @unique
+  userId                Int      @unique
   idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)
   officeLocation        String?  @db.VarChar(255)
@@ -498,7 +498,7 @@ model Provider {
   User                  User     @relation(fields: [userId], references: [id])
 }
 
-model ProviderEarning {
+model ServiceProviderEarning {
   id                Int      @id @default(autoincrement())
   transactionId     String   @unique(map: "transactionId") @db.VarChar(255)
   serviceProviderId String?  @db.VarChar(255)
@@ -509,7 +509,7 @@ model ProviderEarning {
   updatedAt         DateTime @updatedAt
 }
 
-model ProviderRating {
+model ServiceProviderRating {
   id                Int      @id @default(autoincrement())
   serviceProviderId String   @db.VarChar(255)
   rating            Decimal? @default(0.0) @db.Decimal(2, 1)
@@ -558,7 +558,7 @@ model RatingBreakdown {
 
 model TxStatus {
   id        Int      @id @default(autoincrement())
-  name     String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -586,8 +586,8 @@ model TruckEmptyingTransaction {
 
   community             String?             @db.VarChar(255)
   gpsAccuracy           Decimal?            @db.Decimal(10, 2)
-  lat                   Decimal            
-  lng                   Decimal           
+  lat                   Decimal
+  lng                   Decimal
   trips                 Int
   paymentStatus         Int?                @default(0)
   currentStatus         Int
@@ -614,8 +614,8 @@ model Transaction {
   cost                   Decimal                  @db.Decimal(10, 2)
   community              String?                  @db.VarChar(255)
   gpsAccuracy            Decimal?                 @db.Decimal(10, 2)
-  lat                    Decimal                  
-  lng                    Decimal                 
+  lat                    Decimal
+  lng                    Decimal
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
   transactionSchedule    Int?                     @default(0)
@@ -629,13 +629,15 @@ model Transaction {
   customerPhoneNumber    String?                  @db.VarChar(100)
   Service                Service                  @relation(fields: [serviceId], references: [id])
   serviceId              Int
-  Provider               User?                    @relation("serviceProvider", fields: [serviceProviderId], references: [id])
+  ServiceProvider        User?                    @relation("serviceProvider", fields: [serviceProviderId], references: [id])
   serviceProviderId      Int?
-  Client                 User                     @relation("client", fields: [clientId], references: [id])
-  clientId               Int
+  Customer               User                     @relation("customer", fields: [customerId], references: [id])
+  customerId             Int
   BiodigesterTransaction BiodigesterTransaction[]
   ServiceArea            ServiceArea              @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId          Int
+  User                   User?                    @relation(fields: [userId], references: [id])
+  userId                 Int?
 }
 
 model BiodigesterTransaction {
@@ -694,7 +696,7 @@ model User {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   serviceProvider Transaction[] @relation("serviceProvider")
-  client          Transaction[] @relation("client")
+  customer        Transaction[] @relation("customer")
   // serviceProvider Transaction[] @relation("serviceProvider", fields: [serviceProviderId], references: [id])
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
   // UserType        UserType?     @relation(fields: [userTypeId], references: [id])
@@ -703,12 +705,13 @@ model User {
   // UserType UserType @relation(fields: [userTypeId], references: [id])
   UserType UserType @relation(fields: [userTypeId], references: [id])
 
-  ScannerUser ScannerUser[]
-  Vehicle     Vehicle[]
-  Provider    Provider?
+  ScannerUser     ScannerUser[]
+  Vehicle         Vehicle[]
+  ServiceProvider ServiceProvider?
 
-  ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
+  ServiceArea   ServiceArea?  @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId Int?
+  Transaction   Transaction[]
 }
 
 // model UserType {

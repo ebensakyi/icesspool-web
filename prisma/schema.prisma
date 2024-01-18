@@ -484,7 +484,7 @@ model Page {
 
 model Provider {
   id                    Int      @id @default(autoincrement())
-  userId                Int
+  userId                Int @unique
   idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)
   officeLocation        String?  @db.VarChar(255)
@@ -556,9 +556,9 @@ model RatingBreakdown {
 //   updatedAt     DateTime @updatedAt
 // }
 
-model Status {
+model TxStatus {
   id        Int      @id @default(autoincrement())
-  state     String   @db.VarChar(255)
+  name     String   @db.VarChar(255)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -705,7 +705,7 @@ model User {
 
   ScannerUser ScannerUser[]
   Vehicle     Vehicle[]
-  Provider    Provider[]
+  Provider    Provider?
 
   ServiceArea   ServiceArea? @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId Int?

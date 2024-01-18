@@ -8,6 +8,7 @@ import {
   getDocs,
   doc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
@@ -29,13 +30,32 @@ export async function POST(request: Request) {
       data: {
         serviceProviderId: Number(serviceProviderId),
         transactionSchedule: Number(transactionSchedule),
-        currentStatus: 2
+        currentStatus: 2,
       },
     });
 
+    let sp = await prisma.user.findFirst({
+      where: { id: serviceProviderId },
+      include: { Provider: true },
+    });
+
+    console.log("SP ",sp);
+    
+
     //Update firestore
 
-    
+    if (transaction) {
+      const transactionRef = doc(db, "transaction", transactionId);
+
+      await updateDoc(transactionRef, {
+        txStatusCode: 2,
+        spName: sp?.otherNames + " " + sp?.surname,
+        spCompany: sp?.Provider?.company,
+        spPhoneNumber: sp?.phoneNumber,
+        spImageUrl: sp?.imagePath,
+        transactionSchedule: transactionSchedule
+      });
+    }
 
     return NextResponse.json({});
   } catch (error: any) {

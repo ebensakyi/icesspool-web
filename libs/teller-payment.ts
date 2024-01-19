@@ -4,6 +4,9 @@ export const initiatePayment = async (
   paymentId: String,
   amount: String
 ) => {
+
+
+  
   const options: any = {
     method: "POST",
     url: process.env.TELLER_URL,
@@ -27,5 +30,5 @@ export const initiatePayment = async (
 
   let response = await axios.request(options);
 
-  return response
+  return response.data
 };

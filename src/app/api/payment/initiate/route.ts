@@ -9,35 +9,39 @@ import { initiatePayment } from "@/libs/teller-payment";
 
 export async function GET(request: Request) {
   try {
+    const session: any = await getServerSession(authOptions);
+
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
-    let paymentId = searchParams.get("paymentId");
-    let transactionId = searchParams.get("transactionId");
+    let paymentId: any = searchParams?.get("paymentId");
+    let transactionId: any = searchParams.get("transactionId");
 
-    const session: any = await getServerSession(authOptions);
-
-    const response = await prisma.region.findMany({
-      where: { deleted: 0 },
-    });
+    // const response = await prisma.region.findMany({
+    //   where: { deleted: 0 },
+    // });
 
     const transaction = await prisma.transaction.findFirst({
       where: { id: transactionId },
     });
 
-    let amount: String = transaction?.discountedCost;
+    console.log(transaction);
+    
+    let amount: String = transaction?.discountedCost?.toString();
+
     const convertedAmount = await converter(amount);
 
     const payment = await prisma.payment.findFirst({
       where: { transactionId: transaction?.id },
     });
 
+    console.log("amt =>", amount);
+    console.log("cnvrtd =>", convertedAmount);
+
     if (!payment) {
-      await await prisma.payment.create({
-        paymentId: paymentId,
-        transactionId: transaction?.id,
+      await prisma.payment.create({
+        data: { paymentId: paymentId, transactionId: transactionId },
       });
-      const convertedAmount = await converter(amount);
       const initiated = await initiatePayment(paymentId, convertedAmount);
 
       return NextResponse.json({ response: initiated });
@@ -45,11 +49,10 @@ export async function GET(request: Request) {
 
     await prisma.payment.update({
       data: { paymentId: paymentId },
-      where: { transactionId: payment.transactionId },
+      where: { id: payment.id },
     });
 
- 
-    const initiated = await initiatePayment(paymentId, amount);
+    const initiated = await initiatePayment(paymentId, convertedAmount);
 
     // return res
     //   .status(200)

@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
-      discountedCost: 0, //Number(res[0]?.discountedCost),
+      discountedCost: Number(res?.totalCost),
       cost: Number(res?.totalCost),
 
       // trips: Number(res[0]?.trips),

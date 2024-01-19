@@ -48,8 +48,8 @@ export async function GET(request: Request) {
           where: { id: Number(transaction?.serviceProviderId) },
         });
 
-        let phoneNumber: string = user?.phoneNumber;
-        const transactionId = transaction?.id;
+        let phoneNumber: any = user?.phoneNumber;
+        let transactionId:any = transaction?.id;
 
       
         // await db

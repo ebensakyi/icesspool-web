@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const initiateTellerPayment = async (
+export const initiatePayment = async (
   paymentId: String,
   amount: String
 ) => {

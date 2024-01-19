@@ -1,5 +1,4 @@
-export const converter = async (amt: String) => {
-  console.log("amountConverter ", amt);
+export const amtConverter = async (amt: string) => {
   if (amt.includes(".")) {
     let amtPart1 = amt.split(".")[0];
     let amtPart2 = amt.split(".")[1];

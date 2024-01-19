@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
-import { converter } from "@/libs/amount-converter";
+import { amtConverter } from "@/libs/amount-converter";
 import { initiatePayment } from "@/libs/teller-payment";
 
 export async function GET(request: Request) {
@@ -26,9 +26,9 @@ export async function GET(request: Request) {
     });
 
     
-    let amount: String = transaction?.discountedCost?.toString();
+    let amount: any = transaction?.discountedCost?.toString();
 
-    const convertedAmount = await converter(amount);
+    const convertedAmount = await amtConverter(amount);
 
     const payment = await prisma.payment.findFirst({
       where: { transactionId: transaction?.id },

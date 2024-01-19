@@ -51,17 +51,7 @@ export async function GET(request: Request) {
         let phoneNumber: any = user?.phoneNumber;
         let transactionId:any = transaction?.id;
 
-      
-        // await db
-        //   .collection(process.env.TRANSACTION_STORE)
-        //   .doc(transactionId)
-        //   .update({
-        //     txStatusCode: 3,
-        //     paymentStatus: 1,
-        //     paymentTime: Helper.getDate() + " at " + Helper.getTime(),
-        //   });
-        // .then(async () => {
-        // UPDATE DATABASE /////////
+    
 
         let updated = await prisma.transaction.update({
           data: { currentStatus: 3, paymentStatus: 1 },

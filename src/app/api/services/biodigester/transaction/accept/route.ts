@@ -39,13 +39,12 @@ export async function POST(request: Request) {
       include: { ServiceProvider: true },
     });
 
-    console.log("SP ",sp);
     
 
     //Update firestore
 
     if (transaction) {
-      const transactionRef = doc(db, "transaction", transactionId);
+      const transactionRef = doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId);
 
       await updateDoc(transactionRef, {
         txStatusCode: 2,

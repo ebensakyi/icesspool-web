@@ -19,7 +19,6 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
-    console.log(res);
     
     const session: any = await getServerSession(authOptions);
 
@@ -82,7 +81,7 @@ export async function POST(request: Request) {
 
     let transactionId = res.transactionId;
 
-    await setDoc(doc(db, "transaction", transactionId), {
+    await setDoc(doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId), {
       transactionId: res.transactionId,
       customerId: Number(res?.userId),
       lat: Number(res?.lat),
@@ -112,6 +111,15 @@ export async function POST(request: Request) {
       deleted: false,
     });
 
+
+    await prisma.transactionStatus.create({
+      data: {
+        transactionId: transactionId,
+        status: 1,
+        date: getCurrentDate(),
+        time: getCurrentTime(),
+      },
+    });
     // await db
     // .collection(process.env.TRANSACTION_STORE)
     // .doc(res.transactionId)

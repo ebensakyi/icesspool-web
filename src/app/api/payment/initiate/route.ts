@@ -25,7 +25,6 @@ export async function GET(request: Request) {
       where: { id: transactionId },
     });
 
-    console.log(transaction);
     
     let amount: String = transaction?.discountedCost?.toString();
 
@@ -35,8 +34,7 @@ export async function GET(request: Request) {
       where: { transactionId: transaction?.id },
     });
 
-    console.log("amt =>", amount);
-    console.log("cnvrtd =>", convertedAmount);
+
 
     if (!payment) {
       await prisma.payment.create({

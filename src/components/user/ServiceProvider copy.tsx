@@ -41,7 +41,7 @@ export default function ServiceProvider({ data }: any) {
     const [company, setCompany] = useState("");
     const [officeLocation, setOfficeLocation] = useState("");
     const [licenseClassification, setLicenseClassification] = useState("");
-    const [passportImage, setPassportImage] = useState(null);
+    const [driversLicence, setDriversLicence] = useState("");
     const [ghanaPostGPS, setGhanaPostGPS] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
 
@@ -51,6 +51,7 @@ export default function ServiceProvider({ data }: any) {
     const [showOtp, setShowOtp] = useState(false);
 
 
+    const [file, setFile] = useState(null);
 
 
     // const [searchText, setSearchText] = useState();
@@ -108,116 +109,74 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-    const handleFileChange = (e:any) => {
-        setPassportImage(e.target.files[0]);
-      };
-
-      
-      const addUser = async () => {
-        if (!passportImage) {
-          console.error('Please select an image file');
-          return;
-        }
-    
-        const formData = new FormData();
-        formData.append('passportImage', passportImage);
-        formData.append('surname', surname);
-        formData.append('otherNames', otherNames);
-        formData.append('email', email);
-        formData.append('phoneNumber', phoneNumber);
-        formData.append('serviceArea', serviceArea);
-        formData.append('ghanaPostGPS', ghanaPostGPS);
-        formData.append('officeLocation', officeLocation);
-        formData.append('company', company);
-
+ 
+    const addUser = async (e: any) => {
         try {
-          const response = await fetch('/api/user/service-provider', {
-            method: 'POST',
-            body: formData,
-          });
+            e.preventDefault();
 
-          console.log("response ",response);
-          
-    
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Image uploaded:', data.imageUrl);
-            // Handle success, e.g., update UI with the uploaded image URL
-          } else {
-            console.error('Failed to upload image');
-          }
-        } catch (error) {
-          console.error('Error uploading image:', error);
+
+
+            if (surname == "") {
+                return toast.error("Surname cannot be empty");
+            }
+            if (otherNames == "") {
+                return toast.error("Other Names cannot be empty");
+            }
+            if (email == "") {
+                return toast.error("Email cannot be empty");
+            }
+            if (phoneNumber == "") {
+                return toast.error("PhoneNumber cannot be empty");
+            }
+            // if (designation == "") {
+            //     return toast.error("Designation cannot be empty");
+            // }
+
+
+
+            let data = {
+                surname,
+                otherNames,
+                email,
+                phoneNumber,
+                designation,
+                company,
+                officeLocation,
+                ghanaPostGPS,
+                licenseClassification,licenseNumber,
+                // region: Number(region),
+                serviceArea: Number(serviceArea),
+            };
+
+
+
+
+            const response = await axios.post("/api/user/service-provider", data);
+
+            if (response.status == 201) {
+                return toast.error("User's phone number already used.\nChange number and try again");
+
+            }
+
+            if (response.status == 200) {
+                setSurname("");
+                setOtherNames("");
+                setEmail("");
+                setPhoneNumber("");
+                setDesignation("");
+                setUserType("");
+                // setRegion("");
+
+                router.refresh()
+                return toast.success("User added successfully");
+
+            }
+
+
+        } catch (error: any) {
+            return toast.error("An error occurred");
         }
-      };
-
-    // const addUser = async (e: any) => {
-    //     try {
-    //         e.preventDefault();
-
-
-
-    //         if (surname == "") {
-    //             return toast.error("Surname cannot be empty");
-    //         }
-    //         if (otherNames == "") {
-    //             return toast.error("Other Names cannot be empty");
-    //         }
-    //         if (email == "") {
-    //             return toast.error("Email cannot be empty");
-    //         }
-    //         if (phoneNumber == "") {
-    //             return toast.error("PhoneNumber cannot be empty");
-    //         }
-    //         // if (designation == "") {
-    //         //     return toast.error("Designation cannot be empty");
-    //         // }
-
-
-
-    //         let data = {
-    //             surname,
-    //             otherNames,
-    //             email,
-    //             phoneNumber,
-    //             designation,
-    //             company,
-    //             officeLocation,
-    //             ghanaPostGPS,
-    //             licenseClassification,licenseNumber,
-    //             // region: Number(region),
-    //             serviceArea: Number(serviceArea),
-    //         };
-
-
-
-
-    //         const response = await axios.post("/api/user/service-provider", data);
-
-    //         if (response.status == 201) {
-    //             return toast.error("User's phone number already used.\nChange number and try again");
-
-    //         }
-
-    //         if (response.status == 200) {
-    //             setSurname("");
-    //             setOtherNames("");
-    //             setEmail("");
-    //             setPhoneNumber("");
-    //             setDesignation("");
-    //             setUserType("");
-    //             // setRegion("");
-
-    //             router.refresh()
-    //             return toast.success("User added successfully");
-
-    //         }
-
-
-    //     } catch (error: any) {
-    //         return toast.error("An error occurred");
-    //     }
-    // };
+    };
 
     const updateUser = async (e: any) => {
         try {
@@ -341,7 +300,7 @@ export default function ServiceProvider({ data }: any) {
                             <div className="card-body">
                                 <h5 className="card-title">Enter user details</h5>
                                 {/* General Form Elements */}
-                                {/* <form> */}
+                                <form>
                                     <div className="row">
 
                                         <div className="col-sm-3 mb-3">
@@ -438,19 +397,19 @@ export default function ServiceProvider({ data }: any) {
 
                                         <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                               Service Provider's Passport picture  </label>
+                                               Driver's Passport picture                                           </label>
                                             <div className="col-sm-12">
-                                                <input className="form-control" type="file" id="formFile" onChange={(e) => handleFileChange(e)}  />
+                                                <input className="form-control" type="file" id="formFile" onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
                                                 {/* <input type="file" className="form-control" placeholder='Passport picture' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} /> */}
                                             </div>
                                         </div>
-                                        {/* <div className="col-sm-3  mb-3">
+                                        <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Drivers license                                           </label>
                                             <div className="col-sm-12">
                                                 <input type="file" className="form-control" placeholder='Drivers license ' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
                                             </div>
-                                        </div> */}
+                                        </div>
                                         <div className="col-sm-3  mb-3">
                                             <label className="col-sm-12 col-form-label">Select service area</label>
 
@@ -560,7 +519,7 @@ export default function ServiceProvider({ data }: any) {
 
                                         </div>
                                     </div>
-                                {/* </form> */}
+                                </form>
                                 {/* End General Form Elements */}
                             </div>
                         </div>

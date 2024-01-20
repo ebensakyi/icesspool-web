@@ -12,40 +12,8 @@ import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
 const XLSX = require("xlsx");
-
-import multer from 'multer';
-import aws from 'aws-sdk';
-
-const s3 = new aws.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 export async function POST(request: Request) {
   try {
-
-    const _data = await request.formData();
-
-    const file: File | null = _data.get("file") as unknown as File;
-    const surname = Number(_data?.get("surname"));
-
-
-    console.log(_data);
-    
-
-
-
-
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 

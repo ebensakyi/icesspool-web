@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendSMS = (phone: string, message: string) => {
+export const sendSMS = async(phone: string, message: string) => {
   var options = {
     method: "GET",
     url: "https://smsc.hubtel.com/v1/messages/send",

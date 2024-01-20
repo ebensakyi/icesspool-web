@@ -9,12 +9,11 @@ import { getServerSession } from "next-auth";
 import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
-import { authOptions } from "../../auth/[...nextauth]/options";
 
 const XLSX = require("xlsx");
 
-import multer from 'multer';
-import aws from 'aws-sdk';
+import multer from "multer";
+import aws from "aws-sdk";
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -33,24 +32,28 @@ export const config = {
 };
 export async function POST(request: Request) {
   try {
-
     const _data = await request.formData();
 
     const file: File | null = _data.get("file") as unknown as File;
-    const surname = Number(_data?.get("surname"));
+    const otherNames = _data?.get("otherNames");
+    const surname = _data?.get("surname");
+    const email = _data?.get("email");
+    const phoneNumber: any = _data?.get("phoneNumber");
+    const serviceAreaId = Number(_data?.get("serviceArea"));
 
+    const company: any = _data?.get("company");
+    const ghanaPostGPS = _data?.get("ghanaPostGPS");
+    const officeLocation = _data?.get("officeLocation");
+    const licenseClassification = _data?.get("licenseClassification");
+    const licenseNumber = _data?.get("licenseNumber");
 
     console.log(_data);
-    
 
+    // const res = await request.json();
+    // const session: any = await getServerSession(authOptions);
 
-
-
-    const res = await request.json();
-    const session: any = await getServerSession(authOptions);
-
-    // let loginUserLevel = session?.user?.userLevelId;
-    // let fileUrl;
+    // // let loginUserLevel = session?.user?.userLevelId;
+    // // let fileUrl;
 
     let password: string = (await generateCode(4)) as string;
     const salt = bcrypt.genSaltSync(10);
@@ -66,19 +69,21 @@ export async function POST(request: Request) {
     //   regionId = district?.regionId;
     // }
 
-    const data = {
+    const data: any = {
       userTypeId: 3,
-      surname: res.surname,
-      otherNames: res.otherNames,
-      email: res.email,
-      phoneNumber: res.phoneNumber,
-      serviceAreaId: res.serviceAreaId,
+      surname: surname,
+      otherNames: otherNames,
+      email: email,
+      phoneNumber: phoneNumber,
+      serviceAreaId: serviceAreaId,
       password: hashedPassword,
     };
 
+    console.log(data);
+
     let count = await prisma.user.count({
       where: {
-        phoneNumber: res.phoneNumber,
+        phoneNumber: phoneNumber,
       },
     });
     if (count != 0) {
@@ -91,17 +96,11 @@ export async function POST(request: Request) {
     const user: any = await prisma.user.create({ data });
 
     await sendSMS(
-      res.phoneNumber,
+      phoneNumber,
       `The temporal password for iCesspool App is ${password}`
     );
 
-    let company = res.company;
-    let officeLocation = res.officeLocation;
-    let ghanaPostGPS = res.ghanaPostGPS;
-    let licenseClassification = res.licenseClassification;
-    let licenseNumber = res.licenseNumber;
-
-    let operatorData = {
+    let operatorData: any = {
       userId: user.id,
       company: company,
       officeLocation: officeLocation,

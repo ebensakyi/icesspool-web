@@ -129,6 +129,8 @@ export default function ServiceProvider({ data }: any) {
         formData.append('ghanaPostGPS', ghanaPostGPS);
         formData.append('officeLocation', officeLocation);
         formData.append('company', company);
+        formData.append('licenseNumber', licenseNumber);
+        formData.append('licenseClassification', licenseClassification);
 
         try {
           const response = await fetch('/api/user/service-provider', {

@@ -16,14 +16,18 @@ import multer from "multer";
 import aws from "aws-sdk";
 
 const s3 = new aws.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
+  //region: process.env.AWS_REGION,
 });
+
+
 
 const upload = multer({
   storage: multer.memoryStorage(),
 });
+
+
 
 export const config = {
   api: {
@@ -34,7 +38,7 @@ export async function POST(request: Request) {
   try {
     const _data = await request.formData();
 
-    const file: File | null = _data.get("file") as unknown as File;
+    const passportImage: File | null = _data.get("passportImage") as unknown as File;
     const otherNames = _data?.get("otherNames");
     const surname = _data?.get("surname");
     const email = _data?.get("email");
@@ -79,7 +83,6 @@ export async function POST(request: Request) {
       password: hashedPassword,
     };
 
-    console.log(data);
 
     let count = await prisma.user.count({
       where: {
@@ -116,6 +119,42 @@ export async function POST(request: Request) {
     await prisma.serviceProvider.create({
       data: operatorData,
     });
+
+
+
+
+////////////////////////////////////////////////////////////////
+    await upload.single('passportImage');
+
+    if (!passportImage) {
+      return NextResponse.json({ error: 'Please select an image file' },{status:400});
+    }
+
+    const arrayBuffer = await passportImage.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+
+    const params = {
+      Bucket: "esicapps-exports",
+      Key: `uploads/${Date.now()}-${passportImage}`,
+      Body: buffer,
+      // Body: fs.createReadStream(passportImage: File),
+      ACL: 'public-read', // adjust access control as needed
+    };
+
+    const result = await s3.upload(params).promise();
+    const imageUrl = result.Location;
+
+   
+
+   console.log('Image uploaded:', imageUrl);
+
+  //await  uploadFile(passportImage);
+
+
+////////////////////////////////////////////////////////////////
+
+
+
     return NextResponse.json(user);
   } catch (error: any) {
     console.log(error);
@@ -123,6 +162,9 @@ export async function POST(request: Request) {
     return NextResponse.json(error);
   }
 }
+
+
+
 
 export async function GET(request: Request) {
   try {
@@ -144,45 +186,11 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
-    // let userLevel = loggedInUserData?.userLevelId;
-    // let region = loggedInUserData?.regionId;
-    // let district = loggedInUserData?.districtId;
-    // let users;
+ 
 
     if (1) {
       const response = await prisma.user.findMany({
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             surname: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             otherNames: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : { districtId: Number(districtId), deleted: 0 },
+      
         include: {
           UserType: true,
           //  Scanner:true
@@ -193,38 +201,7 @@ export async function GET(request: Request) {
       });
 
       const count = await prisma.user.count({
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             surname: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             otherNames: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : {deleted: 0 },
+       
       });
 
       if (exportFile) {
@@ -244,43 +221,7 @@ export async function GET(request: Request) {
       where: {
         userTypeId: 3,
       },
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             surname: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             otherNames: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             District: {
-      //               name: { contains: searchText, mode: "insensitive" },
-      //             },
-      //           },
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
+     
       include: {
         UserType: true,
       },
@@ -292,39 +233,7 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.user.count({
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             surname: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             otherNames: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
+     
 
       orderBy: {
         id: "desc",
@@ -418,32 +327,32 @@ export async function DELETE(request: Request) {
   }
 }
 
-const uploadFile = async (fileName: any) => {
-  try {
-    AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    });
+// const uploadFile = async (fileName: any) => {
+//   try {
+//     AWS.config.update({
+//       accessKeyId: process.env.AWS_ACCESS_KEY,
+//       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//     });
 
-    var s3 = new AWS.S3();
+//     var s3 = new AWS.S3();
 
-    var filePath = `./public/temp/${fileName}`;
+//    // var filePath = `./public/temp/${fileName}`;
 
-    var params = {
-      Bucket: "esicapps-exports",
-      Body: fs.createReadStream(filePath),
-      // Key: prefix + "/" + fileName,
-      Key: fileName,
-    };
+//     var params = {
+//       Bucket: "esicapps-exports",
+//       Body: fs.createReadStream(filePath),
+//       // Key: prefix + "/" + fileName,
+//       Key: fileName,
+//     };
 
-    let stored = await s3.upload(params).promise();
+//     let stored = await s3.upload(params).promise();
 
-    return stored.Location;
-  } catch (error) {
-    console.log("Upload File Error ", error);
-    return error;
-  }
-};
+//     return stored.Location;
+//   } catch (error) {
+//     console.log("Upload File Error ", error);
+//     return error;
+//   }
+// };
 
 const flattenArray = async (data: any) => {
   let newData = [];
@@ -472,9 +381,9 @@ const export2Excel = async (data: any) => {
     let filePath = `./public/temp/users.xlsx`;
     XLSX.writeFile(workBook, filePath);
 
-    let url = await uploadFile("users.xlsx");
+   // let url = await uploadFile("users.xlsx");
 
-    return url;
+   // return url;
   } catch (error) {
     console.log("error NextResponse=> ");
   }

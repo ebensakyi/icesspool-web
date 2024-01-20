@@ -17,6 +17,11 @@ export async function GET(request: Request) {
     let paymentId: any = searchParams?.get("paymentId");
     let transactionId: any = searchParams.get("transactionId");
 
+
+    console.log("paymentId===> ",paymentId);
+    console.log("transactionId===> ",transactionId);
+
+
     // const response = await prisma.region.findMany({
     //   where: { deleted: 0 },
     // });

@@ -10,10 +10,11 @@ datasource db {
 model Otp {
   id        Int      @id @default(autoincrement())
   code      String   @db.VarChar(255)
-  userId    String?  @db.VarChar(255)
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 model TruckClassification {
@@ -686,13 +687,13 @@ model TransactionStatus {
 
 model User {
   id              Int           @id @default(autoincrement())
-  lastName         String        @db.VarChar(255)
-  firstName      String        @db.VarChar(255)
+  lastName        String        @db.VarChar(255)
+  firstName       String        @db.VarChar(255)
   email           String?       @db.VarChar(255)
   phoneNumber     String        @unique @db.VarChar(255)
   fcm             String?       @db.VarChar(255)
   password        String        @db.VarChar(255)
-  passportPicture   String?       @db.VarChar(255)
+  passportPicture String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)
   activated       Int?          @default(0)
   deleted         Int?          @default(0)
@@ -715,6 +716,7 @@ model User {
   ServiceArea   ServiceArea?  @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId Int?
   Transaction   Transaction[]
+  Otp           Otp[]
 }
 
 // model UserType {

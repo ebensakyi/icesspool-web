@@ -1,7 +1,7 @@
 export const users = [
   {
-    surname: "John K.",
-    otherNames: "Doe",
+    lastName: "John K.",
+    firstName: "Doe",
     email: "",
     phoneNumber: "0543212322",
     userTypeId: 1,

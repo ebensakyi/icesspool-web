@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     // });
     // for (let i = 0; i < response?.length; i++) {
     //   rawData?.push({
-    //     User: response[i]?.User.otherNames + " " + response[i]?.User.surname,
+    //     User: response[i]?.User.firstName + " " + response[i]?.User.lastName,
     //     Activity: response[i]?.activity,
     //     Date: response[i]?.createdAt,
     //   });

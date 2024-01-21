@@ -37,8 +37,8 @@ export async function POST(request: Request) {
     const passportPicture: File | null = _data.get(
       "passportPicture"
     ) as unknown as File;
-    const otherNames = _data?.get("otherNames");
-    const surname = _data?.get("surname");
+    const firstName = _data?.get("firstName");
+    const lastName = _data?.get("lastName");
     const email = _data?.get("email");
     const phoneNumber: any = _data?.get("phoneNumber");
     const serviceAreaId = Number(_data?.get("serviceArea"));
@@ -71,8 +71,8 @@ export async function POST(request: Request) {
 
     const data: any = {
       userTypeId: 3,
-      surname: surname,
-      otherNames: otherNames,
+      lastName: lastName,
+      firstName: firstName,
       email: email,
       phoneNumber: phoneNumber,
       serviceAreaId: serviceAreaId,
@@ -214,8 +214,8 @@ export async function PUT(request: Request) {
     const data = {
       userRoleId: res.userRoleId,
       userLevelId: res.userLevelId,
-      surname: res.surname,
-      otherNames: res.otherNames,
+      lastName: res.lastName,
+      firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
       designation: res.designation,
@@ -298,7 +298,7 @@ const flattenArray = async (data: any) => {
 
   for (let i = 0; i < data?.length; i++) {
     newData?.push({
-      Name: data[i]?.otherNames + data[i]?.surname,
+      Name: data[i]?.firstName + data[i]?.lastName,
       "Phone Number": data[i]?.phoneNumber,
       Email: data[i]?.email,
       // "User Level": data[i]?.UserLevel?.name,

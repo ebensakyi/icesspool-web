@@ -99,7 +99,7 @@ export default function Log({ data }: any) {
                                         {data.logs.response.map((log: any) => {
                                             return (
                                                 <tr key={log.id}>
-                                                    <td>{log.User.otherNames} {log.User.surname}</td>
+                                                    <td>{log.User.firstName} {log.User.lastName}</td>
                                                     <td>{log.activity}</td>
                                                     <td> {moment(log.createdAt).format("MMM Do YYYY, h:mm:ss a")}
                                                     </td>

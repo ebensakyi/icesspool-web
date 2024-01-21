@@ -600,8 +600,8 @@ CREATE TABLE `TransactionStatus` (
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `surname` VARCHAR(255) NOT NULL,
-    `otherNames` VARCHAR(255) NOT NULL,
+    `lastName` VARCHAR(255) NOT NULL,
+    `firstName` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NULL,
     `phoneNumber` VARCHAR(255) NOT NULL,
     `fcm` VARCHAR(255) NULL,

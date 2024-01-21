@@ -31,8 +31,8 @@ export default function UserProfile({ data }: any) {
     const pathname = usePathname()
 
     const [userId, setUserId] = useState("")
-    const [surname, setSurname] = useState("");
-    const [otherNames, setOtherNames] = useState("");
+    const [lastName, setSurname] = useState("");
+    const [firstName, setOtherNames] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
@@ -40,8 +40,8 @@ export default function UserProfile({ data }: any) {
 
 
     useEffect(() => {
-        setSurname(data.userData.surname);
-        setOtherNames(data.userData.otherNames);
+        setSurname(data.userData.lastName);
+        setOtherNames(data.userData.firstName);
         setEmail(data.userData.email);
         setPhoneNumber(data.userData.phoneNumber);
         setUserId(data.userData.userId);
@@ -98,10 +98,10 @@ export default function UserProfile({ data }: any) {
             e.preventDefault();
 
 
-            if (surname == "") {
+            if (lastName == "") {
                 return toast.error("Surname cannot be empty");
             }
-            if (otherNames == "") {
+            if (firstName == "") {
                 return toast.error("Other Names cannot be empty");
             }
             if (email == "") {
@@ -112,8 +112,8 @@ export default function UserProfile({ data }: any) {
             }
             let data = {
                 userId,
-                surname,
-                otherNames,
+                lastName,
+                firstName,
                 email,
                 phoneNumber,
                 currentPassword,
@@ -185,7 +185,7 @@ export default function UserProfile({ data }: any) {
                                             Surname
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={surname} />
+                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={lastName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -193,7 +193,7 @@ export default function UserProfile({ data }: any) {
                                             Other name(s)
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={otherNames} />
+                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={firstName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">

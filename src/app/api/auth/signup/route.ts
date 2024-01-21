@@ -8,10 +8,12 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    console.log(res);
     
 
+    let firstName = res.firstName;
+    let lastName = res.lastName;
     let phoneNumber = res.phoneNumber;
+
     let password = res.password;
 
     const user : any = await prisma.user.findFirst({

@@ -199,7 +199,7 @@ export default function SMS({ data }: any) {
                                             <option >Select user * </option>
                                             {data?.users?.response?.map((data: any) => (
                                                 <option key={data.id} value={data.id}>
-                                                    {data.otherNames} {data.surname} - {data.phoneNumber}
+                                                    {data.firstName} {data.lastName} - {data.phoneNumber}
                                                 </option>
                                             ))}
                                         </select>
@@ -330,7 +330,7 @@ export default function SMS({ data }: any) {
                                                     <td>{data?.title}</td>
                                                     <td>{data?.message}</td>
                                                     <td>{data?.SendingType.name}</td>
-                                                    <td>{data?.Region?.name}{data?.District?.name}{data?.Recipient?.otherNames} {data?.Recipient?.surname}</td>
+                                                    <td>{data?.Region?.name}{data?.District?.name}{data?.Recipient?.firstName} {data?.Recipient?.lastName}</td>
                                                     <td>
                                                         <div
                                                             className="btn-group"

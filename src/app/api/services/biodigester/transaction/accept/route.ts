@@ -48,7 +48,7 @@ export async function POST(request: Request) {
 
       await updateDoc(transactionRef, {
         txStatusCode: 2,
-        spName: sp?.otherNames + " " + sp?.surname,
+        spName: sp?.firstName + " " + sp?.lastName,
         spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
         spImageUrl: sp?.passportPicture,

@@ -36,8 +36,8 @@ export async function POST(request: Request) {
 
     const data = {
       userTypeId: 1,
-      surname: res.surname,
-      otherNames: res.otherNames,
+      lastName: res.lastName,
+      firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
       password: hashedPassword,
@@ -105,13 +105,13 @@ export async function GET(request: Request) {
         //     ? {
         //         OR: [
         //           {
-        //             surname: {
+        //             lastName: {
         //               contains: searchText,
         //               mode: "insensitive",
         //             },
         //           },
         //           {
-        //             otherNames: {
+        //             firstName: {
         //               contains: searchText,
         //               mode: "insensitive",
         //             },
@@ -146,13 +146,13 @@ export async function GET(request: Request) {
         //     ? {
         //         OR: [
         //           {
-        //             surname: {
+        //             lastName: {
         //               contains: searchText,
         //               mode: "insensitive",
         //             },
         //           },
         //           {
-        //             otherNames: {
+        //             firstName: {
         //               contains: searchText,
         //               mode: "insensitive",
         //             },
@@ -194,13 +194,13 @@ export async function GET(request: Request) {
       //     ? {
       //         OR: [
       //           {
-      //             surname: {
+      //             lastName: {
       //               contains: searchText,
       //               mode: "insensitive",
       //             },
       //           },
       //           {
-      //             otherNames: {
+      //             firstName: {
       //               contains: searchText,
       //               mode: "insensitive",
       //             },
@@ -243,13 +243,13 @@ export async function GET(request: Request) {
       //     ? {
       //         OR: [
       //           {
-      //             surname: {
+      //             lastName: {
       //               contains: searchText,
       //               mode: "insensitive",
       //             },
       //           },
       //           {
-      //             otherNames: {
+      //             firstName: {
       //               contains: searchText,
       //               mode: "insensitive",
       //             },
@@ -312,8 +312,8 @@ export async function PUT(request: Request) {
     const data = {
       userRoleId: res.userRoleId,
       userLevelId: res.userLevelId,
-      surname: res.surname,
-      otherNames: res.otherNames,
+      lastName: res.lastName,
+      firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
       designation: res.designation,
@@ -396,7 +396,7 @@ const flattenArray = async (data: any) => {
 
   for (let i = 0; i < data?.length; i++) {
     newData?.push({
-      Name: data[i]?.otherNames + data[i]?.surname,
+      Name: data[i]?.firstName + data[i]?.lastName,
       "Phone Number": data[i]?.phoneNumber,
       Email: data[i]?.email,
       // "User Level": data[i]?.UserLevel?.name,

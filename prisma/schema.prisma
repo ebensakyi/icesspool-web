@@ -686,8 +686,8 @@ model TransactionStatus {
 
 model User {
   id              Int           @id @default(autoincrement())
-  surname         String        @db.VarChar(255)
-  otherNames      String        @db.VarChar(255)
+  lastName         String        @db.VarChar(255)
+  firstName      String        @db.VarChar(255)
   email           String?       @db.VarChar(255)
   phoneNumber     String        @unique @db.VarChar(255)
   fcm             String?       @db.VarChar(255)

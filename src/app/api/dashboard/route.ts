@@ -45,7 +45,7 @@ export async function GET(request: Request) {const res = await request.json();
 
 //     // console.log("Session ", session);
 //     let userId = session?.user?.id;
-//     // let surname = session?.user?.surname;
+//     // let lastName = session?.user?.lastName;
 //     let districtId = session?.user?.districtId;
 //     let regionId = session?.user?.regionId;
 //     let userLevel = session?.user?.userLevelId;

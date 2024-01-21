@@ -34,8 +34,8 @@ export default function ServiceProvider({ data }: any) {
     const [userId, setUserId] = useState();
     const [serviceArea, setServiceArea] = useState("");
 
-    const [surname, setSurname] = useState("");
-    const [otherNames, setOtherNames] = useState("");
+    const [lastName, setSurname] = useState("");
+    const [firstName, setOtherNames] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
@@ -122,8 +122,8 @@ export default function ServiceProvider({ data }: any) {
 
         const formData = new FormData();
         formData.append('passportPicture', passportPicture);
-        formData.append('surname', surname);
-        formData.append('otherNames', otherNames);
+        formData.append('lastName', lastName);
+        formData.append('firstName', firstName);
         formData.append('email', email);
         formData.append('phoneNumber', phoneNumber);
         formData.append('serviceArea', serviceArea);
@@ -162,10 +162,10 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-    //         if (surname == "") {
+    //         if (lastName == "") {
     //             return toast.error("Surname cannot be empty");
     //         }
-    //         if (otherNames == "") {
+    //         if (firstName == "") {
     //             return toast.error("Other Names cannot be empty");
     //         }
     //         if (email == "") {
@@ -181,8 +181,8 @@ export default function ServiceProvider({ data }: any) {
 
 
     //         let data = {
-    //             surname,
-    //             otherNames,
+    //             lastName,
+    //             firstName,
     //             email,
     //             phoneNumber,
     //             designation,
@@ -228,10 +228,10 @@ export default function ServiceProvider({ data }: any) {
         try {
             e.preventDefault();
 
-            if (surname == "") {
+            if (lastName == "") {
                 return toast.error("Surname cannot be empty");
             }
-            if (otherNames == "") {
+            if (firstName == "") {
                 return toast.error("Other Names cannot be empty");
             }
             if (email == "") {
@@ -354,7 +354,7 @@ export default function ServiceProvider({ data }: any) {
                                             Surname
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={surname} />
+                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={lastName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -362,7 +362,7 @@ export default function ServiceProvider({ data }: any) {
                                             Other name(s)
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={otherNames} />
+                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={firstName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -621,7 +621,7 @@ export default function ServiceProvider({ data }: any) {
                                         {data?.users?.response.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td> <Image src={AWS_S3_URL+ user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
-                                                <td>{user?.otherNames} {user?.surname}</td>
+                                                <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
                                                 <td>{user?.ServiceProvider?.company}</td>
@@ -665,8 +665,8 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-                                                                        setSurname(user.surname);
-                                                                        setOtherNames(user.otherNames);
+                                                                        setSurname(user.lastName);
+                                                                        setOtherNames(user.firstName);
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
                                                                         setDesignation(user.designation);

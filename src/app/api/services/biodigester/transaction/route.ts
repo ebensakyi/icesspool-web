@@ -98,7 +98,7 @@ export async function POST(request: Request) {
       txStatusCode: 1,
       requestType: 1,
       offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
-      customerName: user?.surname + " " + user?.otherNames,
+      customerName: user?.lastName + " " + user?.firstName,
       customerPhone: user?.phoneNumber,
       customerEmail: user?.email,
 

@@ -32,8 +32,8 @@ export default function User({ data }: any) {
     const [userId, setUserId] = useState();
     const [selectedUserLevel, setSelectedUserLevel] = useState("");
 
-    const [surname, setSurname] = useState("");
-    const [otherNames, setOtherNames] = useState("");
+    const [lastName, setSurname] = useState("");
+    const [firstName, setOtherNames] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
@@ -118,10 +118,10 @@ export default function User({ data }: any) {
 
 
 
-            if (surname == "") {
+            if (lastName == "") {
                 return toast.error("Surname cannot be empty");
             }
-            if (otherNames == "") {
+            if (firstName == "") {
                 return toast.error("Other Names cannot be empty");
             }
             if (email == "") {
@@ -154,8 +154,8 @@ export default function User({ data }: any) {
                     data = {
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -167,8 +167,8 @@ export default function User({ data }: any) {
                     data = {
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -181,8 +181,8 @@ export default function User({ data }: any) {
                     data = {
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -197,8 +197,8 @@ export default function User({ data }: any) {
                     data = {
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -210,8 +210,8 @@ export default function User({ data }: any) {
                     data = {
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -225,8 +225,8 @@ export default function User({ data }: any) {
                 data = {
                     userTypeId: Number(userType),
                     userLevelId: Number(selectedUserLevel),
-                    surname,
-                    otherNames,
+                    lastName,
+                    firstName,
                     email,
                     phoneNumber,
                     designation,
@@ -270,10 +270,10 @@ export default function User({ data }: any) {
         try {
             e.preventDefault();
 
-            if (surname == "") {
+            if (lastName == "") {
                 return toast.error("Surname cannot be empty");
             }
-            if (otherNames == "") {
+            if (firstName == "") {
                 return toast.error("Other Names cannot be empty");
             }
             if (email == "") {
@@ -309,8 +309,8 @@ export default function User({ data }: any) {
                         userId: Number(userId),
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -324,8 +324,8 @@ export default function User({ data }: any) {
 
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -340,8 +340,8 @@ export default function User({ data }: any) {
 
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -358,8 +358,8 @@ export default function User({ data }: any) {
 
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -373,8 +373,8 @@ export default function User({ data }: any) {
 
                         userTypeId: Number(userType),
                         userLevelId: Number(selectedUserLevel),
-                        surname,
-                        otherNames,
+                        lastName,
+                        firstName,
                         email,
                         phoneNumber,
                         designation,
@@ -390,8 +390,8 @@ export default function User({ data }: any) {
 
                     userTypeId: Number(userType),
                     userLevelId: Number(selectedUserLevel),
-                    surname,
-                    otherNames,
+                    lastName,
+                    firstName,
                     email,
                     phoneNumber,
                     designation,
@@ -502,7 +502,7 @@ export default function User({ data }: any) {
                                                 Surname
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={surname} />
+                                                <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={lastName} />
                                             </div>
                                         </div>
                                         <div className="col-sm-3  mb-3">
@@ -510,7 +510,7 @@ export default function User({ data }: any) {
                                                 Other name(s)
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={otherNames} />
+                                                <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={firstName} />
                                             </div>
                                         </div>
                                         <div className="col-sm-3  mb-3">
@@ -819,7 +819,7 @@ export default function User({ data }: any) {
                                     <tbody>
                                         {data.users.response.map((user: any) => (
                                             <tr key={user.id}>
-                                                <td>{user?.otherNames} {user?.surname}</td>
+                                                <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
                                                 <td>{user?.UserLevel?.name}</td>
@@ -864,8 +864,8 @@ export default function User({ data }: any) {
 
 
 
-                                                                        setSurname(user.surname);
-                                                                        setOtherNames(user.otherNames);
+                                                                        setSurname(user.lastName);
+                                                                        setOtherNames(user.firstName);
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
                                                                         setDesignation(user.designation);

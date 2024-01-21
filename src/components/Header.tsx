@@ -68,7 +68,7 @@ export default function Header() {
                                         className="rounded-circle"
                                     />
                                     <span className="d-none d-md-block dropdown-toggle ps-2">
-                                        {/* {session?.user?.otherNames } {session?.user?.surname} */}
+                                        {/* {session?.user?.firstName } {session?.user?.lastName} */}
                                     </span>
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">

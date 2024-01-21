@@ -21,13 +21,9 @@ const s3 = new aws.S3({
   //region: process.env.AWS_REGION,
 });
 
-
-
 const upload = multer({
   storage: multer.memoryStorage(),
 });
-
-
 
 export const config = {
   api: {
@@ -38,7 +34,9 @@ export async function POST(request: Request) {
   try {
     const _data = await request.formData();
 
-    const passportImage: File | null = _data.get("passportImage") as unknown as File;
+    const passportPicture: File | null = _data.get(
+      "passportPicture"
+    ) as unknown as File;
     const otherNames = _data?.get("otherNames");
     const surname = _data?.get("surname");
     const email = _data?.get("email");
@@ -50,8 +48,6 @@ export async function POST(request: Request) {
     const officeLocation = _data?.get("officeLocation");
     const licenseClassification = _data?.get("licenseClassification");
     const licenseNumber = _data?.get("licenseNumber");
-
-    console.log(_data);
 
     // const res = await request.json();
     // const session: any = await getServerSession(authOptions);
@@ -82,7 +78,6 @@ export async function POST(request: Request) {
       serviceAreaId: serviceAreaId,
       password: hashedPassword,
     };
-
 
     let count = await prisma.user.count({
       where: {
@@ -120,40 +115,45 @@ export async function POST(request: Request) {
       data: operatorData,
     });
 
+    ////////////////////////////////////////////////////////////////
+    await upload.single("passportPicture");
 
-
-
-////////////////////////////////////////////////////////////////
-    await upload.single('passportImage');
-
-    if (!passportImage) {
-      return NextResponse.json({ error: 'Please select an image file' },{status:400});
+    if (!passportPicture) {
+      return NextResponse.json(
+        { error: "Please select an image file" },
+        { status: 400 }
+      );
     }
 
-    const arrayBuffer = await passportImage.arrayBuffer();
+    const arrayBuffer = await passportPicture.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
+
+    let imageName = `${Date.now()}-${passportPicture.name}`;
 
     const params = {
       Bucket: "esicapps-exports",
-      Key: `uploads/${Date.now()}-${passportImage}`,
+      Key: `uploads/${imageName}`,
       Body: buffer,
-      // Body: fs.createReadStream(passportImage: File),
-      ACL: 'public-read', // adjust access control as needed
+      // Body: fs.createReadStream(passportPicture: File),
+      // ACL: 'public-read', // adjust access control as needed
     };
 
     const result = await s3.upload(params).promise();
+
+    console.log("Result ==> ", result);
+
     const imageUrl = result.Location;
 
-   
+    const updatedUser: any = await prisma.user.update({
+      where: { id: user.id },
+      data: { passportPicture: imageName },
+    });
 
-   console.log('Image uploaded:', imageUrl);
+    console.log("Image uploaded:", imageUrl);
 
-  //await  uploadFile(passportImage);
+    //await  uploadFile(passportPicture);
 
-
-////////////////////////////////////////////////////////////////
-
-
+    ////////////////////////////////////////////////////////////////
 
     return NextResponse.json(user);
   } catch (error: any) {
@@ -162,9 +162,6 @@ export async function POST(request: Request) {
     return NextResponse.json(error);
   }
 }
-
-
-
 
 export async function GET(request: Request) {
   try {
@@ -186,11 +183,8 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
- 
-
     if (1) {
       const response = await prisma.user.findMany({
-      
         include: {
           UserType: true,
           //  Scanner:true
@@ -200,9 +194,7 @@ export async function GET(request: Request) {
         },
       });
 
-      const count = await prisma.user.count({
-       
-      });
+      const count = await prisma.user.count({});
 
       if (exportFile) {
         let url = await export2Excel(response);
@@ -221,7 +213,7 @@ export async function GET(request: Request) {
       where: {
         userTypeId: 3,
       },
-     
+
       include: {
         UserType: true,
       },
@@ -233,8 +225,6 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.user.count({
-     
-
       orderBy: {
         id: "desc",
       },
@@ -381,9 +371,9 @@ const export2Excel = async (data: any) => {
     let filePath = `./public/temp/users.xlsx`;
     XLSX.writeFile(workBook, filePath);
 
-   // let url = await uploadFile("users.xlsx");
+    // let url = await uploadFile("users.xlsx");
 
-   // return url;
+    // return url;
   } catch (error) {
     console.log("error NextResponse=> ");
   }

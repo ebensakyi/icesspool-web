@@ -41,7 +41,7 @@ export default function ServiceProvider({ data }: any) {
     const [company, setCompany] = useState("");
     const [officeLocation, setOfficeLocation] = useState("");
     const [licenseClassification, setLicenseClassification] = useState("");
-    const [passportImage, setPassportImage] = useState(null);
+    const [passportPicture, setPassportImage] = useState(null);
     const [ghanaPostGPS, setGhanaPostGPS] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
 
@@ -114,13 +114,13 @@ export default function ServiceProvider({ data }: any) {
 
       
       const addUser = async () => {
-        if (!passportImage) {
+        if (!passportPicture) {
           console.error('Please select an image file');
           return;
         }
     
         const formData = new FormData();
-        formData.append('passportImage', passportImage);
+        formData.append('passportPicture', passportPicture);
         formData.append('surname', surname);
         formData.append('otherNames', otherNames);
         formData.append('email', email);

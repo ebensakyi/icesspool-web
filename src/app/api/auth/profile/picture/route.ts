@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     if (fileName != "0") {
       const data = {
-        imagePath: fileName,
+        passportPicture: fileName,
       };
       const ui = await prisma.user.update({
         data,

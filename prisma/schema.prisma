@@ -692,7 +692,7 @@ model User {
   phoneNumber     String        @unique @db.VarChar(255)
   fcm             String?       @db.VarChar(255)
   password        String        @db.VarChar(255)
-  imagePath       String?       @db.VarChar(255)
+  passportPicture   String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)
   activated       Int?          @default(0)
   deleted         Int?          @default(0)

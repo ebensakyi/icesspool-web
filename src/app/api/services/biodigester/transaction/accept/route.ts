@@ -51,7 +51,7 @@ export async function POST(request: Request) {
         spName: sp?.otherNames + " " + sp?.surname,
         spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
-        spImageUrl: sp?.imagePath,
+        spImageUrl: sp?.passportPicture,
         transactionSchedule: transactionSchedule
       });
     }

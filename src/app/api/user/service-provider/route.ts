@@ -149,13 +149,12 @@ export async function POST(request: Request) {
       data: { passportPicture: imageName },
     });
 
-    console.log("Image uploaded:", imageUrl);
 
     //await  uploadFile(passportPicture);
 
     ////////////////////////////////////////////////////////////////
 
-    return NextResponse.json(user);
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     console.log(error);
 
@@ -168,79 +167,29 @@ export async function GET(request: Request) {
     // const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
-    const searchText =
-      searchParams.get("searchText")?.toString() == undefined
-        ? ""
-        : searchParams.get("searchText")?.toString();
-    const districtId = searchParams.get("districtId") || undefined;
-    let exportFile = searchParams.get("exportFile");
-
-    let curPage = Number.isNaN(Number(searchParams.get("page")))
-      ? 1
-      : Number(searchParams.get("page"));
-
-    let perPage = 10;
-    let skip =
-      Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
-
-    if (1) {
+    
       const response = await prisma.user.findMany({
         include: {
           UserType: true,
-          //  Scanner:true
+          ServiceProvider:true
         },
         orderBy: {
           id: "desc",
         },
       });
 
-      const count = await prisma.user.count({});
+      
 
-      if (exportFile) {
-        let url = await export2Excel(response);
 
-        return NextResponse.json(url);
-      }
+    
 
       return NextResponse.json({
         response,
-        curPage: curPage,
-        maxPage: Math.ceil(count / perPage),
+      
       });
-    }
+    
 
-    const response = await prisma.user.findMany({
-      where: {
-        userTypeId: 3,
-      },
-
-      include: {
-        UserType: true,
-      },
-      orderBy: {
-        id: "desc",
-      },
-      skip: skip,
-      take: perPage,
-    });
-
-    const count = await prisma.user.count({
-      orderBy: {
-        id: "desc",
-      },
-    });
-
-    if (exportFile) {
-      let url = await export2Excel(response);
-
-      return NextResponse.json(url);
-    }
-
-    return NextResponse.json({
-      response,
-      curPage: curPage,
-      maxPage: Math.ceil(count / perPage),
-    });
+   
   } catch (error) {
     return NextResponse.json(error);
   }

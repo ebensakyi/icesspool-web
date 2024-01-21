@@ -184,6 +184,18 @@ export async function getAdmins() {
 
 }
 
+
+export async function getServiceProviders() {
+
+  let response = await fetch(`${SERVER_BASE_URL}/api/user/service-provider`, { cache: 'no-store', headers: headers() });
+
+  if (!response.ok) {
+      throw new Error('Failed to fetch data')
+  }
+  return await response.json();
+
+}
+
 export async function getScanners() {
 
   let response = await fetch(`${SERVER_BASE_URL}/api/user/scanner`, { cache: 'no-store', headers: headers() });

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
+import { AWS_S3_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
 
@@ -108,17 +109,17 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-    const handleFileChange = (e:any) => {
+    const handleFileChange = (e: any) => {
         setPassportImage(e.target.files[0]);
-      };
+    };
 
-      
-      const addUser = async () => {
+
+    const addUser = async () => {
         if (!passportPicture) {
-          console.error('Please select an image file');
-          return;
+            console.error('Please select an image file');
+            return;
         }
-    
+
         const formData = new FormData();
         formData.append('passportPicture', passportPicture);
         formData.append('surname', surname);
@@ -133,25 +134,27 @@ export default function ServiceProvider({ data }: any) {
         formData.append('licenseClassification', licenseClassification);
 
         try {
-          const response = await fetch('/api/user/service-provider', {
-            method: 'POST',
-            body: formData,
-          });
+            const response = await fetch('/api/user/service-provider', {
+                method: 'POST',
+                body: formData,
+            });
 
-          console.log("response ",response);
-          
-    
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Image uploaded:', data.imageUrl);
-            // Handle success, e.g., update UI with the uploaded image URL
-          } else {
-            console.error('Failed to upload image');
-          }
+            console.log("response ", response);
+
+
+            if (response.ok) {
+                const data = await response.json();
+                // console.log('Image uploaded:', data.imageUrl);
+                // Handle success, e.g., update UI with the uploaded image URL
+                router.refresh()
+                return toast.success("User added successfully");
+            } else {
+                console.error('Failed to upload image');
+            }
         } catch (error) {
-          console.error('Error uploading image:', error);
+            console.error('Error uploading image:', error);
         }
-      };
+    };
 
     // const addUser = async (e: any) => {
     //     try {
@@ -344,139 +347,140 @@ export default function ServiceProvider({ data }: any) {
                                 <h5 className="card-title">Enter user details</h5>
                                 {/* General Form Elements */}
                                 {/* <form> */}
-                                    <div className="row">
+                                <div className="row">
 
-                                        <div className="col-sm-3 mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Surname
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={surname} />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Other name(s)
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={otherNames} />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputEmail" className="col-sm-12 col-form-label">
-                                                Email
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="email" className="form-control" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-3 mb-3">
-                                            <label
-                                                htmlFor="inputNumber"
-                                                className="col-sm-12 col-form-label"
-                                            >
-                                                Phone Number
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} />
-                                            </div>
+                                    <div className="col-sm-3 mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Surname
+                                        </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={surname} />
                                         </div>
                                     </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Other name(s)
+                                        </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={otherNames} />
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputEmail" className="col-sm-12 col-form-label">
+                                            Email
+                                        </label>
+                                        <div className="col-sm-12">
+                                            <input type="email" className="form-control" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} />
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3 mb-3">
+                                        <label
+                                            htmlFor="inputNumber"
+                                            className="col-sm-12 col-form-label"
+                                        >
+                                            Phone Number
+                                        </label>
+                                        <div className="col-sm-12">
+                                            <input type="number" className="form-control" placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} />
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div className="row">
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Company name                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Company' onChange={(e) => setCompany(e.target.value)} value={company} />
-                                            </div>
+                                <div className="row">
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Company name                                            </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='Company' onChange={(e) => setCompany(e.target.value)} value={company} />
                                         </div>
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Office location                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
-                                            </div>
+                                    </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Office location                                            </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
                                         </div>
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Ghana Post GPS                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Ghana Post GPS' onChange={(e) => setGhanaPostGPS(e.target.value)} value={ghanaPostGPS} />
-                                            </div>
+                                    </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            Ghana Post GPS                                            </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='Ghana Post GPS' onChange={(e) => setGhanaPostGPS(e.target.value)} value={ghanaPostGPS} />
                                         </div>
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                License Number                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
-                                            </div>
+                                    </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            License Number                                            </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
                                         </div>
-                                        <div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select licence classification</label>
-                                            <div className="col-sm-12">
-                                                <select
-                                                    onChange={(e: any) => setLicenseClassification(e.target.value)}
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    value={licenseClassification}
-                                                >
+                                    </div>
+                                    <div className="col-sm-3 mb-3">
+                                        <label className="col-sm-12 col-form-label">Select licence classification</label>
+                                        <div className="col-sm-12">
+                                            <select
+                                                onChange={(e: any) => setLicenseClassification(e.target.value)}
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                value={licenseClassification}
+                                            >
 
-                                                    <option >Select classification</option>
-                                                    <option value="1" >A</option>
-                                                    <option value="2" >B</option>
-                                                    <option value="3">C</option>
-                                                    <option value="4">D</option>
-                                                    <option value="5">E</option>
+                                                <option >Select classification</option>
+                                                <option value="1" >A</option>
+                                                <option value="2" >B</option>
+                                                <option value="3">C</option>
+                                                <option value="4">D</option>
+                                                <option value="5">E</option>
 
-                                                    {/* {data.userTypes.response.map((userType: any) => {
+                                                {/* {data.userTypes.response.map((userType: any) => {
                                                         return (
                                                             <option key={userType.id} value={userType.id}>{userType.name}</option>
                                                         )
                                                     })} */}
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
+                                    </div>
 
-                                        <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                               Service Provider's Passport picture  </label>
-                                            <div className="col-sm-12">
-                                                <input className="form-control" type="file" id="formFile" onChange={(e) => handleFileChange(e)}  />
-                                                {/* <input type="file" className="form-control" placeholder='Passport picture' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} /> */}
-                                            </div>
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                             Passport picture (600 x 600 pixels) </label>
+                                        <div className="col-sm-12">
+                                            <input className="form-control" type="file" accept="image/*" id="formFile" onChange={(e) => handleFileChange(e)} />
+                                            {passportPicture && <Image src={URL.createObjectURL(passportPicture)} alt="Selected Image" width={200} height={200} />}
+                                            {/* <input type="file" className="form-control" placeholder='Passport picture' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} /> */}
                                         </div>
-                                        {/* <div className="col-sm-3  mb-3">
+                                    </div>
+                                    {/* <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 Drivers license                                           </label>
                                             <div className="col-sm-12">
                                                 <input type="file" className="form-control" placeholder='Drivers license ' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
                                             </div>
                                         </div> */}
-                                        <div className="col-sm-3  mb-3">
-                                            <label className="col-sm-12 col-form-label">Select service area</label>
+                                    <div className="col-sm-3  mb-3">
+                                        <label className="col-sm-12 col-form-label">Select service area</label>
 
-                                            <div className="col-sm-12">
-                                                <select
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    onChange={(e: any) => {
-                                                        setServiceArea(e.target.value)
-                                                    }}
-                                                    value={serviceArea}
-                                                >
-                                                    <option >Select area</option>
+                                        <div className="col-sm-12">
+                                            <select
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setServiceArea(e.target.value)
+                                                }}
+                                                value={serviceArea}
+                                            >
+                                                <option >Select area</option>
 
-                                                    {data.serviceAreas.response.map((ul: any) => {
-                                                        return (
-                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
+                                                {data.serviceAreas.response.map((ul: any) => {
+                                                    return (
+                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                    )
+                                                })}
+                                            </select>
                                         </div>
+                                    </div>
 
-                                        {/* {selectedUserLevel == "3" ?
+                                    {/* {selectedUserLevel == "3" ?
                                     <div className=" mb-3">
                                         <div className="col-sm-12">
                                             <select
@@ -493,7 +497,7 @@ export default function ServiceProvider({ data }: any) {
                                         </div>
                                     </div>:<></>} */}
 
-                                        {/* <div className="col-sm-3  mb-3">
+                                    {/* <div className="col-sm-3  mb-3">
                                                         <label className="col-sm-12 col-form-label">Select region</label>
 
                                                         <div className="col-sm-12">
@@ -519,49 +523,49 @@ export default function ServiceProvider({ data }: any) {
                                                     </div> */}
 
 
-                                    </div>
+                                </div>
 
 
-                                    <div className=" mb-3">
-                                        <div className="col-sm-10">
-                                            {isEditing ? (
-                                                <>
-                                                    <button
-                                                        className="btn btn-danger"
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
+                                <div className=" mb-3">
+                                    <div className="col-sm-10">
+                                        {isEditing ? (
+                                            <>
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
 
-                                                            setIsEditing(false);
+                                                        setIsEditing(false);
 
-                                                            setSurname("");
-                                                            setOtherNames("");
-                                                            setEmail("");
-                                                            setPhoneNumber("");
-                                                            setDesignation("");
-                                                            setUserType("");
-                                                            setServiceArea("");
-                                                        }}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                    {"  "} {"  "}
-                                                    <button
-                                                        className="btn btn-warning"
-                                                        onClick={(e) => {
-                                                            updateUser(e);
-                                                        }}
-                                                    >
-                                                        Update
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <button type="submit" className="btn btn-primary" onClick={(e) => addUser(e)}>
-                                                    Add
+                                                        setSurname("");
+                                                        setOtherNames("");
+                                                        setEmail("");
+                                                        setPhoneNumber("");
+                                                        setDesignation("");
+                                                        setUserType("");
+                                                        setServiceArea("");
+                                                    }}
+                                                >
+                                                    Cancel
                                                 </button>
-                                            )}
+                                                {"  "} {"  "}
+                                                <button
+                                                    className="btn btn-warning"
+                                                    onClick={(e) => {
+                                                        updateUser(e);
+                                                    }}
+                                                >
+                                                    Update
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <button type="submit" className="btn btn-primary" onClick={(e) => addUser(e)}>
+                                                Add
+                                            </button>
+                                        )}
 
-                                        </div>
                                     </div>
+                                </div>
                                 {/* </form> */}
                                 {/* End General Form Elements */}
                             </div>
@@ -599,12 +603,12 @@ export default function ServiceProvider({ data }: any) {
 
                                     <thead>
                                         <tr>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">E-mail</th>
-                                            {/* <th scope="col">Level</th>
-                                            <th scope="col">Region</th>
-                                            <th scope="col">District</th> */}
+                                            <th scope="col">Company</th>
+                                            <th scope="col">Location</th>
                                             <th scope="col">OTP</th>
 
                                             <th scope="col">Status</th>
@@ -616,12 +620,12 @@ export default function ServiceProvider({ data }: any) {
                                     <tbody>
                                         {data?.users?.response.map((user: any) => (
                                             <tr key={user.id}>
+                                                <td> <Image src={AWS_S3_URL+ user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
                                                 <td>{user?.otherNames} {user?.surname}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
-                                                {/* <td>{user?.UserLevel?.name}</td>
-                                                <td>{user?.Region?.name}</td>
-                                                <td>{user?.District?.name}</td> */}
+                                                <td>{user?.ServiceProvider?.company}</td>
+                                                <td>{user?.ServiceProvider?.officeLocation}</td>
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)

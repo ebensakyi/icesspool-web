@@ -10,11 +10,9 @@ export async function POST(request: Request) {
     let phoneNumber = res.phoneNumber;
     let code = res.code;
 
-    const otp = await prisma.otp.findFirst({ where: { userId:userId, code } });
+    const otp = await prisma.otp.findFirst({ where: { userId: userId, code } });
     if (otp) {
-
-     await prisma.otp.delete({
-      
+      await prisma.otp.delete({
         where: { id: otp.id },
       });
       const user: any = await prisma.user.update({

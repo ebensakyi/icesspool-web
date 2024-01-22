@@ -10,7 +10,7 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import { getCurrentDate, getCurrentTime } from "@/libs/date";
+import {  convertDateToISO8601, convertTimeToISO8601, getCurrentDate, getCurrentTime } from "@/libs/date";
 
 export async function POST(request: Request) {
  // try {
@@ -116,8 +116,8 @@ export async function POST(request: Request) {
       data: {
         transactionId: transactionId,
         status: 1,
-        date: getCurrentDate(),
-        time: getCurrentTime(),
+        date: convertDateToISO8601(getCurrentDate()) ,
+        time: convertTimeToISO8601(getCurrentTime()) ,
       },
     });
     // await db

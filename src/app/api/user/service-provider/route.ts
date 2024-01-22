@@ -131,7 +131,7 @@ export async function POST(request: Request) {
     let imageName = `${Date.now()}-${passportPicture.name}`;
 
     const params = {
-      Bucket: "esicapps-exports",
+      Bucket:  process.env.AWS_BUCKET,
       Key: `uploads/${imageName}`,
       Body: buffer,
       // Body: fs.createReadStream(passportPicture: File),

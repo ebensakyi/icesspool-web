@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
+import { runCronJob } from "@/libs/transaction-cron";
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +25,9 @@ export async function POST(request: Request) {
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
     let transactionSchedule = res.transactionSchedule;
+
+    console.log(res);
+    
 
     let transaction = await prisma.transaction.update({
       where: { id: transactionId },
@@ -39,12 +43,14 @@ export async function POST(request: Request) {
       include: { ServiceProvider: true },
     });
 
-    
-
     //Update firestore
 
     if (transaction) {
-      const transactionRef = doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId);
+      const transactionRef = doc(
+        db,
+        `${process.env.PROD_TRANSACTION_COLLECTION}`,
+        transactionId
+      );
 
       await updateDoc(transactionRef, {
         txStatusCode: 2,
@@ -52,9 +58,29 @@ export async function POST(request: Request) {
         spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
         spImageUrl: sp?.passportPicture,
-        transactionSchedule: transactionSchedule
+        transactionSchedule: transactionSchedule,
       });
     }
+
+    runCronJob(0.008333, async () => {
+      const transactionRef = doc(
+        db,
+        `${process.env.PROD_TRANSACTION_COLLECTION}`,
+        transactionId
+      );
+
+      await updateDoc(transactionRef, {
+        txStatusCode: 2,
+        spName: sp?.firstName + " " + sp?.lastName,
+        spCompany: sp?.ServiceProvider?.company,
+        spPhoneNumber: sp?.phoneNumber,
+        spImageUrl: sp?.passportPicture,
+        sId: sp?.id,
+
+        transactionSchedule: transactionSchedule,
+        deleted: 1,
+      });
+    });
 
     return NextResponse.json({});
   } catch (error: any) {
@@ -68,3 +94,18 @@ function getNameById(arr: any[], id: any) {
   const foundObject = arr.find((item: { id: any }) => item.id === id);
   return foundObject ? foundObject.name : null;
 }
+
+// function deleteTransaction (){
+//   console.log("delete transaction after timeout")
+
+//   const transactionRef = doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId);
+
+//   await updateDoc(transactionRef, {
+//     txStatusCode: 2,
+//     spName: sp?.firstName + " " + sp?.lastName,
+//     spCompany: sp?.ServiceProvider?.company,
+//     spPhoneNumber: sp?.phoneNumber,
+//     spImageUrl: sp?.passportPicture,
+//     transactionSchedule: transactionSchedule
+//   });
+// }

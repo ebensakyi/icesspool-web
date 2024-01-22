@@ -2,10 +2,10 @@
 CREATE TABLE `Otp` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(255) NOT NULL,
-    `userId` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `userId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -606,7 +606,7 @@ CREATE TABLE `User` (
     `phoneNumber` VARCHAR(255) NOT NULL,
     `fcm` VARCHAR(255) NULL,
     `password` VARCHAR(255) NOT NULL,
-    `imagePath` VARCHAR(255) NULL,
+    `passportPicture` VARCHAR(255) NULL,
     `passwordChanged` INTEGER NULL DEFAULT 0,
     `activated` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
@@ -668,6 +668,9 @@ CREATE TABLE `ScannerUser` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
+ALTER TABLE `Otp` ADD CONSTRAINT `Otp_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -705,6 +708,9 @@ ALTER TABLE `DistrictCoordinates` ADD CONSTRAINT `DistrictCoordinates_districtId
 
 -- AddForeignKey
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Payment` ADD CONSTRAINT `Payment_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `EmptyingServicePricing` ADD CONSTRAINT `EmptyingServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

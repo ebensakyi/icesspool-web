@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         firstName,
         lastName,
         phoneNumber,
-        password:hashedPassword,
+        password: hashedPassword,
         userTypeId: 4,
       },
     });
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       },
     });
 
-   // sendSMS(phoneNumber,`Use this code to verify your account: ${code}`)
+    sendSMS(phoneNumber, `Use this code to verify your account: ${code}`);
 
     return NextResponse.json(user, { status: 200 });
   } catch (error: any) {

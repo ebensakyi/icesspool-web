@@ -20,12 +20,15 @@ export async function POST(request: Request) {
       return NextResponse.json(null, { status: 401 });
     }
 
+    const salt = bcrypt.genSaltSync(10);
+    let hashedPassword = bcrypt.hashSync(password, salt);
+
     const user: any = await prisma.user.create({
       data: {
         firstName,
         lastName,
         phoneNumber,
-        password,
+        password:hashedPassword,
         userTypeId: 4,
       },
     });

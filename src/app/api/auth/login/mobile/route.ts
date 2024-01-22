@@ -8,7 +8,6 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    console.log(res);
     
 
     let phoneNumber = res.phoneNumber;
@@ -26,23 +25,6 @@ export async function POST(request: Request) {
     console.log("user==> ",user);
     
 
-    // const pageAccess = await prisma.pageAccess.findMany({
-    //   where: {
-    //     userRoleId: user?.userRoleId,
-    //     deleted: 0,
-    //   },
-    // });
-
-
-    // let privileges = pageAccess?.map((d: any) => {
-    //   return d.pageId;
-    // });
-
-
-    // if(user?.passwordChanged==0){
-    //   return NextResponse.redirect("/goto");
-
-    // }
 
     if (!user) {
       return NextResponse.json(null, { status: 400 });
@@ -53,10 +35,10 @@ export async function POST(request: Request) {
     
 
     if (isValid) {
-      const token = jwt.sign(user, process.env.TOKEN_SECRET ?? "");
+      //const token = jwt.sign(user, process.env.TOKEN_SECRET ?? "");
 
      // return NextResponse.json({ ...user, token, privileges });
-      return NextResponse.json({ ...user, token });
+      return NextResponse.json(user);
 
     }
     return NextResponse.json(null, { status: 400 });

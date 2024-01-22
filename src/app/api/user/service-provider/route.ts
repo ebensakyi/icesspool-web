@@ -140,7 +140,6 @@ export async function POST(request: Request) {
 
     const result = await s3.upload(params).promise();
 
-    console.log("Result ==> ", result);
 
     const imageUrl = result.Location;
 

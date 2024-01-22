@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       },
     });
 
-    sendSMS(phoneNumber,`Use this code to verify your account: ${code}`)
+   // sendSMS(phoneNumber,`Use this code to verify your account: ${code}`)
 
     return NextResponse.json(user, { status: 200 });
   } catch (error: any) {

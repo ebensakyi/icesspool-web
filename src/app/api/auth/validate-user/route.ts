@@ -10,7 +10,10 @@ export async function POST(request: Request) {
     let phoneNumber = res.phoneNumber;
     let code = res.code;
 
-    const otp = await prisma.otp.findFirst({ where: { userId: userId, code } });
+    const otp = await prisma.otp.findFirst({
+      where: { userId: userId, code },
+      include: { User: true },
+    });
     if (otp) {
       await prisma.otp.delete({
         where: { id: otp.id },
@@ -22,7 +25,18 @@ export async function POST(request: Request) {
         where: { id: userId },
       });
 
-      return NextResponse.json(user, { status: 200 });
+      let data =  {
+        id: otp.userId,
+        phoneNumber: otp.User.phoneNumber,
+        firstName: otp.User.firstName,
+        lastName: otp.User.lastName,
+      }
+
+      
+      return NextResponse.json(
+       data,
+        { status: 200 }
+      );
     }
 
     return NextResponse.json(null, { status: 400 });

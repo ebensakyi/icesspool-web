@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import ReactPaginate from 'react-paginate';
 import { AWS_S3_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
@@ -610,6 +609,8 @@ export default function ServiceProvider({ data }: any) {
                                             <th scope="col">E-mail</th>
                                             <th scope="col">Company</th>
                                             <th scope="col">Location</th>
+                                            <th scope="col">User type</th>
+
                                             <th scope="col">OTP</th>
 
                                             <th scope="col">Status</th>
@@ -627,6 +628,7 @@ export default function ServiceProvider({ data }: any) {
                                                 <td>{user?.email}</td>
                                                 <td>{user?.ServiceProvider?.company}</td>
                                                 <td>{user?.ServiceProvider?.officeLocation}</td>
+                                                <td>{user?.UserType?.name}</td>
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)

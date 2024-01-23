@@ -38,8 +38,8 @@ export default function Admin({ data }: any) {
     const [userId, setUserId] = useState();
     const [serviceArea, setServiceArea] = useState("");
 
-    const [lastName, setSurname] = useState("");
-    const [firstName, setOtherNames] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
@@ -146,8 +146,8 @@ export default function Admin({ data }: any) {
             }
 
             if (response.status == 200) {
-                setSurname("");
-                setOtherNames("");
+                setLastName("");
+                setFirstName("");
                 setEmail("");
                 setPhoneNumber("");
                 setDesignation("");
@@ -196,8 +196,8 @@ export default function Admin({ data }: any) {
 
             const response = await axios.put("/api/user", data);
             if (response.status == 200) {
-                setSurname("");
-                setOtherNames("");
+                setFirstName("");
+                setLastName("");
                 setEmail("");
                 setPhoneNumber("");
                 setServiceArea("");
@@ -292,18 +292,18 @@ export default function Admin({ data }: any) {
 
                                         <div className="col-sm-3 mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Surname
+                                                First name
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={lastName} />
+                                                <input type="text" className="form-control" placeholder='First name' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
                                             </div>
                                         </div>
                                         <div className="col-sm-3  mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Other name(s)
+                                                Last name
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={firstName} />
+                                                <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setLastName(e.target.value)} value={lastName} />
                                             </div>
                                         </div>
                                         <div className="col-sm-3  mb-3">
@@ -435,8 +435,8 @@ export default function Admin({ data }: any) {
 
                                                             setIsEditing(false);
 
-                                                            setSurname("");
-                                                            setOtherNames("");
+                                                            setFirstName("");
+                                                            setLastName("");
                                                             setEmail("");
                                                             setPhoneNumber("");
                                                             setDesignation("");
@@ -563,8 +563,8 @@ export default function Admin({ data }: any) {
 
 
 
-                                                                        setSurname(user.lastName);
-                                                                        setOtherNames(user.firstName);
+                                                                        setLastName(user.lastName);
+                                                                        setFirstName(user.firstName);
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
                                                                         setDesignation(user.designation);

@@ -131,7 +131,7 @@ export async function POST(request: Request) {
     let imageName = `${Date.now()}-${passportPicture.name}`;
 
     const params = {
-      Bucket:  process.env.AWS_BUCKET,
+      Bucket: process.env.AWS_BUCKET,
       Key: `uploads/${imageName}`,
       Body: buffer,
       // Body: fs.createReadStream(passportPicture: File),
@@ -140,14 +140,12 @@ export async function POST(request: Request) {
 
     const result = await s3.upload(params).promise();
 
-
     const imageUrl = result.Location;
 
     const updatedUser: any = await prisma.user.update({
       where: { id: user.id },
       data: { passportPicture: imageName },
     });
-
 
     //await  uploadFile(passportPicture);
 
@@ -166,29 +164,21 @@ export async function GET(request: Request) {
     // const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
-    
-      const response = await prisma.user.findMany({
-        include: {
-          UserType: true,
-          ServiceProvider:true
-        },
-        orderBy: {
-          id: "desc",
-        },
-      });
 
-      
+    const response = await prisma.user.findMany({
+      where:{userTypeId:3},
+      include: {
+        UserType: true,
+        ServiceProvider: true,
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
 
-
-    
-
-      return NextResponse.json({
-        response,
-      
-      });
-    
-
-   
+    return NextResponse.json({
+      response,
+    });
   } catch (error) {
     return NextResponse.json(error);
   }

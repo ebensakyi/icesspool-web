@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
-    let transactionSchedule = res.transactionSchedule;
+    let transactionSchedule = Number(res.transactionSchedule);
 
     console.log(res);
     
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       where: { id: transactionId },
       data: {
         serviceProviderId: Number(serviceProviderId),
-        transactionSchedule: Number(transactionSchedule),
+        transactionSchedule: transactionSchedule,
         currentStatus: 2,
       },
     });
@@ -52,35 +52,37 @@ export async function POST(request: Request) {
         transactionId
       );
 
+      
       await updateDoc(transactionRef, {
         txStatusCode: 2,
         spName: sp?.firstName + " " + sp?.lastName,
         spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
         spImageUrl: sp?.passportPicture,
+        spId: serviceProviderId,
         transactionSchedule: transactionSchedule,
       });
     }
 
-    runCronJob(0.008333, async () => {
-      const transactionRef = doc(
-        db,
-        `${process.env.PROD_TRANSACTION_COLLECTION}`,
-        transactionId
-      );
+    // runCronJob(transactionSchedule, async () => {
+    //   const transactionRef = doc(
+    //     db,
+    //     `${process.env.PROD_TRANSACTION_COLLECTION}`,
+    //     transactionId
+    //   );
 
-      await updateDoc(transactionRef, {
-        txStatusCode: 2,
-        spName: sp?.firstName + " " + sp?.lastName,
-        spCompany: sp?.ServiceProvider?.company,
-        spPhoneNumber: sp?.phoneNumber,
-        spImageUrl: sp?.passportPicture,
-        sId: sp?.id,
+    //   await updateDoc(transactionRef, {
+    //     txStatusCode: 2,
+    //     spName: sp?.firstName + " " + sp?.lastName,
+    //     spCompany: sp?.ServiceProvider?.company,
+    //     spPhoneNumber: sp?.phoneNumber,
+    //     spImageUrl: sp?.passportPicture,
+    //     sId: sp?.id,
 
-        transactionSchedule: transactionSchedule,
-        deleted: 1,
-      });
-    });
+    //     transactionSchedule: transactionSchedule,
+    //     deleted: 1,
+    //   });
+    // });
 
     return NextResponse.json({});
   } catch (error: any) {

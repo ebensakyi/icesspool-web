@@ -9,15 +9,13 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
-
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
     const data = {
       name: res?.name,
-      serviceId:Number(res?.serviceId),
+      serviceId: Number(res?.serviceId),
       biodigesterTypeId: Number(res?.biodigesterTypeId),
       status: Number(res?.status),
     };
@@ -40,8 +38,13 @@ export async function PUT(request: Request) {
     const userId = session?.user?.id;
     const data = {
       name: res?.name,
+      fullDesc: res?.longDesc,
+      shortDesc: res?.shortDesc,
+      imageUrl: res?.imageUrl,
       status: Number(res?.status),
     };
+    console.log(data);
+    
     await prisma.biodigesterService.update({
       where: {
         id: Number(res?.id),
@@ -69,13 +72,11 @@ export async function GET(request: Request) {
 
     const response = await prisma.biodigesterService.findMany({
       where: { deleted: 0 },
-      include:{
-        Service:true,
-        BiodigesterType:true
-      }
+      include: {
+        Service: true,
+        BiodigesterType: true,
+      },
     });
-
-
 
     return NextResponse.json({ response });
   } catch (error) {

@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     // // let loginUserLevel = session?.user?.userLevelId;
     // // let fileUrl;
 
-    let password: string = (await generateCode(4)) as string;
+    let password: string = (await generateCode(8)) as string;
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -92,6 +92,14 @@ export async function POST(request: Request) {
     }
 
     const user: any = await prisma.user.create({ data });
+
+
+    const otp: any = await prisma.otp.create({
+      data: {
+        code: password,
+        userId: user.id,
+      },
+    });
 
     await sendSMS(
       phoneNumber,
@@ -166,10 +174,11 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const response = await prisma.user.findMany({
-      where:{userTypeId:3},
+      where: { userTypeId: 3 },
       include: {
         UserType: true,
         ServiceProvider: true,
+        Otp: true,
       },
       orderBy: {
         id: "desc",

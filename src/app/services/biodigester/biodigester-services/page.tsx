@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { getBiodigesterServices, getServices } from '@/src/api-services';
+import { getBiodigesterServices } from '@/src/api-services';
 import { BiodigesterService } from '@/src/components/BiodigesterService';
 
 

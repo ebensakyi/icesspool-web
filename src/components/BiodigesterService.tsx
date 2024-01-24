@@ -5,15 +5,18 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 export const BiodigesterService = ({ data }: any) => {
-    
+    const editorRef = useRef(null);
+
     const [id, setId] = useState(null);
     const [name, setName] = useState("");
     const [status, setStatus] = useState(2);
     const [shortDesc, setShortDesc] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const [longDesc, setLongDesc] = useState("");
 
     const { data: session } = useSession({
@@ -62,12 +65,18 @@ export const BiodigesterService = ({ data }: any) => {
             }
 
             let data = {
-                id:Number(id),
+                id: Number(id),
                 name,
                 shortDesc,
                 longDesc,
+                imageUrl,
                 status,
             };
+
+            console.log(data);
+            
+
+            
             const response = await axios.put("/api/services/biodigester", data);
             toast.success(response.data.message);
             setId(null)
@@ -105,7 +114,7 @@ export const BiodigesterService = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Update</h5>
@@ -115,6 +124,14 @@ export const BiodigesterService = ({ data }: any) => {
                                     </label>
                                     <div className="col-sm-12">
                                         <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Image URL *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter image url' value={imageUrl} onChange={(e: any) => setImageUrl(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className=" mb-3">
@@ -130,9 +147,34 @@ export const BiodigesterService = ({ data }: any) => {
                                         Long Description *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter long desc(url to a page)' value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)} />
+                                    <textarea id="myTextarea"  className="form-control" name="myTextarea" rows={4} cols={50}  value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)}>
+                                    Enter long desc(url to a page)
+  </textarea>
+                                        {/* <input type="text" className="form-control" placeholder='Enter long desc(url to a page)' value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)} /> */}
                                     </div>
                                 </div>
+                                {/* <>
+                                    <Editor
+                                         onInit={(evt, editor) => editorRef.current = editor}
+                                         initialValue="<p>This is the initial content of the editor.</p>"
+                                         init={{
+                                           height: 500,
+                                           menubar: false,
+                                           plugins: [
+                                             'advlist autolink lists link image charmap print preview anchor',
+                                             'searchreplace visualblocks code fullscreen',
+                                             'insertdatetime media table paste code help wordcount'
+                                           ],
+                                           toolbar: 'undo redo | formatselect | ' +
+                                           'bold italic backcolor | alignleft aligncenter ' +
+                                           'alignright alignjustify | bullist numlist outdent indent | ' +
+                                           'removeformat | help',
+                                           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                         }}
+                                        value={longDesc}
+                                        onEditorChange={handleEditorChange}
+                                    />
+                                </> */}
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Status *
@@ -173,7 +215,7 @@ export const BiodigesterService = ({ data }: any) => {
                                                         if (id) {
                                                             return update(e)
                                                         }
-                                                       // add(e)
+                                                        // add(e)
 
                                                     }}
 
@@ -189,7 +231,7 @@ export const BiodigesterService = ({ data }: any) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">List</h5>
@@ -209,7 +251,7 @@ export const BiodigesterService = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response.map((data: any) => {
+                                        {data?.services?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
@@ -261,7 +303,7 @@ export const BiodigesterService = ({ data }: any) => {
                                                                             Edit
                                                                         </button>
                                                                     </li>
-                                                                  
+
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

@@ -7,3 +7,7 @@
 
 1. use biodigester services available to get services available -  show and hide
 2. then use biodigest services price to get the prices
+
+
+curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+sudo apt-get install -y nodejs

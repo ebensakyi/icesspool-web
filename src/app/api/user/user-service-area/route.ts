@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getUserArea } from "@/libs/user-service-area";
 import { NextResponse } from "next/server";
 
@@ -17,5 +19,8 @@ export async function GET(request: Request) {
       return NextResponse.json(response.serviceAreaId);
     }
     return NextResponse.json(0);
-  } catch (e) {}
+  } catch (e) {
+    return NextResponse.json(0);
+
+  }
 }

@@ -26,7 +26,7 @@ export const saveFileOnDisk = async (file: File) => {
 export const upload2S3 = async (fileName:any,bucketName:any) => {
     try {
         AWS.config.update({
-          accessKeyId: process.env.AWS_ACCESS_KEY,
+          accessKeyId: process.env.MY_AWS_ACCESS_KEY,
           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         });
     

@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 const uploadFile = async (fileName: any) => {
   try {
     AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY,
+      accessKeyId: process.env.MY_AWS_ACCESS_KEY,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
 

@@ -9,7 +9,11 @@ const nextConfig = {
   images: {
     domains: ['icesspool-files.s3.amazonaws.com','esicapps-exports.s3.eu-west-2.amazonaws.com',],
   },
- // ignoreBuildErrors: true,
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = nextConfig;

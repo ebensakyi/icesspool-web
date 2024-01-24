@@ -25,11 +25,11 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 export async function POST(request: Request) {
   try {
     const _data = await request.formData();

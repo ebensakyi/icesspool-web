@@ -18,8 +18,7 @@ export async function GET(request: Request) {
     let transactionId: any = searchParams.get("transactionId");
 
 
-    console.log("paymentId===> ",paymentId);
-    console.log("transactionId===> ",transactionId);
+
 
 
     // const response = await prisma.region.findMany({

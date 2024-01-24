@@ -138,13 +138,14 @@ export async function POST(request: Request) {
 
     let imageName = `${Date.now()}-${passportPicture.name}`;
 
-    const params = {
+    const params:any = {
       Bucket: process.env.AWS_BUCKET,
       Key: `uploads/${imageName}`,
       Body: buffer,
       // Body: fs.createReadStream(passportPicture: File),
       // ACL: 'public-read', // adjust access control as needed
     };
+    
 
     const result = await s3.upload(params).promise();
 

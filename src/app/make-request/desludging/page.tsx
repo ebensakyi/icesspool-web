@@ -1,5 +1,5 @@
 import { getServicePoints, getServices } from '@/src/api-services';
-import { MakeEmptyingRequest } from '@/src/components/MakeEmptyingRequest';
+import { MakeEmptyingRequest } from '@/src/components/MakeDesludgingRequest';
 
 
 

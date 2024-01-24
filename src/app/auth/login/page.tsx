@@ -80,7 +80,7 @@ export default function Login() {
                     href="/"
                     className="logo d-flex align-items-center w-auto"
                   >
-                    <img src="../../assets/img/logo.png" alt="" />
+                    <Image src="../../assets/img/logo.png" alt="" width="300" height="300"/>
                     {/* <span className="d-none d-lg-block">ICESSPOOL</span> */}
                   </Link>
                 </div>

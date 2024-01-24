@@ -1,6 +1,7 @@
 'use client'
+import Image from "next/image";
 
-export default async function NotFound() {
+export default  function NotFound() {
   return (
    
   <main>
@@ -11,10 +12,12 @@ export default async function NotFound() {
         <a className="btn" href="/">
           Back to home
         </a>
-        <img
-          src="/assets/img/not-found.svg"
+        <Image
+          src="../../assets/img/not-found.svg"
           className="img-fluid py-5"
           alt="Page Not Found"
+          width={128}
+          height={128}
         />
         <div className="credits">
           {/* All the links in the footer should remain intact. */}

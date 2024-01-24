@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 
 import { LOGIN_URL } from '@/config';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -32,7 +33,7 @@ export default function Header() {
                     }}>Open</button> */}
                     <div className="d-flex align-items-center justify-content-between">
                         <Link href="/" className="logo d-flex align-items-center">
-                            <img src="../../assets/img/logo.png" alt="" />
+                            <Image src="../../assets/img/logo.png" alt=""  width={300} height={300}/>
                             {/* <span className="d-none d-lg-block">ESICApps</span> */}
                         </Link>
                         <i className="bi bi-list toggle-sidebar-btn" onClick={() => {
@@ -62,10 +63,12 @@ export default function Header() {
                                     href="#"
                                     data-bs-toggle="dropdown"
                                 >
-                                    <img
+                                    <Image
                                         src="../../assets/img/profile-img.jpg"
                                         alt="Profile"
                                         className="rounded-circle"
+                                        width={32}
+                                        height={32}
                                     />
                                     <span className="d-none d-md-block dropdown-toggle ps-2">
                                         {/* {session?.user?.firstName } {session?.user?.lastName} */}

@@ -30,7 +30,7 @@ export default function RootLayout({
 
       <head>
 
-        <link href="../../assets/img/favicon.png" rel="icon" />
+        <link href="../../assets/img/favicon.png&display=optional" rel="icon" />
         <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
         <link href="https://fonts.gstatic.com" rel="preconnect" />

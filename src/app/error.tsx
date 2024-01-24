@@ -1,5 +1,6 @@
 'use client'
- 
+import Image from "next/image";
+
 export default function Error({
   error,
   reset,
@@ -18,9 +19,10 @@ export default function Error({
           <a className="btn" href="/">
             Back to home
           </a>
-          <img
+          <Image
             src="../../assets/img/error.svg"
             width={128}
+            height={128}
             className="img-fluid py-5"
             alt="Page Not Found"
           />

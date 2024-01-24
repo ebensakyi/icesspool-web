@@ -25,7 +25,7 @@ export default function ResetPassword() {
       setPhoneNumber(_phoneNumber)
 
     }
-  }, [])
+  }, [_phoneNumber])
 
 
   const handleResetPassword = async (e: any) => {

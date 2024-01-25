@@ -4,8 +4,16 @@ import { headers } from 'next/headers'
 import { getServerSession } from "next-auth";
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
-import {  getRegions } from '@/src/app/api-services';
+async function getRegions(searchParams: any) {
+  let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/region`, {
+    cache: "no-store",
+  });
 
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return await response.json();
+}
 
 async function getDashboardData(searchParams: any) {
   // let { filterBy } = searchParams

@@ -33,7 +33,7 @@ export default function Header() {
                     }}>Open</button> */}
                     <div className="d-flex align-items-center justify-content-between">
                         <Link href="/" className="logo d-flex align-items-center">
-                            <Image src="../../assets/img/logo.png" alt=""  width={300} height={300}/>
+                            <Image src="/assets/img/logo.png" alt=""  width={300} height={300}/>
                             {/* <span className="d-none d-lg-block">ESICApps</span> */}
                         </Link>
                         <i className="bi bi-list toggle-sidebar-btn" onClick={() => {
@@ -64,7 +64,7 @@ export default function Header() {
                                     data-bs-toggle="dropdown"
                                 >
                                     <Image
-                                        src="../../assets/img/profile-img.jpg"
+                                        src="/assets/img/profile-img.jpg"
                                         alt="Profile"
                                         className="rounded-circle"
                                         width={32}

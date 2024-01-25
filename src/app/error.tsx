@@ -15,7 +15,7 @@ export default function Error({
         <section className="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
           <h1>ERROR</h1>
           {/* <h2>An error occured on the requested page</h2> */}
-          <h2>{error.message}</h2>
+          <h2>{error.toString()}</h2>
           <a className="btn" href="/">
             Back to home
           </a>

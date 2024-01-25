@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import Scanner from "@/src/components/user/Scanner";
-import { getScanners, getServicePoints, getServices } from "@/src/api-services";
+import { getScanners, getServicePoints, getServices } from "@/src/app/api-services";
 
 
 

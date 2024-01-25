@@ -33,7 +33,6 @@ export async function PUT(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    console.log(res);
 
 
     const userId = session?.user?.id;

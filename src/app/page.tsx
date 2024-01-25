@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import { getServerSession } from "next-auth";
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
-import {  getRegions } from '@/src/api-services';
+import {  getRegions } from '@/src/app/api-services';
 
 
 async function getDashboardData(searchParams: any) {

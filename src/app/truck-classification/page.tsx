@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import {  getServiceAreas, getServices, getTruckClassification } from '@/src/api-services';
+import {  getServiceAreas, getServices, getTruckClassification } from '@/src/app/api-services';
 import { TruckClassification } from '../../components/TruckClassification';
 
 

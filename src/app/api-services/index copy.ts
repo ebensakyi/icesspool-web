@@ -65,7 +65,8 @@ export async function getRegions(searchParams: any) {
 }
 
 export async function getServiceAreas(searchParams: any) {
-  let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
+try {
+   let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
     cache: "no-store",
   });
 
@@ -73,6 +74,12 @@ export async function getServiceAreas(searchParams: any) {
     throw new Error("Failed to fetch data");
   }
   return await response.json();
+} catch (error) {
+  console.log("getServiceAreas==>");
+  
+}
+
+ 
 }
 
 export async function getTruckClasses(searchParams: any, service?: number) {

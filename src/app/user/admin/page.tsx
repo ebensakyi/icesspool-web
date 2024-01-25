@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { getAdmins, getPages, getServiceAreas, getUserTypes } from "@/src/api-services";
+import { getAdmins, getPages, getServiceAreas, getUserTypes } from "@/src/app/api-services";
 import Admin from "@/src/components/user/Admin";
 import { headers } from "next/headers";
 

@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
-import { getUserTypes } from "@/src/api-services";
+import { getUserTypes } from "@/src/app/api-services";
 import Client from "@/src/components/user/Client";
 import { headers } from "next/headers";
 

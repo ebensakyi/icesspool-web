@@ -135,9 +135,9 @@ CREATE TABLE `ServicesInArea` (
 CREATE TABLE `BiodigesterService` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `image` VARCHAR(255) NULL,
     `shortDesc` VARCHAR(255) NULL,
-    `fullDesc` VARCHAR(255) NULL,
+    `fullDesc` VARCHAR(1000) NULL,
+    `imageUrl` VARCHAR(255) NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

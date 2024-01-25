@@ -8,25 +8,17 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    console.log(res);
-    
-
-    
 
     let phoneNumber = res.phoneNumber;
     let password = res.password;
 
-    const user : any = await prisma.user.findFirst({
+    const user: any = await prisma.user.findFirst({
       where: {
         phoneNumber: phoneNumber,
         deleted: 0,
       },
-     // include: { Region: true, District: true,UserRole:true },
+     // include: { ServiceArea: true, ServiceProvider: true },
     });
-
-    
-    console.log(user);
-    
 
 
     if (!user) {
@@ -35,14 +27,11 @@ export async function POST(request: Request) {
 
     let isValid = await bcrypt.compare(password, user.password);
 
-    
-
     if (isValid) {
       //const token = jwt.sign(user, process.env.TOKEN_SECRET ?? "");
 
-     // return NextResponse.json({ ...user, token, privileges });
+      // return NextResponse.json({ ...user, token, privileges });
       return NextResponse.json(user);
-
     }
     return NextResponse.json(null, { status: 400 });
   } catch (error: any) {
@@ -51,7 +40,4 @@ export async function POST(request: Request) {
   }
 }
 
-
-export async function GET(request: Request) {
-  
-}
+export async function GET(request: Request) {}

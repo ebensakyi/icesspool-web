@@ -38,10 +38,14 @@ export async function POST(request: Request) {
       },
     });
 
+    console.log("transaction =>",transaction);
+
+
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },
       include: { ServiceProvider: true },
     });
+
 
     //Update firestore
 

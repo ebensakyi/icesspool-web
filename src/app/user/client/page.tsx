@@ -1,7 +1,6 @@
 export const dynamic = "force-dynamic";
 
 import { LOGIN_URL, SERVER_BASE_URL } from "@/config";
-import { getUserTypes } from "@/src/app/api-services";
 import Client from "@/src/components/user/Client";
 import { headers } from "next/headers";
 
@@ -17,7 +16,35 @@ async function getPages() {
 }
 
 
-
+async function getServiceAreas(searchParams: any) {
+    try {
+       let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
+        cache: "no-store",
+      });
+    
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("getServiceAreas==>");
+      
+    }
+    
+     
+    }
+    
+    
+       async function getUserTypes() {
+    
+        let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/user-type`, { cache: 'no-store', headers: headers() });
+        if (!response.ok) {
+            throw new Error('Failed to fetch data')
+        }
+        return await response.json();
+    
+    }
+    
 
 
 export default async function Page() {

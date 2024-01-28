@@ -23,7 +23,6 @@ export async function POST(request: Request) {
     });
 
     
-    console.log("user==> ",user);
     
 
     // const pageAccess = await prisma.pageAccess.findMany({

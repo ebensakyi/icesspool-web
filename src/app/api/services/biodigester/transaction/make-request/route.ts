@@ -14,12 +14,10 @@ import {  convertDateToISO8601, convertTimeToISO8601, getCurrentDate, getCurrent
 
 export async function POST(request: Request) {
  // try {
-    // const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     const res = await request.json();
 
-    console.log(res);
     
 
     
@@ -128,7 +126,7 @@ export async function POST(request: Request) {
     // .doc(res.transactionId)
     // .set(data);
 
-    return NextResponse.json({});
+    return NextResponse.json(response);
   // } catch (error: any) {
   //   console.log(error);
 

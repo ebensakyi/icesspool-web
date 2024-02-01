@@ -85,8 +85,8 @@ export async function POST(request: Request) {
     await setDoc(doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId), {
       transactionId: res.transactionId,
       customerId: Number(res?.userId),
-      lat: Number(res?.lat),
-      lng: Number(res?.lng),
+      customerLat: Number(res?.customerLat),
+      customerLng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
       // trips: Number(res[0]?.trips),

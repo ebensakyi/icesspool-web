@@ -197,7 +197,7 @@ model BiodigesterType {
 model BiodigesterServicePricing {
   id                   Int         @id @default(autoincrement())
   biodigesterServiceId Int
-  cost                 Int
+  cost                 Decimal     @db.Decimal(10, 2)
   ServiceArea          ServiceArea @relation(fields: [serviceAreaId], references: [id])
   status               Int?        @default(0)
   deleted              Int?        @default(0)

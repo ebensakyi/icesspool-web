@@ -67,9 +67,7 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let platform = Number(searchParams.get("platform"));
 
-    console.log(serviceAreaId);
-    console.log(platform);
-
+   
     const session: any = await getServerSession(authOptions);
 
     // await logActivity("Visited data assignment page", session?.user?.id);

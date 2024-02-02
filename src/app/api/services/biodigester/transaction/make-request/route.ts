@@ -18,6 +18,9 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
+    console.log(res);
+    
+
     
 
     
@@ -54,8 +57,8 @@ export async function POST(request: Request) {
     const data = {
       id: res.transactionId,
       customerId: Number(res?.userId),
-      lat: Number(res?.lat),
-      lng: Number(res?.lng),
+      lat: Number(res?.customerLat),
+      lng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
       discountedCost: Number(res?.totalCost),

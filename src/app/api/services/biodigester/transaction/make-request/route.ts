@@ -113,7 +113,9 @@ export async function POST(request: Request) {
 
         unitCost: Number(res?.totalCost),
         discountedTotalCost: Number(res?.totalCost),
-        scheduledDateTime: res.scheduledDate + " at " + res.scheduledTime,
+        scheduledTime: res.scheduledTime,
+        scheduledDate: res.scheduledDate,
+
         createdDate: getCurrentDate() + " at " + getCurrentTime(),
         deleted: false,
       }

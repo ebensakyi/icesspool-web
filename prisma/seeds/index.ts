@@ -16,6 +16,7 @@ import { bservices } from "./biodigester_services";
 import { biodigesterTypes } from "./biodigester_type";
 import { districts } from './districts';
 import { txStatuses } from './tx_statuses';
+import { serviceProvider } from './service_provider';
 
 async function main() {
 
@@ -67,6 +68,10 @@ async function main() {
     });
     await prisma.txStatus.createMany({
       data: txStatuses,
+    });
+
+    await prisma.serviceProvider.createMany({
+      data: serviceProvider,
     });
 
 }

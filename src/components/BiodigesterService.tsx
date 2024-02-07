@@ -126,15 +126,15 @@ export const BiodigesterService = ({ data }: any) => {
                                         <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className=" mb-3">
+                                {/* <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Image URL *
                                     </label>
                                     <div className="col-sm-12">
                                         <input type="text" className="form-control" placeholder='Enter image url' value={imageUrl} onChange={(e: any) => setImageUrl(e.target.value)} />
                                     </div>
-                                </div>
-                                <div className=" mb-3">
+                                </div> */}
+                                {/* <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Short Description *
                                     </label>
@@ -150,9 +150,8 @@ export const BiodigesterService = ({ data }: any) => {
                                     <textarea id="myTextarea"  className="form-control" name="myTextarea" rows={4} cols={50}  value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)}>
                                     Enter long desc(url to a page)
   </textarea>
-                                        {/* <input type="text" className="form-control" placeholder='Enter long desc(url to a page)' value={longDesc} onChange={(e: any) => setLongDesc(e.target.value)} /> */}
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* <>
                                     <Editor
                                          onInit={(evt, editor) => editorRef.current = editor}

@@ -24,18 +24,15 @@ export async function POST(request: Request) {
 
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
-    let transactionSchedule = Number(res.transactionSchedule);
 
     let currentStatus;
-    console.log(res);
-    
+
     
 
     let transaction = await prisma.transaction.update({
       where: { id: transactionId },
       data: {
         serviceProviderId: Number(serviceProviderId),
-        transactionSchedule: transactionSchedule,
         currentStatus: 2,
       },
     });
@@ -65,7 +62,6 @@ export async function POST(request: Request) {
         spPhoneNumber: sp?.phoneNumber,
         spImageUrl: sp?.passportPicture,
         spId: serviceProviderId,
-        transactionSchedule: transactionSchedule,
       });
     }
 

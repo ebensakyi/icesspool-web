@@ -634,7 +634,6 @@ model Transaction {
   lng                    Decimal
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
-  transactionSchedule    Int?                     @default(0)
   currentStatus          Int                      @default(1)
   requestTypeId          Int?                     @default(1)
   deleted                Int?                     @default(0)

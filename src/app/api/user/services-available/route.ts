@@ -8,7 +8,10 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    let serviceAreaId = Number(searchParams.get("serviceAreaId"));
+
+    
+
+    let serviceAreaId =1// Number(searchParams.get("serviceAreaId"));
 
     
 
@@ -23,6 +26,8 @@ export async function GET(request: Request) {
 
 
     let res = response.map((res) => res.serviceId);
+
+    
 
     return NextResponse.json(res);
   } catch (error) {

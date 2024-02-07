@@ -26,7 +26,9 @@ export async function POST(request: Request) {
     let transactionId = res.transactionId;
     let transactionSchedule = Number(res.transactionSchedule);
 
+    let currentStatus;
     console.log(res);
+    
     
 
     let transaction = await prisma.transaction.update({
@@ -38,7 +40,6 @@ export async function POST(request: Request) {
       },
     });
 
-    console.log("transaction =>",transaction);
 
 
     let sp = await prisma.user.findFirst({

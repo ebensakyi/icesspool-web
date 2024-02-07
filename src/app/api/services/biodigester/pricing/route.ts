@@ -62,7 +62,7 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    let serviceAreaId = Number(searchParams.get("serviceAreaId"));
+    let serviceAreaId =1// Number(searchParams.get("serviceAreaId"));
 
     let userId = Number(searchParams.get("userId"));
     let platform = Number(searchParams.get("platform"));

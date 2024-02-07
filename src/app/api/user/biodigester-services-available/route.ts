@@ -19,10 +19,10 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log(response);
     
 
     let res = response.map((res) => res.id);
+    console.log("BIODI - SERV - AVAIL",res);
 
     return NextResponse.json(res);
   } catch (error) {

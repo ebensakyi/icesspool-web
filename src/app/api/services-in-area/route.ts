@@ -9,6 +9,8 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
+    
+
     const data = {
       serviceId: Number(res?.service),
       serviceAreaId: Number(res?.serviceArea),
@@ -42,7 +44,6 @@ export async function PUT(request: Request) {
 
     const userId = session?.user?.id;
 
-    console.log(res);
     
     const data = {
       serviceId: Number(res?.service),

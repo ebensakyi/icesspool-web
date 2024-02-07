@@ -70,7 +70,7 @@ export async function POST(request: Request) {
     await prisma.transactionSchedule.create({
       data: {
         transactionId: res.transactionId,
-        scheduledDate: res.scheduledDate,
+        scheduledDate: new Date(res.scheduledDate),
         scheduledTime: res.scheduledTime,
       },
     });

@@ -166,7 +166,7 @@ CREATE TABLE `BiodigesterType` (
 CREATE TABLE `BiodigesterServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `biodigesterServiceId` INTEGER NOT NULL,
-    `cost` INTEGER NOT NULL,
+    `cost` DECIMAL(10, 2) NOT NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -278,6 +278,20 @@ CREATE TABLE `MomoAccount` (
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `serviceProviderId`(`serviceProviderId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `TransactionSchedule` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `scheduledDate` DATETIME(3) NOT NULL,
+    `scheduledTime` VARCHAR(15) NOT NULL,
+    `status` INTEGER NULL DEFAULT 0,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `transactionId` VARCHAR(255) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -708,6 +722,9 @@ ALTER TABLE `DistrictCoordinates` ADD CONSTRAINT `DistrictCoordinates_districtId
 
 -- AddForeignKey
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `TransactionSchedule` ADD CONSTRAINT `TransactionSchedule_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Payment` ADD CONSTRAINT `Payment_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

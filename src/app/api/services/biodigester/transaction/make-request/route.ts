@@ -10,20 +10,19 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import {  convertDateToISO8601, convertTimeToISO8601, getCurrentDate, getCurrentTime } from "@/libs/date";
+import {
+  convertDateToISO8601,
+  convertTimeToISO8601,
+  getCurrentDate,
+  getCurrentTime,
+} from "@/libs/date";
 
 export async function POST(request: Request) {
- // try {
+  try {
     const db = getFirestore(app);
 
     const res = await request.json();
 
-    console.log(res);
-    
-
-    
-
-    
     const session: any = await getServerSession(authOptions);
 
     const requestDetails = res.requestDetails.map(
@@ -35,9 +34,7 @@ export async function POST(request: Request) {
       })
     );
 
-
     let biodigesterServices = await prisma.biodigesterService.findMany({});
-
 
     const requestDetails1 = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
@@ -46,9 +43,6 @@ export async function POST(request: Request) {
       })
       // item.name + " : " + item.unitCost
     );
-
-
-
 
     // const userId = session?.user?.id;
 
@@ -60,13 +54,12 @@ export async function POST(request: Request) {
       lat: Number(res?.customerLat),
       lng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
-
       discountedCost: Number(res?.totalCost),
       cost: Number(res?.totalCost),
 
       // trips: Number(res[0]?.trips),
       serviceId: 3,
-      serviceAreaId: Number(res?.serviceAreaId),
+      serviceAreaId: 1, //Number(res?.serviceAreaId),
 
       // unitCost: Number(res[0]?.unitCost),
     };
@@ -74,6 +67,13 @@ export async function POST(request: Request) {
     const response = await prisma.transaction.create({ data });
 
     await prisma.biodigesterTransaction.createMany({ data: requestDetails });
+    await prisma.transactionSchedule.create({
+      data: {
+        transactionId: res.transactionId,
+        scheduledDate: res.scheduledDate,
+        scheduledTime: res.scheduledTime,
+      },
+    });
 
     let user = await prisma.user.findFirst({
       where: { id: Number(res?.userId) },
@@ -85,43 +85,45 @@ export async function POST(request: Request) {
 
     let transactionId = res.transactionId;
 
-    await setDoc(doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId), {
-      transactionId: res.transactionId,
-      customerId: Number(res?.userId),
-      customerLat: Number(res?.customerLat),
-      customerLng: Number(res?.customerLng),
-      gpsAccuracy: Number(res?.accuracy).toFixed(),
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        transactionId: res.transactionId,
+        customerId: Number(res?.userId),
+        customerLat: Number(res?.customerLat),
+        customerLng: Number(res?.customerLng),
+        gpsAccuracy: Number(res?.accuracy).toFixed(),
 
-      // trips: Number(res[0]?.trips),
-      service: "Biodigester",
-      serviceId:3,
-      biodigesterTxDetails: requestDetails1,
-      serviceAreaId: Number(res?.serviceAreaId),
+        // trips: Number(res[0]?.trips),
+        service: "Biodigester ",
+        serviceId: 3,
+        biodigesterTxDetails: requestDetails1,
+        serviceAreaId: Number(res?.serviceAreaId),
 
-      //clientId: tr,
-      txStatusCode: 1,
-      requestType: 1,
-      offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
-      customerName: user?.lastName + " " + user?.firstName,
-      customerPhone: user?.phoneNumber,
-      customerEmail: user?.email,
+        //clientId: tr,
+        txStatusCode: 1,
+        requestType: 1,
+        offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
+        customerName: user?.lastName + " " + user?.firstName,
+        customerPhone: user?.phoneNumber,
+        customerEmail: user?.email,
 
-      // toiletType: req.body.toiletType,
-      totalCost: Number(res?.totalCost),
+        // toiletType: req.body.toiletType,
+        totalCost: Number(res?.totalCost),
 
-      unitCost: Number(res?.totalCost),
-      discountedTotalCost: Number(res?.totalCost),
-      createdDate: getCurrentDate() + " at " + getCurrentTime(),
-      deleted: false,
-    });
-
+        unitCost: Number(res?.totalCost),
+        discountedTotalCost: Number(res?.totalCost),
+        createdDate: getCurrentDate() + " at " + getCurrentTime(),
+        deleted: false,
+      }
+    );
 
     await prisma.transactionStatus.create({
       data: {
         transactionId: transactionId,
         status: 1,
-        date: convertDateToISO8601(getCurrentDate()) ,
-        time: convertTimeToISO8601(getCurrentTime()) ,
+        date: convertDateToISO8601(getCurrentDate()),
+        time: convertTimeToISO8601(getCurrentTime()),
       },
     });
     // await db
@@ -130,11 +132,11 @@ export async function POST(request: Request) {
     // .set(data);
 
     return NextResponse.json(response);
-  // } catch (error: any) {
-  //   console.log(error);
+  } catch (error: any) {
+    console.log(error);
 
-  //   return NextResponse.json(error, { status: 500 });
-  // }
+    return NextResponse.json(error, { status: 500 });
+  }
 }
 
 function getNameById(arr: any[], id: any) {

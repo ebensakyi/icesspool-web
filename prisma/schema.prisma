@@ -704,7 +704,7 @@ model User {
   firstName       String        @db.VarChar(255)
   email           String?       @db.VarChar(255)
   phoneNumber     String        @unique @db.VarChar(255)
-  fcm             String?       @db.VarChar(255)
+  fcmId             String?       @db.VarChar(255)
   password        String        @db.VarChar(255)
   passportPicture String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)

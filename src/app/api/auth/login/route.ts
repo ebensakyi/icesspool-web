@@ -7,8 +7,6 @@ import jwt from "jsonwebtoken";
 export async function POST(request: Request) {
   try {
     const res = await request.json();
-
-    console.log(res);
     
 
     let phoneNumber = res.phoneNumber;

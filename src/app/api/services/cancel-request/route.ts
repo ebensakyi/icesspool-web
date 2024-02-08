@@ -105,7 +105,7 @@ export async function POST(request: Request) {
   await prisma.transactionStatus.create({
     data: {
       transactionId: transactionId,
-      status: status,
+      txStatusId: status,
       date: convertDateToISO8601(getCurrentDate()),
       time: convertTimeToISO8601(getCurrentTime()),
     },

@@ -573,11 +573,12 @@ model RatingBreakdown {
 // }
 
 model TxStatus {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(255)
+  deleted           Int?                @default(0)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  TransactionStatus TransactionStatus[]
 }
 
 model ServicePoint {
@@ -691,13 +692,14 @@ model BiodigesterTransaction {
 model TransactionStatus {
   id            Int         @id @default(autoincrement())
   transactionId String      @db.VarChar(255)
-  status        Int
   date          DateTime?   @db.Date
   time          DateTime?   @db.Time(0)
   deleted       Int?        @default(0)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   Transaction   Transaction @relation(fields: [transactionId], references: [id])
+  TxStatus      TxStatus    @relation(fields: [txStatusId], references: [id])
+  txStatusId    Int
 }
 
 model User {

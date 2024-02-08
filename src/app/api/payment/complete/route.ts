@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
+import { txStatuses } from '../../../../../prisma/seeds/tx_statuses';
 
 export async function GET(request: Request) {
   try {
@@ -75,7 +76,7 @@ export async function GET(request: Request) {
           await prisma.transactionStatus.create({
             data: {
               transactionId: transactionId,
-              status: 3,
+              txStatusId: 3,
               date: getCurrentDate(),
               time: getCurrentTime(),
             },
@@ -90,7 +91,7 @@ export async function GET(request: Request) {
             where: { id: transactionId },
             include: { ServiceProvider: true },
           });
-          let fcms: any = [user?.fcm];
+          let fcms: any = [user?.fcmId];
 
           await sendFCM(
             fcms,
@@ -177,7 +178,7 @@ export async function POST(request: Request) {
           await prisma.transactionStatus.create({
             data: {
               transactionId: transactionId,
-              status: 3,
+              txStatusId: 3,
               date: getCurrentDate(),
               time: getCurrentTime(),
             },
@@ -192,7 +193,7 @@ export async function POST(request: Request) {
             where: { id: transactionId },
             include: { ServiceProvider: true },
           });
-          let fcms: any = [user?.fcm];
+          let fcms: any = [user?.fcmId];
 
           await sendFCM(
             fcms,

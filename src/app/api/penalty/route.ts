@@ -9,19 +9,28 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-
-
-    // const userId = session?.user?.id;
-
-    // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
-
     const data = {
-      fine: res?.fine,
+      fine: Number(res?.fine),
     };
+
+    const penalty = await prisma.penalty.findFirst({
+      where: { deleted: 0 },
+    });
+    if (penalty) {
+      await prisma.penalty.update({
+        where: {
+          id: Number(penalty?.id),
+        },
+        data,
+      });
+
+      return NextResponse.json({});
+
+    }
 
     const response = await prisma.penalty.create({ data });
 
-    return NextResponse.json(response);
+    return NextResponse.json({});
   } catch (error: any) {
     console.log(error);
 
@@ -29,28 +38,35 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PUT(request: Request) {
-  try {
-    const res = await request.json();
-    const session: any = await getServerSession(authOptions);
+// export async function PUT(request: Request) {
+//   try {
+//     const res = await request.json();
+//     const session: any = await getServerSession(authOptions);
 
-    const data = {
-        fine: res?.fine,
-    };
-    await prisma.penalty.update({
-      where: {
-        id: Number(res?.id),
-      },
-      data,
-    });
+//     const data = {
+//         fine: res?.fine,
+//     };
 
-    return NextResponse.json({ status: 200 });
-  } catch (error: any) {
-    console.log(error);
+//     const response = await prisma.penalty.findFirst({
+//         where: { deleted: 0 },
+//       });
+//       if(response){
 
-    return NextResponse.json(error, { status: 500 });
-  }
-}
+//       }
+//     await prisma.penalty.update({
+//       where: {
+//         id: Number(res?.id),
+//       },
+//       data,
+//     });
+
+//     return NextResponse.json({ status: 200 });
+//   } catch (error: any) {
+//     console.log(error);
+
+//     return NextResponse.json(error, { status: 500 });
+//   }
+// }
 
 export async function GET(request: Request) {
   try {
@@ -62,13 +78,11 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.penalty.findMany({
+    const response = await prisma.penalty.findFirst({
       where: { deleted: 0 },
     });
 
-
-
-    return NextResponse.json({ response });
+    return NextResponse.json(Number(response?.fine));
   } catch (error) {
     console.log(error);
 

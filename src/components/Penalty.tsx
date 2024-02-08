@@ -5,12 +5,14 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const Penalty = ({ data }: any) => {
     const [id, setId] = useState(null);
     const [fine, setFine] = useState("");
+
+    
 
     const { data: session } = useSession({
         required: true,
@@ -22,6 +24,12 @@ export const Penalty = ({ data }: any) => {
 
     const router = useRouter();
     const pathname = usePathname()
+
+    useEffect(() => {
+      
+          setFine(data?.penalty);
+     
+      },[]);
 
 
 
@@ -36,49 +44,55 @@ export const Penalty = ({ data }: any) => {
                 fine,
             };
             const response = await axios.post("/api/penalty", data);
-            toast.success(response.data.message);
-            setFine("")
+            toast.success("Fine added");
 
             router.refresh()
 
         } catch (error: any) {
-            if (error.response.status == 401) {
-                toast.error(error.response.data.message);
-            }
+         toast.error("An error occured")
         }
     };
 
-    const update = async (e: any) => {
-        try {
-            e.preventDefault();
-            if (fine == "" ) {
-                return toast.error("Please fill form");
-            }
+    // const update = async (e: any) => {
+    //     try {
+    //         e.preventDefault();
+    //         if (fine == "" ) {
+    //             return toast.error("Please fill form");
+    //         }
 
-            let data = {
-                id:Number(id),
-                name,
-                status,
-            };
-            const response = await axios.put("/api/services", data);
-            toast.success(response.data.message);
-            setId(null)
-            setFine("")
+    //         let data = {
+    //             id:Number(id),
+    //             fine,
+    //         };
+    //         const response = await axios.post("/api/penalty", data);
+    //         toast.success(response.data.message);
+       
 
-            router.refresh()
+    //         router.refresh()
 
-        } catch (error: any) {
-            if (error.response.status == 401) {
-                toast.error(error.response.data.message);
-            }
-        }
-    };
+    //     } catch (error: any) {
+    //         if (error.response.status == 401) {
+    //             toast.error(error.response.data.message);
+    //         }
+    //     }
+    // };
 
 
 
 
     return (
         <main id="main" className="main">
+               <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="pagetitle">
                 <h1>PENALTY</h1>
                 {/* <nav>
@@ -106,10 +120,6 @@ export const Penalty = ({ data }: any) => {
                                         <input type="text" className="form-control" placeholder='Enter fine' value={fine} onChange={(e: any) => setFine(e.target.value)} />
                                     </div>
                                 </div>
-                               
-
-
-
 
                                 <div className=" mb-3">
                                     <div className="col-sm-10">
@@ -121,11 +131,7 @@ export const Penalty = ({ data }: any) => {
                                                 <button
                                                     className="btn btn-primary"
                                                     onClick={async (e) => {
-                                                        if (id) {
-                                                            return update(e)
-                                                        }
                                                         add(e)
-
                                                     }}
 
                                                 >

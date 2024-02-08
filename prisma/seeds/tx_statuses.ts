@@ -27,4 +27,12 @@ export const txStatuses = [
     id: 7,
     name: "Offer Re-broadcasted",
   },
+  {
+    id: 8,
+    name: "Cancelled by customer",
+  },
+  {
+    id: 9,
+    name: "Cancelled by sp",
+  },
 ];

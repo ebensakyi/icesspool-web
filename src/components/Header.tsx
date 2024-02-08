@@ -33,7 +33,7 @@ export default function Header() {
                     }}>Open</button> */}
                     <div className="d-flex align-items-center justify-content-between">
                         <Link href="/" className="logo d-flex align-items-center">
-                            <Image src="/assets/img/logo.png" alt=""  width={300} height={300}/>
+                            <Image src="/assets/img/logo.png" alt="" width={300} height={300} />
                             {/* <span className="d-none d-lg-block">ESICApps</span> */}
                         </Link>
                         <i className="bi bi-list toggle-sidebar-btn" onClick={() => {
@@ -248,6 +248,17 @@ export default function Header() {
                             <li className="nav-item">
 
                                 <Link className={
+                                    pathname == "/penalty"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                } href="/penalty">
+                                    <i className="bi bi-outlet" />
+                                    <span>Cancellation Penalty</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+
+                                <Link className={
                                     pathname == "/truck-classification"
                                         ? "nav-link"
                                         : "nav-link collapsed"
@@ -318,7 +329,7 @@ export default function Header() {
 
                             </ul>
                         </li>
-                       
+
                         <li className="nav-item">
 
                             <Link

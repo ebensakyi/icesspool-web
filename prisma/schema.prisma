@@ -315,13 +315,13 @@ model MomoAccount {
 }
 
 model TransactionSchedule {
-  id           Int      @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   scheduledDate DateTime
   scheduledTime String   @db.VarChar(15)
-  status       Int?     @default(0)
-  deleted      Int?     @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  status        Int?     @default(0)
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   Transaction   Transaction @relation(fields: [transactionId], references: [id])
   transactionId String      @db.VarChar(255)
@@ -704,7 +704,7 @@ model User {
   firstName       String        @db.VarChar(255)
   email           String?       @db.VarChar(255)
   phoneNumber     String        @unique @db.VarChar(255)
-  fcmId             String?       @db.VarChar(255)
+  fcmId           String?       @db.VarChar(255)
   password        String        @db.VarChar(255)
   passportPicture String?       @db.VarChar(255)
   passwordChanged Int?          @default(0)
@@ -730,6 +730,7 @@ model User {
   serviceAreaId Int?
   Transaction   Transaction[]
   Otp           Otp[]
+  Penalty       Penalty[]
 }
 
 // model UserType {
@@ -782,4 +783,14 @@ model ScannerUser {
   servicePointId Int
   User           User         @relation(fields: [userId], references: [id])
   userId         Int
+}
+
+model Penalty {
+  id             Int      @id @default(autoincrement())
+  fine           Decimal
+  deleted        Int?     @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User?     @relation(fields: [userId], references: [id])
+  userId         Int?
 }

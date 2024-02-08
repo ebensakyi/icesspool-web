@@ -565,7 +565,6 @@ CREATE TABLE `Transaction` (
     `lng` DECIMAL(65, 30) NOT NULL,
     `trips` INTEGER NOT NULL DEFAULT 1,
     `paymentStatus` INTEGER NULL DEFAULT 0,
-    `transactionSchedule` INTEGER NULL DEFAULT 0,
     `currentStatus` INTEGER NOT NULL DEFAULT 1,
     `requestTypeId` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
@@ -618,7 +617,7 @@ CREATE TABLE `User` (
     `firstName` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NULL,
     `phoneNumber` VARCHAR(255) NOT NULL,
-    `fcm` VARCHAR(255) NULL,
+    `fcmId` VARCHAR(255) NULL,
     `password` VARCHAR(255) NOT NULL,
     `passportPicture` VARCHAR(255) NULL,
     `passwordChanged` INTEGER NULL DEFAULT 0,
@@ -677,6 +676,18 @@ CREATE TABLE `ScannerUser` (
     `updatedAt` DATETIME(3) NOT NULL,
     `servicePointId` INTEGER NOT NULL,
     `userId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Penalty` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `fine` DECIMAL(65, 30) NOT NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `userId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -809,3 +820,6 @@ ALTER TABLE `ScannerUser` ADD CONSTRAINT `ScannerUser_servicePointId_fkey` FOREI
 
 -- AddForeignKey
 ALTER TABLE `ScannerUser` ADD CONSTRAINT `ScannerUser_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Penalty` ADD CONSTRAINT `Penalty_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

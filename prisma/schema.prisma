@@ -195,14 +195,18 @@ model BiodigesterType {
 }
 
 model BiodigesterServicePricing {
-  id                   Int         @id @default(autoincrement())
+  id                   Int      @id @default(autoincrement())
   biodigesterServiceId Int
-  cost                 Decimal     @db.Decimal(10, 2)
-  ServiceArea          ServiceArea @relation(fields: [serviceAreaId], references: [id])
-  status               Int?        @default(0)
-  deleted              Int?        @default(0)
-  createdAt            DateTime    @default(now())
-  updatedAt            DateTime    @updatedAt
+  cost                 Decimal  @db.Decimal(10, 2)
+  standardCost         Decimal @db.Decimal(10, 2) @default(0.0)
+  largeCost            Decimal @db.Decimal(10, 2) @default(0.0)
+  doubleLargeCost      Decimal @db.Decimal(10, 2) @default(0.0)
+
+  ServiceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  status      Int?        @default(0)
+  deleted     Int?        @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   BiodigesterService BiodigesterService @relation(fields: [biodigesterServiceId], references: [id])
 
@@ -499,7 +503,7 @@ model Page {
 }
 
 model ServiceProvider {
-  id                    Int      @id @default(autoincrement())
+  id                    String         @id     @unique @db.VarChar(255)  
   userId                Int      @unique
   idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)

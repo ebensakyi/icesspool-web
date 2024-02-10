@@ -16,9 +16,15 @@ export async function POST(request: Request) {
     const data = {
       status: Number(res?.status),
       cost: Number(res?.cost),
+      standardCost: Number(res?.standardCost),
+      largeCost: Number(res?.largeCost),
+      doubleLargeCost: 2 * Number(res?.largeCost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
     };
+
+
+    
 
     const response = await prisma.biodigesterServicePricing.create({ data });
 
@@ -39,6 +45,9 @@ export async function PUT(request: Request) {
     const data = {
       status: Number(res?.status),
       cost: Number(res?.cost),
+      standardCost: Number(res?.standardCost),
+      largeCost: Number(res?.largeCost),
+      doubleLargeCost: 2 * Number(res?.largeCost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
     };
@@ -101,6 +110,9 @@ export async function GET(request: Request) {
         biodigesterServiceId:data.biodigesterServiceId,
         name: data.BiodigesterService.name,
         cost: data.cost,
+        standardCost: data.standardCost,
+        largeCost: data.largeCost,
+        doubleLargeCost: data.doubleLargeCost,
         type: data.BiodigesterService.BiodigesterType.name,
       }));
       return NextResponse.json(res);

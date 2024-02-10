@@ -167,6 +167,9 @@ CREATE TABLE `BiodigesterServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `biodigesterServiceId` INTEGER NOT NULL,
     `cost` DECIMAL(10, 2) NOT NULL,
+    `standardCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    `largeCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    `doubleLargeCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -422,7 +425,7 @@ CREATE TABLE `Page` (
 
 -- CreateTable
 CREATE TABLE `ServiceProvider` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(255) NOT NULL,
     `userId` INTEGER NOT NULL,
     `idCardImg` VARCHAR(255) NULL,
     `company` VARCHAR(255) NULL,
@@ -435,6 +438,7 @@ CREATE TABLE `ServiceProvider` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `ServiceProvider_id_key`(`id`),
     UNIQUE INDEX `ServiceProvider_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

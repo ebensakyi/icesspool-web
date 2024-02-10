@@ -215,7 +215,12 @@ export default function Header() {
                                 id="offers-nav"
                                 className="nav-content collapse "
                                 data-bs-parent="#offers-nav"
-                            >
+                            > <li>
+                                    <Link href="/offers/biodigester">
+                                        <i className="bi bi-circle" />
+                                        <span> Bio-digest</span>
+                                    </Link>
+                                </li>
 
                                 <li>
                                     <Link href="/offers/emptying">
@@ -229,12 +234,7 @@ export default function Header() {
                                         <span>Water</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/offers/biodigester">
-                                        <i className="bi bi-circle" />
-                                        <span> Bio-digest</span>
-                                    </Link>
-                                </li>
+                               
 
 
                             </ul>
@@ -350,7 +350,12 @@ export default function Header() {
                                 id="pricing-nav"
                                 className="nav-content collapse "
                                 data-bs-parent="#pricing-nav"
-                            >
+                            > <li>
+                                    <Link href="/services/biodigester/pricing">
+                                        <i className="bi bi-circle" />
+                                        <span>Bio-digester</span>
+                                    </Link>
+                                </li>
 
                                 <li>
                                     <Link href="/services/septic-tank/pricing">
@@ -364,12 +369,7 @@ export default function Header() {
                                         <span>Water </span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/services/biodigester/pricing">
-                                        <i className="bi bi-circle" />
-                                        <span>Bio-digester</span>
-                                    </Link>
-                                </li>
+                               
 
                             </ul>
                         </li>

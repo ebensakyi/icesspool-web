@@ -1,3 +1,3 @@
 export const serviceProvider = [
-  { userId: 2, idCardImg: "Content of post 1", company: "" },
+  {id:"SP1111111111", userId: 2,  company: "Union Waste LLC" },
 ];

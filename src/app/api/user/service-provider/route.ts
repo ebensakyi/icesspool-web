@@ -7,13 +7,13 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { sendSMS } from "@/libs/send-hubtel-sms";
-import AWS from "aws-sdk";
-import fs from "fs";
+
 
 const XLSX = require("xlsx");
 
 import multer from "multer";
 import aws from "aws-sdk";
+import { getMergedDate } from "@/libs/date";
 
 const s3 = new aws.S3({
   accessKeyId: process.env.MY_AWS_ACCESS_KEY,
@@ -105,8 +105,9 @@ export async function POST(request: Request) {
       phoneNumber,
       `The temporal password for iCesspool App is ${password}`
     );
-
+let spId = "SP"+ serviceAreaId+ await getMergedDate()+ await generateCode(4)
     let operatorData: any = {
+      id: spId,
       userId: user.id,
       company: company,
       officeLocation: officeLocation,
@@ -169,7 +170,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  try {
+ try {
     // const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
@@ -240,7 +241,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-    console.log(res);
 
     let userId = res.userId;
 

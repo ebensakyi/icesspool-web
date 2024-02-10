@@ -9,10 +9,11 @@ export const users = [
     passwordChanged: 1,
   },
   {
-    lastName: "First",
-    firstName: "Service Provider",
+    lastName: "Wusu",
+    firstName: "Samuel",
     email: "",
     phoneNumber: "0540000000",
+    passportPicture: "sp1.jpg",
     userTypeId: 3,
     password: "$2a$12$81TbSB3HBu/NP/cRG6kDlu2sBcRz.4dq..3lpkcjklc.C/mCDxHaO",
     passwordChanged: 1,
@@ -21,8 +22,8 @@ export const users = [
   },
 
   {
-    lastName: "First",
-    firstName: "Customer",
+    lastName: "Asante",
+    firstName: "Kojo",
     email: "",
     phoneNumber: "0541111111",
     userTypeId: 4,

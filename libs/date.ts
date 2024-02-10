@@ -8,6 +8,18 @@ export const getCurrentDate = () => {
   return day + "/" + month + "/" + year;
 };
 
+
+
+export const getMergedDate=() =>{
+  const today = new Date();
+
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+  const year = today.getFullYear();
+
+  return year + "" + month + "" + day;
+}
+
 export const getCurrentTime = () => {
   const today = new Date();
 

@@ -11,6 +11,10 @@ import { AWS_S3_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
 
+
+    console.log(data);
+    
+
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session }: any = useSession()
@@ -139,7 +143,6 @@ export default function ServiceProvider({ data }: any) {
                 body: formData,
             });
 
-            console.log("response ", response);
 
 
             if (response.ok) {
@@ -156,73 +159,7 @@ export default function ServiceProvider({ data }: any) {
         }
     };
 
-    // const addUser = async (e: any) => {
-    //     try {
-    //         e.preventDefault();
-
-
-
-    //         if (lastName == "") {
-    //             return toast.error("Surname cannot be empty");
-    //         }
-    //         if (firstName == "") {
-    //             return toast.error("Other Names cannot be empty");
-    //         }
-    //         if (email == "") {
-    //             return toast.error("Email cannot be empty");
-    //         }
-    //         if (phoneNumber == "") {
-    //             return toast.error("PhoneNumber cannot be empty");
-    //         }
-    //         // if (designation == "") {
-    //         //     return toast.error("Designation cannot be empty");
-    //         // }
-
-
-
-    //         let data = {
-    //             lastName,
-    //             firstName,
-    //             email,
-    //             phoneNumber,
-    //             designation,
-    //             company,
-    //             officeLocation,
-    //             ghanaPostGPS,
-    //             licenseClassification,licenseNumber,
-    //             // region: Number(region),
-    //             serviceArea: Number(serviceArea),
-    //         };
-
-
-
-
-    //         const response = await axios.post("/api/user/service-provider", data);
-
-    //         if (response.status == 201) {
-    //             return toast.error("User's phone number already used.\nChange number and try again");
-
-    //         }
-
-    //         if (response.status == 200) {
-    //             setSurname("");
-    //             setOtherNames("");
-    //             setEmail("");
-    //             setPhoneNumber("");
-    //             setDesignation("");
-    //             setUserType("");
-    //             // setRegion("");
-
-    //             router.refresh()
-    //             return toast.success("User added successfully");
-
-    //         }
-
-
-    //     } catch (error: any) {
-    //         return toast.error("An error occurred");
-    //     }
-    // };
+   
 
     const updateUser = async (e: any) => {
         try {
@@ -268,8 +205,6 @@ export default function ServiceProvider({ data }: any) {
                 return toast.success("User updated successfully");
 
             }
-
-
 
         } catch (error) {
             console.log(error);
@@ -446,7 +381,7 @@ export default function ServiceProvider({ data }: any) {
                                              Passport picture (600 x 600 pixels) </label>
                                         <div className="col-sm-12">
                                             <input className="form-control" type="file" accept="image/*" id="formFile" onChange={(e) => handleFileChange(e)} />
-                                            {passportPicture && <Image src={URL.createObjectURL(passportPicture)} alt="Selected Image" width={200} height={200} />}
+                                            {passportPicture && <Image src={URL.createObjectURL(passportPicture)} alt="Passport Image" width={200} height={200} />}
                                             {/* <input type="file" className="form-control" placeholder='Passport picture' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} /> */}
                                         </div>
                                     </div>
@@ -604,6 +539,8 @@ export default function ServiceProvider({ data }: any) {
                                     <thead>
                                         <tr>
                                             <th scope="col">Image</th>
+                                            <th scope="col">Id</th>
+
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">E-mail</th>
@@ -623,6 +560,8 @@ export default function ServiceProvider({ data }: any) {
                                         {data?.users?.response.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td> <Image src={AWS_S3_URL+ user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
+                                                <td>{user?.ServiceProvider?.id}</td>
+
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>

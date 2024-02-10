@@ -193,6 +193,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                             </select>
                                         </div>
                                     </div>
+                                    {biodigesterService == "1" || biodigesterService == "2" || biodigesterService == "3" ?
                                     <div className="col-lg-2 col-md-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -202,27 +203,31 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 <input type="number" className="form-control" placeholder='Enter cost' value={cost} onChange={(e: any) => setCost(e.target.value)} />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-lg-2 col-md-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Standard Cost *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter standard cost' value={standardCost} onChange={(e: any) => setStandardCost(e.target.value)} />
+                                    </div>:<></>}
+                                    {biodigesterService == "4" || biodigesterService == "5" || biodigesterService == "6" ?
+                                        <>
+                                            <div className="col-lg-2 col-md-4">
+                                                <div className=" mb-3">
+                                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                        Standard Cost *
+                                                    </label>
+                                                    <div className="col-sm-12">
+                                                        <input type="number" className="form-control" placeholder='Enter standard cost' value={standardCost} onChange={(e: any) => setStandardCost(e.target.value)} />
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-2 col-md-4">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Large  Cost *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter large cost' value={largeCost} onChange={(e: any) => setLargeCost(e.target.value)} />
+                                            <div className="col-lg-2 col-md-4">
+                                                <div className=" mb-3">
+                                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                        Large  Cost *
+                                                    </label>
+                                                    <div className="col-sm-12">
+                                                        <input type="number" className="form-control" placeholder='Enter large cost' value={largeCost} onChange={(e: any) => setLargeCost(e.target.value)} />
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </> : <></>}
+
                                     <div className="col-lg-2 col-md-4">
 
                                         <div className=" mb-3">

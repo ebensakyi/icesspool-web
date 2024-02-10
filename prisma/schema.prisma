@@ -195,12 +195,12 @@ model BiodigesterType {
 }
 
 model BiodigesterServicePricing {
-  id                   Int      @id @default(autoincrement())
+  id                   Int     @id @default(autoincrement())
   biodigesterServiceId Int
-  cost                 Decimal  @db.Decimal(10, 2)
-  standardCost         Decimal @db.Decimal(10, 2) @default(0.0)
-  largeCost            Decimal @db.Decimal(10, 2) @default(0.0)
-  doubleLargeCost      Decimal @db.Decimal(10, 2) @default(0.0)
+  cost                 Decimal @db.Decimal(10, 2)
+  standardCost         Decimal @default(0.0) @db.Decimal(10, 2)
+  largeCost            Decimal @default(0.0) @db.Decimal(10, 2)
+  doubleLargeCost      Decimal @default(0.0) @db.Decimal(10, 2)
 
   ServiceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
   status      Int?        @default(0)
@@ -503,7 +503,7 @@ model Page {
 }
 
 model ServiceProvider {
-  id                    String         @id     @unique @db.VarChar(255)  
+  id                    String   @id @unique @db.VarChar(255)
   userId                Int      @unique
   idCardImg             String?  @db.VarChar(255)
   company               String?  @db.VarChar(255)
@@ -583,6 +583,7 @@ model TxStatus {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   TransactionStatus TransactionStatus[]
+  Transaction       Transaction[]
 }
 
 model ServicePoint {
@@ -639,7 +640,6 @@ model Transaction {
   lng                    Decimal
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
-  currentStatus          Int                      @default(1)
   requestTypeId          Int?                     @default(1)
   deleted                Int?                     @default(0)
   createdAt              DateTime                 @default(now())
@@ -661,6 +661,10 @@ model Transaction {
   Payment                Payment[]
   TransactionSchedule    TransactionSchedule[]
   TransactionStatus      TransactionStatus[]
+
+  TxStatus   TxStatus @relation(fields: [currentStatus], references: [id])
+  currentStatus Int
+
 }
 
 model BiodigesterTransaction {

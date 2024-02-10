@@ -13,14 +13,20 @@ export async function GET(request: Request) {
   
       // await logActivity("Visited data assignment page", session?.user?.id);
   
-      const response = await prisma.biodigesterService.findMany({
-        where: { deleted: 0 },
+      const response = await prisma.transaction.findMany({
+        where: { deleted: 0,  serviceId: 3, },
         include: {
-          Service: true,
-          BiodigesterType: true,
+          
+          BiodigesterTransaction: true,
+          Customer:true,
+          ServiceProvider: true,
+          ServiceArea: true,
         },
       });
   
+
+      console.log(response);
+      
       return NextResponse.json({ response });
     } catch (error) {
       console.log(error);

@@ -569,7 +569,6 @@ CREATE TABLE `Transaction` (
     `lng` DECIMAL(65, 30) NOT NULL,
     `trips` INTEGER NOT NULL DEFAULT 1,
     `paymentStatus` INTEGER NULL DEFAULT 0,
-    `currentStatus` INTEGER NOT NULL DEFAULT 1,
     `requestTypeId` INTEGER NULL DEFAULT 1,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -582,6 +581,7 @@ CREATE TABLE `Transaction` (
     `customerId` INTEGER NOT NULL,
     `serviceAreaId` INTEGER NOT NULL,
     `userId` INTEGER NULL,
+    `currentStatus` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -797,6 +797,9 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceAreaId_fkey` FOREIG
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_currentStatus_fkey` FOREIGN KEY (`currentStatus`) REFERENCES `TxStatus`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biodigesterServiceId_fkey` FOREIGN KEY (`biodigesterServiceId`) REFERENCES `BiodigesterService`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

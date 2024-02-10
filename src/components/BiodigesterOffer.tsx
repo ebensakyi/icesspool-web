@@ -10,15 +10,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const BiodigesterOffer = ({ data }: any) => {
-    const editorRef = useRef(null);
 
+    console.log(data);
+    
     const [id, setId] = useState(null);
-    const [name, setName] = useState("");
-    const [status, setStatus] = useState(2);
-    const [shortDesc, setShortDesc] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [longDesc, setLongDesc] = useState("");
-
+   
     const { data: session } = useSession({
         required: true,
         onUnauthenticated() {
@@ -35,17 +31,14 @@ export const BiodigesterOffer = ({ data }: any) => {
     const update = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == 0) {
-                return toast.error("Please fill form");
-            }
+            // if (name == "" || status == 0) {
+            //     return toast.error("Please fill form");
+            // }
 
             let data = {
                 id: Number(id),
                 name,
-                shortDesc,
-                longDesc,
-                imageUrl,
-                status,
+               
             };
 
             console.log(data);
@@ -55,10 +48,7 @@ export const BiodigesterOffer = ({ data }: any) => {
             const response = await axios.put("/api/services/biodigester", data);
             toast.success(response.data.message);
             setId(null)
-            setName("")
-            setLongDesc("")
-            setShortDesc("")
-            setStatus(2);
+          
 
             router.refresh()
 
@@ -75,7 +65,7 @@ export const BiodigesterOffer = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>BIODIGESTER SERVICES</h1>
+                <h1>BIODIGESTER OFFERS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -160,12 +150,13 @@ export const BiodigesterOffer = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">Customer Name</th>
+                                            <th scope="col">Provider Name</th>
+                                            <th scope="col">Area</th>
 
-                                            <th scope="col">Service</th>
+                                            <th scope="col">Current Status</th>
 
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Offer Details</th>
                                             <th scope="col">Created Date</th>
 
                                             <th scope="col">Action</th>
@@ -173,14 +164,16 @@ export const BiodigesterOffer = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response?.map((data: any) => {
+                                        {data?.biodigesterOffers?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                    <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
+                                                    <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
+                                                    <td>{data?.ServiceArea?.name}</td>
 
-                                                    <td>{data?.BiodigesterType.name}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
+                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td> 
+                                                                                                       <td>{data?.BiodigesterTransaction.name}</td>
+
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
                                                     )}</td>
@@ -211,8 +204,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                                setName(data.name)
-                                                                                setStatus(data.status)
+                                                                              
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);
 

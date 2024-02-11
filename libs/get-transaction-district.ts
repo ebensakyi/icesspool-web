@@ -1,7 +1,9 @@
 import { prisma } from "@/prisma/db";
 
 
-async function getDistrict(lat: number, lng: number): Promise<number> {
+export async function getTxDistrict(lat: number, lng: number): Promise<number> {
+
+    
     try {
         // Fetch all district boundaries from the database
         const boundaries = await prisma.districtCoordinates.findMany();
@@ -49,13 +51,13 @@ function isWithinBoundary(lat: number, lng: number, boundaryPoints: { latitude: 
 }
 
 // Example usage
-const latitude = 5.575;
-const longitude = -0.205;
+// const latitude = 5.575;
+// const longitude = -0.205;
 
-getDistrict(latitude, longitude)
-    .then(districtId => {
-        console.log(`The coordinates (${latitude}, ${longitude}) fall into district ${districtId}.`);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+// getTxDistrict(latitude, longitude)
+//     .then(districtId => {
+//         console.log(`The coordinates (${latitude}, ${longitude}) fall into district ${districtId}.`);
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });

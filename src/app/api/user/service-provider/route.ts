@@ -8,7 +8,6 @@ import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { sendSMS } from "@/libs/send-hubtel-sms";
 
-
 const XLSX = require("xlsx");
 
 import multer from "multer";
@@ -93,7 +92,6 @@ export async function POST(request: Request) {
 
     const user: any = await prisma.user.create({ data });
 
-
     const otp: any = await prisma.otp.create({
       data: {
         code: password,
@@ -105,7 +103,8 @@ export async function POST(request: Request) {
       phoneNumber,
       `The temporal password for iCesspool App is ${password}`
     );
-let spId = "SP"+ serviceAreaId+ await getMergedDate()+ await generateCode(4)
+    let spId =
+      "SP" + serviceAreaId + (await getMergedDate()) + (await generateCode(4));
     let operatorData: any = {
       id: spId,
       userId: user.id,
@@ -139,14 +138,13 @@ let spId = "SP"+ serviceAreaId+ await getMergedDate()+ await generateCode(4)
 
     let imageName = `${Date.now()}-${passportPicture.name}`;
 
-    const params:any = {
+    const params: any = {
       Bucket: process.env.AWS_BUCKET,
       Key: `uploads/${imageName}`,
       Body: buffer,
       // Body: fs.createReadStream(passportPicture: File),
       // ACL: 'public-read', // adjust access control as needed
     };
-    
 
     const result = await s3.upload(params).promise();
 
@@ -170,7 +168,7 @@ let spId = "SP"+ serviceAreaId+ await getMergedDate()+ await generateCode(4)
 }
 
 export async function GET(request: Request) {
- try {
+  try {
     // const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
@@ -187,6 +185,8 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log(response);
+    
     return NextResponse.json({
       response,
     });

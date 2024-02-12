@@ -60,6 +60,7 @@ export async function POST(request: Request) {
       // trips: Number(res[0]?.trips),
       serviceId: 3,
       serviceAreaId: 1, //Number(res?.serviceAreaId),
+      currentStatus:1
 
       // unitCost: Number(res[0]?.unitCost),
     };

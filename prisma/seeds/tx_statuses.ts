@@ -17,22 +17,31 @@ export const txStatuses = [
   },
   {
     id: 5,
-    name: "Offer completed",
+    name: "SP is on site",
   },
   {
     id: 6,
-    name: "Offer closed",
+    name: "Customer says job is completed",
   },
   {
     id: 7,
-    name: "Offer Re-broadcasted",
+    name: "SP says job is completed",
   },
   {
     id: 8,
+    name: "Offer rated",
+  },
+
+  {
+    id: 9,
+    name: "Offer Re-broadcasted",
+  },
+  {
+    id: 10,
     name: "Cancelled by customer",
   },
   {
-    id: 9,
+    id: 11,
     name: "Cancelled by sp",
   },
 ];

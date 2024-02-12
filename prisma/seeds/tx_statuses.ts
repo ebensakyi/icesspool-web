@@ -17,7 +17,7 @@ export const txStatuses = [
   },
   {
     id: 5,
-    name: "SP is on site",
+    name: "Work started",
   },
   {
     id: 6,
@@ -42,6 +42,10 @@ export const txStatuses = [
   },
   {
     id: 11,
-    name: "Cancelled by sp",
+    name: "SP cancelled unpaid offer",
+  },
+  {
+    id: 12,
+    name: "SP cancelled paid offer",
   },
 ];

@@ -33,6 +33,7 @@ export async function POST(request: Request) {
   try {
     const _data = await request.formData();
 
+
     const passportPicture: File | null = _data.get(
       "passportPicture"
     ) as unknown as File;
@@ -60,15 +61,7 @@ export async function POST(request: Request) {
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
 
-    // let regionId = res.region;
 
-    // if (regionId == null) {
-    //   const district = await prisma.district.findFirst({
-    //     where: { id: Number(res.district) },
-    //   });
-
-    //   regionId = district?.regionId;
-    // }
 
     const data: any = {
       userTypeId: 3,
@@ -115,23 +108,22 @@ export async function POST(request: Request) {
       ghanaPostGPS: ghanaPostGPS,
       licenseClassification: Number(licenseClassification),
       licenseNumber: licenseNumber,
-      momoNetwork: momoNetwork,
     };
 
-    // const operator = await prisma.provider.create({
-    //   data: operatorData
-    // });
+    let momoData: any = {
+      momoNetworkId: Number(momoNetwork),
+      momoNumber: momoNumber,
+      serviceProviderId: spId,
+    };
+
+
 
     await prisma.serviceProvider.create({
       data: operatorData,
     });
 
     await prisma.momoAccount.create({
-      data: {
-        momoNetworkId: Number(momoNetwork),
-        momoNumber: momoNumber,
-        serviceProviderId: spId,
-      },
+      data: momoData,
     });
 
     ////////////////////////////////////////////////////////////////

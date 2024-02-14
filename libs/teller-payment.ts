@@ -2,11 +2,9 @@ import axios from "axios";
 
 export const initiatePayment = async (
   paymentId: String,
-  amount: String
+  amount: String,
+  paymentMethod: any
 ) => {
-
-
-  
   const options: any = {
     method: "POST",
     url: process.env.TELLER_URL,
@@ -19,6 +17,7 @@ export const initiatePayment = async (
     params: {
       merchant_id: process.env.MERCHANT_ID,
       transaction_id: paymentId,
+      payment_method: paymentMethod,
       desc: "Payment for iCesspool",
       amount: amount,
       //redirect_url: "http://192.168.8.116:3000/api/v1/complete-payment",
@@ -30,5 +29,5 @@ export const initiatePayment = async (
 
   let response = await axios.request(options);
 
-  return response.data
+  return response.data;
 };

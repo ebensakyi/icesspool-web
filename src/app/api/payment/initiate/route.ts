@@ -16,7 +16,11 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let paymentId: any = searchParams?.get("paymentId");
     let transactionId: any = searchParams.get("transactionId");
+    let paymentMethod: any = searchParams?.get("paymentMethod");
 
+
+    console.log(searchParams);
+    
 
 
 
@@ -44,7 +48,7 @@ export async function GET(request: Request) {
       await prisma.payment.create({
         data: { paymentId: paymentId, transactionId: transactionId },
       });
-      const initiated = await initiatePayment(paymentId, convertedAmount);
+      const initiated = await initiatePayment(paymentId, convertedAmount,paymentMethod);
 
       return NextResponse.json({ response: initiated });
     }
@@ -54,7 +58,7 @@ export async function GET(request: Request) {
       where: { id: payment.id },
     });
 
-    const initiated = await initiatePayment(paymentId, convertedAmount);
+    const initiated = await initiatePayment(paymentId, convertedAmount,paymentMethod);
 
     // return res
     //   .status(200)

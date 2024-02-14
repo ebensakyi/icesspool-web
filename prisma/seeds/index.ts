@@ -17,6 +17,7 @@ import { biodigesterTypes } from "./biodigester_type";
 import { districts } from './districts';
 import { txStatuses } from './tx_statuses';
 import { serviceProvider } from './service_provider';
+import { momoNetworks } from './momo_network';
 
 async function main() {
 
@@ -73,7 +74,9 @@ async function main() {
     await prisma.serviceProvider.createMany({
       data: serviceProvider,
     });
-
+    await prisma.momoNetwork.createMany({
+      data: momoNetworks,
+    });
 }
 
 main()

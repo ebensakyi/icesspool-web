@@ -3,7 +3,7 @@ import axios from "axios";
 export const initiatePayment = async (
   paymentId: String,
   amount: String,
-  paymentMethod: any
+  paymentMethod: String
 ) => {
   const options: any = {
     method: "POST",

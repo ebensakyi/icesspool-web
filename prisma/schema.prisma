@@ -309,13 +309,15 @@ model Notification {
 }
 
 model MomoAccount {
-  id                Int      @id @default(autoincrement())
-  serviceProviderId String   @unique(map: "serviceProviderId") @db.VarChar(255)
-  momoNumber        String?  @db.VarChar(255)
-  momoNetwork       Int?
-  deleted           Int?     @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                Int             @id @default(autoincrement())
+  serviceProviderId String          @unique(map: "serviceProviderId") @db.VarChar(255)
+  momoNumber        String?         @db.VarChar(10)
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  MomoNetwork       MomoNetwork     @relation(fields: [momoNetworkId], references: [id])
+  momoNetworkId     Int
 }
 
 model TransactionSchedule {
@@ -332,13 +334,13 @@ model TransactionSchedule {
 }
 
 model MomoNetwork {
-  id        Int      @id @default(autoincrement())
-  network   String   @db.VarChar(255)
-  abbrv     String   @db.VarChar(255)
-  status    Int?     @default(0)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  abbrv       String?       @db.VarChar(255)
+  deleted     Int?          @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  MomoAccount MomoAccount[]
 }
 
 model Payment {
@@ -503,19 +505,20 @@ model Page {
 }
 
 model ServiceProvider {
-  id                    String   @id @unique @db.VarChar(255)
-  userId                Int      @unique
-  idCardImg             String?  @db.VarChar(255)
-  company               String?  @db.VarChar(255)
-  officeLocation        String?  @db.VarChar(255)
-  ghanaPostGPS          String?  @db.VarChar(255)
-  licenseNumber         String?  @db.VarChar(255)
+  id                    String        @id @unique @db.VarChar(255)
+  userId                Int           @unique
+  idCardImg             String?       @db.VarChar(255)
+  company               String?       @db.VarChar(255)
+  officeLocation        String?       @db.VarChar(255)
+  ghanaPostGPS          String?       @db.VarChar(255)
+  licenseNumber         String?       @db.VarChar(255)
   licenseClassification Int?
-  driversLicenseImg     String?  @db.VarChar(255)
-  deleted               Int?     @default(0)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  User                  User     @relation(fields: [userId], references: [id])
+  driversLicenseImg     String?       @db.VarChar(255)
+  deleted               Int?          @default(0)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  User                  User          @relation(fields: [userId], references: [id])
+  MomoAccount           MomoAccount[]
 }
 
 model ServiceProviderEarning {
@@ -662,9 +665,8 @@ model Transaction {
   TransactionSchedule    TransactionSchedule[]
   TransactionStatus      TransactionStatus[]
 
-  TxStatus   TxStatus @relation(fields: [currentStatus], references: [id])
+  TxStatus      TxStatus @relation(fields: [currentStatus], references: [id])
   currentStatus Int
-
 }
 
 model BiodigesterTransaction {

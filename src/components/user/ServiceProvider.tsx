@@ -48,6 +48,8 @@ export default function ServiceProvider({ data }: any) {
     const [passportPicture, setPassportImage] = useState(null);
     const [ghanaPostGPS, setGhanaPostGPS] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
+    const [momoNumber, setMomoNumber] = useState("");
+    const [momoNetwork, setMomoNetwork] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -375,6 +377,36 @@ export default function ServiceProvider({ data }: any) {
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                           Momo Number                                          </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='Momo number' onChange={(e) => setMomoNumber(e.target.value)} value={momoNumber} />
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3 mb-3">
+                                        <label className="col-sm-12 col-form-label">Select mobile network</label>
+                                        <div className="col-sm-12">
+                                            <select
+                                                onChange={(e: any) => setMomoNetwork(e.target.value)}
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                value={momoNetwork}
+                                            >
+
+                                                <option >Select network</option>
+                                             
+
+                                                {data.mobileNetworks.response.map((mn: any) => {
+                                                        return (
+                                                            <option key={mn.id} value={mn.id}>{mn.name}</option>
+                                                        )
+                                                    })}
+                                            </select>
+                                        </div>
+                                    </div>
+
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">

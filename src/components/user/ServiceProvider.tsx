@@ -135,6 +135,8 @@ export default function ServiceProvider({ data }: any) {
         formData.append('company', company);
         formData.append('licenseNumber', licenseNumber);
         formData.append('licenseClassification', licenseClassification);
+        formData.append('momoNumber', momoNumber);
+        formData.append('momoNetwork', momoNetwork);
 
         try {
             const response = await fetch('/api/user/service-provider', {

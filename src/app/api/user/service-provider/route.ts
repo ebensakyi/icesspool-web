@@ -47,6 +47,8 @@ export async function POST(request: Request) {
     const officeLocation = _data?.get("officeLocation");
     const licenseClassification = _data?.get("licenseClassification");
     const licenseNumber = _data?.get("licenseNumber");
+    const momoNetwork = _data?.get("momoNetwork");
+    const momoNumber = _data?.get("momoNumber");
 
     // const res = await request.json();
     // const session: any = await getServerSession(authOptions);
@@ -113,6 +115,7 @@ export async function POST(request: Request) {
       ghanaPostGPS: ghanaPostGPS,
       licenseClassification: Number(licenseClassification),
       licenseNumber: licenseNumber,
+      momoNetwork: momoNetwork,
     };
 
     // const operator = await prisma.provider.create({
@@ -121,6 +124,14 @@ export async function POST(request: Request) {
 
     await prisma.serviceProvider.create({
       data: operatorData,
+    });
+
+    await prisma.momoAccount.create({
+      data: {
+        momoNetworkId: Number(momoNetwork),
+        momoNumber: momoNumber,
+        serviceProviderId: spId,
+      },
     });
 
     ////////////////////////////////////////////////////////////////
@@ -186,7 +197,7 @@ export async function GET(request: Request) {
     });
 
     console.log(response);
-    
+
     return NextResponse.json({
       response,
     });

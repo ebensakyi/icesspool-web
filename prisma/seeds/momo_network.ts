@@ -1,4 +1,4 @@
-export const momoNetwork = [
+export const momoNetworks = [
   {
     name: "MTN",
   },

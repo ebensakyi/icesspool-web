@@ -274,11 +274,11 @@ CREATE TABLE `Notification` (
 CREATE TABLE `MomoAccount` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `serviceProviderId` VARCHAR(255) NOT NULL,
-    `momoNumber` VARCHAR(255) NULL,
-    `momoNetwork` INTEGER NULL,
+    `momoNumber` VARCHAR(10) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `momoNetworkId` INTEGER NOT NULL,
 
     UNIQUE INDEX `serviceProviderId`(`serviceProviderId`),
     PRIMARY KEY (`id`)
@@ -301,9 +301,8 @@ CREATE TABLE `TransactionSchedule` (
 -- CreateTable
 CREATE TABLE `MomoNetwork` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `network` VARCHAR(255) NOT NULL,
-    `abbrv` VARCHAR(255) NOT NULL,
-    `status` INTEGER NULL DEFAULT 0,
+    `name` VARCHAR(255) NOT NULL,
+    `abbrv` VARCHAR(255) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -737,6 +736,12 @@ ALTER TABLE `DistrictCoordinates` ADD CONSTRAINT `DistrictCoordinates_districtId
 
 -- AddForeignKey
 ALTER TABLE `Commission` ADD CONSTRAINT `Commission_mainEntityId_fkey` FOREIGN KEY (`mainEntityId`) REFERENCES `MainEntity`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_momoNetworkId_fkey` FOREIGN KEY (`momoNetworkId`) REFERENCES `MomoNetwork`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `TransactionSchedule` ADD CONSTRAINT `TransactionSchedule_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

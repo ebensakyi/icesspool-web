@@ -59,7 +59,16 @@ import { headers } from "next/headers";
   
   }
   
-
+  async function getMomoNetworks() {
+  
+    let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/momo-network`, { cache: 'no-store', headers: headers() });
+  
+    if (!response.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    return await response.json();
+  
+  }
 export default async function Page({ searchParams }: any) {
 
 
@@ -67,8 +76,9 @@ export default async function Page({ searchParams }: any) {
     const userTypes = await getUserTypes()
     const serviceAreas = await getServiceAreas(searchParams)
     const users = await getServiceProviders()
+    const momoNetworks = await getMomoNetworks()
 
-    let data = { pages, userTypes,serviceAreas,users }
+    let data = { pages, userTypes,serviceAreas,users,momoNetworks }
 
 
 

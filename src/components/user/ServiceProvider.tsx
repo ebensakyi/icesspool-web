@@ -10,9 +10,6 @@ import { useSession } from 'next-auth/react';
 import { AWS_S3_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
-
-
-    console.log(data);
     
 
     const searchParams = useSearchParams();
@@ -398,7 +395,7 @@ export default function ServiceProvider({ data }: any) {
                                                 <option >Select network</option>
                                              
 
-                                                {data.mobileNetworks.response.map((mn: any) => {
+                                                {data.momoNetworks.response.map((mn: any) => {
                                                         return (
                                                             <option key={mn.id} value={mn.id}>{mn.name}</option>
                                                         )

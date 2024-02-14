@@ -4,6 +4,7 @@ export const bservices = [
     name: "Biodigester Emptying",
     biodigesterTypeId: 1,
     serviceId: 3,
+    status: 1,
   },
   {
     id: 2,
@@ -11,13 +12,15 @@ export const bservices = [
     name: "Soakaway Servicing",
     biodigesterTypeId: 1,
     serviceId: 3,
+    status: 1,
   },
   {
     id: 3,
 
-    name: "Drainfield Servicing ",
+    name: "Drainfield Servicing",
     biodigesterTypeId: 1,
     serviceId: 3,
+    status: 1,
   },
   {
     id: 4,
@@ -25,6 +28,7 @@ export const bservices = [
     name: "Biodigester Only",
     biodigesterTypeId: 2,
     serviceId: 3,
+    status: 1,
   },
   {
     id: 5,
@@ -32,6 +36,7 @@ export const bservices = [
     name: "Biodigester With Seat",
     biodigesterTypeId: 2,
     serviceId: 3,
+    status: 1,
   },
   {
     id: 6,
@@ -39,5 +44,6 @@ export const bservices = [
     name: "Standalone Toilet",
     biodigesterTypeId: 2,
     serviceId: 3,
+    status: 1,
   },
 ];

@@ -120,7 +120,31 @@ export default function ServiceProvider({ data }: any) {
         e.preventDefault();
         if (!passportPicture) {
             console.error('Please select an image file');
-            return;
+            return toast.error("Please select an image file");
+        }
+        if (firstName=="") {
+            return toast.error("Please enter first name");
+        }
+        if (lastName=="") {
+            return toast.error("Please enter last name");
+        }
+        if (phoneNumber=="") {
+            return toast.error("Please enter phone number");
+        }
+        if (serviceArea=="") {
+            return toast.error("Please select service area");
+        }
+        if (officeLocation=="") {
+            return toast.error("Please enter office location");
+        }
+        if (company=="") {
+            return toast.error("Please enter company name");
+        }
+        if (momoNumber=="") {
+            return toast.error("Please enter momo number");
+        }
+        if (momoNetwork=="") {
+            return toast.error("Please select momo network");
         }
 
         const formData = new FormData();

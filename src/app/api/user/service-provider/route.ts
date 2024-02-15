@@ -96,7 +96,7 @@ export async function POST(request: Request) {
 
     await sendSMS(
       phoneNumber,
-      `The temporal password for iCesspool App is ${password}`
+      `The temporal password for iCesspool is ${password}`
     );
     let spId =
       "SP" + serviceAreaId + (await getMergedDate()) + (await generateCode(4));

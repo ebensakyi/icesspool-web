@@ -12,9 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 export const BiodigesterOffer = ({ data }: any) => {
 
     console.log(data);
-    
+
     const [id, setId] = useState(null);
-   
+
     const { data: session } = useSession({
         required: true,
         onUnauthenticated() {
@@ -28,27 +28,24 @@ export const BiodigesterOffer = ({ data }: any) => {
 
 
 
-    const update = async (e: any) => {
+    const closeTx = async () => {
         try {
-            e.preventDefault();
             // if (name == "" || status == 0) {
             //     return toast.error("Please fill form");
             // }
 
             let data = {
                 id: Number(id),
-                name,
-               
+
             };
 
-            console.log(data);
-            
 
-            
-            const response = await axios.put("/api/services/biodigester", data);
+
+
+            const response = await axios.put("/api/services/biodigester/offers", data);
             toast.success(response.data.message);
             setId(null)
-          
+
 
             router.refresh()
 
@@ -171,8 +168,8 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
 
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td> 
-                                                                                                       <td>{data?.BiodigesterTransaction.name}</td>
+                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
+                                                    <td>{data?.BiodigesterTransaction.name}</td>
 
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
@@ -204,17 +201,17 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-                                                                              
+
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);
-
+                                                                                closeTx()
 
 
                                                                                 // setIsEditing(true);
 
                                                                             }}
                                                                         >
-                                                                            Edit
+                                                                            Close Tx
                                                                         </button>
                                                                     </li>
 

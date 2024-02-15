@@ -145,7 +145,99 @@ export default function Header() {
                                 <span>Make Request</span>
                             </Link>
                         </li> */}
+      <li className="nav-item">
 
+<Link
+    className={
+        pathname == "/esicapps1/general"
+            ? "nav-link"
+            : "nav-link collapsed"
+    }
+    data-bs-target="#mq-nav"
+    data-bs-toggle="collapse"
+    href="#"
+>
+    <i className="bi bi-arrow-up-right-square
+" />
+    <span>Make Request</span>
+    <i className="bi bi-chevron-down ms-auto" />
+</Link>
+<ul
+    id="mq-nav"
+    className="nav-content collapse "
+    data-bs-parent="#mq-nav"
+>
+    <li>
+        <Link href="/make-request/emptying">
+            <i className="bi bi-circle" />
+            <span>Emptying toilet </span>
+        </Link>
+    </li>
+    <li>
+        <Link href="/make-request/water">
+            <i className="bi bi-circle" />
+            <span>Water </span>
+        </Link>
+    </li>
+
+    <li>
+        <Link href="/make-request/bio-digester">
+            <i className="bi bi-circle" />
+            <span>Bio-digester</span>
+        </Link>
+    </li>
+
+</ul>
+</li>
+
+
+
+
+<li className="nav-item">
+
+<Link
+    className={
+        pathname == "/esicapps1/general"
+            ? "nav-link"
+            : "nav-link collapsed"
+    }
+    data-bs-target="#offers-nav"
+    data-bs-toggle="collapse"
+    href="#"
+>
+    <i className="bi bi-card-list
+" />
+    <span>Close requests</span>
+    <i className="bi bi-chevron-down ms-auto" />
+</Link>
+<ul
+    id="offers-nav"
+    className="nav-content collapse "
+    data-bs-parent="#offers-nav"
+> <li>
+        <Link href="/services/biodigester/close-request">
+            <i className="bi bi-circle" />
+            <span> Bio-digester</span>
+        </Link>
+    </li>
+
+    <li>
+        <Link href="/services/biodigester/close-request">
+            <i className="bi bi-circle" />
+            <span>Emptying</span>
+        </Link>
+    </li>
+    <li>
+        <Link href="/offers/water">
+            <i className="bi bi-circle" />
+            <span>Water</span>
+        </Link>
+    </li>
+   
+
+
+</ul>
+</li>
                         <li className="nav-item">
 
                             <Link

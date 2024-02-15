@@ -16,6 +16,8 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
+import { sendSMS } from "@/libs/send-hubtel-sms";
+import { sendFCM } from "@/libs/send-fcm";
 
 export async function POST(request: Request) {
   try {
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
       // trips: Number(res[0]?.trips),
       serviceId: 3,
       serviceAreaId: 1, //Number(res?.serviceAreaId),
-      currentStatus:1
+      currentStatus: 1,
 
       // unitCost: Number(res[0]?.unitCost),
     };
@@ -130,6 +132,24 @@ export async function POST(request: Request) {
         time: convertTimeToISO8601(getCurrentTime()),
       },
     });
+
+    let serviceProviders = await prisma.user.findMany({
+      where: { deleted: 0, userTypeId: 3, serviceAreaId: 1 },
+    });
+
+    for (let i = 0; i < serviceProviders.length; i++) {
+      await sendSMS(
+        serviceProviders[i].phoneNumber,
+        `Hello ${serviceProviders[i].firstName} biodigester request is available`
+      );
+
+      await sendFCM(
+        "New Request",
+        `Hello ${serviceProviders[i].firstName} biodigester request is available`,
+        serviceProviders[i].fcmId
+      );
+    }
+
     // await db
     // .collection(process.env.TRANSACTION_STORE)
     // .doc(res.transactionId)

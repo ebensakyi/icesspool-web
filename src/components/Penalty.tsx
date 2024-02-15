@@ -29,7 +29,7 @@ export const Penalty = ({ data }: any) => {
       
           setFine(data?.penalty);
      
-      },[]);
+      },[data.penalty]);
 
 
 

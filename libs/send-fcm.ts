@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendFCM = async (title: string, body: string, fcmId: string) => {
+export const sendFCM = async (title: string, body: string, fcmId: any) => {
   let options:any = {
     method: "POST",
     url: "https://fcm.googleapis.com/fcm/send",

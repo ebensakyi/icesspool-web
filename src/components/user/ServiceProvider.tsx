@@ -311,18 +311,18 @@ export default function ServiceProvider({ data }: any) {
 
                                     <div className="col-sm-3 mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            First name
+                                            First name *
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
+                                            <input type="text" className="form-control" placeholder='First name' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Other name(s)
+                                            Last name(s) *
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setLastName(e.target.value)} value={lastName} />
+                                            <input type="text" className="form-control" placeholder='Last names' onChange={(e) => setLastName(e.target.value)} value={lastName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -338,7 +338,7 @@ export default function ServiceProvider({ data }: any) {
                                             htmlFor="inputNumber"
                                             className="col-sm-12 col-form-label"
                                         >
-                                            Phone Number
+                                            Phone Number *
                                         </label>
                                         <div className="col-sm-12">
                                             <input type="number" className="form-control" placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} />
@@ -349,14 +349,14 @@ export default function ServiceProvider({ data }: any) {
                                 <div className="row">
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Company name                                            </label>
+                                            Company name  *                                          </label>
                                         <div className="col-sm-12">
                                             <input type="text" className="form-control" placeholder='Company' onChange={(e) => setCompany(e.target.value)} value={company} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            Office location                                            </label>
+                                            Office location *                                           </label>
                                         <div className="col-sm-12">
                                             <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
                                         </div>
@@ -403,13 +403,13 @@ export default function ServiceProvider({ data }: any) {
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                           Momo Number                                          </label>
+                                           Momo Number **                                         </label>
                                         <div className="col-sm-12">
                                             <input type="text" className="form-control" placeholder='Momo number' onChange={(e) => setMomoNumber(e.target.value)} value={momoNumber} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3 mb-3">
-                                        <label className="col-sm-12 col-form-label">Select mobile network</label>
+                                        <label className="col-sm-12 col-form-label">Select mobile network **</label>
                                         <div className="col-sm-12">
                                             <select
                                                 onChange={(e: any) => setMomoNetwork(e.target.value)}
@@ -433,7 +433,7 @@ export default function ServiceProvider({ data }: any) {
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                             Passport picture (600 x 600 pixels) </label>
+                                             Passport picture (600 x 600 pixels) * </label>
                                         <div className="col-sm-12">
                                             <input className="form-control" type="file" accept="image/*" id="formFile" onChange={(e) => handleFileChange(e)} />
                                             {passportPicture && <Image src={URL.createObjectURL(passportPicture)} alt="Passport Image" width={200} height={200} />}
@@ -448,7 +448,7 @@ export default function ServiceProvider({ data }: any) {
                                             </div>
                                         </div> */}
                                     <div className="col-sm-3  mb-3">
-                                        <label className="col-sm-12 col-form-label">Select service area</label>
+                                        <label className="col-sm-12 col-form-label">Select service area *</label>
 
                                         <div className="col-sm-12">
                                             <select

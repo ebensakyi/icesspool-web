@@ -30,20 +30,20 @@ export const bservices = [
     serviceId: 3,
     status: 1,
   },
-  {
-    id: 5,
+  // {
+  //   id: 5,
 
-    name: "Biodigester With Seat",
-    biodigesterTypeId: 2,
-    serviceId: 3,
-    status: 1,
-  },
-  {
-    id: 6,
+  //   name: "Biodigester With Seat",
+  //   biodigesterTypeId: 2,
+  //   serviceId: 3,
+  //   status: 1,
+  // },
+  // {
+  //   id: 6,
 
-    name: "Standalone Toilet",
-    biodigesterTypeId: 2,
-    serviceId: 3,
-    status: 1,
-  },
+  //   name: "Standalone Toilet",
+  //   biodigesterTypeId: 2,
+  //   serviceId: 3,
+  //   status: 1,
+  // },
 ];

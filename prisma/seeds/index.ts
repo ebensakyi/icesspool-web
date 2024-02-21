@@ -77,6 +77,10 @@ async function main() {
     await prisma.momoNetwork.createMany({
       data: momoNetworks,
     });
+
+    await prisma.momoNetwork.createMany({
+      data: momoNetworks,
+    });
 }
 
 main()

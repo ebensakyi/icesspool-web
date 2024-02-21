@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 // import { destroySession, setSession } from "../../../../../utils/session-manager";
 import jwt from "jsonwebtoken";
 import { sendSMS } from "@/libs/send-hubtel-sms";
-import { generateCode } from "@/libs/generate-code";
 
 export async function POST(request: Request) {
   try {
@@ -14,12 +13,28 @@ export async function POST(request: Request) {
     let resetCode = res.resetCode;
     let password = res.password;
 
-    const user : any = await prisma.user.findFirst({
+    const otp: any = await prisma.otp.findFirst({
+      where: {
+        code: resetCode,
+        deleted: 0,
+      },
+    });
+    
+
+    if (!otp) {
+      return NextResponse.json("Wrong reset code entered", { status: 201 });
+    }
+
+    const user: any = await prisma.user.findFirst({
       where: {
         phoneNumber: phoneNumber,
         deleted: 0,
       },
     });
+
+    if (!user) {
+      return NextResponse.json("User account not found", { status: 201 });
+    }
 
     if (user) {
       const salt = bcrypt.genSaltSync(10);
@@ -36,23 +51,22 @@ export async function POST(request: Request) {
           id: user?.id,
         },
       });
-    }
 
-    // console.log(user);
-
-    // if(user?.passwordChanged==0){
-    //   return NextResponse.redirect("/goto");
-
-    // }
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          message: "User Account not found.\nCheck phone number, reset code and try again",
+      await prisma.otp.delete({
+        where: {
+          id: otp?.id,
         },
-        { status: 201 }
-      );
+      });
     }
+
+    // if (!user) {
+    //   return NextResponse.json(
+    //     {
+    //       message: "User Account not found.\nCheck phone number, reset code and try again",
+    //     },
+    //     { status: 201 }
+    //   );
+    // }
 
     return NextResponse.json(null, { status: 200 });
   } catch (error: any) {

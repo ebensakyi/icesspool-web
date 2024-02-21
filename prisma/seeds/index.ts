@@ -18,6 +18,8 @@ import { districts } from './districts';
 import { txStatuses } from './tx_statuses';
 import { serviceProvider } from './service_provider';
 import { momoNetworks } from './momo_network';
+import { jobTimeSchedules } from "./job_time_schedules";
+import { penalty } from './penalty';
 
 async function main() {
 
@@ -78,8 +80,11 @@ async function main() {
       data: momoNetworks,
     });
 
-    await prisma.momoNetwork.createMany({
-      data: momoNetworks,
+    await prisma.jobTimeSchedule.createMany({
+      data: jobTimeSchedules,
+    });
+    await prisma.penalty.createMany({
+      data: penalty,
     });
 }
 

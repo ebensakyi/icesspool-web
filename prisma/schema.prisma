@@ -811,8 +811,8 @@ model Penalty {
 
 model JobTimeSchedule {
   id            Int      @id @default(autoincrement())
-  time_schedule String?
-  start_time    String?
+  time_schedule String
+  start_time    String
   end_time      String?
   deleted       Int?     @default(0)
   createdAt     DateTime @default(now())

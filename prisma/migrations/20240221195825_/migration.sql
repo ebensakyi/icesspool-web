@@ -274,7 +274,7 @@ CREATE TABLE `Notification` (
 CREATE TABLE `MomoAccount` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `serviceProviderId` VARCHAR(255) NOT NULL,
-    `momoNumber` VARCHAR(10) NULL,
+    `momoNumber` VARCHAR(10) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -691,6 +691,19 @@ CREATE TABLE `Penalty` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` INTEGER NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `JobTimeSchedule` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `time_schedule` VARCHAR(191) NOT NULL,
+    `start_time` VARCHAR(191) NOT NULL,
+    `end_time` VARCHAR(191) NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

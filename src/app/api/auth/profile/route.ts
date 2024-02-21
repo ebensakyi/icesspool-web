@@ -16,15 +16,21 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
+    let firstName = res.firstName;
+    let lastName = res.lastName;
+    let phoneNumber = res.phoneNumber;
+    let email = res.email;
+    let password = res.password;
+
+    console.log(res);
+    
 
     // let loginUserLevel = session?.user?.userLevelId;
     // let fileUrl;
 
-    let password: string = (await generateCode(4)) as string;
+    // let password: string = (await generateCode(4)) as string;
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
-
-    // let regionId = res.region;
 
     // if (regionId == null) {
     //   const district = await prisma.district.findFirst({
@@ -34,36 +40,39 @@ export async function POST(request: Request) {
     //   regionId = district?.regionId;
     // }
 
-    const data = {
-      userRoleId: res.userRoleId,
-      userTypeId: res.userTypeId,
-      lastName: res.lastName,
-      firstName: res.firstName,
-      email: res.email,
-      phoneNumber: res.phoneNumber,
-      designation: res.designation,
-      password: hashedPassword,
-     
-    };
+    let data;
+    if (password.trim() != "") {
+      data = {
+        lastName: lastName,
+        firstName: firstName,
+        phoneNumber: phoneNumber,
+        email: email,
+        password: hashedPassword,
+      };
+    } else {
+      data = {
+        lastName: res.lastName,
+        firstName: res.firstName,
+        phoneNumber: res.phoneNumber,
+        email: res.email,
+      };
+    }
 
-    let count = await prisma.user.count({
+    let user = await prisma.user.findFirst({
       where: {
         phoneNumber: res.phoneNumber,
       },
     });
-    if (count != 0) {
+    if (!user) {
       return NextResponse.json(
-        { message: "Phone number already used" },
+        { message: "User account not found" },
         { status: 201 }
       );
     }
 
-    const user: any = await prisma.user.create({ data });
+    await prisma.user.update({ where: { id: user.id }, data });
 
-    await sendSMS(
-      res.phoneNumber,
-      `The temporal password for ESICApps App is ${password}`
-    );
+   
     return NextResponse.json(user);
   } catch (error: any) {
     console.log(error);
@@ -226,7 +235,6 @@ export async function GET(request: Request) {
       //       }
       //     : { deleted: 0 },
       include: {
-      
         UserType: true,
       },
       orderBy: {
@@ -265,7 +273,7 @@ export async function GET(request: Request) {
       //               mode: "insensitive",
       //             },
       //           },
-              
+
       //         ],
       //         deleted: 0,
       //       }
@@ -346,7 +354,7 @@ export async function DELETE(request: Request) {
       where: { id: Number(userId) },
     });
 
-    let updatedPhoneNumber = user?.phoneNumber+"-deleted-" + uuidv4();
+    let updatedPhoneNumber = user?.phoneNumber + "-deleted-" + uuidv4();
     await prisma.user.update({
       where: { id: Number(userId) },
       data: {

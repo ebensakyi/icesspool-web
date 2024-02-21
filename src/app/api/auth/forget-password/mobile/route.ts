@@ -35,18 +35,24 @@ export async function POST(request: Request) {
     }
 
 
-    let password: string = await generateCode(4) as string;
-
-    await prisma.user.update({
+    let code: string = await generateCode(6) as string;
+    await prisma.otp.create({
       data: {
-        password: password,
+        code: code,
+        userId:user.id
       },
-      where: {
-        id: user?.id,
-        deleted: 0,
-      },
+     
     });
-   // await sendSMS(user?.phoneNumber, `Enter the reset code to reset your password ${password}`);
+    // await prisma.user.update({
+    //   data: {
+    //     password: password,
+    //   },
+    //   where: {
+    //     id: user?.id,
+    //     deleted: 0,
+    //   },
+    // });
+  await sendSMS(user?.phoneNumber, `Enter the reset code to reset your password ${code}`);
 
 
    return NextResponse.json(null, { status: 200 });

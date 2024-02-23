@@ -288,12 +288,12 @@ CREATE TABLE `MomoAccount` (
 CREATE TABLE `TransactionSchedule` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `scheduledDate` DATETIME(3) NOT NULL,
-    `scheduledTime` VARCHAR(15) NOT NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `transactionId` VARCHAR(255) NOT NULL,
+    `timeFrameId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -696,7 +696,7 @@ CREATE TABLE `Penalty` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `JobTimeSchedule` (
+CREATE TABLE `TimeFrame` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `time_schedule` VARCHAR(191) NOT NULL,
     `start_time` VARCHAR(191) NOT NULL,
@@ -755,6 +755,9 @@ ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_serviceProviderId_fkey` FO
 
 -- AddForeignKey
 ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_momoNetworkId_fkey` FOREIGN KEY (`momoNetworkId`) REFERENCES `MomoNetwork`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `TransactionSchedule` ADD CONSTRAINT `TransactionSchedule_timeFrameId_fkey` FOREIGN KEY (`timeFrameId`) REFERENCES `TimeFrame`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `TransactionSchedule` ADD CONSTRAINT `TransactionSchedule_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

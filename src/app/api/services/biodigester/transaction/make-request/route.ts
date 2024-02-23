@@ -25,6 +25,8 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
+    console.log(res);
+
     const session: any = await getServerSession(authOptions);
 
     const requestDetails = res.requestDetails.map(
@@ -74,7 +76,7 @@ export async function POST(request: Request) {
       data: {
         transactionId: res.transactionId,
         scheduledDate: new Date(res.scheduledDate),
-        scheduledTime: res.scheduledTime,
+        timeFrameId: Number(res.timeFrame),
       },
     });
 
@@ -88,40 +90,48 @@ export async function POST(request: Request) {
 
     let transactionId = res.transactionId;
 
+    let timeFrame = await prisma.timeFrame.findFirst({
+      where: { id: Number(res.timeFrame) },
+    });
+
+    let firestoreData = {
+      transactionId: res.transactionId,
+      customerId: Number(res?.userId),
+      customerLat: Number(res?.customerLat),
+      customerLng: Number(res?.customerLng),
+      gpsAccuracy: Number(res?.accuracy).toFixed(),
+
+      // trips: Number(res[0]?.trips),
+      service: "Biodigester ",
+      serviceId: 3,
+      biodigesterTxDetails: requestDetails1,
+      serviceAreaId: Number(res?.serviceAreaId),
+
+      //clientId: tr,
+      txStatusCode: 1,
+      requestType: 1,
+      offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
+      customerName: user?.lastName + " " + user?.firstName,
+      customerPhone: user?.phoneNumber,
+      customerEmail: user?.email,
+
+      // toiletType: req.body.toiletType,
+      totalCost: Number(res?.totalCost),
+
+      unitCost: Number(res?.totalCost),
+      discountedTotalCost: Number(res?.totalCost),
+      scheduledTime: timeFrame?.time_schedule,
+      scheduledDate: res.scheduledDate,
+
+      createdDate: getCurrentDate() + " at " + getCurrentTime(),
+      deleted: false,
+    };
+
+    console.log("firestoreData==> ", firestoreData);
+
     await setDoc(
       doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-      {
-        transactionId: res.transactionId,
-        customerId: Number(res?.userId),
-        customerLat: Number(res?.customerLat),
-        customerLng: Number(res?.customerLng),
-        gpsAccuracy: Number(res?.accuracy).toFixed(),
-
-        // trips: Number(res[0]?.trips),
-        service: "Biodigester ",
-        serviceId: 3,
-        biodigesterTxDetails: requestDetails1,
-        serviceAreaId: Number(res?.serviceAreaId),
-
-        //clientId: tr,
-        txStatusCode: 1,
-        requestType: 1,
-        offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
-        customerName: user?.lastName + " " + user?.firstName,
-        customerPhone: user?.phoneNumber,
-        customerEmail: user?.email,
-
-        // toiletType: req.body.toiletType,
-        totalCost: Number(res?.totalCost),
-
-        unitCost: Number(res?.totalCost),
-        discountedTotalCost: Number(res?.totalCost),
-        scheduledTime: res.scheduledTime,
-        scheduledDate: res.scheduledDate,
-
-        createdDate: getCurrentDate() + " at " + getCurrentTime(),
-        deleted: false,
-      }
+      firestoreData
     );
 
     await prisma.transactionStatus.create({

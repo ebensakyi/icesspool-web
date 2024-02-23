@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       fine: Number(res?.fine),
     };
 
-    const penalty = await prisma.jobTimeSchedule.findFirst({
+    const penalty = await prisma.timeFrame.findFirst({
       where: { deleted: 0 },
     });
    
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.jobTimeSchedule.findFirst({
+    const response = await prisma.timeFrame.findMany({
       where: { deleted: 0 },
     });
 

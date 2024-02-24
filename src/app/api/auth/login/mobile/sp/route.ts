@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const user: any = await prisma.user.findFirst({
       where: {
         phoneNumber: phoneNumber,
+        userTypeId:3,
         deleted: 0,
       },
      // include: { ServiceArea: true, ServiceProvider: true },

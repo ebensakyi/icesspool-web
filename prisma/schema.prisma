@@ -637,7 +637,7 @@ model Transaction {
   id                     String                   @id @db.VarChar(255)
   // unitCost               Decimal                  @db.Decimal(10, 2)
   discountedCost         Decimal?                 @db.Decimal(10, 2)
-  cost                   Decimal                  @db.Decimal(10, 2)
+  totalCost              Decimal                  @db.Decimal(10, 2)
   community              String?                  @db.VarChar(255)
   gpsAccuracy            Decimal?                 @db.Decimal(10, 2)
   lat                    Decimal

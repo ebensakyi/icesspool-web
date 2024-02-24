@@ -59,7 +59,7 @@ export async function POST(request: Request) {
       lng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
       discountedCost: Number(res?.totalCost),
-      cost: Number(res?.totalCost),
+      totalCost: Number(res?.totalCost),
 
       // trips: Number(res[0]?.trips),
       serviceId: 3,
@@ -106,6 +106,7 @@ export async function POST(request: Request) {
       serviceId: 3,
       biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
+      paymentStatus :0,
 
       //clientId: tr,
       txStatusCode: 1,

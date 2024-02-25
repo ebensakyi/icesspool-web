@@ -149,10 +149,10 @@ export async function POST(request: Request) {
     });
 
     for (let i = 0; i < serviceProviders.length; i++) {
-      await sendSMS(
-        serviceProviders[i].phoneNumber,
-        `Hello ${serviceProviders[i].firstName} biodigester request is available`
-      );
+      // await sendSMS(
+      //   serviceProviders[i].phoneNumber,
+      //   `Hello ${serviceProviders[i].firstName} biodigester request is available`
+      // );
 
       await sendFCM(
         "New Request",
@@ -168,7 +168,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(response);
   } catch (error: any) {
-    console.log(error);
+    console.log("Make request error=>",error);
 
     return NextResponse.json(error, { status: 500 });
   }

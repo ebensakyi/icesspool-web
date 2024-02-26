@@ -10,7 +10,6 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import { txStatuses } from "../../../../../prisma/seeds/tx_statuses";
 import {
   convertDateToISO8601,
   convertTimeToISO8601,
@@ -25,7 +24,6 @@ export async function POST(request: Request) {
 
   const res = await request.json();
 
-  console.log(res);
 
   let transactionId = res.transactionId;
   let status = Number(res.status);

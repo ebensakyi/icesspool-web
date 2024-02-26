@@ -34,7 +34,7 @@ export const txStatuses = [
 
   {
     id: 9,
-    name: "Offer Re-broadcasted",
+    name: "Offer Re-assigned",
   },
   {
     id: 10,
@@ -47,5 +47,21 @@ export const txStatuses = [
   {
     id: 12,
     name: "SP cancelled paid offer",
+  },
+  {
+    id: 13,
+    name: "Customer confirms job is started",
+  },
+  {
+    id: 14,
+    name: "Customer confirms job is completed",
+  },
+  {
+    id: 15,
+    name: "Tx closed",
+  },
+  {
+    id: 16,
+    name: "Tx rated",
   },
 ];

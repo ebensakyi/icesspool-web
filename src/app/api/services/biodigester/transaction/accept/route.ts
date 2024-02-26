@@ -24,29 +24,35 @@ export async function POST(request: Request) {
 
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
-
+    let txStatusCode = Number(res.txStatusCode);
     let currentStatus;
 
-    
-
+    if (txStatusCode == 1) {
+      currentStatus = 2;
+    }
+    if (txStatusCode == 12) {
+      currentStatus = 9;
+    }
+    if (txStatusCode == 11) {
+      currentStatus = 2;
+    }
     let transaction = await prisma.transaction.update({
       where: { id: transactionId },
       data: {
         serviceProviderId: Number(serviceProviderId),
-        currentStatus: 2,
+        currentStatus: currentStatus,
       },
     });
-
-
 
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },
       include: { ServiceProvider: true },
     });
 
-
     //Update firestore
 
+
+    
     if (transaction) {
       const transactionRef = doc(
         db,
@@ -54,9 +60,8 @@ export async function POST(request: Request) {
         transactionId
       );
 
-      
       await updateDoc(transactionRef, {
-        txStatusCode: 2,
+        txStatusCode: currentStatus,
         spName: sp?.firstName + " " + sp?.lastName,
         spCompany: sp?.ServiceProvider?.company,
         spPhoneNumber: sp?.phoneNumber,
@@ -87,7 +92,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({});
   } catch (error: any) {
-    console.log(error);
+    console.log("FirebaseError==> ",error);
 
     return NextResponse.json(error, { status: 500 });
   }

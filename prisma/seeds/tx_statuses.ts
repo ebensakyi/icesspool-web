@@ -13,55 +13,51 @@ export const txStatuses = [
   },
   {
     id: 4,
-    name: "Offer in Progress",
+    name: "Work started request", //by sp
+  },
+  {
+    id: 41,
+    name: "Work started", //by client
+  },
+  {
+    id: 40,
+    name: "Work not started", //by client
   },
   {
     id: 5,
-    name: "Work started",
+    name: "Work completed request", //by client
   },
+  {
+    id: 51,
+    name: "Work completed", //by client
+  },
+  {
+    id: 50,
+    name: "Work not completed", //by client
+  },
+ 
   {
     id: 6,
-    name: "Customer says job is completed",
-  },
-  {
+    name: "Offer closed", // by admin, sp, or client
+  },{
     id: 7,
-    name: "SP says job is completed",
+    name: "Offer rated",
   },
   {
     id: 8,
-    name: "Offer rated",
+    name: "Offer cancelled by sp",  // by sp or client
   },
-
-  {
+ {
     id: 9,
-    name: "Offer Re-assigned",
+    name: "Cancelled by cl", //make as deleted and set status to 10
   },
   {
     id: 10,
-    name: "Cancelled by customer",
+    name: "Offer Re-assigned", // if cancelled by sp. push back to pool
   },
-  {
-    id: 11,
-    name: "SP cancelled unpaid offer",
-  },
-  {
-    id: 12,
-    name: "SP cancelled paid offer",
-  },
-  {
-    id: 13,
-    name: "Customer confirms job is started",
-  },
-  {
-    id: 14,
-    name: "Customer confirms job is completed",
-  },
-  {
-    id: 15,
-    name: "Tx closed",
-  },
-  {
-    id: 16,
-    name: "Tx rated",
-  },
+ 
+ 
+
 ];
+
+

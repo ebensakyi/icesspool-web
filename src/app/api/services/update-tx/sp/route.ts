@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/options";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -10,7 +10,7 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import { txStatuses } from "../../../../../prisma/seeds/tx_statuses";
+import { txStatuses } from "../../../../../../prisma/seeds/tx_statuses";
 import {
   convertDateToISO8601,
   convertTimeToISO8601,

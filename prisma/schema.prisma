@@ -534,41 +534,65 @@ model ServiceProviderEarning {
 }
 
 model ServiceProviderRating {
-  id                Int      @id @default(autoincrement())
-  serviceProviderId String   @db.VarChar(255)
-  rating            Decimal? @default(0.0) @db.Decimal(2, 1)
-  deleted           Int?     @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  rating    Decimal? @default(0.0) @db.Decimal(2, 1)
+  deleted   Int?     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 model TransactionRating {
-  id            Int      @id @default(autoincrement())
-  transactionId String   @unique(map: "transactionId") @db.VarChar(255)
-  rating        Decimal? @default(0.0) @db.Decimal(2, 1)
-  comment       String?  @db.VarChar(255)
-  deleted       Int?     @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            Int         @id @default(autoincrement())
+  transactionId String      @unique(map: "transactionId") @db.VarChar(255)
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
+  rating        Decimal?    @default(0.0) @db.Decimal(2, 1)
+  comment       String?     @db.VarChar(255)
+  deleted       Int?        @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model RatingBreakdown {
-  id               Int      @id @default(autoincrement())
-  ratingId         Int      @unique(map: "ratingId")
-  helmet           Int?
-  abusive          Int?
-  overall          Int?
-  boots            Int?
-  respirator       Int?
-  eyesProtector    Int?
-  cashDemand       Int?
-  damageProperty   Int?
-  closeOpenSeal    Int?
-  cleanEnvironment Int?
-  deleted          Int?     @default(0)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id               Int            @id @default(autoincrement())
+  ratingId         Int            @unique(map: "ratingId")
+  RatingQuestion   RatingQuestion @relation(fields: [ratingQuestionId], references: [id])
+  deleted          Int?           @default(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  ratingQuestionId Int
+  User             User           @relation(fields: [userId], references: [id])
+  userId           Int
 }
+
+model RatingQuestion {
+  id       Int     @id @default(autoincrement())
+  question String?
+
+  deleted         Int?              @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  RatingBreakdown RatingBreakdown[]
+}
+
+// model RatingBreakdown {
+//   id               Int      @id @default(autoincrement())
+//   ratingId         Int      @unique(map: "ratingId")
+//   helmet           Int?
+//   abusive          Int?
+//   overall          Int?
+//   boots            Int?
+//   respirator       Int?
+//   eyesProtector    Int?
+//   cashDemand       Int?
+//   damageProperty   Int?
+//   closeOpenSeal    Int?
+//   cleanEnvironment Int?
+//   deleted          Int?     @default(0)
+//   createdAt        DateTime @default(now())
+//   updatedAt        DateTime @updatedAt
+// }
 
 // model ScannerUser {
 //   id            Int      @id @default(autoincrement())
@@ -666,8 +690,9 @@ model Transaction {
   TransactionSchedule    TransactionSchedule[]
   TransactionStatus      TransactionStatus[]
 
-  TxStatus      TxStatus @relation(fields: [currentStatus], references: [id])
-  currentStatus Int
+  TxStatus          TxStatus            @relation(fields: [currentStatus], references: [id])
+  currentStatus     Int
+  TransactionRating TransactionRating[]
 }
 
 model BiodigesterTransaction {
@@ -741,11 +766,13 @@ model User {
   Vehicle         Vehicle[]
   ServiceProvider ServiceProvider?
 
-  ServiceArea   ServiceArea?  @relation(fields: [serviceAreaId], references: [id])
-  serviceAreaId Int?
-  Transaction   Transaction[]
-  Otp           Otp[]
-  Penalty       Penalty[]
+  ServiceArea           ServiceArea?            @relation(fields: [serviceAreaId], references: [id])
+  serviceAreaId         Int?
+  Transaction           Transaction[]
+  Otp                   Otp[]
+  Penalty               Penalty[]
+  RatingBreakdown       RatingBreakdown[]
+  ServiceProviderRating ServiceProviderRating[]
 }
 
 // model UserType {

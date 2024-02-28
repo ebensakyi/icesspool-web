@@ -460,11 +460,11 @@ CREATE TABLE `ServiceProviderEarning` (
 -- CreateTable
 CREATE TABLE `ServiceProviderRating` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `serviceProviderId` VARCHAR(255) NOT NULL,
     `rating` DECIMAL(2, 1) NULL DEFAULT 0.0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `userId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -487,21 +487,24 @@ CREATE TABLE `TransactionRating` (
 CREATE TABLE `RatingBreakdown` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `ratingId` INTEGER NOT NULL,
-    `helmet` INTEGER NULL,
-    `abusive` INTEGER NULL,
-    `overall` INTEGER NULL,
-    `boots` INTEGER NULL,
-    `respirator` INTEGER NULL,
-    `eyesProtector` INTEGER NULL,
-    `cashDemand` INTEGER NULL,
-    `damageProperty` INTEGER NULL,
-    `closeOpenSeal` INTEGER NULL,
-    `cleanEnvironment` INTEGER NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `ratingQuestionId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+
+    UNIQUE INDEX `ratingId`(`ratingId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `RatingQuestion` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `question` VARCHAR(191) NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `ratingId`(`ratingId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -561,7 +564,7 @@ CREATE TABLE `TruckEmptyingTransaction` (
 CREATE TABLE `Transaction` (
     `id` VARCHAR(255) NOT NULL,
     `discountedCost` DECIMAL(10, 2) NULL,
-    `cost` DECIMAL(10, 2) NOT NULL,
+    `totalCost` DECIMAL(10, 2) NOT NULL,
     `community` VARCHAR(255) NULL,
     `gpsAccuracy` DECIMAL(10, 2) NULL,
     `lat` DECIMAL(65, 30) NOT NULL,
@@ -797,6 +800,18 @@ ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_userTypeId_fkey` FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE `ServiceProvider` ADD CONSTRAINT `ServiceProvider_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ServiceProviderRating` ADD CONSTRAINT `ServiceProviderRating_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `TransactionRating` ADD CONSTRAINT `TransactionRating_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RatingBreakdown` ADD CONSTRAINT `RatingBreakdown_ratingQuestionId_fkey` FOREIGN KEY (`ratingQuestionId`) REFERENCES `RatingQuestion`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RatingBreakdown` ADD CONSTRAINT `RatingBreakdown_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -658,11 +658,13 @@ model TruckEmptyingTransaction {
 }
 
 model Transaction {
-  id                     String                   @id @db.VarChar(255)
+  id             String   @id @db.VarChar(255)
   // unitCost               Decimal                  @db.Decimal(10, 2)
-  discountedCost         Decimal?                 @db.Decimal(10, 2)
-  totalCost              Decimal                  @db.Decimal(10, 2)
-  community              String?                  @db.VarChar(255)
+  discountedCost Decimal? @db.Decimal(10, 2)
+  totalCost      Decimal  @db.Decimal(10, 2)
+  community      String?  @db.VarChar(255)
+  address        String?  @db.VarChar(255)
+
   gpsAccuracy            Decimal?                 @db.Decimal(10, 2)
   lat                    Decimal
   lng                    Decimal

@@ -60,6 +60,8 @@ export async function POST(request: Request) {
       gpsAccuracy: Number(res?.accuracy).toFixed(),
       discountedCost: Number(res?.totalCost),
       totalCost: Number(res?.totalCost),
+      community:res?.community,
+      address:res?.address,
 
       // trips: Number(res[0]?.trips),
       serviceId: 3,
@@ -100,7 +102,8 @@ export async function POST(request: Request) {
       customerLat: Number(res?.customerLat),
       customerLng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
-
+      community:res?.community,
+      address:res?.address,
       // trips: Number(res[0]?.trips),
       service: "Biodigester ",
       serviceId: 3,

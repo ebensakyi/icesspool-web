@@ -10,7 +10,6 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import { txStatuses } from "../../../../../../prisma/seeds/tx_statuses";
 import {
   convertDateToISO8601,
   convertTimeToISO8601,

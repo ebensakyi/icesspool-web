@@ -52,6 +52,28 @@ CREATE TABLE `ServiceProviderBalance` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `PlatformBalance` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `balance` DECIMAL(10, 2) NULL DEFAULT 0.00,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `IcesspoolBalance` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `balance` DECIMAL(10, 2) NULL DEFAULT 0.00,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `TransactionClosure` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NULL,
@@ -423,7 +445,33 @@ CREATE TABLE `ServiceProviderEarning` (
     `transactionId` VARCHAR(255) NOT NULL,
     `serviceProviderId` VARCHAR(255) NOT NULL,
     `amount` DECIMAL(10, 2) NOT NULL,
-    `completionDate` VARCHAR(255) NOT NULL,
+    `completionDate` VARCHAR(30) NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `transactionId`(`transactionId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `IcesspoolEarning` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `transactionId` VARCHAR(255) NOT NULL,
+    `amount` DECIMAL(10, 2) NOT NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `transactionId`(`transactionId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `PlatformEarning` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `transactionId` VARCHAR(255) NOT NULL,
+    `amount` DECIMAL(10, 2) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -590,6 +638,7 @@ CREATE TABLE `ServiceCharges` (
     `serviceId` INTEGER NOT NULL,
     `serviceAreaId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `ServiceCharges_serviceAreaId_serviceId_key`(`serviceAreaId`, `serviceId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -791,6 +840,15 @@ ALTER TABLE `ServiceProvider` ADD CONSTRAINT `ServiceProvider_userId_fkey` FOREI
 
 -- AddForeignKey
 ALTER TABLE `ServiceProviderEarning` ADD CONSTRAINT `ServiceProviderEarning_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ServiceProviderEarning` ADD CONSTRAINT `ServiceProviderEarning_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `IcesspoolEarning` ADD CONSTRAINT `IcesspoolEarning_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `PlatformEarning` ADD CONSTRAINT `PlatformEarning_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServiceProviderRating` ADD CONSTRAINT `ServiceProviderRating_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

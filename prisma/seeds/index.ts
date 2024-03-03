@@ -83,6 +83,13 @@ async function main() {
     await prisma.penalty.createMany({
       data: penalty,
     });
+
+    await prisma.icesspoolBalance.create({
+      data: {balance:0.00},
+    });
+    await prisma.platformBalance.createMany({
+      data: {balance:0.00},
+    });
 }
 
 main()

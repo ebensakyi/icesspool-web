@@ -24,16 +24,17 @@ export async function PUT(request: Request) {
     const db = getFirestore(app);
 
     const res = await request.json();
-    console.log(res);
 
     let transactionId = res.id;
     // let serviceId = res.serviceId;
     // let serviceAreaId = res.serviceAreaId;
-    const transaction:any = await prisma.transaction.findFirst({
+    const transaction: any = await prisma.transaction.findFirst({
       where: { id: transactionId },
     });
 
     let serviceId = transaction?.serviceId;
+    let serviceProviderId = transaction?.serviceProviderId;
+
     let serviceAreaId = transaction?.serviceAreaId;
     let totalCost: number = transaction.discountedCost;
 
@@ -75,8 +76,57 @@ export async function PUT(request: Request) {
     }
     if (serviceId == 2) {
     }
+
     if (serviceId == 3) {
-      await allocateFundsBiodigester(totalCost, charges);
+      let moneyAllocations = await allocateFundsBiodigester(totalCost, charges);
+      await prisma.icesspoolEarning.create({
+        data: {
+          transactionId: transactionId,
+          amount: moneyAllocations.icesspoolAmount,
+        },
+      });
+
+      await prisma.icesspoolBalance.update({
+        where: { id: 1 },
+        data: {
+          balance: { increment: moneyAllocations.icesspoolAmount },
+        },
+      });
+
+      await prisma.platformEarning.create({
+        data: {
+          transactionId: transactionId,
+          amount: moneyAllocations.platformCharges,
+        },
+      });
+
+      await prisma.platformBalance.update({
+        where: { id: 1 },
+        data: {
+          balance: { increment: moneyAllocations.platformCharges },
+        },
+      });
+
+      await prisma.serviceProviderEarning.create({
+        data: {
+          transactionId: transactionId,
+          amount: moneyAllocations.providerAmount,
+          serviceProviderId: serviceProviderId,
+        },
+      });
+      let serviceProviderBalance =
+        await prisma.serviceProviderBalance.findFirst({
+          where: { serviceProviderId },
+        });
+
+      await prisma.serviceProviderBalance.update({
+        data: {
+          balance: { increment: moneyAllocations.providerAmount },
+        },
+        where: {
+          id: serviceProviderBalance?.id,
+        },
+      });
     }
 
     return NextResponse.json({});
@@ -101,11 +151,12 @@ const allocateFundsBiodigester = async (
   const icesspoolAmount = transactionAmount * icesspoolPercentage;
   const paymentCharges = transactionAmount * paymentChargesPercentage;
   const otherCharges = transactionAmount * otherChargesPercentage;
+  const platformCharges = otherCharges + paymentCharges;
 
   const providerAmount =
-    transactionAmount - (icesspoolAmount + paymentCharges + otherCharges);
+    transactionAmount - (icesspoolAmount + platformCharges);
 
-  return [icesspoolAmount, providerAmount, paymentCharges, otherCharges];
+  return { icesspoolAmount, providerAmount, platformCharges };
 };
 
 const allocateFundsWaterTanker = (discountedTotalCost: number) => {

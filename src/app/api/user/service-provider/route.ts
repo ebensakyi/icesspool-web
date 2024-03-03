@@ -33,7 +33,6 @@ export async function POST(request: Request) {
   try {
     const _data = await request.formData();
 
-
     const passportPicture: File | null = _data.get(
       "passportPicture"
     ) as unknown as File;
@@ -60,8 +59,6 @@ export async function POST(request: Request) {
     let password: string = (await generateCode(8)) as string;
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
-
-
 
     const data: any = {
       userTypeId: 3,
@@ -116,9 +113,7 @@ export async function POST(request: Request) {
       serviceProviderId: spId,
     };
 
-
-
-    await prisma.serviceProvider.create({
+    let serviceProvider = await prisma.serviceProvider.create({
       data: operatorData,
     });
 
@@ -126,6 +121,9 @@ export async function POST(request: Request) {
       data: momoData,
     });
 
+    await prisma.serviceProviderBalance.create({
+      data: { balance: 0, serviceProviderId: serviceProvider.id },
+    });
     ////////////////////////////////////////////////////////////////
     await upload.single("passportPicture");
 

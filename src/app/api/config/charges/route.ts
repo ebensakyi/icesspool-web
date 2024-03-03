@@ -7,12 +7,17 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 export async function POST(request: Request) {
   try {
     const res = await request.json();
+
+    console.log(res);
+    
     const session: any = await getServerSession(authOptions);
 
     const data = {
-      serviceAreaId: Number(res?.serviceAreaId),
-      serviceId: Number(res?.serviceId),
-      percentage: Number(res?.percentage),
+      serviceAreaId: Number(res?.serviceArea),
+      serviceId: Number(res?.service),
+      icesspoolCommission: Number(res?.icesspoolCommission),
+      platformCommission: Number(res?.platformCharges),
+      paymentCharges: Number(res?.paymentCharges),
 
     };
 

@@ -580,8 +580,8 @@ CREATE TABLE `BiodigesterTransaction` (
 -- CreateTable
 CREATE TABLE `ServiceCharges` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `icesspoolCommision` DECIMAL(10, 2) NOT NULL DEFAULT 0,
-    `platformCommion` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `icesspoolCommission` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `platformCommission` DECIMAL(10, 2) NOT NULL DEFAULT 0,
     `paymentCharges` DECIMAL(10, 2) NOT NULL DEFAULT 0,
     `otherCharges` DECIMAL(10, 2) NOT NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,

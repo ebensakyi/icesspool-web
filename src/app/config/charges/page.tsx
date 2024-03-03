@@ -1,16 +1,33 @@
 export const dynamic = "force-dynamic";
 import { SERVER_BASE_URL } from '@/config';
-import { Penalty } from '@/src/components/Penalty';
-import { Service } from '@/src/components/Service';
+import { Charges } from '@/src/components/Charges';
+
 import { headers } from 'next/headers';
 
 
-async function getPenalty(searchParams: any) {
+async function getCharges(searchParams: any) {
     let { searchText } = searchParams;
   
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/penalty?`,
+      `${SERVER_BASE_URL}/api/config/charges`,
+      { cache: "no-store", headers: headers() }
+    );
+  
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+  
+    return res.json();
+  }
+
+
+  async function getServiceAreas(searchParams: any) {
+    let { searchText } = searchParams;
+  
+  
+    const res = await fetch(
+      `${SERVER_BASE_URL}/api/service-area`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -21,37 +38,36 @@ async function getPenalty(searchParams: any) {
     return res.json();
   }
   
-
+  async function getServices(searchParams: any) {
+    let { searchText } = searchParams;
+  
+  
+    const res = await fetch(
+      `${SERVER_BASE_URL}/api/services`,
+      { cache: "no-store", headers: headers() }
+    );
+  
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+  
+    return res.json();
+  }
 export default async function Page({ searchParams }: any) {
-    const penalty = await getPenalty(searchParams)
+    const charges = await getCharges(searchParams)
+
+    const services = await getServices(searchParams)
+    const serviceAreas = await getServiceAreas(searchParams)
 
 
 
-    // const { data: session } = useSession()
+
+
+    let data = { charges,services,serviceAreas }
 
 
 
-    // const router = useRouter();
-    // const searchParams = useSearchParams()
-    // const pathname = usePathname()
-
-
-
-    // var dateString = moment().format("DD-MM-yyyy-HH-mm-ss-a");
-
-    // // const query = router.query;
-    // const formId = Number(searchParams.get('formId'))
-    // const published = Number(searchParams.get('published'))
-    // const page = Number(searchParams.get('page'))
-    // const searchtext = Number(searchParams.get('searchText'))
-
-
-
-    let data = { penalty }
-
-
-
-    return <Penalty data={data} />
+    return <Charges data={data} />
 
 
 }

@@ -11,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const BiodigesterOffer = ({ data }: any) => {
 
+    console.log(data);
+    
+
 
     const [id, setId] = useState(null);
 
@@ -145,6 +148,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Provider Name</th>
                                             <th scope="col">Area</th>
+                                            <th scope="col">Cost</th>
 
                                             <th scope="col">Current Status</th>
 
@@ -163,8 +167,9 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
+                                                    <td>GHS {data?.totalCost}</td>
 
-                                                    <td>{data?.TxStatus.name == 1 ? <span className="badge bg-primary">{data?.TxStatus.name}</span> : <span className="badge bg-danger">{data?.TxStatus.name}</span>}</td>
+                                                    <td>{<span className="badge bg-primary">{data?.TxStatus?.name}</span>}</td>
                                                     {/* <td>{data?.BiodigesterTransaction.name}</td> */}
 
                                                     <td>  {moment(data?.createdAt).format(

@@ -73,11 +73,14 @@ export async function GET(request: Request) {
     const response = await prisma.biodigesterTransaction.findMany({
       where: { deleted: 0 },
       include: {
-        // Service: true,
         BiodigesterType: true,
-        Transaction: true
+        Transaction: {
+          include: { TxStatus: true },
+        },
       },
     });
+
+    console.log(response);
 
     return NextResponse.json({ response });
   } catch (error) {

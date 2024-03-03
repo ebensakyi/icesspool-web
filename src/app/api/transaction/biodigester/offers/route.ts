@@ -18,14 +18,15 @@ export async function GET(request: Request) {
       const response = await prisma.transaction.findMany({
         where: { deleted: 0,  serviceId: 3, },
         include: {
-          
+         
           BiodigesterTransaction: true,
           Customer:true,
           ServiceProvider: true,
-          ServiceArea: true,
+          ServiceArea: true,TxStatus: true 
         },
       });
-  
+
+
 
       console.log(response);
       

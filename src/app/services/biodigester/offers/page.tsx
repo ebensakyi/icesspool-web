@@ -14,7 +14,6 @@ async function getBiodigesterOffers(searchParams: any) {
         `${SERVER_BASE_URL}/api/transaction/biodigester/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
-    console.log("RES===> ",res);
     
 
     if (!res.ok) {

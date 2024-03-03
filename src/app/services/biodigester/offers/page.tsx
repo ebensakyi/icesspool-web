@@ -11,9 +11,11 @@ async function getBiodigesterOffers(searchParams: any) {
     let { page } = searchParams;
 
     const res = await fetch(
-        `${SERVER_BASE_URL}/api/services/biodigester/offers?page=${page}&searchText=${searchText}`,
+        `${SERVER_BASE_URL}/api/transaction/biodigester/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
+    console.log("RES===> ",res);
+    
 
     if (!res.ok) {
         throw new Error("Failed to fetch data");

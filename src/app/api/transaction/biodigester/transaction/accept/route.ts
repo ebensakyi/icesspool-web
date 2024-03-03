@@ -25,17 +25,18 @@ export async function POST(request: Request) {
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
     let txStatusCode = Number(res.txStatusCode);
+    console.log("txStatusCode ",txStatusCode);
+    
     let currentStatus;
 
     if (txStatusCode == 1) {
       currentStatus = 2;
     }
-    if (txStatusCode == 12) {
-      currentStatus = 9;
+
+    if (txStatusCode == 8) {
+      currentStatus = 10;
     }
-    if (txStatusCode == 11) {
-      currentStatus = 2;
-    }
+   
     let transaction = await prisma.transaction.update({
       where: { id: transactionId },
       data: {
@@ -51,6 +52,7 @@ export async function POST(request: Request) {
 
     //Update firestore
 
+console.log("cuuuuu ",currentStatus);
 
     
     if (transaction) {

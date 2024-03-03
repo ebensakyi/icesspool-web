@@ -44,7 +44,7 @@ export async function PUT(request: Request) {
       status: Number(res?.status),
     };
     console.log(data);
-    
+
     await prisma.biodigesterService.update({
       where: {
         id: Number(res?.id),
@@ -70,11 +70,12 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.biodigesterService.findMany({
+    const response = await prisma.biodigesterTransaction.findMany({
       where: { deleted: 0 },
       include: {
-        Service: true,
+        // Service: true,
         BiodigesterType: true,
+        Transaction: true
       },
     });
 

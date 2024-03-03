@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const BiodigesterOffer = ({ data }: any) => {
 
-    console.log(data);
 
     const [id, setId] = useState(null);
 
@@ -30,17 +29,10 @@ export const BiodigesterOffer = ({ data }: any) => {
 
     const closeTx = async () => {
         try {
-            // if (name == "" || status == 0) {
-            //     return toast.error("Please fill form");
-            // }
-
             let data = {
                 id: Number(id),
 
             };
-
-
-
 
             const response = await axios.put("/api/services/biodigester/offers", data);
             toast.success(response.data.message);
@@ -56,6 +48,9 @@ export const BiodigesterOffer = ({ data }: any) => {
         }
     };
 
+    const  viewTx = async () => {
+        throw new Error('Function not implemented.');
+    }
 
 
 
@@ -153,7 +148,7 @@ export const BiodigesterOffer = ({ data }: any) => {
 
                                             <th scope="col">Current Status</th>
 
-                                            <th scope="col">Offer Details</th>
+                                            {/* <th scope="col">Offer Details</th> */}
                                             <th scope="col">Created Date</th>
 
                                             <th scope="col">Action</th>
@@ -162,14 +157,15 @@ export const BiodigesterOffer = ({ data }: any) => {
                                     </thead>
                                     <tbody>
                                         {data?.biodigesterOffers?.response?.map((data: any) => {
+                                          
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
 
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
-                                                    <td>{data?.BiodigesterTransaction.name}</td>
+                                                    <td>{data?.TxStatus.name == 1 ? <span className="badge bg-primary">{data?.TxStatus.name}</span> : <span className="badge bg-danger">{data?.TxStatus.name}</span>}</td>
+                                                    {/* <td>{data?.BiodigesterTransaction.name}</td> */}
 
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
@@ -204,6 +200,26 @@ export const BiodigesterOffer = ({ data }: any) => {
 
                                                                                 // setSendingType(data.sendingType)
                                                                                 // setDistrictId(data.districtId);
+                                                                                viewTx()
+
+
+                                                                                // setIsEditing(true);
+
+                                                                            }}
+                                                                        >
+                                                                            View Tx
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+
+                                                                        <button
+                                                                            className="dropdown-item btn btn-sm "
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                setId(data.id);
+
+                                                                                // setSendingType(data.sendingType)
+                                                                                // setDistrictId(data.districtId);
                                                                                 closeTx()
 
 
@@ -214,7 +230,6 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             Close Tx
                                                                         </button>
                                                                     </li>
-
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

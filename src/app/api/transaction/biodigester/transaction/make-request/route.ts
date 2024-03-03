@@ -105,7 +105,7 @@ export async function POST(request: Request) {
       community:res?.community,
       address:res?.address,
       // trips: Number(res[0]?.trips),
-      service: "Biodigester ",
+      service: "Biodigester",
       serviceId: 3,
       biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),

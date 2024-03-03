@@ -686,8 +686,8 @@ model Transaction {
   BiodigesterTransaction BiodigesterTransaction[]
   ServiceArea            ServiceArea              @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId          Int
-  User                   User?                    @relation(fields: [userId], references: [id])
-  userId                 Int?
+  // User                   User?                    @relation(fields: [userId], references: [id])
+  // userId                 Int?
   Payment                Payment[]
   TransactionSchedule    TransactionSchedule[]
   TransactionStatus      TransactionStatus[]
@@ -770,7 +770,7 @@ model User {
 
   ServiceArea           ServiceArea?            @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId         Int?
-  Transaction           Transaction[]
+  // Transaction           Transaction[]
   Otp                   Otp[]
   Penalty               Penalty[]
   RatingBreakdown       RatingBreakdown[]

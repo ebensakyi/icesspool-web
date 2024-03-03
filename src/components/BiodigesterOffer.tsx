@@ -175,7 +175,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
-                                                    <td>GHS {data?.totalCost}</td>
+                                                    <td>GHS {data?.discountedCost}</td>
 
                                                     <td>{<span className="badge bg-primary">{data?.TxStatus?.name}</span>}</td>
                                                     {/* <td>{data?.BiodigesterTransaction.name}</td> */}

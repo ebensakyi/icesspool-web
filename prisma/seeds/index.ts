@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-import { entities} from "./main_entities";
 
 import { services } from "./services";
 import { truckClassification } from './truck_classification';
@@ -44,9 +43,7 @@ async function main() {
       data: userTypes,
     });
   
-    await prisma.mainEntity.createMany({
-      data: entities,
-    });
+
 
     await prisma.user.createMany({
       data: users,

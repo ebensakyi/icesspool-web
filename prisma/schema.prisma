@@ -52,16 +52,17 @@ model Service {
   ServicesInArea         ServicesInArea[]
   Transaction            Transaction[]
   BiodigesterService     BiodigesterService[]
+  ServiceCharges         ServiceCharges[]
 }
 
-model Balance {
-  id           Int        @id @default(autoincrement())
-  balance      Decimal?   @default(0.00) @db.Decimal(10, 2)
-  deleted      Int?       @default(0)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  MainEntity   MainEntity @relation(fields: [mainEntityId], references: [id])
-  mainEntityId Int
+model ServiceProviderBalance {
+  id                Int             @id @default(autoincrement())
+  balance           Decimal?        @default(0.00) @db.Decimal(10, 2)
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String          @db.VarChar(255)
 }
 
 // model Location {
@@ -145,6 +146,7 @@ model ServiceArea {
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
   User                      User[]
+  ServiceCharges            ServiceCharges[]
 }
 
 model ServicesInArea {
@@ -255,28 +257,28 @@ model DistrictCoordinates {
   districtId Int
 }
 
-model MainEntity {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(255)
+// model MainEntity {
+//   id   Int    @id @default(autoincrement())
+//   name String @db.VarChar(255)
 
-  deleted    Int?         @default(0)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Commission Commission[]
-  Balance    Balance[]
-}
+//   deleted    Int?         @default(0)
+//   createdAt  DateTime     @default(now())
+//   updatedAt  DateTime     @updatedAt
+//   Commission Commission[]
+//   Balance    Balance[]
+// }
 
-model Commission {
-  id           Int        @id @default(autoincrement())
-  mainEntityId Int
-  commission   Decimal    @unique(map: "commission") @db.Decimal(10, 2)
-  status       Int?       @default(1)
-  deleted      Int?       @default(0)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  MainEntity   MainEntity @relation(fields: [mainEntityId], references: [id])
-  //icesspool and mmda
-}
+// model Commission {
+//   id           Int        @id @default(autoincrement())
+//   mainEntityId Int
+//   commission   Decimal    @unique(map: "commission") @db.Decimal(10, 2)
+//   status       Int?       @default(1)
+//   deleted      Int?       @default(0)
+//   createdAt    DateTime   @default(now())
+//   updatedAt    DateTime   @updatedAt
+//  // MainEntity   MainEntity @relation(fields: [mainEntityId], references: [id])
+//   //icesspool and mmda
+// }
 
 model Logs {
   id        Int      @id @default(autoincrement())
@@ -506,31 +508,35 @@ model Page {
 }
 
 model ServiceProvider {
-  id                    String        @id @unique @db.VarChar(255)
-  userId                Int           @unique
-  idCardImg             String?       @db.VarChar(255)
-  company               String?       @db.VarChar(255)
-  officeLocation        String?       @db.VarChar(255)
-  ghanaPostGPS          String?       @db.VarChar(255)
-  licenseNumber         String?       @db.VarChar(255)
-  licenseClassification Int?
-  driversLicenseImg     String?       @db.VarChar(255)
-  deleted               Int?          @default(0)
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
-  User                  User          @relation(fields: [userId], references: [id])
-  MomoAccount           MomoAccount[]
+  id                        String                      @id @unique @db.VarChar(255)
+  userId                    Int                         @unique
+  idCardImg                 String?                     @db.VarChar(255)
+  company                   String?                     @db.VarChar(255)
+  officeLocation            String?                     @db.VarChar(255)
+  ghanaPostGPS              String?                     @db.VarChar(255)
+  licenseNumber             String?                     @db.VarChar(255)
+  licenseClassification     Int?
+  driversLicenseImg         String?                     @db.VarChar(255)
+  deleted                   Int?                        @default(0)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  User                      User                        @relation(fields: [userId], references: [id])
+  MomoAccount               MomoAccount[]
+  ServiceProviderEarning    ServiceProviderEarning[]
+  ServiceProviderBalance    ServiceProviderBalance[]
+  ServiceProviderWithdrawal ServiceProviderWithdrawal[]
 }
 
 model ServiceProviderEarning {
-  id                Int      @id @default(autoincrement())
-  transactionId     String   @unique(map: "transactionId") @db.VarChar(255)
-  serviceProviderId String?  @db.VarChar(255)
-  amount            Decimal  @db.Decimal(10, 2)
-  completionDate    String   @db.VarChar(255)
-  deleted           Int?     @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                Int             @id @default(autoincrement())
+  transactionId     String          @unique(map: "transactionId") @db.VarChar(255)
+  serviceProviderId String          @db.VarChar(255)
+  amount            Decimal         @db.Decimal(10, 2)
+  completionDate    String          @db.VarChar(255)
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
 }
 
 model ServiceProviderRating {
@@ -727,6 +733,22 @@ model BiodigesterTransaction {
   biodigesterServiceId Int
 }
 
+model ServiceCharges {
+  id                 Int     @id @default(autoincrement())
+  icesspoolCommision Decimal @default(0) @db.Decimal(10, 2)
+  platformCommion    Decimal @default(0) @db.Decimal(10, 2)
+  paymentCharges     Decimal @default(0) @db.Decimal(10, 2)
+  otherCharges       Decimal @default(0) @db.Decimal(10, 2)
+
+  deleted       Int?        @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Service       Service     @relation(fields: [serviceId], references: [id])
+  ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  serviceId     Int
+  serviceAreaId Int
+}
+
 model TransactionStatus {
   id            Int         @id @default(autoincrement())
   transactionId String      @db.VarChar(255)
@@ -805,17 +827,18 @@ model Vehicle {
   User                  User                @relation(fields: [userId], references: [id])
 }
 
-model Withdrawal {
-  id                Int       @id @default(autoincrement())
-  serviceProviderId String    @db.VarChar(255)
-  transactionId     String?   @db.VarChar(255)
+model ServiceProviderWithdrawal {
+  id                Int             @id @default(autoincrement())
+  serviceProviderId String          @db.VarChar(255)
+  transactionId     String?         @db.VarChar(255)
   amount            Int?
   disbursementDate  DateTime?
-  status            Int?      @default(0)
+  status            Int?            @default(0)
   approvedBy        Int?
-  deleted           Int?      @default(0)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
 }
 
 model ScannerUser {

@@ -13,6 +13,9 @@ async function getCharges(searchParams: any) {
       `${SERVER_BASE_URL}/api/config/charges`,
       { cache: "no-store", headers: headers() }
     );
+
+    console.log(res);
+    
   
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -46,6 +49,8 @@ async function getCharges(searchParams: any) {
       `${SERVER_BASE_URL}/api/services`,
       { cache: "no-store", headers: headers() }
     );
+
+
   
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -54,7 +59,7 @@ async function getCharges(searchParams: any) {
     return res.json();
   }
 export default async function Page({ searchParams }: any) {
-    const charges = await getCharges(searchParams)
+    const serviceCharges = await getCharges(searchParams)
 
     const services = await getServices(searchParams)
     const serviceAreas = await getServiceAreas(searchParams)
@@ -63,7 +68,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    let data = { charges,services,serviceAreas }
+    let data = { serviceCharges,services,serviceAreas }
 
 
 

@@ -747,6 +747,9 @@ model ServiceCharges {
   ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
   serviceId     Int
   serviceAreaId Int
+
+    @@unique([serviceAreaId, serviceId], name: "areaServiceKey")
+
 }
 
 model TransactionStatus {

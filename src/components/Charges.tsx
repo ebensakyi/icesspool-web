@@ -43,7 +43,7 @@ export const Charges = ({ data }: any) => {
                 icesspoolCommission, platformCharges, paymentCharges,serviceArea,service
             };
             const response = await axios.post("/api/config/charges", data);
-            toast.success("Fine added");
+            toast.success("Commission and charges added");
 
             router.refresh()
 
@@ -219,7 +219,107 @@ export const Charges = ({ data }: any) => {
                             </div>
                         </div>
                     </div>
+                    <div className="col-lg-8">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">List</h5>
+                                <table className="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Icesspool Commission</th>
+                                            <th scope="col">Platform Charges</th>
+                                            <th scope="col">Payment Charges</th>
 
+                                            {/* <th scope="col">Status</th> */}
+                                            <th scope="col">Created Date</th>
+
+                                            <th scope="col">Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data?.serviceCharges?.response.map((data: any) => {
+                                            return (
+                                                <tr key={data?.id}>
+                                                    <td>{data?.icesspoolCommission}</td>
+                                                    <td>{data?.platformCommission}</td>
+                                                    <td>{data?.paymentCharges}</td>
+                                                    {/* <td>{data?.otherCharges}</td> */}
+
+                                                    <td>  {moment(data?.createdAt).format(
+                                                        "MMM Do YYYY, h:mm:ss a"
+                                                    )}</td>
+                                                    <td>
+                                                        <div
+                                                            className="btn-group"
+                                                            role="group"
+                                                            aria-label="Button group with nested dropdown"
+                                                        >
+                                                            <div className="btn-group" role="group">
+                                                                <button
+                                                                    id="btnGroupDrop1"
+                                                                    type="button"
+                                                                    className="btn btn-success dropdown-toggle"
+                                                                    data-bs-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                >
+                                                                    Actions
+                                                                </button>
+                                                                <ul
+                                                                    className="dropdown-menu"
+                                                                    aria-labelledby="btnGroupDrop1"
+                                                                >
+                                                                    <li>
+
+                                                                        <button
+                                                                            className="dropdown-item btn btn-sm "
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                setId(data.id);
+                                                                                setIcesspoolCommission(data.icesspoolCommission)
+                                                                                setPaymentCharges(data.paymentCharges)
+                                                                                setPlatformCharges(data.platformCommission)
+
+                                                                                // setSendingType(data.sendingType)
+                                                                                // setDistrictId(data.districtId);
+
+
+
+                                                                                // setIsEditing(true);
+
+                                                                            }}
+                                                                        >
+                                                                            Edit
+                                                                        </button>
+                                                                    </li>
+                                                                  
+                                                                    <li>
+                                                                        <button
+                                                                            className="dropdown-item btn btn-sm "
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+
+                                                                                // _delete(data.id);
+                                                                            }}
+                                                                        >
+                                                                            Delete
+                                                                        </button>
+
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>

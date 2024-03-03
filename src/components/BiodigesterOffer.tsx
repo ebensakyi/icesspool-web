@@ -33,15 +33,21 @@ export const BiodigesterOffer = ({ data }: any) => {
     const closeTx = async () => {
         try {
             let data = {
-                id: Number(id),
+                id: id,
 
             };
 
-            const response = await axios.put("/api/services/biodigester/offers", data);
-            toast.success(response.data.message);
-            setId(null)
+            const response = await axios.put("/api/transaction/close-tx/admin", data);
+            console.log(response);
+            
 
-
+            if(response.data.status){
+                toast.success("Transaction closed");
+                setId(null)
+    
+    
+            }
+          
             router.refresh()
 
         } catch (error: any) {
@@ -145,6 +151,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
+                                        <th scope="col">Tx.Id</th>
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Provider Name</th>
                                             <th scope="col">Area</th>
@@ -164,6 +171,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                           
                                             return (
                                                 <tr key={data?.id}>
+                                                     <td>{data?.id}</td>
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>

@@ -17,14 +17,15 @@ import {
   getCurrentTime,
 } from "@/libs/date";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
    try {
   const db = getFirestore(app);
 
   const res = await request.json();
+console.log(res);
 
 
-  let transactionId = res.transactionId;
+  let transactionId = res.id;
   let status = Number(res.status);
 
   const session: any = await getServerSession(authOptions);
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
       where: { id: transactionId },
       data: {
         currentStatus: 6,
-        deleted: 1,
+        deleted: 0,
       },
     });
   

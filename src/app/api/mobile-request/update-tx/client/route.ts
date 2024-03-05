@@ -16,66 +16,92 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
+import {
+  OFFER_CANCELLED_CL,
+  WORK_COMPLETED,
+  WORK_STARTED,
+} from "@/config";
 
 export async function POST(request: Request) {
-  // try {
-  // const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  try {
+    // const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  const res = await request.json();
+    const res = await request.json();
 
+    let transactionId = res.transactionId;
+    let status = Number(res.status);
 
-  let transactionId = res.transactionId;
-  let status = Number(res.status);
+console.log(res);
 
-  const session: any = await getServerSession(authOptions);
-  if (status == 10) {
+    //  await prisma.transaction.update({
+    //       where: { id: transactionId },
+    //       data: {
+    //         currentStatus: status,
+    //         deleted: 1,
+    //       },
+    //     });
+    // //work started request
+    if (status == WORK_STARTED) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+        },
+        { merge: true }
+      );
+    }
+    // //work completed request
+
+    if (status == WORK_COMPLETED) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+        },
+        { merge: true }
+      );
+    }
+
+    if (status == OFFER_CANCELLED_CL) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+        deleted: true,
+        },
+        { merge: true }
+      );
+    }
+
     const response = await prisma.transaction.update({
       where: { id: transactionId },
       data: {
         currentStatus: status,
-        deleted: 1,
       },
     });
+
+    await prisma.transactionStatus.create({
+      data: {
+        transactionId: transactionId,
+        txStatusId: status,
+        date: convertDateToISO8601(getCurrentDate()),
+        time: convertTimeToISO8601(getCurrentTime()),
+      },
+    });
+
+    // await db
+    // .collection(process.env.TRANSACTION_STORE)
+    // .doc(res.transactionId)
+    // .set(data);
+
+    return NextResponse.json({});
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json(error, { status: 500 });
   }
-
-  const response = await prisma.transaction.update({
-    where: { id: transactionId },
-    data: {
-      currentStatus: status,
-    },
-  });
-
-  
-
-  await prisma.transactionStatus.create({
-    data: {
-      transactionId: transactionId,
-      txStatusId: status,
-      date: convertDateToISO8601(getCurrentDate()),
-      time: convertTimeToISO8601(getCurrentTime()),
-    },
-  });
-
-  await setDoc(
-    doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-    {
-      deleted: true,
-      transactionId: transactionId,
-      txStatusCode: Number(status),
-    },
-    { merge: true }
-  );
-
-  // await db
-  // .collection(process.env.TRANSACTION_STORE)
-  // .doc(res.transactionId)
-  // .set(data);
-
-  return NextResponse.json({});
-  // } catch (error: any) {
-  //   console.log(error);
-
-  //   return NextResponse.json(error, { status: 500 });
-  // }
 }

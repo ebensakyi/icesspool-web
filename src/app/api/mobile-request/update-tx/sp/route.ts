@@ -16,94 +16,96 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
+import {
+  OFFER_CANCELLED_SP,
+  WORK_COMPLETED_REQUEST,
+  WORK_STARTED_REQUEST,
+} from "@/config";
 
 export async function POST(request: Request) {
-  // try {
-  // const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  try {
+    // const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  const res = await request.json();
+    const res = await request.json();
 
+    let transactionId = res.transactionId;
+    let status = Number(res.status);
 
-  let transactionId = res.transactionId;
-  let status = Number(res.status);
+    const session: any = await getServerSession(authOptions);
 
-  const session: any = await getServerSession(authOptions);
-  // //cancel unpaid request
-  // if (status == 11) {
-  //   const response = await prisma.transaction.update({
-  //     where: { id: transactionId },
-  //     data: {
-  //       currentStatus: status,
-  //       deleted: 1,
-  //     },
-  //   });
+    //  await prisma.transaction.update({
+    //       where: { id: transactionId },
+    //       data: {
+    //         currentStatus: status,
+    //         deleted: 1,
+    //       },
+    //     });
+    // //work started request
+    if (status == WORK_STARTED_REQUEST) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+        },
+        { merge: true }
+      );
+    }
+    // //work completed request
 
-  //   await setDoc(
-  //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-  //     {
-  //       transactionId: transactionId,
-  //       txStatusCode: Number(status),
-  //     },
-  //     { merge: true }
-  //   );
-  // }
-  // //cancel paid request
+    if (status == WORK_COMPLETED_REQUEST) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+        },
+        { merge: true }
+      );
+    }
 
-  // if (status == 12) {
-  //   const response = await prisma.transaction.update({
-  //     where: { id: transactionId },
-  //     data: {
-  //       currentStatus: status,
-  //       deleted: 1,
-  //     },
-  //   });
-  //}
+    if (status == OFFER_CANCELLED_SP) {
+      await setDoc(
+        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+        {
+          transactionId: transactionId,
+          txStatusCode: Number(status),
+          spId: "",
+          spCompany: "",
+          spImageUrl: "",
+          spName: "",
+          spPhoneNumber: "",
+        },
+        { merge: true }
+      );
+    }
 
-
-    await setDoc(
-      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-      {
-        transactionId: transactionId,
-        txStatusCode: Number(status),
-        spId:"",
-        spCompany:"",
-        spImageUrl:"",
-        spName:"",
-        spPhoneNumber:""
+    const response = await prisma.transaction.update({
+      where: { id: transactionId },
+      data: {
+        currentStatus: status,
       },
-      { merge: true }
-    );
-  
-  const response = await prisma.transaction.update({
-    where: { id: transactionId },
-    data: {
-      currentStatus: status,
-    },
-  });
+    });
 
-  
+    await prisma.transactionStatus.create({
+      data: {
+        transactionId: transactionId,
+        txStatusId: status,
+        date: convertDateToISO8601(getCurrentDate()),
+        time: convertTimeToISO8601(getCurrentTime()),
+      },
+    });
 
-  await prisma.transactionStatus.create({
-    data: {
-      transactionId: transactionId,
-      txStatusId: status,
-      date: convertDateToISO8601(getCurrentDate()),
-      time: convertTimeToISO8601(getCurrentTime()),
-    },
-  });
+    // await db
+    // .collection(process.env.TRANSACTION_STORE)
+    // .doc(res.transactionId)
+    // .set(data);
 
- 
+    return NextResponse.json({});
+  } catch (error: any) {
+    console.log(error);
 
-  // await db
-  // .collection(process.env.TRANSACTION_STORE)
-  // .doc(res.transactionId)
-  // .set(data);
-
-  return NextResponse.json({});
-  // } catch (error: any) {
-  //   console.log(error);
-
-  //   return NextResponse.json(error, { status: 500 });
-  // }
+    return NextResponse.json(error, { status: 500 });
+  }
 }

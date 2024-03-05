@@ -149,7 +149,7 @@ export default function Header() {
 
                             <Link
                                 className={
-                                    pathname == "/esicapps1/general"
+                                    pathname == "/make-request/emptying"
                                         ? "nav-link"
                                         : "nav-link collapsed"
                                 }
@@ -197,11 +197,11 @@ export default function Header() {
 
                             <Link
                                 className={
-                                    pathname == "/esicapps1/general"
+                                    pathname == "/services/biodigester/close-request"
                                         ? "nav-link"
                                         : "nav-link collapsed"
                                 }
-                                data-bs-target="#offers-nav"
+                                data-bs-target="#closed-offers-nav"
                                 data-bs-toggle="collapse"
                                 href="#"
                             >
@@ -211,9 +211,9 @@ export default function Header() {
                                 <i className="bi bi-chevron-down ms-auto" />
                             </Link>
                             <ul
-                                id="offers-nav"
+                                id="closed-offers-nav"
                                 className="nav-content collapse "
-                                data-bs-parent="#offers-nav"
+                                data-bs-parent="#closed-offers-nav"
                             > <li>
                                     <Link href="/services/biodigester/close-request">
                                         <i className="bi bi-circle" />
@@ -238,7 +238,7 @@ export default function Header() {
 
                             </ul>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
 
                             <Link
                                 className={
@@ -281,7 +281,7 @@ export default function Header() {
                                 </li>
 
                             </ul>
-                        </li>
+                        </li> */}
 
 
 

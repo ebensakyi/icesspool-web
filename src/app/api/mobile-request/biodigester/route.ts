@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
+import { authOptions } from "../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -10,23 +10,18 @@ import {
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import {
-  convertDateToISO8601,
-  convertTimeToISO8601,
-  getCurrentDate,
-  getCurrentTime,
-} from "@/libs/date";
-import { sendSMS } from "@/libs/send-hubtel-sms";
-import { sendFCM } from "@/libs/send-fcm";
+import {  convertDateToISO8601, convertTimeToISO8601, getCurrentDate, getCurrentTime } from "@/libs/date";
 
 export async function POST(request: Request) {
-  try {
+ // try {
+    // const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     const res = await request.json();
 
-    console.log(res);
+    
 
+    
     const session: any = await getServerSession(authOptions);
 
     const requestDetails = res.requestDetails.map(
@@ -38,7 +33,9 @@ export async function POST(request: Request) {
       })
     );
 
+
     let biodigesterServices = await prisma.biodigesterService.findMany({});
+
 
     const requestDetails1 = res.requestDetails.map(
       (item: { id: any; unitCost: any; name: any }) => ({
@@ -48,6 +45,9 @@ export async function POST(request: Request) {
       // item.name + " : " + item.unitCost
     );
 
+
+
+
     // const userId = session?.user?.id;
 
     // await logActivity(`Assigned data from ${res[0]?.assignedFromUser} to ${res[0]?.assignedToUser}`, userId);
@@ -55,18 +55,16 @@ export async function POST(request: Request) {
     const data = {
       id: res.transactionId,
       customerId: Number(res?.userId),
-      lat: Number(res?.customerLat),
-      lng: Number(res?.customerLng),
+      lat: Number(res?.lat),
+      lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
+
       discountedCost: Number(res?.totalCost),
-      totalCost: Number(res?.totalCost),
-      community:res?.community,
-      address:res?.address,
+      cost: Number(res?.totalCost),
 
       // trips: Number(res[0]?.trips),
       serviceId: 3,
-      serviceAreaId: 1, //Number(res?.serviceAreaId),
-      currentStatus: 1,
+      serviceAreaId: Number(res?.serviceAreaId),
 
       // unitCost: Number(res[0]?.unitCost),
     };
@@ -74,13 +72,6 @@ export async function POST(request: Request) {
     const response = await prisma.transaction.create({ data });
 
     await prisma.biodigesterTransaction.createMany({ data: requestDetails });
-    await prisma.transactionSchedule.create({
-      data: {
-        transactionId: res.transactionId,
-        scheduledDate: new Date(res.scheduledDate),
-        timeFrameId: Number(res.timeFrame),
-      },
-    });
 
     let user = await prisma.user.findFirst({
       where: { id: Number(res?.userId) },
@@ -92,24 +83,18 @@ export async function POST(request: Request) {
 
     let transactionId = res.transactionId;
 
-    let timeFrame = await prisma.timeFrame.findFirst({
-      where: { id: Number(res.timeFrame) },
-    });
-
-    let firestoreData = {
+    await setDoc(doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId), {
       transactionId: res.transactionId,
       customerId: Number(res?.userId),
-      customerLat: Number(res?.customerLat),
-      customerLng: Number(res?.customerLng),
+      lat: Number(res?.lat),
+      lng: Number(res?.lng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
-      community:res?.community,
-      address:res?.address,
+
       // trips: Number(res[0]?.trips),
       service: "Biodigester",
-      serviceId: 3,
+      serviceId:3,
       biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
-      paymentStatus :0,
 
       //clientId: tr,
       txStatusCode: 1,
@@ -124,57 +109,30 @@ export async function POST(request: Request) {
 
       unitCost: Number(res?.totalCost),
       discountedTotalCost: Number(res?.totalCost),
-      scheduledTime: timeFrame?.time_schedule,
-      scheduledDate: res.scheduledDate,
-
       createdDate: getCurrentDate() + " at " + getCurrentTime(),
       deleted: false,
-    };
+    });
 
-    console.log("firestoreData==> ", firestoreData);
-
-    await setDoc(
-      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-      firestoreData
-    );
 
     await prisma.transactionStatus.create({
       data: {
         transactionId: transactionId,
         txStatusId: 1,
-        date: convertDateToISO8601(getCurrentDate()),
-        time: convertTimeToISO8601(getCurrentTime()),
+        date: convertDateToISO8601(getCurrentDate()) ,
+        time: convertTimeToISO8601(getCurrentTime()) ,
       },
     });
-
-    let serviceProviders = await prisma.user.findMany({
-      where: { deleted: 0, userTypeId: 3, serviceAreaId: 1 },
-    });
-
-    for (let i = 0; i < serviceProviders.length; i++) {
-      // await sendSMS(
-      //   serviceProviders[i].phoneNumber,
-      //   `Hello ${serviceProviders[i].firstName} biodigester request is available`
-      // );
-
-      await sendFCM(
-        "New Request",
-        `Hello ${serviceProviders[i].firstName} biodigester request is available`,
-        serviceProviders[i].fcmId
-      );
-    }
-
     // await db
     // .collection(process.env.TRANSACTION_STORE)
     // .doc(res.transactionId)
     // .set(data);
 
-    return NextResponse.json(response);
-  } catch (error: any) {
-    console.log("Make request error=>",error);
+    return NextResponse.json({});
+  // } catch (error: any) {
+  //   console.log(error);
 
-    return NextResponse.json(error, { status: 500 });
-  }
+  //   return NextResponse.json(error, { status: 500 });
+  // }
 }
 
 function getNameById(arr: any[], id: any) {

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
     let txStatusCode = Number(res.txStatusCode);
-    console.log("txStatusCode ",txStatusCode);
+    console.log(">>>>>>>>transactionId>>>>>>> ",transactionId);
     
     let currentStatus;
 

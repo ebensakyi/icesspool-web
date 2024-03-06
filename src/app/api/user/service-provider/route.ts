@@ -124,6 +124,11 @@ export async function POST(request: Request) {
     await prisma.serviceProviderBalance.create({
       data: { balance: 0, serviceProviderId: serviceProvider.id },
     });
+
+
+    await prisma.serviceProviderRating.create({
+      data: { rating:0.0, serviceProviderId: serviceProvider.id },
+    });
     ////////////////////////////////////////////////////////////////
     await upload.single("passportPicture");
 

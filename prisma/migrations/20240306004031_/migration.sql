@@ -487,7 +487,7 @@ CREATE TABLE `ServiceProviderRating` (
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `serviceProviderId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -589,13 +589,13 @@ CREATE TABLE `Transaction` (
     `discountedCost` DECIMAL(10, 2) NULL,
     `totalCost` DECIMAL(10, 2) NOT NULL,
     `community` VARCHAR(255) NULL,
-    `address` VARCHAR(255) NULL,
     `gpsAccuracy` DECIMAL(10, 2) NULL,
     `lat` DECIMAL(65, 30) NOT NULL,
     `lng` DECIMAL(65, 30) NOT NULL,
-    `placeLat` DECIMAL(65, 30) NOT NULL,
-    `placeLng` DECIMAL(65, 30) NOT NULL,
+    `placeLat` DECIMAL(65, 30) NULL,
+    `placeLng` DECIMAL(65, 30) NULL,
     `placeId` VARCHAR(255) NULL,
+    `address` VARCHAR(255) NULL,
     `trips` INTEGER NOT NULL DEFAULT 1,
     `paymentStatus` INTEGER NULL DEFAULT 0,
     `requestTypeId` INTEGER NULL DEFAULT 1,
@@ -854,7 +854,7 @@ ALTER TABLE `IcesspoolEarning` ADD CONSTRAINT `IcesspoolEarning_transactionId_fk
 ALTER TABLE `PlatformEarning` ADD CONSTRAINT `PlatformEarning_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ServiceProviderRating` ADD CONSTRAINT `ServiceProviderRating_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceProviderRating` ADD CONSTRAINT `ServiceProviderRating_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `TransactionRating` ADD CONSTRAINT `TransactionRating_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

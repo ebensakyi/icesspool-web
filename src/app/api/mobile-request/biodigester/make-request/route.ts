@@ -105,7 +105,6 @@ export async function POST(request: Request) {
       customerLat: Number(res?.customerLat),
       customerLng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
-      community:res?.community,
 
       address:res?.address,
       placeLat:res?.placeLat,

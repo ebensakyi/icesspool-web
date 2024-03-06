@@ -541,6 +541,7 @@ model ServiceProvider {
   ServiceProviderEarning    ServiceProviderEarning[]
   ServiceProviderBalance    ServiceProviderBalance[]
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
+  ServiceProviderRating     ServiceProviderRating[]
 }
 
 model ServiceProviderEarning {
@@ -579,13 +580,14 @@ model PlatformEarning {
 }
 
 model ServiceProviderRating {
-  id        Int      @id @default(autoincrement())
-  rating    Decimal? @default(0.0) @db.Decimal(2, 1)
-  deleted   Int?     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  id                Int             @id @default(autoincrement())
+  rating            Decimal?        @default(0.0) @db.Decimal(2, 1)
+  deleted           Int?            @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String          @db.VarChar(255)
+ 
 }
 
 model TransactionRating {
@@ -715,8 +717,8 @@ model Transaction {
 
   placeLat Decimal?
   placeLng Decimal?
-  placeId  String? @db.VarChar(255)
-  address        String?  @db.VarChar(255)
+  placeId  String?  @db.VarChar(255)
+  address  String?  @db.VarChar(255)
 
   trips                  Int                      @default(1)
   paymentStatus          Int?                     @default(0)
@@ -845,7 +847,6 @@ model User {
   Otp                   Otp[]
   Penalty               Penalty[]
   RatingBreakdown       RatingBreakdown[]
-  ServiceProviderRating ServiceProviderRating[]
 }
 
 // model UserType {

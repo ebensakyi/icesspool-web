@@ -8,6 +8,8 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
+    const transactionId = res?.transactionId
+    const serviceProviderId = Number(res?.spId)
 
     console.log(res);
 
@@ -15,12 +17,24 @@ export async function POST(request: Request) {
 
     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
+    // let transaction: any =
+    //   await prisma.transaction.findFirst({
+    //     where: { id: transactionId },
+    //   })
+
+      let serviceProvider: any =
+      await prisma.serviceProvider.findFirst({
+        where: { userId: serviceProviderId },
+      })
+      
+
+
     let serviceProviderRating: any =
       await prisma.serviceProviderRating.findFirst({
-        where: { serviceProviderId: res?.spId },
+        where: { serviceProviderId:serviceProvider?.id },
       });
 
-      
+
 
     let currentRating: any = serviceProviderRating?.rating ?? 0.0;
 
@@ -32,7 +46,7 @@ export async function POST(request: Request) {
     });
 
     const data = {
-      transactionId: res?.transactionId,
+      transactionId: transactionId,
       comment: res?.comment,
       rating: Number(res?.rating),
     };

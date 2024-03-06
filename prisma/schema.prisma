@@ -586,7 +586,7 @@ model ServiceProviderRating {
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
-  serviceProviderId String          @db.VarChar(255)
+  serviceProviderId String          @db.VarChar(255)   @unique(map: "serviceProviderId")
  
 }
 

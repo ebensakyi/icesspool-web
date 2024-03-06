@@ -20,6 +20,8 @@ export async function POST(request: Request) {
         where: { serviceProviderId: res?.spId },
       });
 
+      
+
     let currentRating: any = serviceProviderRating?.rating ?? 0.0;
 
     let newRating = (currentRating + Number(res?.rating)) / 2;

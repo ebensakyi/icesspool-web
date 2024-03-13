@@ -3,15 +3,20 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
 import { Decimal } from "@prisma/client/runtime/library";
+import { setDoc, doc, getFirestore } from "firebase/firestore/lite";
+import { app } from "@/libs/firebase-config";
 
 export async function POST(request: Request) {
   try {
     const res = await request.json();
+    const db = getFirestore(app);
+
     const session: any = await getServerSession(authOptions);
     const transactionId = res?.transactionId
     const serviceProviderId = Number(res?.spId)
 
-    console.log(res);
+
+ console.log(" contextcontextcontext ");
 
     // const userId = session?.user?.id;
 
@@ -21,6 +26,15 @@ export async function POST(request: Request) {
     //   await prisma.transaction.findFirst({
     //     where: { id: transactionId },
     //   })
+
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        transactionId: transactionId,
+      deleted: true,
+      },
+      { merge: true }
+    );
 
       let serviceProvider: any =
       await prisma.serviceProvider.findFirst({

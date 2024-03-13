@@ -32,6 +32,18 @@ export const users = [
     serviceAreaId:1
 
   },
+
+  {
+    lastName: "Play",
+    firstName: "Store",
+    email: "",
+    phoneNumber: "0501111111",
+    userTypeId: 4,
+    password: "$2a$12$81TbSB3HBu/NP/cRG6kDlu2sBcRz.4dq..3lpkcjklc.C/mCDxHaO",
+    passwordChanged: 1,
+    serviceAreaId:1
+
+  },
 ];
 
 // userId                Int      @unique

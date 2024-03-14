@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../auth/[...nextauth]/options";
+import { authOptions } from "../../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -29,16 +29,52 @@ export async function POST(request: Request) {
   let status = Number(res.status);
 
   const session: any = await getServerSession(authOptions);
-  if (status == 10) {
-    const response = await prisma.transaction.update({
-      where: { id: transactionId },
-      data: {
-        currentStatus: status,
-        deleted: 1,
-      },
-    });
-  }
+  // //cancel unpaid request
+  // if (status == 11) {
+  //   const response = await prisma.transaction.update({
+  //     where: { id: transactionId },
+  //     data: {
+  //       currentStatus: status,
+  //       deleted: 1,
+  //     },
+  //   });
 
+  //   await setDoc(
+  //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+  //     {
+  //       transactionId: transactionId,
+  //       txStatusCode: Number(status),
+  //     },
+  //     { merge: true }
+  //   );
+  // }
+  // //cancel paid request
+
+  // if (status == 12) {
+  //   const response = await prisma.transaction.update({
+  //     where: { id: transactionId },
+  //     data: {
+  //       currentStatus: status,
+  //       deleted: 1,
+  //     },
+  //   });
+  //}
+
+
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        transactionId: transactionId,
+        txStatusCode: Number(status),
+        spId:"",
+        spCompany:"",
+        spImageUrl:"",
+        spName:"",
+        spPhoneNumber:""
+      },
+      { merge: true }
+    );
+  
   const response = await prisma.transaction.update({
     where: { id: transactionId },
     data: {
@@ -57,15 +93,7 @@ export async function POST(request: Request) {
     },
   });
 
-  await setDoc(
-    doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-    {
-      deleted: true,
-      transactionId: transactionId,
-      txStatusCode: Number(status),
-    },
-    { merge: true }
-  );
+ 
 
   // await db
   // .collection(process.env.TRANSACTION_STORE)

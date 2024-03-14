@@ -11,3 +11,8 @@
 
 curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
 sudo apt-get install -y nodejs
+
+
+change mobile-request to request in mobile
+change config to configure
+change charges to service-charges

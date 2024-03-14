@@ -193,7 +193,7 @@ export default function Header() {
 
 
 
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
 
                             <Link
                                 className={
@@ -237,7 +237,7 @@ export default function Header() {
 
 
                             </ul>
-                        </li>
+                        </li> */}
                         {/* <li className="nav-item">
 
                             <Link
@@ -308,7 +308,7 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#offers-nav"
                             > <li>
-                                    <Link href="/services/biodigester/offers">
+                                    <Link href="/request/biodigester/offers">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digester</span>
                                     </Link>
@@ -337,7 +337,7 @@ export default function Header() {
                         <li className="nav-heading">SETTINGS</li>
 
                         <li className="nav-item">
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
 
                                 <Link className={
                                     pathname == "/config/penalty"
@@ -366,11 +366,11 @@ export default function Header() {
                                     pathname == "/truck-classification"
                                         ? "nav-link"
                                         : "nav-link collapsed"
-                                } href="/truck-classification">
+                                } href="/configure/truck-classification">
                                     <i className="bi bi-truck" />
                                     <span>Truck Classes</span>
                                 </Link>
-                            </li>
+                            </li> */}
                             <Link
                                 className={
                                     pathname == "/esicapps1/general"
@@ -383,7 +383,7 @@ export default function Header() {
                             >
                                 <i className="bi bi-recycle
 " />
-                                <span>Services</span>
+                                <span>Configure</span>
                                 <i className="bi bi-chevron-down ms-auto" />
                             </Link>
                             <ul
@@ -393,8 +393,8 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/services" className={
-                                        pathname == "/services"
+                                    <Link href="/configure/services" className={
+                                        pathname == "/configure/services"
                                             ? "nav-link"
                                             : "nav-link collapsed"
                                     }>
@@ -403,8 +403,8 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/biodigester/biodigester-services" className={
-                                        pathname == "/services/biodigester-services"
+                                    <Link href="/configure/services/biodigester/biodigester-services" className={
+                                        pathname == "/configure/services/biodigester-services"
                                             ? "nav-link"
                                             : "nav-link collapsed"
                                     }>
@@ -413,21 +413,35 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/service-area">
+                                    <Link href="/configure/service-area">
                                         <i className="bi bi-circle" />
-                                        <span>Areas</span>
+                                        <span>Service Areas</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services-in-area">
+                                    <Link href="/configure/services-in-area">
                                         <i className="bi bi-circle" />
-                                        <span>Services In Areas</span>
+                                        <span>Set services In Areas</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/service-points">
+                                    <Link href="/configure/service-points">
                                         <i className="bi bi-circle" />
                                         <span>Service Points</span>
+                                    </Link>
+                                </li>
+<hr/>
+                                <li>
+                                    <Link href="/configure/charges">
+                                        <i className="bi bi-circle" />
+                                        <span>Service charges</span>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link href="/configure/penalty">
+                                        <i className="bi bi-circle" />
+                                        <span>Cancellation Penalty</span>
                                     </Link>
                                 </li>
 

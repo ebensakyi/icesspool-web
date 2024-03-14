@@ -403,7 +403,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/configure/services/biodigester/biodigester-services" className={
+                                    <Link href="/configure/services/biodigester-services" className={
                                         pathname == "/configure/services/biodigester-services"
                                             ? "nav-link"
                                             : "nav-link collapsed"
@@ -469,20 +469,20 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#pricing-nav"
                             > <li>
-                                    <Link href="/services/biodigester/pricing">
+                                    <Link href="/pricing/biodigester">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link href="/services/septic-tank/pricing">
+                                    <Link href="/pricing/septic-tank">
                                         <i className="bi bi-circle" />
                                         <span>Septic Tank </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/water/pricing">
+                                    <Link href="/pricing/water">
                                         <i className="bi bi-circle" />
                                         <span>Water </span>
                                     </Link>

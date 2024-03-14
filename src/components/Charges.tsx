@@ -8,8 +8,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { services } from '../../prisma/seeds/services';
-export const Charges = ({ data }: any) => {
+export const ServiceCharges = ({ data }: any) => {
     const [id, setId] = useState(null);
     const [icesspoolCommission, setIcesspoolCommission] = useState("");
     const [platformCharges, setPlatformCharges] = useState("");
@@ -42,7 +41,7 @@ export const Charges = ({ data }: any) => {
             let data = {
                 icesspoolCommission, platformCharges, paymentCharges,serviceArea,service
             };
-            const response = await axios.post("/api/config/charges", data);
+            const response = await axios.post("/api/configure/service-charges", data);
             toast.success("Commission and charges added");
 
             router.refresh()

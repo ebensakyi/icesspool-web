@@ -10,7 +10,7 @@ async function getServicePoints(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/service-points?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/configure/service-points?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -28,7 +28,7 @@ async function getServicePoints(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/services?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/configure/services?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   

@@ -43,7 +43,7 @@ export const Penalty = ({ data }: any) => {
             let data = {
                 fine,
             };
-            const response = await axios.post("/api/penalty", data);
+            const response = await axios.post("/api/configure/penalty", data);
             toast.success("Fine added");
 
             router.refresh()

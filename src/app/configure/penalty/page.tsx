@@ -10,7 +10,7 @@ async function getPenalty(searchParams: any) {
   
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/config/penalty`,
+      `${SERVER_BASE_URL}/api/configure/penalty`,
       { cache: "no-store", headers: headers() }
     );
   

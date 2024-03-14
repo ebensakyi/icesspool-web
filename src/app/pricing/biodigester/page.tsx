@@ -11,7 +11,7 @@ async function getBiodigesterServices(searchParams: any) {
     let { page } = searchParams;
 
     const res = await fetch(
-        `${SERVER_BASE_URL}/api/services/biodigester?page=${page}&searchText=${searchText}`,
+        `${SERVER_BASE_URL}/api/configure/biodigester-sub-services?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
 
@@ -24,7 +24,7 @@ async function getBiodigesterServices(searchParams: any) {
 
 async function getServiceAreas(searchParams: any) {
     try {
-        let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
+        let response = await fetch(`${SERVER_BASE_URL}/api/configure/service-area`, {
             cache: "no-store",
         });
 
@@ -42,7 +42,7 @@ async function getServiceAreas(searchParams: any) {
 
 async function getBiodigesterPricing(searchParams: any, service?: number) {
     let response = await fetch(
-        `${SERVER_BASE_URL}/api/services/biodigester/pricing`,
+        `${SERVER_BASE_URL}/api/pricing/biodigester-service`,
         { cache: "no-store" }
     );
 

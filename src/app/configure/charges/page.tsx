@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { SERVER_BASE_URL } from '@/config';
-import { Charges } from '@/src/components/Charges';
+import {  ServiceCharges } from '@/src/components/Charges';
 
 import { headers } from 'next/headers';
 
@@ -10,7 +10,7 @@ async function getCharges(searchParams: any) {
   
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/config/charges`,
+      `${SERVER_BASE_URL}/api/configure/service-charges`,
       { cache: "no-store", headers: headers() }
     );
 
@@ -30,7 +30,7 @@ async function getCharges(searchParams: any) {
   
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/service-area`,
+      `${SERVER_BASE_URL}/api/configure/service-area`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -46,7 +46,7 @@ async function getCharges(searchParams: any) {
   
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/services`,
+      `${SERVER_BASE_URL}/api/configure/services`,
       { cache: "no-store", headers: headers() }
     );
 
@@ -72,7 +72,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <Charges data={data} />
+    return <ServiceCharges data={data} />
 
 
 }

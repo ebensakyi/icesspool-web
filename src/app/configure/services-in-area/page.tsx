@@ -13,7 +13,7 @@ async function getServices(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/services?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/configure/services?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -26,7 +26,7 @@ async function getServices(searchParams: any) {
 
   async function getServicesInAreas(searchParams: any) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/services-in-area`,
+      `${SERVER_BASE_URL}/api/configure/services-in-area`,
       { cache: "no-store" }
     );
   
@@ -39,7 +39,7 @@ async function getServices(searchParams: any) {
 
  async function getServiceAreas(searchParams: any) {
     try {
-       let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
+       let response = await fetch(`${SERVER_BASE_URL}/api/configure/service-area`, {
         cache: "no-store",
       });
     

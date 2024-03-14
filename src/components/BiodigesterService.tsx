@@ -73,11 +73,10 @@ export const BiodigesterService = ({ data }: any) => {
                 status,
             };
 
-            console.log(data);
             
 
             
-            const response = await axios.put("/api/services/biodigester", data);
+            const response = await axios.put("/api/configure/biodigester-services", data);
             toast.success(response.data.message);
             setId(null)
             setName("")

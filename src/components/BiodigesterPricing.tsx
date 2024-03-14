@@ -49,7 +49,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                 serviceArea: Number(serviceArea),
                 status: Number(status),
             };
-            const response = await axios.post("/api/services/biodigester/pricing", data);
+            const response = await axios.post("/api/pricing/biodigester-service", data);
             toast.success(response.data.message);
             setId("")
             setBiodigesterService("")
@@ -89,7 +89,7 @@ export const BiodigesterPricing = ({ data }: any) => {
             };
 
 
-            response = await axios.put("/api/services/biodigester/pricing", data);
+            response = await axios.put("/api/pricing/biodigester-service", data);
             toast.success(response.data.message);
             setId("")
             setBiodigesterService("")

@@ -1,6 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
-import { MmdaWithdrawals } from '@/src/components/finance/MmdaWithdrawals';
+import { MmdaBalance } from '@/src/components/finance/MmdaBalance';
 import { headers } from 'next/headers';
 
 async function getRequests(searchParams: any) {
@@ -9,7 +9,7 @@ async function getRequests(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/finance/withdrawals/mmda?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/finance/balances/mmda?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <MmdaWithdrawals data={data} />
+    return <MmdaBalance data={data} />
 
 
 }

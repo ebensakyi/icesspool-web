@@ -1,5 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
+import { ServiceProviderWithdrawals } from '@/src/components/finance/ServiceProviderWithdrawals';
 import { headers } from 'next/headers';
 
 async function getRequests(searchParams: any) {
@@ -31,7 +32,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <ServiceProviderRequest data={data} />
+    return <ServiceProviderWithdrawals data={data} />
 
 
 }

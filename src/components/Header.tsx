@@ -619,13 +619,13 @@ export default function Header() {
 
 
                                 <li>
-                                    <Link href="/finance/withdrawal/service-provider">
+                                    <Link href="/finance/withdrawals/service-provider">
                                         <i className="bi bi-circle" />
                                         <span>Service provider</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/withdrawal/mmda">
+                                    <Link href="/finance/withdrawals/mmda">
                                         <i className="bi bi-circle" />
                                         <span>MMDA</span>
                                     </Link>
@@ -633,6 +633,48 @@ export default function Header() {
 
                             </ul>
                         </li>
+
+
+                        <li className="nav-item">
+
+<Link
+    className={
+        pathname == "/esicapps1/general"
+            ? "nav-link"
+            : "nav-link collapsed"
+    }
+    data-bs-target="#balances-nav"
+    data-bs-toggle="collapse"
+    href="#"
+>
+    <i className="bi bi-currency-dollar
+
+" />
+    <span>Balances</span>
+    <i className="bi bi-chevron-down ms-auto" />
+</Link>
+<ul
+    id="balances-nav"
+    className="nav-content collapse "
+    data-bs-parent="#balances-nav"
+>
+
+
+    <li>
+        <Link href="/finance/balances/service-provider">
+            <i className="bi bi-circle" />
+            <span>Service provider</span>
+        </Link>
+    </li>
+    <li>
+        <Link href="/finance/balances/mmda">
+            <i className="bi bi-circle" />
+            <span>MMDA</span>
+        </Link>
+    </li>
+
+</ul>
+</li>
                     </ul>
                 </aside> : <></>}
         </>

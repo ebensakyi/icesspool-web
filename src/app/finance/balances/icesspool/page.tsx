@@ -9,7 +9,7 @@ async function getRequests(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/finance/earnings/icesspool?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/finance/balances/icesspool?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   

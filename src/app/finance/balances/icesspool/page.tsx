@@ -1,6 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
-import { IcesspoolEarnings } from '@/src/components/finance/IcesspoolEarnings';
+import { IcesspoolBalance } from '@/src/components/finance/IcesspoolBalance';
 import { headers } from 'next/headers';
 
 async function getRequests(searchParams: any) {
@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <IcesspoolEarnings data={data} />
+    return <IcesspoolBalance data={data} />
 
 
 }

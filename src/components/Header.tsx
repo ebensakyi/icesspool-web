@@ -149,7 +149,7 @@ export default function Header() {
 
                             <Link
                                 className={
-                                    pathname == "/make-request/emptying"
+                                    pathname == "/make-request"
                                         ? "nav-link"
                                         : "nav-link collapsed"
                                 }
@@ -168,20 +168,20 @@ export default function Header() {
                                 data-bs-parent="#mq-nav"
                             >
                                 <li>
-                                    <Link href="/make-request/emptying">
+                                    <Link href="/make-request/toilet-truck">
                                         <i className="bi bi-circle" />
-                                        <span>Emptying toilet </span>
+                                        <span>Toilet Truck </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/make-request/water">
+                                    <Link href="/make-request/wate-tanker">
                                         <i className="bi bi-circle" />
                                         <span>Water </span>
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link href="/make-request/bio-digester">
+                                    <Link href="/make-request/biodigester">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>
@@ -403,8 +403,8 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/configure/services/biodigester-services" className={
-                                        pathname == "/configure/services/biodigester-services"
+                                    <Link href="/configure/biodigester-services" className={
+                                        pathname == "/configure/biodigester-services"
                                             ? "nav-link"
                                             : "nav-link collapsed"
                                     }>
@@ -476,15 +476,15 @@ export default function Header() {
                                 </li>
 
                                 <li>
-                                    <Link href="/pricing/septic-tank">
+                                    <Link href="/pricing/toilet-truck">
                                         <i className="bi bi-circle" />
-                                        <span>Septic Tank </span>
+                                        <span>Toilet Truck </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/pricing/water">
+                                    <Link href="/pricing/water-tanker">
                                         <i className="bi bi-circle" />
-                                        <span>Water </span>
+                                        <span>Water Tanker</span>
                                     </Link>
                                 </li>
 
@@ -571,29 +571,24 @@ export default function Header() {
                             >
 
                                 <li>
-                                    <Link href="/finance/icesspool">
+                                    <Link href="/finance/earnings/icesspool">
                                         <i className="bi bi-circle" />
                                         <span>iCesspool</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/system-charges">
+                                    <Link href="/finance/earnings/system-charges">
                                         <i className="bi bi-circle" />
                                         <span>System Charges</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/operate">
+                                    <Link href="/finance/earnings/operate">
                                         <i className="bi bi-circle" />
                                         <span>Service Provider</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/esicapps1/table">
-                                        <i className="bi bi-circle" />
-                                        <span>MMDA</span>
-                                    </Link>
-                                </li>
+                               
 
                             </ul>
                         </li>

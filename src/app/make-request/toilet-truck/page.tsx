@@ -1,6 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
-import { MakeEmptyingRequest } from '@/src/components/MakeDesludgingRequest';
+import { ToiletTruckRequest } from '@/src/components/MakeDesludgingRequest';
 import { headers } from 'next/headers';
 
 async function getServices(searchParams: any) {
@@ -9,7 +9,7 @@ async function getServices(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/services?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/configure/services?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -27,7 +27,7 @@ async function getServices(searchParams: any) {
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/service-points?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/configure/service-points?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -49,7 +49,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <MakeEmptyingRequest data={data} />
+    return <ToiletTruckRequest data={data} />
 
 
 }

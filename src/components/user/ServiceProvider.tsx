@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import { AWS_S3_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
-    
+
 
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -33,6 +33,7 @@ export default function ServiceProvider({ data }: any) {
     const [userType, setUserType] = useState("");
     const [userId, setUserId] = useState();
     const [serviceArea, setServiceArea] = useState("");
+    const [service, setService] = useState();
 
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -122,28 +123,28 @@ export default function ServiceProvider({ data }: any) {
             console.error('Please select an image file');
             return toast.error("Please select an image file");
         }
-        if (firstName=="") {
+        if (firstName == "") {
             return toast.error("Please enter first name");
         }
-        if (lastName=="") {
+        if (lastName == "") {
             return toast.error("Please enter last name");
         }
-        if (phoneNumber=="") {
+        if (phoneNumber == "") {
             return toast.error("Please enter phone number");
         }
-        if (serviceArea=="") {
+        if (serviceArea == "") {
             return toast.error("Please select service area");
         }
-        if (officeLocation=="") {
+        if (officeLocation == "") {
             return toast.error("Please enter office location");
         }
-        if (company=="") {
+        if (company == "") {
             return toast.error("Please enter company name");
         }
-        if (momoNumber=="") {
+        if (momoNumber == "") {
             return toast.error("Please enter momo number");
         }
-        if (momoNetwork=="") {
+        if (momoNetwork == "") {
             return toast.error("Please select momo network");
         }
 
@@ -154,6 +155,7 @@ export default function ServiceProvider({ data }: any) {
         formData.append('email', email);
         formData.append('phoneNumber', phoneNumber);
         formData.append('serviceArea', serviceArea);
+        formData.append('service', service+"");
         formData.append('ghanaPostGPS', ghanaPostGPS);
         formData.append('officeLocation', officeLocation);
         formData.append('company', company);
@@ -184,7 +186,7 @@ export default function ServiceProvider({ data }: any) {
         }
     };
 
-   
+
 
     const updateUser = async (e: any) => {
         try {
@@ -308,7 +310,7 @@ export default function ServiceProvider({ data }: any) {
                                 {/* General Form Elements */}
                                 {/* <form> */}
                                 <div className="row">
-
+                                    
                                     <div className="col-sm-3 mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                             First name *
@@ -368,14 +370,30 @@ export default function ServiceProvider({ data }: any) {
                                             <input type="text" className="form-control" placeholder='Ghana Post GPS' onChange={(e) => setGhanaPostGPS(e.target.value)} value={ghanaPostGPS} />
                                         </div>
                                     </div>
-                                    <div className="col-sm-3  mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            License Number                                            </label>
+                                    <div className="col-sm-3 mb-3">
+                                        <label className="col-sm-12 col-form-label">Select service **</label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
+                                            <select
+                                                onChange={(e: any) => setService(e.target.value)}
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                value={service}
+                                            >
+
+                                                <option >Select service</option>
+
+
+                                                {data.services.response.map((mn: any) => {
+                                                    return (
+                                                        <option key={mn.id} value={mn.id}>{mn.name}</option>
+                                                    )
+                                                })}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="col-sm-3 mb-3">
+                                  
+                                    {service==1||service==2?
+                                    <><div className="col-sm-3 mb-3">
                                         <label className="col-sm-12 col-form-label">Select licence classification</label>
                                         <div className="col-sm-12">
                                             <select
@@ -399,11 +417,17 @@ export default function ServiceProvider({ data }: any) {
                                                     })} */}
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  <div className="col-sm-3  mb-3">
+                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                            License Number                                            </label>
+                                        <div className="col-sm-12">
+                                            <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
+                                        </div>
+                                    </div></>:<></>}
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                           Momo Number **                                         </label>
+                                            Momo Number **                                         </label>
                                         <div className="col-sm-12">
                                             <input type="text" className="form-control" placeholder='Momo number' onChange={(e) => setMomoNumber(e.target.value)} value={momoNumber} />
                                         </div>
@@ -419,13 +443,13 @@ export default function ServiceProvider({ data }: any) {
                                             >
 
                                                 <option >Select network</option>
-                                             
+
 
                                                 {data.momoNetworks.response.map((mn: any) => {
-                                                        return (
-                                                            <option key={mn.id} value={mn.id}>{mn.name}</option>
-                                                        )
-                                                    })}
+                                                    return (
+                                                        <option key={mn.id} value={mn.id}>{mn.name}</option>
+                                                    )
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -433,7 +457,7 @@ export default function ServiceProvider({ data }: any) {
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                             Passport picture (600 x 600 pixels) * </label>
+                                            Passport picture (600 x 600 pixels) * </label>
                                         <div className="col-sm-12">
                                             <input className="form-control" type="file" accept="image/*" id="formFile" onChange={(e) => handleFileChange(e)} />
                                             {passportPicture && <Image src={URL.createObjectURL(passportPicture)} alt="Passport Image" width={200} height={200} />}
@@ -549,7 +573,7 @@ export default function ServiceProvider({ data }: any) {
                                                 </button>
                                             </>
                                         ) : (
-                                            <button type="submit" className="btn btn-primary" onClick={(e:any) => addUser(e)}>
+                                            <button type="submit" className="btn btn-primary" onClick={(e: any) => addUser(e)}>
                                                 Add
                                             </button>
                                         )}
@@ -614,7 +638,7 @@ export default function ServiceProvider({ data }: any) {
                                     <tbody>
                                         {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
-                                                <td> <Image src={AWS_S3_URL+ user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
+                                                <td> <Image src={AWS_S3_URL + user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
                                                 <td>{user?.ServiceProvider?.id}</td>
 
                                                 <td>{user?.firstName} {user?.lastName}</td>

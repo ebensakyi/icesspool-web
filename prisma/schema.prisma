@@ -53,16 +53,17 @@ model Service {
   Transaction            Transaction[]
   BiodigesterService     BiodigesterService[]
   ServiceCharges         ServiceCharges[]
+  ServiceProvider        ServiceProvider[]
 }
 
 model ServiceProviderBalance {
-  id                Int             @id @default(autoincrement())
-  balance           Decimal?        @default(0.00) @db.Decimal(10, 2)
-  deleted           Int?            @default(0)
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  id                Int              @id @default(autoincrement())
+  balance           Decimal?         @default(0.00) @db.Decimal(10, 2)
+  deleted           Int?             @default(0)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
   ServiceProvider   ServiceProvider? @relation(fields: [serviceProviderId], references: [id])
-  serviceProviderId String          @db.VarChar(255)  @unique(map: "serviceProviderId") 
+  serviceProviderId String           @unique(map: "serviceProviderId") @db.VarChar(255)
 }
 
 model PlatformBalance {
@@ -531,6 +532,7 @@ model ServiceProvider {
   officeLocation            String?                     @db.VarChar(255)
   ghanaPostGPS              String?                     @db.VarChar(255)
   licenseNumber             String?                     @db.VarChar(255)
+  Service                   Service                     @relation(fields: [serviceId], references: [id])
   licenseClassification     Int?
   driversLicenseImg         String?                     @db.VarChar(255)
   deleted                   Int?                        @default(0)
@@ -542,6 +544,7 @@ model ServiceProvider {
   ServiceProviderBalance    ServiceProviderBalance?
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
   ServiceProviderRating     ServiceProviderRating?
+  serviceId                 Int
 }
 
 model ServiceProviderEarning {
@@ -755,7 +758,7 @@ model Transaction {
 }
 
 model ToiletTankerTransaction {
-    id            Int          @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   deleted       Int?        @default(0)
   createdAt     DateTime    @default(now())

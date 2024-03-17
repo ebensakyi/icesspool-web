@@ -49,6 +49,7 @@ export async function POST(request: Request) {
     const licenseNumber = _data?.get("licenseNumber");
     const momoNetwork = _data?.get("momoNetwork");
     const momoNumber = _data?.get("momoNumber");
+    const service = _data?.get("service")
 
     // const res = await request.json();
     // const session: any = await getServerSession(authOptions);
@@ -105,6 +106,8 @@ export async function POST(request: Request) {
       ghanaPostGPS: ghanaPostGPS,
       licenseClassification: Number(licenseClassification),
       licenseNumber: licenseNumber,
+      serviceId: Number(service),
+
     };
 
     let momoData: any = {

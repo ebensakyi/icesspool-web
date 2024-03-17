@@ -9,20 +9,51 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    let userId = Number(searchParams.get("userId"));
+    let userId = 3; //Number(searchParams.get("userId"));
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.transaction.findMany({
+    const transaction = await prisma.transaction.findMany({
       where: { deleted: 0, customerId: userId },
       include: {
-        BiodigesterTransaction: true,
+        Service:true,
         WaterTankerTransaction: true,
         ToiletTankerTransaction: true,
+        BiodigesterTransaction: {
+          include: {
+            BiodigesterService: {
+              include: {
+                BiodigesterType: true,
+              },
+            },
+          },
+        },
       },
     });
 
-    return NextResponse.json({ response });
+    
+    const response = transaction.map(item => {
+      return {
+          id: item.id,
+          discountedCost: item.discountedCost,
+          totalCost: item.totalCost,
+          address: item.address,
+          service: item.Service.name,
+          lat: item.lat,
+          lng: item.lng,
+
+          // service: item.serviceId == 1
+          // ? "Toilet Tanker"
+          // : item.serviceId == 2
+          // ? "Water Tanker"
+          // : "Biodigester",
+          serviceType: item.BiodigesterTransaction[0]?.BiodigesterService?.name || 'Unknown',
+          serviceDescription: item.BiodigesterTransaction[0]?.BiodigesterService?.BiodigesterType?.name || 'Unknown',
+          createdAt: item.createdAt
+      };
+  });
+
+    return NextResponse.json(response);
   } catch (error) {
     console.log(error);
 

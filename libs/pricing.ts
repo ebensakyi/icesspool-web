@@ -55,8 +55,7 @@ export const calculateDeludgingPrice = async (
 
     const totalCost = totalCostService  * profitPercentage;
 
-    console.log("totalcost ",totalCost);
-    console.log("tankVolume ",tankVolume);
+
 
    
 

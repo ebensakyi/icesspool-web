@@ -9,24 +9,23 @@ export async function GET(request: Request) {
 
     let userId = Number(searchParams.get("userId"));
     console.log(userId);
-    
+
     // from mobile
     if (userId) {
       const sp = await prisma.serviceProvider.findFirst({
         where: { deleted: 0, userId: userId },
       });
 
-      
-
-      const serviceProviderBalance =
-        await prisma.serviceProviderBalance.findMany({
+      const serviceProviderBalance: any =
+        await prisma.serviceProviderBalance.findFirst({
           where: { deleted: 0, serviceProviderId: sp?.id },
         });
-      // let balance = serviceProviderBalance.balance;
-      return NextResponse.json(serviceProviderBalance);
+      let balance = serviceProviderBalance.balance;
+      return NextResponse.json(balance);
     }
 
-//from web
+
+    //from web
     const response = await prisma.serviceProviderBalance.findMany({
       where: { deleted: 0 },
     });

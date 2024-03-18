@@ -6,7 +6,7 @@ import { EmptyingPricing } from '@/src/components/DesludgingPricing';
 
 async function getServiceAreas(searchParams: any) {
     try {
-        let response = await fetch(`${SERVER_BASE_URL}/api/service-area`, {
+        let response = await fetch(`${SERVER_BASE_URL}/api/configure/service-area`, {
             cache: "no-store",
         });
 

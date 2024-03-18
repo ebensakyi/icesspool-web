@@ -19,6 +19,7 @@ import { serviceProvider } from './service_provider';
 import { momoNetworks } from './momo_network';
 import {  timeframes } from "./time_frames";
 import { penalty } from './penalty';
+import { serviceProviderBal } from "./service_provider_bal";
 
 async function main() {
 
@@ -89,6 +90,10 @@ async function main() {
     });
     await prisma.platformBalance.createMany({
       data: {balance:0.00},
+    });
+
+    await prisma.serviceProviderBalance.createMany({
+      data: serviceProviderBal,
     });
 }
 

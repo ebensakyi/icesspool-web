@@ -57,7 +57,7 @@ export const ServiceArea = ({ data }: any) => {
                 status
             };
 
-            const response = await axios.post("/api/service-area", data);
+            const response = await axios.post("/api/configure/service-area", data);
             toast.success(response.data.message);
             setId("")
             setRegion("")
@@ -98,7 +98,7 @@ export const ServiceArea = ({ data }: any) => {
                 status
             };
 
-            const response = await axios.put("/api/service-area", data);
+            const response = await axios.put("/api/configure/service-area", data);
             toast.success(response.data.message);
             setId("")
             setRegion("")

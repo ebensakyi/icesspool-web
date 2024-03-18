@@ -5,17 +5,20 @@ import { useRef, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { AWS_S3_URL } from '@/config';
+import { AWS_S3_URL, LOGIN_URL } from '@/config';
 
 export default function ServiceProvider({ data }: any) {
-
-
     const searchParams = useSearchParams();
     const router = useRouter();
-    const { data: session }: any = useSession()
 
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect(LOGIN_URL);
+        }
+    })
 
 
 

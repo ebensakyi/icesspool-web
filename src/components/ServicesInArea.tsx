@@ -40,7 +40,7 @@ export const ServicesInArea = ({ data }: any) => {
                 service,
                 status,
             };
-            const response = await axios.post("/api/services-in-area", data);
+            const response = await axios.post("/api/configure/services-in-area", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
@@ -69,7 +69,7 @@ export const ServicesInArea = ({ data }: any) => {
                 service,
                 status,
             };
-            const response = await axios.put("/api/services-in-area", data);
+            const response = await axios.put("/api/configure/services-in-area", data);
             toast.success(response.data.message);
             setId("")
             setServiceArea("")

@@ -115,6 +115,9 @@ export async function GET(request: Request) {
         doubleLargeCost: data.doubleLargeCost,
         type: data.BiodigesterService.BiodigesterType.name,
       }));
+
+      console.log(res);
+      
       return NextResponse.json(res);
     }
 

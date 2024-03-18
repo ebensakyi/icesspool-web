@@ -19,8 +19,6 @@
 //       },
 //     });
 
-    
-
 //     let res = response.map((res) => res.id);
 
 //     return NextResponse.json(res);
@@ -30,7 +28,6 @@
 //     return NextResponse.json(error);
 //   }
 // }
-
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
@@ -77,7 +74,6 @@ export async function PUT(request: Request) {
       imageUrl: res?.imageUrl,
       status: Number(res?.status),
     };
-    console.log(data);
 
     await prisma.biodigesterService.update({
       where: {
@@ -108,11 +104,9 @@ export async function GET(request: Request) {
       where: { deleted: 0 },
       include: {
         BiodigesterType: true,
-       Service:true
+        Service: true,
       },
     });
-console.log("prisma.biodigesterService. ",response);
-
 
     return NextResponse.json({ response });
   } catch (error) {

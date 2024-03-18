@@ -308,7 +308,7 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#offers-nav"
                             > <li>
-                                    <Link href="/request/biodigester/offers">
+                                    <Link href="/service-request/biodigester/offers">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digester</span>
                                     </Link>

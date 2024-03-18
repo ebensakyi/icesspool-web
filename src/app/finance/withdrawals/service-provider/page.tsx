@@ -3,7 +3,7 @@ import { SERVER_BASE_URL } from '@/config';
 import { ServiceProviderWithdrawals } from '@/src/components/finance/ServiceProviderWithdrawals';
 import { headers } from 'next/headers';
 
-async function getRequests(searchParams: any) {
+async function getWithdrawals(searchParams: any) {
     let { searchText } = searchParams;
   
     let { page } = searchParams;
@@ -24,11 +24,11 @@ async function getRequests(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const requests = await getRequests(searchParams)
+    const withdrawals = await getWithdrawals(searchParams)
 
 
 
-    let data = { requests }
+    let data = { withdrawals }
 
 
 

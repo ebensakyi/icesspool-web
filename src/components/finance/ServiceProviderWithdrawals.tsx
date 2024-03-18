@@ -30,7 +30,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>SERVICE PROVIDER EARNINGS</h1>
+                <h1>SERVICE PROVIDER WITHDRAWALS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -54,28 +54,27 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                         <tr>
                                             <th scope="col">Name</th>
 
-                                            <th scope="col">Service</th>
+                                            <th scope="col">Amount</th>
 
-                                            <th scope="col">Type</th>
+                                            <th scope="col">Date</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Created Date</th>
 
                                             <th scope="col">Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response?.map((data: any) => {
+                                        {data?.withdrawals?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                    <td>{data?.amount}</td>
 
-                                                    <td>{data?.BiodigesterType.name}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
                                                     )}</td>
+                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
+                                                   
                                                     <td>
                                                         <div
                                                             className="btn-group"
@@ -109,7 +108,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
 
                                                                             }}
                                                                         >
-                                                                            Edit
+                                                                            Approve
                                                                         </button>
                                                                     </li>
 

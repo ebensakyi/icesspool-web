@@ -876,12 +876,13 @@ model User {
   Vehicle         Vehicle[]
   ServiceProvider ServiceProvider?
 
-  ServiceArea     ServiceArea?      @relation(fields: [serviceAreaId], references: [id])
-  serviceAreaId   Int?
+  ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
+  serviceAreaId             Int?
   // Transaction           Transaction[]
-  Otp             Otp[]
-  Penalty         Penalty[]
-  RatingBreakdown RatingBreakdown[]
+  Otp                       Otp[]
+  Penalty                   Penalty[]
+  RatingBreakdown           RatingBreakdown[]
+  ServiceProviderWithdrawal ServiceProviderWithdrawal[]
 }
 
 // model UserType {
@@ -918,12 +919,14 @@ model ServiceProviderWithdrawal {
   transactionId     String?         @db.VarChar(255)
   amount            Int?
   disbursementDate  DateTime?
+  disbusedBy        User            @relation(fields: [userId], references: [id])
   status            Int?            @default(0)
   approvedBy        Int?
   deleted           Int?            @default(0)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  userId            Int
 }
 
 model ScannerUser {

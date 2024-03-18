@@ -11,7 +11,7 @@ async function getBiodigesterOffers(searchParams: any) {
     let { page } = searchParams;
 
     const res = await fetch(
-        `${SERVER_BASE_URL}/api/request/biodigester/offers?page=${page}&searchText=${searchText}`,
+        `${SERVER_BASE_URL}/api/service-request/biodigester/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
     

@@ -29,7 +29,8 @@ export const users = [
     userTypeId: 4,
     password: "$2a$12$81TbSB3HBu/NP/cRG6kDlu2sBcRz.4dq..3lpkcjklc.C/mCDxHaO",
     passwordChanged: 1,
-    serviceAreaId:1
+    serviceAreaId:1,
+    activated: 1,
 
   },
 

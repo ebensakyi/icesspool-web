@@ -18,27 +18,11 @@ async function getRegions(searchParams: any) {
   }
 
 
-  async function getServices(searchParams: any) {
-    let { searchText } = searchParams;
-  
-    let { page } = searchParams;
-  
-    const res = await fetch(
-      `${SERVER_BASE_URL}/api/services?page=${page}&searchText=${searchText}`,
-      { cache: "no-store", headers: headers() }
-    );
-  
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-  
-    return res.json();
-  }
 
 
 async function getTruckClasses(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/truck-classification?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/configure/truck-classification?serviceId=${service}`,
       { cache: "no-store" }
     );
   
@@ -51,7 +35,7 @@ async function getTruckClasses(searchParams: any, service?: number) {
 
   async function getWaterPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/services/water/pricing?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/pricing/water-tanker-service`,
       { cache: "no-store" }
     );
   
@@ -63,13 +47,12 @@ async function getTruckClasses(searchParams: any, service?: number) {
 
 export default async function Page({ searchParams }: any) {
     const regions = await getRegions(searchParams)
-    const services = await getServices(searchParams)
     const truckClassifications = await getTruckClasses(searchParams, 1)
     const waterPricings = await getWaterPricing(searchParams, 1)
 
     
 
-    let data = { regions, services,truckClassifications,waterPricings }
+    let data = { regions,truckClassifications,waterPricings }
 
 
 

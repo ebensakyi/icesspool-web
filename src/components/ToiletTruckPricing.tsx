@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const EmptyingPricing = ({ data }: any) => {
+export const ToiletTruckPricing = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
@@ -70,8 +70,11 @@ export const EmptyingPricing = ({ data }: any) => {
                 fuelDistanceConst: Number(fuelDistanceConst),
                 status: Number(status),
             };
-            const response = await axios.post("/api/services/tanker-emptying/pricing", data);
-            toast.success(response.data.message);
+            const response = await axios.post("/api/pricing/toilet-truck-service", data);
+            if (response.status === 200) {
+                toast.success("Updated");
+
+            }
             setId("")
             setRepairCost("")
             setRoadWorthy("");
@@ -125,8 +128,8 @@ export const EmptyingPricing = ({ data }: any) => {
                 status: Number(status),
             };
 
-            
-            response = await axios.put("/api/services/tanker-emptying/pricing", data);
+
+            response = await axios.put("/api/pricing/toilet-truck-service", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -161,7 +164,7 @@ export const EmptyingPricing = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>FEACAL DESLUDGING PRICING</h1>
+                <h1>TOILET TRUCK PRICING</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -279,7 +282,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Admin Cost *
+                                                Admin Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  admin cost' value={adminCost} onChange={(e: any) => setAdminCost(e.target.value)} />
@@ -289,7 +292,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Overhead Cost *
+                                                Overhead Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  overhead cost' value={overheadCost} onChange={(e: any) => setOverheadCost(e.target.value)} />
@@ -299,7 +302,7 @@ export const EmptyingPricing = ({ data }: any) => {
                                     <div className="col-lg-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                 Tools Cost *
+                                                Tools Cost *
                                             </label>
                                             <div className="col-sm-12">
                                                 <input type="number" className="form-control" placeholder='Enter  tools cost' value={toolsCost} onChange={(e: any) => setToolsCost(e.target.value)} />

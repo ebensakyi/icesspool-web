@@ -26,6 +26,7 @@ export const WaterPricing = ({ data }: any) => {
     const [workingDays, setWorkingDays] = useState(""); //1
     const [annualEstVol, setAnnualEstVol] = useState(""); //1
 
+    const [waterUnitCost, setWaterUnitCost] = useState(""); //1
 
 
     const [profitPercentage, setProfitPercentage] = useState("");
@@ -58,7 +59,11 @@ export const WaterPricing = ({ data }: any) => {
             // }
 
             let data = {
-
+                insurance: Number(insurance),
+                repairCost: Number(repairCost),
+                roadWorthy: Number(roadWorthy),
+                unitFuelCost: Number(unitFuelCost),
+                /////
                 workingDays: Number(workingDays),
                 truckDepreciation: Number(truckDepreciation),
                 adminCost: Number(adminCost),
@@ -72,11 +77,16 @@ export const WaterPricing = ({ data }: any) => {
                 hoseDepreciation: Number(hoseDepreciation),
                 status: Number(status),
             };
-            const response = await axios.post("/api/pricing/emptying", data);
-            toast.success(response.data.message);
+            const response = await axios.post("/api/pricing/water-tanker-service", data);
+            if (response.status === 200) {
+                toast.success("Success");
+
+            }
             setId("")
-            // setRepairCost("")
-            // setRoadWorthy("");
+            setRepairCost("")
+            setRoadWorthy("");
+            setInsurance("")
+            setUnitFuelCost("")
 
             setWorkingDays("");
             setTruckDepreciation("");
@@ -123,7 +133,7 @@ export const WaterPricing = ({ data }: any) => {
             };
 
 
-            response = await axios.put("/api/pricing/emptying", data);
+            response = await axios.put("/api/pricing/water-tanker-service", data);
             toast.success(response.data.message);
             setId("")
             setRepairCost("")
@@ -181,7 +191,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Annual Est. Water Volume *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter water volume' value={annualEstVol} onChange={(e: any) => setAnnualEstVol(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -191,7 +201,7 @@ export const WaterPricing = ({ data }: any) => {
                                                 Water Unit Cost *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Enter name' value={rawWaterCost} onChange={(e: any) => setRawWaterCost(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Enter water unit cost' value={waterUnitCost} onChange={(e: any) => setWaterUnitCost(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>

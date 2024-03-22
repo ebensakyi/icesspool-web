@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import { EmptyingPricing } from '@/src/components/DesludgingPricing';
+import { ToiletTruckPricing } from '@/src/components/ToiletTruckPricing';
 
 
 async function getServiceAreas(searchParams: any) {
@@ -24,7 +24,7 @@ async function getServiceAreas(searchParams: any) {
 
 async function getTruckClasses(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/truck-classification?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/configure/truck-classification?serviceId=${service}`,
       { cache: "no-store" }
     );
   
@@ -38,7 +38,7 @@ async function getTruckClasses(searchParams: any, service?: number) {
 
  async function getEmptyingPricing(searchParams: any, service?: number) {
     let response = await fetch(
-      `${SERVER_BASE_URL}/api/services/septic-tank/pricing?serviceId=${service}`,
+      `${SERVER_BASE_URL}/api/pricing/toilet-truck-service`,
       { cache: "no-store" }
     );
   
@@ -61,7 +61,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <EmptyingPricing data={data} />
+    return <ToiletTruckPricing data={data} />
 
 
 }

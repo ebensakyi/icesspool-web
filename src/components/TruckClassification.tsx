@@ -48,7 +48,7 @@ export const TruckClassification = ({ data }: any) => {
 
             console.log(data);
 
-            const response = await axios.post("/api/truck-classification", data);
+            const response = await axios.post("/api/configure/truck-classification", data);
             toast.success(response.data.message);
             setService("")
             setStatus("");
@@ -83,7 +83,7 @@ export const TruckClassification = ({ data }: any) => {
                 tankCapacity: tankCapacity,
                 service: service,
             };
-            const response = await axios.put("/api/truck-classification", data);
+            const response = await axios.put("/api/configure/truck-classification", data);
             toast.success(response.data.message);
             setId("")
             setServiceArea("")

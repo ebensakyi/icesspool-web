@@ -359,7 +359,7 @@ export default function Header() {
                                     <i className="bi bi-outlet" />
                                     <span>Charges</span>
                                 </Link>
-                            </li>
+                            </li>*/}
                             <li className="nav-item">
 
                                 <Link className={
@@ -370,7 +370,7 @@ export default function Header() {
                                     <i className="bi bi-truck" />
                                     <span>Truck Classes</span>
                                 </Link>
-                            </li> */}
+                            </li> 
                             <Link
                                 className={
                                     pathname == "/esicapps1/general"

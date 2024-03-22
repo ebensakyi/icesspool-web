@@ -31,7 +31,7 @@ model TruckClassification {
   updatedAt                DateTime                   @updatedAt
   Service                  Service                    @relation(fields: [serviceId], references: [id])
   Vehicle                  Vehicle[]
-  EmptyingServicePricing   EmptyingServicePricing[]
+  ToiletTruckServicePricing   ToiletTruckServicePricing[]
   WaterServicePricing      WaterServicePricing[]
   ServiceArea              ServiceArea?               @relation(fields: [serviceAreaId], references: [id])
   TruckEmptyingTransaction TruckEmptyingTransaction[]
@@ -47,7 +47,7 @@ model Service {
   ServicePoint        ServicePoint[]
   TruckClassification TruckClassification[]
 
-  EmptyingServicePricing EmptyingServicePricing[]
+  ToiletTruckServicePricing ToiletTruckServicePricing[]
   WaterServicePricing    WaterServicePricing[]
   ServicesInArea         ServicesInArea[]
   Transaction            Transaction[]
@@ -91,7 +91,7 @@ model IcesspoolBalance {
 //   createdAt                 DateTime                    @default(now())
 //   updatedAt                 DateTime                    @updatedAt
 //   PricingModel              PricingModel[]
-//   EmptyingServicePricing  EmptyingServicePricing[]
+//   toiletTruckServicePricing  toiletTruckServicePricing[]
 //   WaterServicePricing       WaterServicePricing[]
 //   BiodigesterServicePricing BiodigesterServicePricing[]
 // }
@@ -129,7 +129,7 @@ model Region {
   deleted                Int?                     @default(0)
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
-  EmptyingServicePricing EmptyingServicePricing[]
+  ToiletTruckServicePricing ToiletTruckServicePricing[]
   WaterServicePricing    WaterServicePricing[]
   ServiceArea            ServiceArea[]
   District               District[]
@@ -158,7 +158,7 @@ model ServiceArea {
   TruckClassification       TruckClassification[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  EmptyingServicePricing    EmptyingServicePricing[]
+  ToiletTruckServicePricing    ToiletTruckServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
@@ -387,7 +387,7 @@ model Payment {
 //   serviceId Int
 // }
 
-model EmptyingServicePricing {
+model ToiletTruckServicePricing {
   id Int @id @default(autoincrement())
 
   fuelDistanceConst   Decimal @db.Decimal(10, 2)

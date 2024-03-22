@@ -43,7 +43,7 @@ export async function GET(request: Request) {
           lng: item.lng,
 
           // service: item.serviceId == 1
-          // ? "Toilet Tanker"
+          // ? "Toilet Truck"
           // : item.serviceId == 2
           // ? "Water Tanker"
           // : "Biodigester",

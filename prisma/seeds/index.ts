@@ -50,7 +50,7 @@ async function main() {
       data: users,
     });
 
-    await prisma.emptyingServicePricing.createMany({
+    await prisma.toiletTruckServicePricing.createMany({
       data: truckEmptying,
     });
 

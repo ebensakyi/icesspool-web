@@ -37,7 +37,7 @@ import { calculateDeludgingPrice } from "@/libs/pricing";
 
 //     };
 
-//     const response = await prisma.emptyingServicePricing.create({ data });
+//     const response = await prisma.toiletTruckServicePricing.create({ data });
 
 //     return NextResponse.json(response);
 //   } catch (error: any) {
@@ -75,7 +75,7 @@ import { calculateDeludgingPrice } from "@/libs/pricing";
 
 //       };
 
-//     await prisma.emptyingServicePricing.update({
+//     await prisma.toiletTruckServicePricing.update({
 //       where: {
 //         id: Number(res?.id),
 //       },
@@ -102,8 +102,11 @@ export async function GET(request: Request) {
 
     let userLocation = [userLatitude, userLongitude];
 
+    console.log(userLocation);
+    
 
-    const pricingModel = await prisma.emptyingServicePricing.findMany({
+
+    const pricingModel = await prisma.toiletTruckServicePricing.findMany({
       where: {
         deleted: 0,
         regionId:Number(regionId)

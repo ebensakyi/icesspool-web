@@ -1,6 +1,6 @@
 export const services = [
     {
-      name: "Toilet Tanker",
+      name: "Toilet Truck",
     },
     {
       name: "Water Tanker",

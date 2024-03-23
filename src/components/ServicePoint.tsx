@@ -14,6 +14,8 @@ export const ServicePoint = ({ data }: any) => {
     const [longitude, setLongitude] = useState("");
     const [address, setAddress] = useState("");
     const [service, setService] = useState("");
+    const [serviceArea, setServiceArea] = useState("");
+
     const [status, setStatus] = useState("");
 
     const { data: session } = useSession({
@@ -32,7 +34,7 @@ export const ServicePoint = ({ data }: any) => {
     const add = async (e: any) => {
         try {
             e.preventDefault();
-            if (name == "" || status == "") {
+            if (name == "" || status == "" || latitude == "" || longitude == "" || address == "" || service == "" || serviceArea == "" || status == "") {
                 return toast.error("Please fill form");
             }
 
@@ -41,10 +43,12 @@ export const ServicePoint = ({ data }: any) => {
                 latitude: Number(latitude),
                 longitude: Number(longitude),
                 address,
+                serviceArea: Number(serviceArea),
+
                 service: Number(service),
                 status: Number(status),
             };
-            const response = await axios.post("/api/service-points", data);
+            const response = await axios.post("/api/configure/service-points", data);
             toast.success(response.data.message);
             setId("")
             setName("")
@@ -53,6 +57,7 @@ export const ServicePoint = ({ data }: any) => {
             setLatitude("");
             setLongitude("");
             setService("");
+            setServiceArea("");
             setStatus("");
 
             router.refresh()
@@ -68,7 +73,7 @@ export const ServicePoint = ({ data }: any) => {
         let response
         try {
             e.preventDefault();
-            if (name == "" || status == "" || latitude == null || longitude == null || address == "" || service == null || status == null) {
+            if (name == "" || status == "" || latitude == "" || longitude == "" || address == "" || service == "" || serviceArea == "" || status == "") {
                 return toast.error("Please fill form");
             }
 
@@ -79,14 +84,15 @@ export const ServicePoint = ({ data }: any) => {
                 longitude: Number(longitude),
                 address,
                 service: Number(service),
+                serviceArea: Number(serviceArea),
                 status: Number(status),
             };
-             response = await axios.put("/api/service-points", data);
+            response = await axios.put("/api/configure/service-points", data);
             toast.success(response.data.message);
             setId("")
             setName("")
             setAddress("");
-
+            setServiceArea("")
             setLatitude("");
             setLongitude("");
             setService("");
@@ -95,7 +101,7 @@ export const ServicePoint = ({ data }: any) => {
 
         } catch (error: any) {
             console.log(error.response);
-            
+
             // if (error.response.status == 401) {
             //     toast.error(error.response.data.message);
             // }
@@ -170,7 +176,7 @@ export const ServicePoint = ({ data }: any) => {
                                         }}
                                         value={service}
                                     >
-                                        <option value={0}>Select service * </option>
+                                        <option value={""}>Select service * </option>
 
 
                                         {data?.services?.response?.map((data: any) => (
@@ -188,11 +194,11 @@ export const ServicePoint = ({ data }: any) => {
                                         className="form-control"
                                         aria-label="Default select example"
                                         onChange={(e: any) => {
-                                            setService(e.target.value);
+                                            setServiceArea(e.target.value);
                                         }}
-                                        value={service}
+                                        value={serviceArea}
                                     >
-                                        <option value={0}>Select service area * </option>
+                                        <option value={""}>Select service area * </option>
 
 
                                         {data?.serviceAreas?.response?.map((data: any) => (

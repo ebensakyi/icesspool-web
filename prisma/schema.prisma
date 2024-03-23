@@ -22,19 +22,19 @@ model TruckClassification {
   name  String  @unique(map: "axleClass") @db.VarChar(255)
   image String? @db.VarChar(255)
 
-  serviceId                Int
-  tankCapacity             Decimal                    @default(0.00) @db.Decimal(10, 2)
-  serviceAreaId            Int
-  deleted                  Int?                       @default(0)
-  status                   Int?                       @default(0)
-  createdAt                DateTime                   @default(now())
-  updatedAt                DateTime                   @updatedAt
-  Service                  Service                    @relation(fields: [serviceId], references: [id])
-  Vehicle                  Vehicle[]
-  ToiletTruckServicePricing   ToiletTruckServicePricing[]
-  WaterServicePricing      WaterServicePricing[]
-  ServiceArea              ServiceArea?               @relation(fields: [serviceAreaId], references: [id])
-  TruckEmptyingTransaction TruckEmptyingTransaction[]
+  serviceId                 Int
+  tankCapacity              Decimal                     @default(0.00) @db.Decimal(10, 2)
+  serviceAreaId             Int
+  deleted                   Int?                        @default(0)
+  status                    Int?                        @default(0)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  Service                   Service                     @relation(fields: [serviceId], references: [id])
+  Vehicle                   Vehicle[]
+  ToiletTruckServicePricing ToiletTruckServicePricing[]
+  WaterServicePricing       WaterServicePricing[]
+  ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
+  TruckEmptyingTransaction  TruckEmptyingTransaction[]
 }
 
 model Service {
@@ -48,12 +48,12 @@ model Service {
   TruckClassification TruckClassification[]
 
   ToiletTruckServicePricing ToiletTruckServicePricing[]
-  WaterServicePricing    WaterServicePricing[]
-  ServicesInArea         ServicesInArea[]
-  Transaction            Transaction[]
-  BiodigesterService     BiodigesterService[]
-  ServiceCharges         ServiceCharges[]
-  ServiceProvider        ServiceProvider[]
+  WaterServicePricing       WaterServicePricing[]
+  ServicesInArea            ServicesInArea[]
+  Transaction               Transaction[]
+  BiodigesterService        BiodigesterService[]
+  ServiceCharges            ServiceCharges[]
+  ServiceProvider           ServiceProvider[]
 }
 
 model ServiceProviderBalance {
@@ -122,17 +122,17 @@ model Discount {
 }
 
 model Region {
-  id                     Int                      @id @default(autoincrement())
-  name                   String                   @db.VarChar(255)
-  latitude               Decimal?                 @db.Decimal(10, 6)
-  longitude              Decimal?                 @db.Decimal(10, 6)
-  deleted                Int?                     @default(0)
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  id                        Int                         @id @default(autoincrement())
+  name                      String                      @db.VarChar(255)
+  latitude                  Decimal?                    @db.Decimal(10, 6)
+  longitude                 Decimal?                    @db.Decimal(10, 6)
+  deleted                   Int?                        @default(0)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
   ToiletTruckServicePricing ToiletTruckServicePricing[]
-  WaterServicePricing    WaterServicePricing[]
-  ServiceArea            ServiceArea[]
-  District               District[]
+  WaterServicePricing       WaterServicePricing[]
+  ServiceArea               ServiceArea[]
+  District                  District[]
 }
 
 model ServiceArea {
@@ -158,12 +158,13 @@ model ServiceArea {
   TruckClassification       TruckClassification[]
   WaterServicePricing       WaterServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
-  ToiletTruckServicePricing    ToiletTruckServicePricing[]
+  ToiletTruckServicePricing ToiletTruckServicePricing[]
   Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
   User                      User[]
   ServiceCharges            ServiceCharges[]
+  ServicePoint              ServicePoint[]
 }
 
 model ServicesInArea {
@@ -664,20 +665,22 @@ model TxStatus {
 }
 
 model ServicePoint {
-  id          Int           @id @default(autoincrement())
-  name        String        @db.VarChar(255)
-  placeId     String?       @db.VarChar(255)
-  address     String?       @db.VarChar(255)
-  location    String?       @db.VarChar(255)
-  latitude    Decimal?      @db.Decimal(10, 6)
-  longitude   Decimal?      @db.Decimal(10, 6)
-  status      Int?          @default(1)
-  deleted     Int?          @default(0)
-  Service     Service       @relation(fields: [serviceId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  serviceId   Int
-  ScannerUser ScannerUser[]
+  id            Int           @id @default(autoincrement())
+  name          String        @db.VarChar(255)
+  placeId       String?       @db.VarChar(255)
+  address       String?       @db.VarChar(255)
+  location      String?       @db.VarChar(255)
+  latitude      Decimal?      @db.Decimal(10, 6)
+  longitude     Decimal?      @db.Decimal(10, 6)
+  status        Int?          @default(1)
+  deleted       Int?          @default(0)
+  Service       Service       @relation(fields: [serviceId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  serviceId     Int
+  ServiceArea   ServiceArea?   @relation(fields: [serviceAreaId], references: [id])
+  ScannerUser   ScannerUser[]
+  serviceAreaId Int?
 }
 
 model TruckEmptyingTransaction {
@@ -753,11 +756,11 @@ model Transaction {
   ServiceProviderEarning ServiceProviderEarning[]
   PlatformEarning        PlatformEarning?
 
-  WaterTankerTransaction  WaterTankerTransaction?
-  ToiletTankerTransaction ToiletTankerTransaction[]
+  WaterTankerTransaction WaterTankerTransaction?
+  ToiletTruckTransaction ToiletTruckTransaction[]
 }
 
-model ToiletTankerTransaction {
+model ToiletTruckTransaction {
   id Int @id @default(autoincrement())
 
   deleted       Int?        @default(0)

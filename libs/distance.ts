@@ -2,11 +2,14 @@ import { prisma } from "@/prisma/db";
 import axios from "axios";
 
 export const getShortestDistanceBtnUserServicePoint = async (
-  userLocation: any
+  userLocation: any,
+  serviceId: number,
+  serviceAreaId: number
 ) => {
   let servicePoints = await prisma.servicePoint.findMany({
     where: {
-      serviceId: 1,
+      serviceId: serviceId,
+      serviceAreaId: serviceAreaId,
       status: 1,
       deleted: 0,
     },
@@ -48,6 +51,9 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
 
   const response = await axios.request(options);
+
+  console.log(response);
+  
 
   let distances: any = [];
   response.data.rows.map((d: any) => {

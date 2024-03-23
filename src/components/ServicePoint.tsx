@@ -182,6 +182,28 @@ export const ServicePoint = ({ data }: any) => {
                                 </div>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Service Area *
+                                    </label>
+                                    <select
+                                        className="form-control"
+                                        aria-label="Default select example"
+                                        onChange={(e: any) => {
+                                            setService(e.target.value);
+                                        }}
+                                        value={service}
+                                    >
+                                        <option value={0}>Select service area * </option>
+
+
+                                        {data?.serviceAreas?.response?.map((data: any) => (
+                                            <option key={data.id} value={data.id}>
+                                                {data.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Status *
                                     </label>
                                     <select

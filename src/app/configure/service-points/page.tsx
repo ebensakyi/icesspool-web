@@ -38,14 +38,32 @@ async function getServicePoints(searchParams: any) {
   
     return res.json();
   }
+
+  async function getServiceAreas(searchParams: any) {
+    let { searchText } = searchParams;
+  
+    let { page } = searchParams;
+  
+    const res = await fetch(
+      `${SERVER_BASE_URL}/api/configure/service-area?page=${page}&searchText=${searchText}`,
+      { cache: "no-store", headers: headers() }
+    );
+  
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+  
+    return res.json();
+  }
   
 export default async function Page({ searchParams }: any) {
     const servicePoints = await getServicePoints(searchParams)
     const services = await getServices(searchParams)
+    const serviceAreas = await getServiceAreas(searchParams)
 
 
 
-    let data = { servicePoints, services }
+    let data = { servicePoints, services,serviceAreas }
 
 
 

@@ -60,7 +60,7 @@ const getServiceAreaBoundaries = async () => {
 export const getUserArea = async (userPoint: any) => {
   let polygons = await getServiceAreaBoundaries();
   //let whereIsUser = await isPointInsidePolygon(userPoint, polygons);
-  // console.log("whereIsUseruserPointx==> ", userPoint);
+//  console.log("whereIsUseruserPointx==> ", userPoint);
 
   const foundRegion = polygons.find((region) =>
     isPointInsidePolygon(userPoint, region.points)

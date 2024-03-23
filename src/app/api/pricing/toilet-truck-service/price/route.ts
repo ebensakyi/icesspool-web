@@ -4,6 +4,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { calculateDeludgingPrice } from "@/libs/pricing";
+import { getUserArea } from "@/libs/user-service-area";
 // import { authOptions } from "../../auth/[...nextauth]/options";
 
 // export async function POST(request: Request) {
@@ -95,21 +96,23 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
     // 5.601454,-0.169431
     let userId = Number(searchParams.get("userId"));
-    let userLatitude =  Number(searchParams.get("lat"));
+    let userLatitude = Number(searchParams.get("lat"));
     let userLongitude = Number(searchParams.get("lng"));
     let tripsNumber = Number(searchParams.get("tripsNumber"));
-    let regionId = Number(searchParams.get("regionId"));
 
     let userLocation = [userLatitude, userLongitude];
 
-    console.log(userLocation);
-    
+    let userArea = await getUserArea([userLatitude, userLongitude]);
 
+    let serviceArea = Number(userArea?.serviceAreaId)
+    if (!userArea) {
+      return NextResponse.json({});
+    }
 
     const pricingModel = await prisma.toiletTruckServicePricing.findMany({
       where: {
         deleted: 0,
-        regionId:Number(regionId)
+        serviceAreaId: serviceArea,
       },
       include: {
         Region: true,
@@ -117,10 +120,12 @@ export async function GET(request: Request) {
       },
     });
 
+    
 
-   let price = await calculateDeludgingPrice(
+    let price = await calculateDeludgingPrice(
       pricingModel,
       userLocation,
+      serviceArea,
       tripsNumber
     );
 

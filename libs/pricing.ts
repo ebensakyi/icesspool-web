@@ -3,10 +3,13 @@ import { getShortestDistanceBtnUserServicePoint } from "./distance";
 export const calculateDeludgingPrice = async (
   pricingModel: any,
   userLocation: any,
-  tripNumber: any
+  serviceAreaId:number,
+  tripNumber:number
+
 ) => {
-  let distance = await getShortestDistanceBtnUserServicePoint(userLocation);
-        console.log("pricingModel-->",pricingModel);
+  
+  let serviceId=1
+  let distance = await getShortestDistanceBtnUserServicePoint(userLocation,serviceId,serviceAreaId);
 
 
   let pricing: any = [];
@@ -61,7 +64,6 @@ export const calculateDeludgingPrice = async (
 
     const sludgeVolume = tankVolume * workingDays;
 
-    console.log("sludgeVolume ",sludgeVolume);
 
 
     //COST

@@ -10,6 +10,7 @@ export const servicePoints = [
     longitude: -0.218367,
     status: 1,
     serviceId: 1,
+    serviceAreaId:1
   },
   {
     name: "Accra Compost Recycle Plant, ACRP",
@@ -20,5 +21,7 @@ export const servicePoints = [
     longitude: -0.361391,
     status: 1,
     serviceId: 1,
+    serviceAreaId:1
+
   },
 ];

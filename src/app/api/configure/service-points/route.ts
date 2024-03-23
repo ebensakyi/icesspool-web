@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       longitude: Number(res?.longitude),
       address: res?.address,
       serviceId: Number(res?.service),
+      serviceAreaId: Number(res?.serviceArea)
     };
 
 
@@ -42,6 +43,7 @@ export async function PUT(request: Request) {
       longitude: Number(res?.longitude),
       address: res?.address,
       serviceId: Number(res?.service),
+      serviceAreaId: Number(res?.serviceArea),
       status: Number(res?.status),
     };
     await prisma.servicePoint.update({

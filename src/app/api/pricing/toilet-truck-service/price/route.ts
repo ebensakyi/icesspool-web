@@ -96,18 +96,24 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
     // 5.601454,-0.169431
     let userId = Number(searchParams.get("userId"));
-    let userLatitude = Number(searchParams.get("lat"));
-    let userLongitude = Number(searchParams.get("lng"));
+    let userLatitude = Number(searchParams.get("userLatitude"));
+    let userLongitude = Number(searchParams.get("userLongitude"));
     let tripsNumber = Number(searchParams.get("tripsNumber"));
+    let serviceArea = Number(searchParams.get("serviceArea"));
 
     let userLocation = [userLatitude, userLongitude];
 
-    let userArea = await getUserArea([userLatitude, userLongitude]);
+    
 
-    let serviceArea = Number(userArea?.serviceAreaId)
-    if (!userArea) {
-      return NextResponse.json({});
-    }
+    // let userArea = await getUserArea([userLatitude, userLongitude]);
+
+    // console.log("userArea==> " + userArea);
+    
+
+    // let serviceArea = Number(userArea?.serviceAreaId)
+    // if (!userArea) {
+    //   return NextResponse.json({message: "Not in service area"});
+    // }
 
     const pricingModel = await prisma.toiletTruckServicePricing.findMany({
       where: {

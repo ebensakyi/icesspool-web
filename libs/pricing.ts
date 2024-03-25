@@ -3,20 +3,20 @@ import { getShortestDistanceBtnUserServicePoint } from "./distance";
 export const calculateDeludgingPrice = async (
   pricingModel: any,
   userLocation: any,
-  serviceAreaId:number,
-  tripNumber:number
-
+  serviceAreaId: number,
+  tripNumber: number
 ) => {
-  
-  let serviceId=1
-  let distance = await getShortestDistanceBtnUserServicePoint(userLocation,serviceId,serviceAreaId);
+  let serviceId = 1;
+  let distance = await getShortestDistanceBtnUserServicePoint(
+    userLocation,
+    serviceId,
+    serviceAreaId
+  );
 
 
   let pricing: any = [];
 
   pricingModel.map((d: any) => {
-
-    // console.log("d-->",d);
 
     const pumpDepreciation = parseFloat(d.pumpDepreciation);
     const fuelUnitCost = parseFloat(d.unitFuelCost);
@@ -54,34 +54,21 @@ export const calculateDeludgingPrice = async (
       toolsCost +
       adminCost;
 
-      
-
-    const totalCost = totalCostService  * profitPercentage;
-
-
-
-   
+    const totalCost = totalCostService * profitPercentage;
 
     const sludgeVolume = tankVolume * workingDays;
 
-
-
     //COST
     const cost = ((totalCost / sludgeVolume) * tankVolume).toFixed(0);
-
-    
-
 
     pricing.push({
       id: d.TruckClassification.id,
       name: d.TruckClassification.name,
       image: d.TruckClassification.image,
+      tankVolume: d.TruckClassification.tankCapacity,
       price: cost,
     });
   });
-
-
-
 
   return pricing;
 };

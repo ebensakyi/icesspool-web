@@ -276,6 +276,7 @@ export const ServicePoint = ({ data }: any) => {
                                             <th scope="col">Latitute</th>
                                             <th scope="col">Longitude</th>
                                             <th scope="col">Service</th>
+                                            <th scope="col">Service Area</th>
 
                                             <th scope="col">Status</th>
                                             <th scope="col">Created Date</th>
@@ -293,6 +294,7 @@ export const ServicePoint = ({ data }: any) => {
                                                     <td>{data?.latitude}</td>
                                                     <td>{data?.longitude}</td>
                                                     <td>{data?.Service?.name}</td>
+                                                    <td>{data?.ServiceArea?.name}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
@@ -330,6 +332,8 @@ export const ServicePoint = ({ data }: any) => {
                                                                                 setLatitude(data.latitude)
                                                                                 setLongitude(data.longitude)
                                                                                 setService(data.serviceId)
+                                                                                setServiceArea(data.serviceAreaId)
+
                                                                                 setStatus(data.status)
                                                                                 // setIsEditing(true);
 

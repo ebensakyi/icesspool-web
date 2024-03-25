@@ -191,7 +191,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                             </select>
                                         </div>
                                     </div>
-                                    {biodigesterService == "1" || biodigesterService == "2" || biodigesterService == "3" ?
+                                    {biodigesterService == "1"  ?
                                     <div className="col-lg-2 col-md-4">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -202,7 +202,7 @@ export const BiodigesterPricing = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>:<></>}
-                                    {biodigesterService == "4" || biodigesterService == "5" || biodigesterService == "6" ?
+                                    {biodigesterService == "2"  ?
                                         <>
                                             <div className="col-lg-2 col-md-4">
                                                 <div className=" mb-3">

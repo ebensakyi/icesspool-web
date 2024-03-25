@@ -74,7 +74,8 @@ export async function GET(request: Request) {
     const response = await prisma.servicePoint.findMany({
       where: { deleted: 0 },
       include: {
-        Service: true
+        Service: true,
+        ServiceArea:true
       }
     });
 

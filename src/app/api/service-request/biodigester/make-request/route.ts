@@ -137,7 +137,6 @@ export async function POST(request: Request) {
       deleted: false,
     };
 
-    console.log("firestoreData==> ", firestoreData);
 
     await setDoc(
       doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),

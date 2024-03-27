@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -17,9 +17,9 @@ import {
   getCurrentTime,
 } from "@/libs/date";
 import {
-  OFFER_CANCELLED_CL,
-  WORK_COMPLETED,
-  WORK_STARTED,
+  OFFER_CANCELLED_SP,
+  WORK_COMPLETED_REQUEST,
+  WORK_STARTED_REQUEST,
 } from "@/config";
 
 export async function POST(request: Request) {
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
     let transactionId = res.transactionId;
     let status = Number(res.status);
 
+    const session: any = await getServerSession(authOptions);
 
     //  await prisma.transaction.update({
     //       where: { id: transactionId },
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
     //       },
     //     });
     // //work started request
-    if (status == WORK_STARTED) {
+    if (status == WORK_STARTED_REQUEST) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
     }
     // //work completed request
 
-    if (status == WORK_COMPLETED) {
+    if (status == WORK_COMPLETED_REQUEST) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
@@ -64,13 +65,17 @@ export async function POST(request: Request) {
       );
     }
 
-    if (status == OFFER_CANCELLED_CL) {
+    if (status == OFFER_CANCELLED_SP) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
           transactionId: transactionId,
           txStatusCode: Number(status),
-        deleted: true,
+          spId: "",
+          spCompany: "",
+          spImageUrl: "",
+          spName: "",
+          spPhoneNumber: "",
         },
         { merge: true }
       );

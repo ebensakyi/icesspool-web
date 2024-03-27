@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -17,9 +17,9 @@ import {
   getCurrentTime,
 } from "@/libs/date";
 import {
-  OFFER_CANCELLED_SP,
-  WORK_COMPLETED_REQUEST,
-  WORK_STARTED_REQUEST,
+  OFFER_CANCELLED_CL,
+  WORK_COMPLETED,
+  WORK_STARTED,
 } from "@/config";
 
 export async function POST(request: Request) {
@@ -32,7 +32,9 @@ export async function POST(request: Request) {
     let transactionId = res.transactionId;
     let status = Number(res.status);
 
-    const session: any = await getServerSession(authOptions);
+
+    console.log('res  ',res);
+    
 
     //  await prisma.transaction.update({
     //       where: { id: transactionId },
@@ -42,7 +44,7 @@ export async function POST(request: Request) {
     //       },
     //     });
     // //work started request
-    if (status == WORK_STARTED_REQUEST) {
+    if (status == WORK_STARTED) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
     }
     // //work completed request
 
-    if (status == WORK_COMPLETED_REQUEST) {
+    if (status == WORK_COMPLETED) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
@@ -65,17 +67,13 @@ export async function POST(request: Request) {
       );
     }
 
-    if (status == OFFER_CANCELLED_SP) {
+    if (status == OFFER_CANCELLED_CL) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
           transactionId: transactionId,
           txStatusCode: Number(status),
-          spId: "",
-          spCompany: "",
-          spImageUrl: "",
-          spName: "",
-          spPhoneNumber: "",
+        deleted: true,
         },
         { merge: true }
       );

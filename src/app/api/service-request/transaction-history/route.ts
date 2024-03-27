@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       include: {
         Service:true,
         WaterTankerTransaction: true,
-        ToiletTankerTransaction: true,
+        ToiletTruckTransaction: true,
         BiodigesterTransaction: {
           include: {
             BiodigesterService: {

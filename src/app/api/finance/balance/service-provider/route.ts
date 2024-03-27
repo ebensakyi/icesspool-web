@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
-    console.log(userId);
+    console.log("userId ==> " + userId);
 
     // from mobile
     if (userId) {

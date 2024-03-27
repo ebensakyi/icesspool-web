@@ -3,21 +3,36 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
-    let { searchParams } = new URL(request.url);
+    const res = await request.json();
 
-    let userId = Number(searchParams.get("userId"));
+    let spUserId = Number(res.userId);
 
-    const sp = await prisma.serviceProvider.findFirst({
-      where: { deleted: 0, userId: userId },
+    if (spUserId) {
+      const sp = await prisma.serviceProvider.findFirst({
+        where: { deleted: 0, userId: spUserId },
+      });
+
+      let serviceProviderId: any = sp?.id;
+
+    let response = await prisma.serviceProviderWithdrawal.findMany({
+        where: {
+          serviceProviderId: serviceProviderId,
+          deleted: 0,
+        },
+      });
+
+      return NextResponse.json(response);
+    }
+
+    await prisma.serviceProviderWithdrawal.findMany({
+      where: {
+        deleted: 0,
+      },
     });
 
-    const response = await prisma.serviceProviderEarning.findMany({
-      where: { deleted: 0, serviceProviderId: sp?.id },
-    });
-
-    return NextResponse.json({ response });
+    return NextResponse.json({});
   } catch (error) {
     console.log(error);
 

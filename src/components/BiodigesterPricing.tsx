@@ -16,7 +16,6 @@ export const BiodigesterPricing = ({ data }: any) => {
     const [cost, setCost] = useState("");
     const [standardCost, setStandardCost] = useState("");
     const [largeCost, setLargeCost] = useState("");
-    const [doubleLargeCost, setDoubleLargeCost] = useState("");
 
     const [serviceArea, setServiceArea] = useState("");
     const [status, setStatus] = useState("");
@@ -56,7 +55,6 @@ export const BiodigesterPricing = ({ data }: any) => {
             setCost("");
             setStandardCost("")
             setLargeCost("")
-            setDoubleLargeCost("")
             setServiceArea("");
             setStatus("");
 
@@ -96,7 +94,6 @@ export const BiodigesterPricing = ({ data }: any) => {
             setCost("");
             setStandardCost("")
             setLargeCost("")
-            setDoubleLargeCost("")
             setServiceArea("");
             setStatus("");
             router.refresh()
@@ -336,7 +333,6 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                 <th scope="col">Cost</th>
                                                 <th scope="col">Standard Cost</th>
                                                 <th scope="col">Large Cost</th>
-                                                <th scope="col">Double Cost</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Created Date</th>
 
@@ -355,7 +351,6 @@ export const BiodigesterPricing = ({ data }: any) => {
                                                         <td>{data?.cost}</td>
                                                         <td>{data?.standardCost}</td>
                                                         <td>{data?.largeCost}</td>
-                                                        <td>{data?.doubleLargeCost}</td>
 
                                                         <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                         <td>  {moment(data?.createdAt).format(

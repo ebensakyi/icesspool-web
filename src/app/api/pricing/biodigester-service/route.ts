@@ -18,7 +18,6 @@ export async function POST(request: Request) {
       cost: Number(res?.cost),
       standardCost: Number(res?.standardCost),
       largeCost: Number(res?.largeCost),
-      doubleLargeCost: 2 * Number(res?.largeCost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
     };
@@ -47,7 +46,6 @@ export async function PUT(request: Request) {
       cost: Number(res?.cost),
       standardCost: Number(res?.standardCost),
       largeCost: Number(res?.largeCost),
-      doubleLargeCost: 2 * Number(res?.largeCost),
       biodigesterServiceId: Number(res?.biodigesterService),
       serviceAreaId: Number(res?.serviceArea),
     };
@@ -112,7 +110,6 @@ export async function GET(request: Request) {
         cost: data.cost,
         standardCost: data.standardCost,
         largeCost: data.largeCost,
-        doubleLargeCost: data.doubleLargeCost,
         type: data.BiodigesterService.BiodigesterType.name,
       }));
 

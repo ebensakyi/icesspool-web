@@ -220,7 +220,6 @@ model BiodigesterServicePricing {
   cost                 Decimal @db.Decimal(10, 2)
   standardCost         Decimal @default(0.0) @db.Decimal(10, 2)
   largeCost            Decimal @default(0.0) @db.Decimal(10, 2)
-  doubleLargeCost      Decimal @default(0.0) @db.Decimal(10, 2)
 
   ServiceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
   status      Int?        @default(0)

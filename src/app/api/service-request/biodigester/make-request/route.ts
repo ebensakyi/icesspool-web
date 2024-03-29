@@ -61,8 +61,8 @@ export async function POST(request: Request) {
       totalCost: Number(res?.totalCost),
       community:res?.community,
       address:res?.address,
-      placeLat:res?.placeLat,
-      placeLng:res?.placeLng,
+      placeLat: Number(res?.placeLat),
+      placeLng:Number(res?.placeLng),
       placeId:res?.placeId,
 
       // trips: Number(res[0]?.trips),
@@ -106,8 +106,8 @@ export async function POST(request: Request) {
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
       address:res?.address,
-      placeLat:res?.placeLat,
-      placeLng:res?.placeLng,
+      placeLat:Number(res?.placeLat),
+      placeLng:Number(res?.placeLng),
       placeId:res?.placeId,
 
       // trips: Number(res[0]?.trips),

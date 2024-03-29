@@ -22,7 +22,6 @@ export async function POST(request: Request) {
     let email = res.email;
     let password = res.password;
 
-    console.log(res);
     
 
     // let loginUserLevel = session?.user?.userLevelId;
@@ -83,7 +82,10 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    // const session :any= await getServerSession(authOptions);
+  const session :any= await getServerSession(authOptions);
+  if(!session) {
+    return NextResponse.json({"message":"No access"});
+  }
 
     const { searchParams } = new URL(request.url);
     const searchText =
@@ -346,7 +348,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-    console.log(res);
 
     let userId = res.userId;
 

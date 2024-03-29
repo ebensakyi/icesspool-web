@@ -928,7 +928,7 @@ model ServiceProviderWithdrawal {
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
-  userId            Int?
+  userId            Int? @default(1)
 }
 
 model ScannerUser {

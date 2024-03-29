@@ -8,7 +8,6 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
-    console.log("userId ==> " + userId);
 
     // from mobile
     if (userId) {
@@ -20,8 +19,10 @@ export async function GET(request: Request) {
         await prisma.serviceProviderBalance.findFirst({
           where: { deleted: 0, serviceProviderId: sp?.id },
         });
-      let balance = serviceProviderBalance.balance;
-      return NextResponse.json(balance);
+      let balance = serviceProviderBalance.balance.toFixed(2);  
+        console.log("userId ==> " + userId,balance);
+
+      return NextResponse.json({accountBalance: Number(balance)});
     }
 
 

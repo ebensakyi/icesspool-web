@@ -113,7 +113,6 @@ export async function GET(request: Request) {
         type: data.BiodigesterService.BiodigesterType.name,
       }));
 
-      console.log(res);
       
       return NextResponse.json(res);
     }

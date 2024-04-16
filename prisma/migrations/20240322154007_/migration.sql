@@ -192,7 +192,6 @@ CREATE TABLE `BiodigesterServicePricing` (
     `cost` DECIMAL(10, 2) NOT NULL,
     `standardCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     `largeCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
-    `doubleLargeCost` DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

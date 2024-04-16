@@ -33,7 +33,6 @@ export async function POST(request: Request) {
     let status = Number(res.status);
 
 
-    console.log('res  ',res);
     
 
     //  await prisma.transaction.update({

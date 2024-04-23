@@ -36,6 +36,7 @@ export async function POST(request: Request) {
       return NextResponse.json("User account not found", { status: 201 });
     }
 
+    
     if (user) {
       const salt = bcrypt.genSaltSync(10);
       let hashedPassword = bcrypt.hashSync(password, salt);
@@ -44,6 +45,10 @@ export async function POST(request: Request) {
         password: hashedPassword,
         passwordChanged: 1,
       };
+
+      console.log(data);
+      console.log(user);
+
 
       await prisma.user.update({
         data: data,

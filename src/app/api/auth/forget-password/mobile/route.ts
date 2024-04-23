@@ -12,16 +12,12 @@ export async function POST(request: Request) {
 
     let phoneNumber = res.phoneNumber;
 
-    console.log(phoneNumber);
-    
-
-    const user : any = await prisma.user.findFirst({
+    const user: any = await prisma.user.findFirst({
       where: {
         phoneNumber: phoneNumber,
         deleted: 0,
       },
     });
-
 
     // if(user?.passwordChanged==0){
     //   return NextResponse.redirect("/goto");
@@ -29,19 +25,15 @@ export async function POST(request: Request) {
     // }
 
     if (!user) {
-      return NextResponse.json(
-       0
-      );
+      return NextResponse.json(0);
     }
 
-
-    let code: string = await generateCode(6) as string;
+    let code: string = (await generateCode(6)) as string;
     await prisma.otp.create({
       data: {
         code: code,
-        userId:user.id
+        userId: user.id,
       },
-     
     });
     // await prisma.user.update({
     //   data: {
@@ -52,15 +44,16 @@ export async function POST(request: Request) {
     //     deleted: 0,
     //   },
     // });
- // await sendSMS(user?.phoneNumber, `Enter the reset code to reset your password ${code}`);
+    await sendSMS(
+      user?.phoneNumber,
+      `Enter the reset code to reset your password ${code}`
+    );
 
+    return NextResponse.json(null, { status: 200 });
 
-   return NextResponse.json(null, { status: 200 });
-
-   //return NextResponse.redirect(new URL('/auth/reset-password',request.url));
-
+    //return NextResponse.redirect(new URL('/auth/reset-password',request.url));
   } catch (error: any) {
     console.log(error);
-    return  NextResponse.json({ message: error.message });
+    return NextResponse.json({ message: error.message });
   }
 }

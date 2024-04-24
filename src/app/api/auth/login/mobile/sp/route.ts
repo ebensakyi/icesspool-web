@@ -8,19 +8,21 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-
     let phoneNumber = res.phoneNumber;
     let password = res.password;
 
     const user: any = await prisma.user.findFirst({
       where: {
         phoneNumber: phoneNumber,
-        userTypeId:3,
+        userTypeId: 3,
         deleted: 0,
       },
-     // include: { ServiceArea: true, ServiceProvider: true },
+      include: {
+        ServiceProvider: {
+          include: { Service: true },
+        },
+      },
     });
-
 
     if (!user) {
       return NextResponse.json(null, { status: 400 });
@@ -32,7 +34,11 @@ export async function POST(request: Request) {
       //const token = jwt.sign(user, process.env.TOKEN_SECRET ?? "");
 
       // return NextResponse.json({ ...user, token, privileges });
-      return NextResponse.json(user);
+
+      let newUser = { ...user, serviceId: user.ServiceProvider.serviceId };
+
+      
+      return NextResponse.json(newUser);
     }
     return NextResponse.json(null, { status: 400 });
   } catch (error: any) {

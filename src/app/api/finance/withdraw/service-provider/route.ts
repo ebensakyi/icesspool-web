@@ -10,25 +10,24 @@ export async function POST(request: Request) {
     let userId = Number(res.userId);
     let amount = Number(res.amount);
 
+console.log(userId);
+
+
     const sp = await prisma.serviceProvider.findFirst({
       where: { deleted: 0, userId: userId },
     });
 
     let serviceProviderId: any = sp?.id;
 
-    console.log("serviceProviderId ID ", serviceProviderId);
+    console.log("serviceProviderId==>serviceProviderId", serviceProviderId);
+    
 
-
- let x =   await prisma.serviceProviderWithdrawal.create({
+    let x = await prisma.serviceProviderWithdrawal.create({
       data: {
         serviceProviderId: serviceProviderId,
         amount: amount,
-       
       },
     });
-
-    console.log(x);
-    
 
     return NextResponse.json({});
   } catch (error) {
@@ -38,33 +37,27 @@ export async function POST(request: Request) {
   }
 }
 
-
-
-
-
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
     let spUserId = Number(searchParams.get("userId"));
 
-      const sp = await prisma.serviceProvider.findFirst({
-        where: { deleted: 0, userId: spUserId },
-      });
+    const sp = await prisma.serviceProvider.findFirst({
+      where: { deleted: 0, userId: spUserId },
+    });
 
-      let serviceProviderId: any = sp?.id;
+    let serviceProviderId: any = sp?.id;
 
     let pendingWithdrawal = await prisma.serviceProviderWithdrawal.findFirst({
-        where: {
-          serviceProviderId: serviceProviderId,
-          deleted: 0,
-        },
-      });
+      where: {
+        serviceProviderId: serviceProviderId,
+        deleted: 0,
+        status: 0,
+      },
+    });
 
-      
-      return NextResponse.json({pendingWithdrawal});
-   
-
+    return NextResponse.json({ pendingWithdrawal });
   } catch (error) {
     console.log(error);
 

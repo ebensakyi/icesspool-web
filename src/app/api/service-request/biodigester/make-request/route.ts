@@ -157,10 +157,10 @@ export async function POST(request: Request) {
     });
 
     for (let i = 0; i < serviceProviders.length; i++) {
-      // await sendSMS(
-      //   serviceProviders[i].phoneNumber,
-      //   `Hello ${serviceProviders[i].firstName} biodigester request is available`
-      // );
+      await sendSMS(
+        serviceProviders[i].phoneNumber,
+        `Hello ${serviceProviders[i].firstName} biodigester request is available`
+      );
 
       await sendFCM(
         "New Request",

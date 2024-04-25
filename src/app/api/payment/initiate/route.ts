@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let paymentId: any = searchParams?.get("paymentId");
     let transactionId: any = searchParams.get("transactionId");
-    let paymentMethod: any = searchParams?.get("paymentMethod");
+    let paymentMethod: any = searchParams?.get("payment_method");
 
 
     console.log(searchParams);

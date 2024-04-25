@@ -27,6 +27,9 @@ export const initiatePayment = async (
     json: true,
   };
 
+  console.log("OPTIONS===> ", options);
+  
+
   let response = await axios.request(options);
 
   return response.data;

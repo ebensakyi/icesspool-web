@@ -13,6 +13,8 @@ import {
 import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
 import { runCronJob } from "@/libs/transaction-cron";
+import { sendSMS } from "@/libs/send-hubtel-sms";
+import { sendFCM } from "@/libs/send-fcm";
 
 export async function POST(request: Request) {
   try {
@@ -25,7 +27,6 @@ export async function POST(request: Request) {
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
     let txStatusCode = Number(res.txStatusCode);
-    console.log(">>>>>>>>transactionId>>>>>>> ",transactionId);
     
     let currentStatus;
 
@@ -45,6 +46,14 @@ export async function POST(request: Request) {
       },
     });
 
+///Get client info
+    let client:any = await prisma.transaction.findFirst({
+      where: { id: transactionId },
+      include: { Customer: true },
+    });
+
+console.log(client);
+
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },
       include: { ServiceProvider: true },
@@ -52,7 +61,6 @@ export async function POST(request: Request) {
 
     //Update firestore
 
-console.log("cuuuuu ",currentStatus);
 
     
     if (transaction) {
@@ -70,6 +78,18 @@ console.log("cuuuuu ",currentStatus);
         spImageUrl: sp?.passportPicture,
         spId: serviceProviderId,
       });
+
+
+      await sendSMS(
+        client?.Customer?.phoneNumber,
+        `Hello ${client?.Customer?.firstName} your icesspool request has been accepted. Make payment now`
+      );
+
+      await sendFCM(
+        "Request Accepted",
+        `Hello ${ client?.Customer?.firstName} biodigester request is available`,
+        client?.Customer?.fcmId
+      );
     }
 
     // runCronJob(transactionSchedule, async () => {

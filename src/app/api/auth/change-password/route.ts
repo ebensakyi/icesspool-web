@@ -8,6 +8,8 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
+    console.log(res);
+    
     let phoneNumber = res.phoneNumber;
     let newPassword = res.newPassword;
     let oldPassword = res.oldPassword;

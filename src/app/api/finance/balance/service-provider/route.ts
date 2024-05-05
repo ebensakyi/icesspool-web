@@ -20,7 +20,6 @@ export async function GET(request: Request) {
           where: { deleted: 0, serviceProviderId: sp?.id },
         });
       let balance = serviceProviderBalance.balance.toFixed(2);  
-        console.log("userId ==> " + userId,balance);
 
       return NextResponse.json({accountBalance: Number(balance)});
     }

@@ -52,7 +52,6 @@ export async function POST(request: Request) {
       include: { Customer: true },
     });
 
-console.log(client);
 
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },

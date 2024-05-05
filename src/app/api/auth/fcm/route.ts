@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    console.log(res);
     
 
     let userId = res.userId;

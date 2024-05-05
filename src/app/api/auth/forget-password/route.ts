@@ -10,10 +10,7 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    let phoneNumber = res.phoneNumber;
-
-    console.log(phoneNumber);
-    
+    let phoneNumber = res.phoneNumber;    
 
     const user : any = await prisma.user.findFirst({
       where: {

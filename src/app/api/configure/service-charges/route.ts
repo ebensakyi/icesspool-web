@@ -8,7 +8,6 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
 
-    console.log(res);
     
     const session: any = await getServerSession(authOptions);
 
@@ -33,35 +32,38 @@ export async function POST(request: Request) {
   }
 }
 
-// export async function PUT(request: Request) {
-//   try {
-//     const res = await request.json();
-//     const session: any = await getServerSession(authOptions);
+export async function PUT(request: Request) {
+  try {
+    const res = await request.json();
+    const session: any = await getServerSession(authOptions);
 
-//     const data = {
-//         fine: res?.fine,
-//     };
+    
+    const data = {
+      serviceAreaId: Number(res?.serviceArea),
+      serviceId: Number(res?.service),
+      icesspoolCommission: Number(res?.icesspoolCommission),
+      platformCommission: Number(res?.platformCharges),
+      paymentCharges: Number(res?.paymentCharges),
 
-//     const response = await prisma.penalty.findFirst({
-//         where: { deleted: 0 },
-//       });
-//       if(response){
+    };
+    // const response = await prisma.serviceCharges.findFirst({
+    //     where: { deleted: 0 },
+    //   });
+    
+    await prisma.serviceCharges.update({
+      where: {
+        id: Number(res?.id),
+      },
+      data,
+    });
 
-//       }
-//     await prisma.penalty.update({
-//       where: {
-//         id: Number(res?.id),
-//       },
-//       data,
-//     });
+    return NextResponse.json({ status: 200 });
+  } catch (error: any) {
+    console.log(error);
 
-//     return NextResponse.json({ status: 200 });
-//   } catch (error: any) {
-//     console.log(error);
-
-//     return NextResponse.json(error, { status: 500 });
-//   }
-// }
+    return NextResponse.json(error, { status: 500 });
+  }
+}
 
 export async function GET(request: Request) {
   try {
@@ -75,6 +77,10 @@ export async function GET(request: Request) {
 
     const response = await prisma.serviceCharges.findMany({
       where: { deleted: 0 },
+      include:{
+        Service:true,
+        ServiceArea:true,
+      }
     });
 
     

@@ -8,11 +8,10 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from "react-modal";
 
 export const BiodigesterOffer = ({ data }: any) => {
 
-    console.log(data);
-    
 
 
     const [id, setId] = useState(null);
@@ -29,8 +28,41 @@ export const BiodigesterOffer = ({ data }: any) => {
     const pathname = usePathname()
 
 
+    const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
+    const [closeTxModalIsOpen, setCloseTxModalIsOpen] = useState(false);
 
-    const closeTx = async () => {
+
+    function openDeleteTxModal(e: any) {
+        e.preventDefault();
+        setDeleteTxModalIsOpen(true);
+    }
+
+    function afterOpenDeleteModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = "#f00";
+    }
+
+    function closeDeleteModal() {
+        setDeleteTxModalIsOpen(false);
+    }
+
+
+    function openCloseTxModal(e: any) {
+        e.preventDefault();
+        setCloseTxModalIsOpen(true);
+    }
+
+    function afterOpenCloseTxModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = "#f00";
+    }
+
+    function closeCloseTxModal() {
+        setCloseTxModalIsOpen(false);
+    }
+
+    const handleCloseTx = async (e:any) => {
+        e.preventDefault();
         try {
             let data = {
                 id: id,
@@ -38,16 +70,15 @@ export const BiodigesterOffer = ({ data }: any) => {
             };
 
             const response = await axios.put("/api/service-request/biodigester/close-transaction/admin", data);
-            console.log(response);
-            
 
-            if(response.data.status){
+
+            if (response.data.status) {
                 toast.success("Transaction closed");
                 setId(null)
-    
-    
+
+
             }
-          
+
             router.refresh()
 
         } catch (error: any) {
@@ -57,16 +88,153 @@ export const BiodigesterOffer = ({ data }: any) => {
         }
     };
 
-    const  viewTx = async () => {
+
+    const handleDeleteTx = async (e: any) => {
+        e.preventDefault();
+        try {
+            let data = {
+                id: id,
+
+            };
+
+            const response = await axios.put("/api/service-request/biodigester/delete-transaction/admin", data);
+
+
+            if (response.data.status) {
+                toast.success("Transaction closed");
+                setId(null)
+
+
+            }
+
+            router.refresh()
+
+        } catch (error: any) {
+            if (error.response.status == 401) {
+                toast.error(error.response.data.message);
+            }
+        }
+    };
+
+    // const handleCloseTx = async (e: any) => {
+    //     e.preventDefault();
+    //     try {
+    //         let data = {
+    //             id: id,
+
+    //         };
+
+    //         const response = await axios.put("/api/service-request/biodigester/delete-transaction/admin", data);
+
+
+    //         if (response.data.status) {
+    //             toast.success("Transaction closed");
+    //             setId(null)
+
+
+    //         }
+
+    //         router.refresh()
+
+    //     } catch (error: any) {
+    //         if (error.response.status == 401) {
+    //             toast.error(error.response.data.message);
+    //         }
+    //     }
+    // };
+    const viewTx = async () => {
         throw new Error('Function not implemented.');
     }
 
-
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+        },
+    };
 
     return (
         <main id="main" className="main">
             <div className="pagetitle">
                 <h1>BIODIGESTER OFFERS</h1>
+
+                <Modal
+                    isOpen={deleteTxModalIsOpen}
+                    onAfterOpen={afterOpenDeleteModal}
+                    onRequestClose={closeDeleteModal}
+                    style={customStyles}
+                    contentLabel="Confirm deletion"
+                >
+                    <div className="alert alert-outline-danger alert-p" role="alert">
+                        <span className="alert-content">
+                            You are about to delete this report.<br /> Deleted report cannot be recovered.
+                            Click OK to proceed to delete or Cancel to dismiss
+                        </span>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button
+                                    onClick={(e: any) => {
+                                        handleDeleteTx(e);
+                                        closeDeleteModal();
+                                    }}
+                                    className="btn btn-success"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button onClick={closeDeleteModal} className="btn btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
+                <Modal
+                    isOpen={closeTxModalIsOpen}
+                    onAfterOpen={afterOpenCloseTxModal}
+                    onRequestClose={closeCloseTxModal}
+                    style={customStyles}
+                    contentLabel="Confirm deletion"
+                >
+                    <div className="alert alert-outline-danger alert-p" role="alert">
+                        <span className="alert-content">
+                            You are about to close this offer.<br />Closed offer cannot be recovered.
+                            Click OK to close or Cancel to dismiss
+                        </span>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button
+                                    onClick={(e: any) => {
+                                        handleCloseTx(e);
+                                        closeCloseTxModal();
+                                    }}
+                                    className="btn btn-success"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button onClick={closeCloseTxModal} className="btn btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -151,7 +319,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Tx.Id</th>
+                                            <th scope="col">Tx.Id</th>
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Provider Name</th>
                                             <th scope="col">Area</th>
@@ -168,16 +336,47 @@ export const BiodigesterOffer = ({ data }: any) => {
                                     </thead>
                                     <tbody>
                                         {data?.biodigesterOffers?.response?.map((data: any) => {
-                                          
+
                                             return (
                                                 <tr key={data?.id}>
-                                                     <td>{data?.id}</td>
+                                                    <td>{data?.id}</td>
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
-                                                    <td>GHS {data?.discountedCost}</td>
+                                                    <td>GHS {data?.discountedCost} {data?.currentStatus}</td>
 
-                                                    <td>{<span className="badge bg-primary">{data?.TxStatus?.name}</span>}</td>
+                                                    <td>{data?.currentStatus == 1 ? (
+                                                        <span className="badge bg-primary">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 2 ? (
+                                                        <span className="badge bg-success">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 3 ? (
+                                                        <span className="badge bg-success">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 4 ? (
+                                                        <span className="badge bg-danger">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 5 ? (
+                                                        <span className="badge bg-warning">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 6 ? (
+                                                        <span className="badge bg-info">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 7 ? (
+                                                        <span className="badge bg-light text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 8 ? (
+                                                        <span className="badge bg-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 9 ? (
+                                                        <span className="badge bg-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 10 ? (
+                                                        <span className="badge bg-success">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 40 ? (
+                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 41 ? (
+                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 50 ? (
+                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 51 ? (
+                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : (
+                                                        <span className="badge bg-secondary">{data?.TxStatus?.name}</span>
+                                                    )}
+                                                    </td>
                                                     {/* <td>{data?.BiodigesterTransaction.name}</td> */}
 
                                                     <td>  {moment(data?.createdAt).format(
@@ -211,45 +410,34 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
 
-                                                                                // setSendingType(data.sendingType)
-                                                                                // setDistrictId(data.districtId);
                                                                                 viewTx()
-
-
-                                                                                // setIsEditing(true);
-
                                                                             }}
                                                                         >
                                                                             View Tx
                                                                         </button>
                                                                     </li>
-                                                                    <li>
+                                                                    {data?.currentStatus == 4 || data.currentStatus == 5?  <li>
 
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
-
-                                                                                // setSendingType(data.sendingType)
-                                                                                // setDistrictId(data.districtId);
-                                                                                closeTx()
-
-
-                                                                                // setIsEditing(true);
+                                                                                setCloseTxModalIsOpen(true);
+                                                                                // closeTx()
 
                                                                             }}
                                                                         >
                                                                             Close Tx
                                                                         </button>
-                                                                    </li>
+                                                                    </li>:<></>}
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                                // _delete(data.id);
+                                                                               setDeleteTxModalIsOpen(true);
                                                                             }}
                                                                         >
                                                                             Delete

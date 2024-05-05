@@ -27,7 +27,6 @@ export async function GET(request: Request) {
         orderBy: {id:"desc"}
       });
 
-      console.log( response);
       
 
       return NextResponse.json(response);

@@ -8,7 +8,6 @@ export async function getTxDistrict(lat: number, lng: number): Promise<number> {
         // Fetch all district boundaries from the database
         const boundaries = await prisma.districtCoordinates.findMany();
 
-        console.log(boundaries);
         
 
         // Iterate over each district boundary

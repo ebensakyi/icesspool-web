@@ -46,8 +46,7 @@ export async function POST(request: Request) {
         passwordChanged: 1,
       };
 
-      console.log(data);
-      console.log(user);
+
 
 
       await prisma.user.update({

@@ -43,8 +43,6 @@ export async function POST(request: Request) {
       password: hashedPassword,
      
     };
-
-    console.log("data====> ",data);
     
 
     let count = await prisma.user.count({
@@ -339,7 +337,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-    console.log(res);
 
     let userId = res.userId;
 

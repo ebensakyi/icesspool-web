@@ -42,7 +42,6 @@ export const upload2S3 = async (fileName:any,bucketName:any) => {
         };
     
         let stored = await s3.upload(params).promise();
-        console.log("STORE ", stored.Location);
     
         return stored.Location;
       } catch (error) {

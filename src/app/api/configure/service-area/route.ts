@@ -70,7 +70,6 @@ export async function PUT(request: Request) {
       lng4: Number(res?.lng4),
     };
 
-    console.log(data);
     
     await prisma.serviceArea.update({
       where: {

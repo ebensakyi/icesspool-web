@@ -12,10 +12,7 @@ async function getCharges(searchParams: any) {
     const res = await fetch(
       `${SERVER_BASE_URL}/api/configure/service-charges`,
       { cache: "no-store", headers: headers() }
-    );
-
-    console.log(res);
-    
+    );    
   
     if (!res.ok) {
       throw new Error("Failed to fetch data");

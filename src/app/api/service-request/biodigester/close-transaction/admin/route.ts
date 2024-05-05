@@ -25,15 +25,19 @@ export async function PUT(request: Request) {
 
     const res = await request.json();
 
+
+
     let transactionId = res.id;
     // let serviceId = res.serviceId;
     // let serviceAreaId = res.serviceAreaId;
+
+
     const transaction: any = await prisma.transaction.findFirst({
       where: { id: transactionId },
     });
 
     let serviceId = transaction?.serviceId;
-    let serviceProviderId = transaction?.serviceProviderId;
+    let serviceProviderUserId = transaction?.serviceProviderId;
 
     let serviceAreaId = transaction?.serviceAreaId;
     let totalCost: number = transaction.discountedCost;
@@ -78,7 +82,11 @@ export async function PUT(request: Request) {
     }
 
     if (serviceId == 3) {
+
+    
+
       let moneyAllocations = await allocateFundsBiodigester(totalCost, charges);
+      
       await prisma.icesspoolEarning.create({
         data: {
           transactionId: transactionId,
@@ -107,6 +115,10 @@ export async function PUT(request: Request) {
         },
       });
 
+      let sp = await prisma.serviceProvider.findFirst({where: {userId:serviceProviderUserId}})
+
+      let serviceProviderId :any = sp?.id;
+
       await prisma.serviceProviderEarning.create({
         data: {
           transactionId: transactionId,
@@ -126,7 +138,7 @@ export async function PUT(request: Request) {
         where: {
           id: serviceProviderBalance?.id,
         },
-      });
+     });
     }
 
     return NextResponse.json({});
@@ -141,17 +153,30 @@ const allocateFundsBiodigester = async (
   discountedTotalCost: number,
   charges: any
 ) => {
-  let icesspoolPercentage = charges.icesspoolPercentage;
-  let paymentChargesPercentage = charges.icesspoolPercentage;
-  let otherChargesPercentage = charges.icesspoolPercentage;
+
+  console.log("discountedTotalCost===> ",discountedTotalCost);
+
+  let icesspoolPercentage = charges.icesspoolCommission;
+  let paymentChargesPercentage = charges.paymentCharges;
+  let otherChargesPercentage = charges.otherCharges;
   const transactionAmount = discountedTotalCost;
 
-  // const icesspoolAmount = transactionAmount * 0.07;
-  // const charges = transactionAmount * 0.03;
+  console.log("icesspoolPercentage",icesspoolPercentage);
+  console.log("paymentChargesPercentage",paymentChargesPercentage);
+  console.log("otherChargesPercentage",otherChargesPercentage);
+  console.log("transactionAmount",transactionAmount);
+
   const icesspoolAmount = transactionAmount * icesspoolPercentage;
   const paymentCharges = transactionAmount * paymentChargesPercentage;
   const otherCharges = transactionAmount * otherChargesPercentage;
   const platformCharges = otherCharges + paymentCharges;
+
+
+
+  console.log("icesspoolAmount==>",icesspoolAmount);
+  console.log("paymentCharges==>",paymentCharges);
+  console.log("otherCharges==>",otherCharges);
+  console.log("platformCharges==>",platformCharges);
 
   const providerAmount =
     transactionAmount - (icesspoolAmount + platformCharges);

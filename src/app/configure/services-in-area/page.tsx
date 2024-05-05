@@ -48,7 +48,7 @@ async function getServices(searchParams: any) {
       }
       return await response.json();
     } catch (error) {
-      console.log("getServiceAreas==>");
+      console.log("getServiceAreas==>",error);
       
     }
     

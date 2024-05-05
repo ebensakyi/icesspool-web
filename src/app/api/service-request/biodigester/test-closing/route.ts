@@ -2,24 +2,20 @@ import { getServerSession } from "next-auth";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 
-
 export async function POST(request: Request) {
   try {
     const res = await request.json();
 
     let totalAmount = res.totalAmount;
-let charges = {
-  icesspoolPercentage:1,
-  otherChargesPercentage:3,
-  paymentChargesPercentage:5
+    let charges = {
+      icesspoolPercentage: 1,
+      otherChargesPercentage: 3,
+      paymentChargesPercentage: 5,
+    };
 
-}
+    let moneyAllocations = await allocateFundsBiodigester(totalAmount, charges);
 
-      let moneyAllocations = await allocateFundsBiodigester(totalAmount, charges);
-
-     
-
-    return NextResponse.json({moneyAllocations});
+    return NextResponse.json({ moneyAllocations });
   } catch (error: any) {
     console.log(error);
 
@@ -31,9 +27,9 @@ const allocateFundsBiodigester = async (
   discountedTotalCost: number,
   charges: any
 ) => {
-  let icesspoolPercentage = charges.icesspoolPercentage/100;
-  let paymentChargesPercentage = charges.icesspoolPercentage/100;
-  let otherChargesPercentage = charges.icesspoolPercentage/100;
+  let icesspoolPercentage = charges.icesspoolPercentage / 100;
+  let paymentChargesPercentage = charges.icesspoolPercentage / 100;
+  let otherChargesPercentage = charges.icesspoolPercentage / 100;
   const transactionAmount = discountedTotalCost;
 
   // const icesspoolAmount = transactionAmount * 0.07;

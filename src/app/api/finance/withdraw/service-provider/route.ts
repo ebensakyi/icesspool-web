@@ -72,7 +72,6 @@ export async function PUT(request: Request) {
       },
       where: { serviceProviderId: sp?.id, deleted: 0 },
     });
-    console.log(withdrawal);
 
     await prisma.serviceProviderWithdrawal.update({
       data: { deleted: 1 },

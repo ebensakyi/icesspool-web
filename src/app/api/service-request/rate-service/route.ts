@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     const serviceProviderId = Number(res?.spId)
 
 
- console.log(" contextcontextcontext ");
 
     // const userId = session?.user?.id;
 

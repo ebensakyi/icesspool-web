@@ -338,7 +338,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-    console.log(res);
 
     let userId = res.userId;
 

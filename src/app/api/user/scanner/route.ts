@@ -43,7 +43,6 @@ export async function POST(request: Request) {
       password: hashedPassword,
     };
 
-    console.log("data====> ", data);
 
     let count = await prisma.user.count({
       where: {
@@ -93,7 +92,6 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log(response);
 
     return NextResponse.json({
       response,
@@ -149,7 +147,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-    console.log(res);
 
     let userId = res.userId;
 

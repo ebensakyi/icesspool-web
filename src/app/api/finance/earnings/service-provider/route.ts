@@ -21,18 +21,21 @@ export async function GET(request: Request) {
           include: { Transaction: { include: { Service: true } } },
         });
 
+        
       const response = await serviceProviderEarning.map((item: any) => {
         return {
           id: item.id,
           amount: item.amount,
-          completionDate: item.completionDate,
-          address: item.address,
-          service: item.Service?.name,
+          completionDate: item?.completionDate??"",
+          address: item?.Transaction?.address,
+          service: item?.Transaction?.Service?.name,
           createdAt: item.createdAt,
         };
       });
+      console.log(response);
+      
 
-      return NextResponse.json({ response });
+      return NextResponse.json(response);
     }
 
     //from web
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
       include: { Transaction: { include: { Service: true } } },
     });
     // let balance = serviceProviderBalance.balance;
-    return NextResponse.json({ response });
+    return NextResponse.json( response );
   } catch (error) {
     console.log(error);
 

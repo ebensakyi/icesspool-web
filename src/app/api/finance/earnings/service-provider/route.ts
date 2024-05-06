@@ -25,6 +25,7 @@ export async function GET(request: Request) {
       const response = await serviceProviderEarning.map((item: any) => {
         return {
           id: item.id,
+          transactionId:item.Transaction.id,
           amount: item.amount,
           completionDate: item?.completionDate??"",
           address: item?.Transaction?.address,

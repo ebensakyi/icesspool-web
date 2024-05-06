@@ -308,12 +308,18 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#offers-nav"
                             > <li>
+                                    <Link href="/service-request/change-price">
+                                        <i className="bi bi-circle" />
+                                        <span>Change Price</span>
+                                    </Link>
+                                </li>
+                                 <li>
                                     <Link href="/service-request/biodigester/offers">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digester</span>
                                     </Link>
                                 </li>
-
+                               
                                 <li>
                                     <Link href="/offers/emptying">
                                         <i className="bi bi-circle" />
@@ -370,7 +376,7 @@ export default function Header() {
                                     <i className="bi bi-truck" />
                                     <span>Truck Classes</span>
                                 </Link>
-                            </li> 
+                            </li>
                             <Link
                                 className={
                                     pathname == "/esicapps1/general"
@@ -430,7 +436,7 @@ export default function Header() {
                                         <span>Service Points</span>
                                     </Link>
                                 </li>
-<hr/>
+                                <hr />
                                 <li>
                                     <Link href="/configure/charges">
                                         <i className="bi bi-circle" />
@@ -588,7 +594,7 @@ export default function Header() {
                                         <span>Service Provider</span>
                                     </Link>
                                 </li>
-                               
+
 
                             </ul>
                         </li>
@@ -637,44 +643,44 @@ export default function Header() {
 
                         <li className="nav-item">
 
-<Link
-    className={
-        pathname == "/esicapps1/general"
-            ? "nav-link"
-            : "nav-link collapsed"
-    }
-    data-bs-target="#balances-nav"
-    data-bs-toggle="collapse"
-    href="#"
->
-    <i className="bi bi-currency-dollar
+                            <Link
+                                className={
+                                    pathname == "/esicapps1/general"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }
+                                data-bs-target="#balances-nav"
+                                data-bs-toggle="collapse"
+                                href="#"
+                            >
+                                <i className="bi bi-currency-dollar
 
 " />
-    <span>Balances</span>
-    <i className="bi bi-chevron-down ms-auto" />
-</Link>
-<ul
-    id="balances-nav"
-    className="nav-content collapse "
-    data-bs-parent="#balances-nav"
->
+                                <span>Balances</span>
+                                <i className="bi bi-chevron-down ms-auto" />
+                            </Link>
+                            <ul
+                                id="balances-nav"
+                                className="nav-content collapse "
+                                data-bs-parent="#balances-nav"
+                            >
 
 
-    <li>
-        <Link href="/finance/balances/service-provider">
-            <i className="bi bi-circle" />
-            <span>Service provider</span>
-        </Link>
-    </li>
-    <li>
-        <Link href="/finance/balances/mmda">
-            <i className="bi bi-circle" />
-            <span>MMDA</span>
-        </Link>
-    </li>
+                                <li>
+                                    <Link href="/finance/balances/service-provider">
+                                        <i className="bi bi-circle" />
+                                        <span>Service provider</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/finance/balances/mmda">
+                                        <i className="bi bi-circle" />
+                                        <span>MMDA</span>
+                                    </Link>
+                                </li>
 
-</ul>
-</li>
+                            </ul>
+                        </li>
                     </ul>
                 </aside> : <></>}
         </>

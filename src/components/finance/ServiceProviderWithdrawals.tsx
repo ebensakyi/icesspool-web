@@ -10,7 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ServiceProviderWithdrawals = ({ data }: any) => {
-   
+
+
 
     const { data: session } = useSession({
         required: true,
@@ -24,13 +25,48 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
     const pathname = usePathname()
 
 
+    const approve = async (e: any) => {
+        try {
+            e.preventDefault();
+            // if (name == "" || status == 0) {
+            //     return toast.error("Please fill form");
+            // }
+
+            // let data = {
+            //     id: Number(id),
+            //     name,
+            //     shortDesc,
+            //     longDesc,
+            //     imageUrl,
+            //     status,
+            // };
+
+
+
+
+            // const response = await axios.put("/api/configure/biodigester-services", data);
+            // toast.success(response.data.message);
+            // setId(null)
+            // setName("")
+            // setLongDesc("")
+            // setShortDesc("")
+            // setStatus(2);
+
+            router.refresh()
+
+        } catch (error: any) {
+            if (error.response.status == 401) {
+                toast.error(error.response.data.message);
+            }
+        }
+    };
 
 
 
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>SERVICE PROVIDER WITHDRAWALS</h1>
+                <h1>WITHDRAWAL REQUESTS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -44,7 +80,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-             
+
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
@@ -53,6 +89,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Phone Number</th>
 
                                             <th scope="col">Amount</th>
 
@@ -64,17 +101,18 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.withdrawals?.response?.map((data: any) => {
+                                        {data?.withdrawals?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
+                                                    <td>{data?.ServiceProvider?.User?.firstName} {data?.ServiceProvider?.User?.lastName}</td>
+                                                    <td>{data?.ServiceProvider?.User?.phoneNumber}</td>
                                                     <td>{data?.amount}</td>
 
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
                                                     )}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
-                                                   
+                                                    <td>{data?.status == 1 ? <span className="badge bg-success">Disbursed</span> : <span className="badge bg-warning">Pending</span>}</td>
+
                                                     <td>
                                                         <div
                                                             className="btn-group"
@@ -99,10 +137,10 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
 
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
-                                                                            onClick={(e) => {
+                                                                            onClick={async(e)  => {
                                                                                 e.preventDefault();
-                                                                               
 
+                                                                               await approve(e)
 
                                                                                 // setIsEditing(true);
 

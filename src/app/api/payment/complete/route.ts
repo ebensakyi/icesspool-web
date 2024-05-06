@@ -17,7 +17,6 @@ import {
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
 import { getCurrentDate, getCurrentTime } from "@/libs/date";
-import { txStatuses } from '../../../../../prisma/seeds/tx_statuses';
 
 export async function GET(request: Request) {
   try {

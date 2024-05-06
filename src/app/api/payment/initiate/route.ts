@@ -19,7 +19,6 @@ export async function GET(request: Request) {
     let paymentMethod: any = searchParams?.get("paymentMethod");
 
 
-    console.log(searchParams);
     
 
 

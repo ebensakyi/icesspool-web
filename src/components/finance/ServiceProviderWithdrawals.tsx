@@ -106,7 +106,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                                 <tr key={data?.id}>
                                                     <td>{data?.ServiceProvider?.User?.firstName} {data?.ServiceProvider?.User?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.User?.phoneNumber}</td>
-                                                    <td>{data?.amount}</td>
+                                                    <td>GHS {data?.amount}</td>
 
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"

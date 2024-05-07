@@ -158,7 +158,7 @@ export default function ServiceProvider({ data }: any) {
         formData.append('email', email);
         formData.append('phoneNumber', phoneNumber);
         formData.append('serviceArea', serviceArea);
-        formData.append('service', service+"");
+        formData.append('service', service + "");
         formData.append('ghanaPostGPS', ghanaPostGPS);
         formData.append('officeLocation', officeLocation);
         formData.append('company', company);
@@ -228,6 +228,11 @@ export default function ServiceProvider({ data }: any) {
                 setPhoneNumber("");
                 setServiceArea("");
                 setUserType("");
+                setCompany("")
+                setOfficeLocation("")
+                setMomoNetwork("");
+                setMomoNumber("")
+                setPassportImage(null);
                 // setRegion("");
                 setIsEditing(false);
 
@@ -313,7 +318,7 @@ export default function ServiceProvider({ data }: any) {
                                 {/* General Form Elements */}
                                 {/* <form> */}
                                 <div className="row">
-                                    
+
                                     <div className="col-sm-3 mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                             First name *
@@ -394,39 +399,39 @@ export default function ServiceProvider({ data }: any) {
                                             </select>
                                         </div>
                                     </div>
-                                  
-                                    {service==1||service==2?
-                                    <><div className="col-sm-3 mb-3">
-                                        <label className="col-sm-12 col-form-label">Select licence classification</label>
-                                        <div className="col-sm-12">
-                                            <select
-                                                onChange={(e: any) => setLicenseClassification(e.target.value)}
-                                                className="form-select"
-                                                aria-label="Default select example"
-                                                value={licenseClassification}
-                                            >
 
-                                                <option >Select classification</option>
-                                                <option value="1" >A</option>
-                                                <option value="2" >B</option>
-                                                <option value="3">C</option>
-                                                <option value="4">D</option>
-                                                <option value="5">E</option>
+                                    {service == 1 || service == 2 ?
+                                        <><div className="col-sm-3 mb-3">
+                                            <label className="col-sm-12 col-form-label">Select licence classification</label>
+                                            <div className="col-sm-12">
+                                                <select
+                                                    onChange={(e: any) => setLicenseClassification(e.target.value)}
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    value={licenseClassification}
+                                                >
 
-                                                {/* {data.userTypes.response.map((userType: any) => {
+                                                    <option >Select classification</option>
+                                                    <option value="1" >A</option>
+                                                    <option value="2" >B</option>
+                                                    <option value="3">C</option>
+                                                    <option value="4">D</option>
+                                                    <option value="5">E</option>
+
+                                                    {/* {data.userTypes.response.map((userType: any) => {
                                                         return (
                                                             <option key={userType.id} value={userType.id}>{userType.name}</option>
                                                         )
                                                     })} */}
-                                            </select>
-                                        </div>
-                                    </div>  <div className="col-sm-3  mb-3">
-                                        <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                            License Number                                            </label>
-                                        <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
-                                        </div>
-                                    </div></>:<></>}
+                                                </select>
+                                            </div>
+                                        </div>  <div className="col-sm-3  mb-3">
+                                                <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                    License Number                                            </label>
+                                                <div className="col-sm-12">
+                                                    <input type="text" className="form-control" placeholder='License Number' onChange={(e) => setLicenseNumber(e.target.value)} value={licenseNumber} />
+                                                </div>
+                                            </div></> : <></>}
 
                                     <div className="col-sm-3  mb-3">
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -630,7 +635,7 @@ export default function ServiceProvider({ data }: any) {
                                             <th scope="col">Location</th>
                                             <th scope="col">User type</th>
 
-                                            <th scope="col">OTP</th>
+                                            {/* <th scope="col">OTP</th> */}
 
                                             <th scope="col">Status</th>
 
@@ -650,12 +655,12 @@ export default function ServiceProvider({ data }: any) {
                                                 <td>{user?.ServiceProvider?.company}</td>
                                                 <td>{user?.ServiceProvider?.officeLocation}</td>
                                                 <td>{user?.UserType?.name}</td>
-                                                <td><span style={{ "cursor": "pointer" }}
+                                                {/* <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
-                                                    }}>{!showOtp ? "****" : user?.tempPassword}</span></td>
+                                                    }}>{!showOtp ? "****" : user?.tempPassword}</span></td> */}
 
-                                                <td>{user?.deleted == 1 ? <>
+                                                <td>{user?.activated != 1 ? <>
                                                     <span className="badge bg-danger"><i className="bi bi-check-circle me-1"></i> Inactive</span>
                                                 </> : <>              <span className="badge bg-success"><i className="bi bi-check-circle me-1"></i> Active</span>
                                                 </>}</td>
@@ -713,11 +718,11 @@ export default function ServiceProvider({ data }: any) {
                                                                     onClick={async (e) => {
                                                                         try {
                                                                             e.preventDefault();
-                                                                            let id = user.id;
+                                                                            let userId = user.id;
                                                                             const response = await axios.delete(
                                                                                 `/api/user`,
                                                                                 {
-                                                                                    data: { id },
+                                                                                    data: { userId, changeStatus: true },
                                                                                 }
                                                                             );
                                                                             if (response.status == 200) {

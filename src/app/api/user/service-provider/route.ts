@@ -183,7 +183,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const response = await prisma.user.findMany({
-      where: { userTypeId: 3 },
+      where: { userTypeId: 3,deleted:0 },
       include: {
         UserType: true,
         ServiceProvider: true,

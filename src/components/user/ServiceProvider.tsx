@@ -660,7 +660,7 @@ export default function ServiceProvider({ data }: any) {
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
                                                     }}>{!showOtp ? "****" : user?.Otp?.code}</span></td> */}
-    <td>{user?.Otp?.length > 0 ? user?.Otp[user?.Otp?.length - 1]?.code : '-'}</td>
+                                                <td>{user?.Otp?.length > 0 ? user?.Otp[user?.Otp?.length - 1]?.code : '-'}</td>
                                                 <td>{user?.activated != 1 ? <>
                                                     <span className="badge bg-danger"><i className="bi bi-check-circle me-1"></i> Inactive</span>
                                                 </> : <>              <span className="badge bg-success"><i className="bi bi-check-circle me-1"></i> Active</span>

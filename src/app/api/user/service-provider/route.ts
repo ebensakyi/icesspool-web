@@ -194,6 +194,8 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log(response[0].Otp);
+    
 
     return NextResponse.json({
       response,

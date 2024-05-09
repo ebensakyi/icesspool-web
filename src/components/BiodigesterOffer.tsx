@@ -416,7 +416,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             View Tx
                                                                         </button>
                                                                     </li>
-                                                                    {data?.currentStatus == 4 || data.currentStatus == 5?  <li>
+                                                                    {/* {data?.currentStatus == 4 || data.currentStatus == 5?  <li>
 
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
@@ -430,7 +430,23 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                         >
                                                                             Close Tx
                                                                         </button>
-                                                                    </li>:<></>}
+                                                                    </li>:<></>} */}
+
+                                                                     <li>
+
+<button
+    className="dropdown-item btn btn-sm "
+    onClick={(e) => {
+        e.preventDefault();
+        setId(data.id);
+        setCloseTxModalIsOpen(true);
+        // closeTx()
+
+    }}
+>
+    Close Tx
+</button>
+</li>
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    let userId = 3; //Number(searchParams.get("userId"));
+    let userId = Number(searchParams.get("userId"));
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
@@ -31,6 +31,7 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log(transaction);
     
     const response = transaction.map(item => {
       return {

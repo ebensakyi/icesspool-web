@@ -61,7 +61,7 @@ export const BiodigesterOffer = ({ data }: any) => {
         setCloseTxModalIsOpen(false);
     }
 
-    const handleCloseTx = async (e:any) => {
+    const handleCloseTx = async (e: any) => {
         e.preventDefault();
         try {
             let data = {
@@ -432,28 +432,28 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                         </button>
                                                                     </li>:<></>} */}
 
-                                                                     <li>
+                                                                    <li>
 
-<button
-    className="dropdown-item btn btn-sm "
-    onClick={(e) => {
-        e.preventDefault();
-        setId(data.id);
-        setCloseTxModalIsOpen(true);
-        // closeTx()
+                                                                        <button
+                                                                            className="dropdown-item btn btn-sm "
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                setId(data.id);
+                                                                                setCloseTxModalIsOpen(true);
+                                                                                // closeTx()
 
-    }}
->
-    Close Tx
-</button>
-</li>
+                                                                            }}
+                                                                        >
+                                                                            Close Tx
+                                                                        </button>
+                                                                    </li>
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                               setDeleteTxModalIsOpen(true);
+                                                                                setDeleteTxModalIsOpen(true);
                                                                             }}
                                                                         >
                                                                             Delete

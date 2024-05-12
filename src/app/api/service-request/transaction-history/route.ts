@@ -31,7 +31,6 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log(transaction);
     
     const response = transaction.map(item => {
       return {

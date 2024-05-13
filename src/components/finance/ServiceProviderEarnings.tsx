@@ -10,6 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ServiceProviderEarnings = ({ data }: any) => {
+
+    console.log(data);
+    
    
 
     const { data: session } = useSession({
@@ -24,6 +27,35 @@ export const ServiceProviderEarnings = ({ data }: any) => {
     const pathname = usePathname()
 
 
+    const handleDelete = async (id:any) => {
+        try {
+    
+       
+          let data = {
+           id
+          };
+    
+    
+          const response = await axios.put("/api/finance/earnings/service-provider", data);
+    
+    
+       
+    
+    
+          if (response.status == 200) {
+            router.refresh()
+    
+          }
+          if (response.status == 201) {
+            return toast.error("An error occured");
+    
+          }
+    
+    
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
 
 
@@ -52,28 +84,30 @@ export const ServiceProviderEarnings = ({ data }: any) => {
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
+                                        <th scope="col">Tx Id</th>
+
                                             <th scope="col">Name</th>
 
                                             <th scope="col">Service</th>
 
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Created Date</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Completion Date</th>
 
                                             <th scope="col">Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response?.map((data: any) => {
+                                        {data?.earnings?.response?.map((data: any) => {
                                             return (
-                                                <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                <tr key={data?.transactionId}>
+                                                      <td>{data?.transactionId}</td>
 
-                                                    <td>{data?.BiodigesterType.name}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
-                                                    <td>  {moment(data?.createdAt).format(
+                                                    <td>{data?.Transaction?.ServiceProvider?.firstName} {data?.Transaction?.ServiceProvider?.lastName}</td>
+                                                    <td>{data?.Transaction?.Service?.name}</td>
+                                                    <td>GHS {data?.amount}</td>
+                                                    {/* <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td> */}
+                                                    <td>  {moment(data?.Transaction?.updatedAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
                                                     )}</td>
                                                     <td>
@@ -96,7 +130,7 @@ export const ServiceProviderEarnings = ({ data }: any) => {
                                                                     className="dropdown-menu"
                                                                     aria-labelledby="btnGroupDrop1"
                                                                 >
-                                                                    <li>
+                                                                    {/* <li>
 
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
@@ -111,7 +145,7 @@ export const ServiceProviderEarnings = ({ data }: any) => {
                                                                         >
                                                                             Edit
                                                                         </button>
-                                                                    </li>
+                                                                    </li> */}
 
                                                                     <li>
                                                                         <button
@@ -119,7 +153,7 @@ export const ServiceProviderEarnings = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                                // _delete(data.id);
+                                                                               handleDelete(data.id);
                                                                             }}
                                                                         >
                                                                             Delete

@@ -18,6 +18,7 @@ export async function GET(request: Request) {
       const serviceProviderBalance: any =
         await prisma.serviceProviderBalance.findFirst({
           where: { deleted: 0, serviceProviderId: sp?.id },
+        
         });
       let balance = serviceProviderBalance.balance.toFixed(2);  
 
@@ -28,9 +29,12 @@ export async function GET(request: Request) {
     //from web
     const response = await prisma.serviceProviderBalance.findMany({
       where: { deleted: 0 },
+      include:{ServiceProvider:{
+        include:{User:true}
+      }}
     });
     // let balance = serviceProviderBalance.balance;
-    return NextResponse.json(response);
+    return NextResponse.json({response});
   } catch (error) {
     console.log(error);
 

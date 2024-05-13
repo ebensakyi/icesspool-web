@@ -3,7 +3,7 @@ import { SERVER_BASE_URL } from '@/config';
 import { ServiceProviderEarnings } from '@/src/components/finance/ServiceProviderEarnings';
 import { headers } from 'next/headers';
 
-async function getRequests(searchParams: any) {
+async function getEarnings(searchParams: any) {
     let { searchText } = searchParams;
   
     let { page } = searchParams;
@@ -24,11 +24,11 @@ async function getRequests(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const requests = await getRequests(searchParams)
+    const earnings = await getEarnings(searchParams)
 
 
 
-    let data = { requests }
+    let data = { earnings }
 
 
 

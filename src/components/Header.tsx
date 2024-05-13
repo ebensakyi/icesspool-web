@@ -589,7 +589,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/earnings/operate">
+                                    <Link href="/finance/earnings/service-provider">
                                         <i className="bi bi-circle" />
                                         <span>Service Provider</span>
                                     </Link>

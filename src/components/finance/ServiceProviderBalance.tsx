@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ServiceProviderBalance = ({ data }: any) => {
+    
    
 
     const { data: session } = useSession({
@@ -54,28 +55,27 @@ export const ServiceProviderBalance = ({ data }: any) => {
                                         <tr>
                                             <th scope="col">Name</th>
 
-                                            <th scope="col">Service</th>
+                                            <th scope="col">Current Balance</th>
 
-                                            <th scope="col">Type</th>
+                                            {/* <th scope="col">Type</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Created Date</th>
+                                            <th scope="col">Last Update</th> */}
 
                                             <th scope="col">Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response?.map((data: any) => {
+                                        {data?.balances?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.name}</td>
-                                                    <td>{data?.Service?.name}</td>
+                                                    <td>{data?.ServiceProvider?.User?.firstName} {data?.ServiceProvider?.User?.lastName}</td>
+                                                    <td>GHS {data?.balance}</td>
 
-                                                    <td>{data?.BiodigesterType.name}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
+                                                    {/* <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
-                                                    )}</td>
+                                                    )}</td> */}
                                                     <td>
                                                         <div
                                                             className="btn-group"
@@ -96,7 +96,7 @@ export const ServiceProviderBalance = ({ data }: any) => {
                                                                     className="dropdown-menu"
                                                                     aria-labelledby="btnGroupDrop1"
                                                                 >
-                                                                    <li>
+                                                                    {/* <li>
 
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "
@@ -110,8 +110,8 @@ export const ServiceProviderBalance = ({ data }: any) => {
                                                                             }}
                                                                         >
                                                                             Edit
-                                                                        </button>
-                                                                    </li>
+                                                                        </button> 
+                                                                    </li>*/}
 
                                                                     <li>
                                                                         <button

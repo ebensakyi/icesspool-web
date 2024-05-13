@@ -3,13 +3,13 @@ import { SERVER_BASE_URL } from '@/config';
 import { ServiceProviderBalance } from '@/src/components/finance/ServiceProviderBalance';
 import { headers } from 'next/headers';
 
-async function getRequests(searchParams: any) {
+async function getBalances(searchParams: any) {
     let { searchText } = searchParams;
   
     let { page } = searchParams;
   
     const res = await fetch(
-      `${SERVER_BASE_URL}/api/finance/balances/service-provider?page=${page}&searchText=${searchText}`,
+      `${SERVER_BASE_URL}/api/finance/balance/service-provider?page=${page}&searchText=${searchText}`,
       { cache: "no-store", headers: headers() }
     );
   
@@ -24,11 +24,11 @@ async function getRequests(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const requests = await getRequests(searchParams)
+    const balances = await getBalances(searchParams)
 
 
 
-    let data = { requests }
+    let data = { balances }
 
 
 

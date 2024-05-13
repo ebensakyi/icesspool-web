@@ -33,7 +33,6 @@ export async function GET(request: Request) {
           createdAt: item.createdAt,
         };
       });
-      console.log(response);
       
 
       return NextResponse.json(response);
@@ -42,10 +41,36 @@ export async function GET(request: Request) {
     //from web
     const response: any = await prisma.serviceProviderEarning.findMany({
       where: { deleted: 0 },
-      include: { Transaction: { include: { Service: true } } },
+      include: { Transaction: { include: { Service: true,ServiceProvider: true } } },
     });
+    
     // let balance = serviceProviderBalance.balance;
-    return NextResponse.json( response );
+    return NextResponse.json( {response} );
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(error);
+  }
+}
+
+
+
+export async function PUT(request: Request) {
+  try {
+    const res = await request.json();
+
+    let id = res.id;  
+
+    await prisma.serviceProviderEarning.update({
+      data: {
+        deleted:1
+      },
+      where: {
+        id: id,
+      },
+    });
+
+    return NextResponse.json({});
   } catch (error) {
     console.log(error);
 

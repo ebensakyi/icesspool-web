@@ -9,6 +9,8 @@ export async function GET(request: Request) {
 
     let userId = Number(searchParams.get("userId"));
 
+    
+
     // from mobile
     if (userId) {
       const sp = await prisma.serviceProvider.findFirst({
@@ -20,6 +22,7 @@ export async function GET(request: Request) {
           where: { deleted: 0, serviceProviderId: sp?.id },
         
         });
+        
       let balance = serviceProviderBalance.balance.toFixed(2);  
 
       return NextResponse.json({accountBalance: Number(balance)});

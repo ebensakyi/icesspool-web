@@ -25,26 +25,21 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
     const pathname = usePathname()
 
 
-    const approve = async (e: any) => {
+    const approve = async (id: any) => {
         try {
-            e.preventDefault();
             // if (name == "" || status == 0) {
             //     return toast.error("Please fill form");
             // }
 
-            // let data = {
-            //     id: Number(id),
-            //     name,
-            //     shortDesc,
-            //     longDesc,
-            //     imageUrl,
-            //     status,
-            // };
+            let data = {
+                id: Number(id),
+             
+            };
 
 
 
 
-            // const response = await axios.put("/api/configure/biodigester-services", data);
+          const response = await axios.post("/api/finance/withdraw/service-provider/approve", data);
             // toast.success(response.data.message);
             // setId(null)
             // setName("")
@@ -140,7 +135,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                                                             onClick={async(e)  => {
                                                                                 e.preventDefault();
 
-                                                                               await approve(e)
+                                                                               await approve(data.id)
 
                                                                                 // setIsEditing(true);
 

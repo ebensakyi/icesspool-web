@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     const licenseNumber = _data?.get("licenseNumber");
     const momoNetwork = _data?.get("momoNetwork");
     const momoNumber = _data?.get("momoNumber");
-    const service = _data?.get("service")
+    const service = _data?.get("service");
 
     // const res = await request.json();
     // const session: any = await getServerSession(authOptions);
@@ -107,7 +107,6 @@ export async function POST(request: Request) {
       licenseClassification: Number(licenseClassification),
       licenseNumber: licenseNumber,
       serviceId: Number(service),
-
     };
 
     let momoData: any = {
@@ -128,11 +127,139 @@ export async function POST(request: Request) {
       data: { balance: 0, serviceProviderId: serviceProvider.id },
     });
 
-
     await prisma.serviceProviderRating.create({
-      data: { rating:0.0, serviceProviderId: serviceProvider.id },
+      data: { rating: 0.0, serviceProviderId: serviceProvider.id },
     });
     ////////////////////////////////////////////////////////////////
+    await upload.single("passportPicture");
+
+    if (!passportPicture) {
+      return NextResponse.json(
+        { error: "Please select an image file" },
+        { status: 400 }
+      );
+    }
+
+    const arrayBuffer = await passportPicture.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+
+    let imageName = `${Date.now()}-${passportPicture.name}`;
+
+    const params: any = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: `uploads/${imageName}`,
+      Body: buffer,
+      // Body: fs.createReadStream(passportPicture: File),
+      // ACL: 'public-read', // adjust access control as needed
+    };
+
+    const result = await s3.upload(params).promise();
+
+    const imageUrl = result.Location;
+
+    const updatedUser: any = await prisma.user.update({
+      where: { id: user.id },
+      data: { passportPicture: imageName },
+    });
+
+    //await  uploadFile(passportPicture);
+
+    ////////////////////////////////////////////////////////////////
+
+    return NextResponse.json(updatedUser);
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json(error);
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const _data = await request.formData();
+
+    console.log("data==> ",_data);
+    
+
+    const passportPicture: File | null = _data.get(
+      "passportPicture"
+    ) as unknown as File;
+    const userId = _data?.get("userId");
+    const spId = _data?.get("spId");
+
+    const firstName = _data?.get("firstName");
+    const lastName = _data?.get("lastName");
+    const email = _data?.get("email");
+    const phoneNumber: any = _data?.get("phoneNumber");
+    const serviceAreaId = Number(_data?.get("serviceArea"));
+
+    const company: any = _data?.get("company");
+    const ghanaPostGPS = _data?.get("ghanaPostGPS");
+    const officeLocation = _data?.get("officeLocation");
+    const licenseClassification = _data?.get("licenseClassification");
+    const licenseNumber = _data?.get("licenseNumber");
+    const momoNetwork = _data?.get("momoNetwork");
+    const momoNumber = _data?.get("momoNumber");
+    const service = _data?.get("service");
+
+    // const res = await request.json();
+    // const session: any = await getServerSession(authOptions);
+
+    // // let loginUserLevel = session?.user?.userLevelId;
+    // // let fileUrl;
+
+ 
+
+    const data: any = {
+      userTypeId: 3,
+      lastName: lastName,
+      firstName: firstName,
+      email: email,
+      phoneNumber: phoneNumber,
+      serviceAreaId: serviceAreaId,
+    };
+
+    const user: any = await prisma.user.update({
+      data,
+      where: { id: Number(userId) },
+    });
+
+   
+
+  
+    let operatorData: any = {
+      userId: user.id,
+      company: company,
+      officeLocation: officeLocation,
+      ghanaPostGPS: ghanaPostGPS,
+      licenseClassification: Number(licenseClassification),
+      licenseNumber: licenseNumber,
+      serviceId: Number(service),
+    };
+
+    let momoData: any = {
+      momoNetworkId: Number(momoNetwork),
+      momoNumber: momoNumber,
+      serviceProviderId: spId,
+    };
+
+    let serviceProvider = await prisma.serviceProvider.update({
+      data: operatorData,
+      where: { id: spId },
+    });
+
+    // let momoAccount = await prisma.serviceProvider.findFirst({})
+    // await prisma.momoAccount.update({
+    //   data: momoData,
+    //   where: { id: spId },
+    // });
+
+   
+    ////////////////////////////////////////////////////////////////
+
+    if(!passportPicture){
+      return
+    }
     await upload.single("passportPicture");
 
     if (!passportPicture) {
@@ -183,10 +310,21 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const response = await prisma.user.findMany({
-      where: { userTypeId: 3,deleted:0 },
+      where: { userTypeId: 3, deleted: 0 },
       include: {
         UserType: true,
-        ServiceProvider: true,
+        ServiceArea: true,
+        ServiceProvider: {
+          include: {
+            Service: true,
+
+            MomoAccount: {
+              include: {
+                MomoNetwork: true,
+              },
+            },
+          },
+        },
         Otp: true,
       },
       orderBy: {
@@ -194,56 +332,10 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log(response[0].Otp);
-    
-
     return NextResponse.json({
       response,
     });
   } catch (error) {
-    return NextResponse.json(error);
-  }
-}
-
-export async function PUT(request: Request) {
-  try {
-    const res = await request.json();
-
-    let regionId = res.region;
-
-    // if (regionId == null) {
-    //   const district = await prisma.district.findFirst({
-    //     where: { id: Number(res.district) },
-    //   });
-
-    //   regionId = district?.regionId;
-    // }
-
-    let id = res.userId;
-
-    const data = {
-      userRoleId: res.userRoleId,
-      userLevelId: res.userLevelId,
-      lastName: res.lastName,
-      firstName: res.firstName,
-      email: res.email,
-      phoneNumber: res.phoneNumber,
-      designation: res.designation,
-      regionId: regionId,
-      districtId: res.district,
-    };
-
-    await prisma.user.update({
-      data: data,
-      where: {
-        id: id,
-      },
-    });
-
-    return NextResponse.json(data);
-  } catch (error) {
-    console.log(error);
-
     return NextResponse.json(error);
   }
 }

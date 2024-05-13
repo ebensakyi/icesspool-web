@@ -1,10 +1,13 @@
 export const dynamic = "force-dynamic";
 
 import { prisma } from "@/prisma/db";
+import moment from "moment";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    const now = moment();
+
     const res = await request.json();
 
     let userId = Number(res.userId);
@@ -15,6 +18,31 @@ export async function POST(request: Request) {
     });
 
     let serviceProviderId: any = sp?.id;
+
+    let w = await prisma.serviceProviderWithdrawal.count({
+      where: {
+        serviceProviderId: serviceProviderId,
+        amount: amount,
+        deleted: 0,
+        status:0
+      },
+    });
+    if(w > 0){
+      return
+    }
+
+
+    // // Define the target time using moment
+    // const targetTime = moment(w?.createdAt, "YYYY-MM-DD HH:mm:ss.SSS");
+
+    // // Calculate the difference using moment
+    // const timeDifference = moment.duration(now.diff(targetTime));
+
+    // const hoursDifference = timeDifference.asHours();
+    // //Skip duplicate withdrawals
+    // if (hoursDifference < 1) {
+    //   return;
+    // }
 
     let x = await prisma.serviceProviderWithdrawal.create({
       data: {
@@ -65,10 +93,12 @@ export async function PUT(request: Request) {
 
     let id = Number(res.userId);
 
+    
+
     let sp = await prisma.serviceProvider.findFirst({ where: { userId: id } });
     let withdrawal = await prisma.serviceProviderWithdrawal.findFirst({
       orderBy: {
-        id:'desc'
+        id: "desc",
       },
       where: { serviceProviderId: sp?.id, deleted: 0 },
     });
@@ -87,3 +117,5 @@ export async function PUT(request: Request) {
     return NextResponse.json(error);
   }
 }
+
+

@@ -20,7 +20,6 @@ export default function ServiceProvider({ data }: any) {
         }
     })
 
-    console.log(data);
 
 
 
@@ -35,9 +34,11 @@ export default function ServiceProvider({ data }: any) {
 
 
     const [userType, setUserType] = useState("");
-    const [userId, setUserId] = useState();
+    const [userId, setUserId] = useState("");
+    const [spId, setSpId] = useState("");
+
     const [serviceArea, setServiceArea] = useState("");
-    const [service, setService] = useState();
+    const [service, setService] = useState("");
 
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -124,7 +125,6 @@ export default function ServiceProvider({ data }: any) {
     const addUser = async (e: any) => {
         e.preventDefault();
         if (!passportPicture) {
-            console.error('Please select an image file');
             return toast.error("Please select an image file");
         }
         if (firstName == "") {
@@ -193,62 +193,76 @@ export default function ServiceProvider({ data }: any) {
 
 
     const updateUser = async (e: any) => {
+        e.preventDefault();
+      
+        if (firstName == "") {
+            return toast.error("Please enter first name");
+        }
+        if (lastName == "") {
+            return toast.error("Please enter last name");
+        }
+        if (phoneNumber == "") {
+            return toast.error("Please enter phone number");
+        }
+        if (serviceArea == "") {
+            return toast.error("Please select service area");
+        }
+        if (officeLocation == "") {
+            return toast.error("Please enter office location");
+        }
+        if (company == "") {
+            return toast.error("Please enter company name");
+        }
+        if (momoNumber == "") {
+            return toast.error("Please enter momo number");
+        }
+        if (momoNetwork == "") {
+            return toast.error("Please select momo network");
+        }
+
+        const formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("spId", spId);
+        // formData.append('passportPicture', passportPicture);
+        formData.append('lastName', lastName);
+        formData.append('firstName', firstName);
+        formData.append('email', email);
+        formData.append('phoneNumber', phoneNumber);
+        formData.append('serviceArea', serviceArea);
+        formData.append('service', service + "");
+        formData.append('ghanaPostGPS', ghanaPostGPS);
+        formData.append('officeLocation', officeLocation);
+        formData.append('company', company);
+        formData.append('licenseNumber', licenseNumber);
+        formData.append('licenseClassification', licenseClassification);
+        formData.append('momoNumber', momoNumber);
+        formData.append('momoNetwork', momoNetwork);
+
         try {
-            e.preventDefault();
-
-            if (lastName == "") {
-                return toast.error("Surname cannot be empty");
-            }
-            if (firstName == "") {
-                return toast.error("Other Names cannot be empty");
-            }
-            if (email == "") {
-                return toast.error("Email cannot be empty");
-            }
-            if (phoneNumber == "") {
-                return toast.error("PhoneNumber cannot be empty");
-            }
-            if (designation == "") {
-                return toast.error("Designation cannot be empty");
-            }
-            if (userType == "") {
-                return toast.error("User role cannot be empty");
-            }
-
-            let data = {}
+            const response = await fetch('/api/user/service-provider', {
+                method: 'PUT',
+                body: formData,
+            });
 
 
 
-
-
-            const response = await axios.put("/api/user", data);
-            if (response.status == 200) {
-                setFirstName("");
-                setLastName("");
-                setEmail("");
-                setPhoneNumber("");
-                setServiceArea("");
-                setUserType("");
-                setCompany("")
-                setOfficeLocation("")
-                setMomoNetwork("");
-                setMomoNumber("")
-                setPassportImage(null);
-                // setRegion("");
-                setIsEditing(false);
-
+            if (response.ok) {
+                const data = await response.json();
+                // console.log('Image uploaded:', data.imageUrl);
+                // Handle success, e.g., update UI with the uploaded image URL
                 router.refresh()
-                return toast.success("User updated successfully");
-
+                return toast.success("User added successfully");
+            } else {
+                console.error('Failed to upload image');
             }
-
         } catch (error) {
-            console.log(error);
-            return toast.error("An error occurred while updating user");
+            console.error('Error uploading image:', error);
         }
     };
 
 
+
+    
     const handleSearch = () => {
         try {
             let _searchText: any = searchTextRef?.current?.value
@@ -282,6 +296,24 @@ export default function ServiceProvider({ data }: any) {
         }
     };
 
+    const handleCancel = async () => {
+      
+        setIsEditing(false);
+
+        setLastName("");
+        setFirstName("");
+        setEmail("");
+        setPhoneNumber("");
+        setDesignation("");
+        setUserType("");
+        setServiceArea("");
+        setMomoNetwork("");
+        setMomoNumber("");
+        setServiceArea("");
+        setService("");
+        setOfficeLocation("");
+        setCompany("");
+    }
 
     return (
         <main id="main" className="main">
@@ -369,7 +401,7 @@ export default function ServiceProvider({ data }: any) {
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                             Office location *                                           </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
+                                            <input type="text" className="form-control" placeholder=' Office location'  onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -401,7 +433,7 @@ export default function ServiceProvider({ data }: any) {
                                         </div>
                                     </div>
 
-                                    {service == 1 || service == 2 ?
+                                    {service == "1" || service == "2" ?
                                         <><div className="col-sm-3 mb-3">
                                             <label className="col-sm-12 col-form-label">Select licence classification</label>
                                             <div className="col-sm-12">
@@ -557,16 +589,8 @@ export default function ServiceProvider({ data }: any) {
                                                     className="btn btn-danger"
                                                     onClick={(e) => {
                                                         e.preventDefault();
+                                                        handleCancel();
 
-                                                        setIsEditing(false);
-
-                                                        setLastName("");
-                                                        setFirstName("");
-                                                        setEmail("");
-                                                        setPhoneNumber("");
-                                                        setDesignation("");
-                                                        setUserType("");
-                                                        setServiceArea("");
                                                     }}
                                                 >
                                                     Cancel
@@ -631,10 +655,14 @@ export default function ServiceProvider({ data }: any) {
 
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
+                                            <th scope="col">MoMo</th>
+
                                             <th scope="col">E-mail</th>
                                             <th scope="col">Company</th>
                                             <th scope="col">Location</th>
-                                            <th scope="col">User type</th>
+                                            <th scope="col">Service</th>
+
+                                            <th scope="col">Service Area</th>
 
                                             <th scope="col">OTP</th>
 
@@ -652,10 +680,14 @@ export default function ServiceProvider({ data }: any) {
 
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
+                                                <td>{user?.ServiceProvider?.MomoAccount?.momoNumber}</td>
+
                                                 <td>{user?.email}</td>
                                                 <td>{user?.ServiceProvider?.company}</td>
                                                 <td>{user?.ServiceProvider?.officeLocation}</td>
-                                                <td>{user?.UserType?.name}</td>
+                                                <td>{user?.ServiceProvider?.Service?.name}</td>
+
+                                                <td>{user?.ServiceArea?.name}</td>
                                                 {/* <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
@@ -691,6 +723,8 @@ export default function ServiceProvider({ data }: any) {
                                                                     className="dropdown-item btn btn-sm "
                                                                     onClick={async (e) => {
                                                                         e.preventDefault();
+
+                                                                       await handleCancel()
                                                                         setIsEditing(true);
 
 
@@ -702,7 +736,13 @@ export default function ServiceProvider({ data }: any) {
                                                                         setDesignation(user.designation);
                                                                         setUserType(user.userTypeId);
                                                                         setUserId(user.id);
-                                                                        setServiceArea(user.districtId);
+                                                                        setSpId(user.ServiceProvider?.id);
+                                                                        setServiceArea(user?.serviceAreaId);
+                                                                        setService(user.ServiceProvider?.serviceId);
+                                                                        setCompany(user.ServiceProvider.company);
+                                                                        setOfficeLocation(user.ServiceProvider.officeLocation);
+                                                                        setMomoNetwork(user?.ServiceProvider?.MomoAccount?.momoNetworkId);
+                                                                        setMomoNumber(user?.ServiceProvider?.MomoAccount?.momoNumber);
 
                                                                         // await getDistrictsByRegion(user.regionId)
 

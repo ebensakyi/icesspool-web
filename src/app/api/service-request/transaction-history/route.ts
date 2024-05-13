@@ -14,9 +14,9 @@ export async function GET(request: Request) {
     // await logActivity("Visited data assignment page", session?.user?.id);
 
     const transaction = await prisma.transaction.findMany({
-      where: { deleted: 0, customerId: userId },
+      where: { deleted: 0, customerId: userId, currentStatus: 6 },
       include: {
-        Service:true,
+        Service: true,
         WaterTankerTransaction: true,
         ToiletTruckTransaction: true,
         BiodigesterTransaction: {
@@ -31,27 +31,24 @@ export async function GET(request: Request) {
       },
     });
 
-    
-    const response = transaction.map(item => {
+    const response = transaction.map((item) => {
       return {
-          id: item.id,
-          discountedCost: item.discountedCost,
-          totalCost: item.totalCost,
-          address: item.address,
-          service: item.Service.name,
-          lat: item.lat,
-          lng: item.lng,
+        id: item.id,
+        discountedCost: item.discountedCost,
+        totalCost: item.totalCost,
+        address: item.address,
+        service: item.Service.name,
+        lat: item.lat,
+        lng: item.lng,
 
-          // service: item.serviceId == 1
-          // ? "Toilet Truck"
-          // : item.serviceId == 2
-          // ? "Water Tanker"
-          // : "Biodigester",
-          serviceType: item.BiodigesterTransaction[0]?.BiodigesterService?.name || 'Unknown',
-          serviceDescription: item.BiodigesterTransaction[0]?.BiodigesterService?.BiodigesterType?.name || 'Unknown',
-          createdAt: item.createdAt
+        serviceType:
+          item.BiodigesterTransaction[0]?.BiodigesterService?.name || "Unknown",
+        serviceDescription:
+          item.BiodigesterTransaction[0]?.BiodigesterService?.BiodigesterType
+            ?.name || "Unknown",
+        createdAt: item.createdAt,
       };
-  });
+    });
 
     return NextResponse.json(response);
   } catch (error) {

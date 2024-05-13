@@ -919,7 +919,7 @@ model ServiceProviderWithdrawal {
   id                Int             @id @default(autoincrement())
   serviceProviderId String          @db.VarChar(255)
   transactionId     String?         @db.VarChar(255)
-  amount            Int?
+  amount             Decimal?         @db.Decimal(10, 2)
   disbursementDate  DateTime?
   disbusedBy        User ?           @relation(fields: [userId], references: [id])
   status            Int?            @default(0)

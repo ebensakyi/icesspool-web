@@ -10,7 +10,6 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
-    console.log("RWS====> ", res);
     
 
     // let userId = Number(res.userId);
@@ -41,24 +40,28 @@ export async function POST(request: Request) {
         },
       },
     });
-    console.log(withdraw);
 
-    let momoAccount = withdraw?.ServiceProvider?.MomoAccount;
-    
+    let momoNumber = withdraw?.ServiceProvider?.MomoAccount?.momoNumber;
+    let momoNetwork = withdraw?.ServiceProvider?.MomoAccount?.MomoNetwork?.abbrv;
+    let amount = withdraw?.amount;
 
-    // Define the target time using moment
-    const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
+console.log(momoNumber,momoNetwork,amount);
 
-    // Calculate the difference using moment
-    const timeDifference = moment.duration(now.diff(targetTime));
+    // // Define the target time using moment
+    // const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
 
-    const hoursDifference = timeDifference.asHours();
-    //Skip duplicate withdrawals
-    if (hoursDifference < 1) {
-      return;
-    }
+    // // Calculate the difference using moment
+    // const timeDifference = moment.duration(now.diff(targetTime));
+
+    // const hoursDifference = timeDifference.asHours();
+    // //Skip duplicate withdrawals
+    // if (hoursDifference < 1) {
+    //   return;
+    // }
 
     //SEND MOMO TO SP
+
+    await sendMoMo(momoNumber, momoNetwork, amount);
 
     //await sendMOMO()
 
@@ -79,39 +82,34 @@ export async function POST(request: Request) {
   }
 }
 
-const sendMoMo = async (momoNetwork: any, momoNumber: any, amount: any) => {
-  let options = {
-    method: "POST",
-    url: "https://prod.theteller.net/v1.1/transaction/process",
-    headers: {
-      "content-type": "application/json",
-      authorization:
-        "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
-    },
-    body: {
-      account_number: momoNumber,
-      account_issuer: momoNetwork,
-      merchant_id: "TTM-00001079",
-      transaction_id: await generateRandom(12),
-      processing_code: "404000",
-      "r-switch": "FLT",
-      desc: "iCesspool payment for an amount of " + amount,
-      pass_code: "952db7a88fa23f34bf7fcecbe453877e",
-      amount: await amtConverter(amount + ""),
-    },
-    json: true,
+const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
+    let options = {
+      method: "POST",
+      url: "https://prod.theteller.net/v1.1/transaction/process",
+      headers: {
+        "content-type": "application/json",
+        "authorization": "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
+      },
+      data: {
+        account_number: momoNumber,
+        account_issuer: momoNetwork,
+        merchant_id: "TTM-00001079",
+        transaction_id: await generateRandom(12),
+        processing_code: "404000",
+        "r-switch": "FLT",
+        desc: "iCesspool payment for an amount of " + amount,
+        pass_code: "952db7a88fa23f34bf7fcecbe453877e",
+        amount: await amtConverter(amount + ""),
+      },
+    };
+  
+    try {
+      const response = await axios(options);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
-
-//   return new Promise((resolve, reject) => {
-//     request(options, (error: any, response: any, body: unknown) => {
-//       if (error) return reject(error);
-//       return resolve(body);
-//     });
-//   });
-
-return     await axios(options);
-
-};
 
 const generateRandom = async (length: number) => {
   var result = "";

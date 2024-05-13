@@ -18,7 +18,7 @@ export const  WORK_STARTED_REQUEST = 4; //SP
 export const  WORK_STARTED = 41; // CL
 export const  WORK_NOT_STARTED = 40; // CL
 
-export const  WORK_COMPLETED_REQUEST = 6; //SP OR CL
+export const  WORK_COMPLETED_REQUEST = 5; //SP OR CL
 
 export const  WORK_COMPLETED = 51; //ADMIN, CL
 export const  WORK_NOT_COMPLETED = 50; //ADMIN, CL

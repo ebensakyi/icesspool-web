@@ -243,10 +243,10 @@ export async function PUT(request: Request) {
       serviceProviderId: spId,
     };
 
-    let serviceProvider = await prisma.serviceProvider.update({
-      data: operatorData,
-      where: { id: spId },
-    });
+    // let serviceProvider = await prisma.serviceProvider.update({
+    //   data: operatorData,
+    //   where: { id: spId },
+    // });
 
     // let momoAccount = await prisma.serviceProvider.findFirst({})
     // await prisma.momoAccount.update({

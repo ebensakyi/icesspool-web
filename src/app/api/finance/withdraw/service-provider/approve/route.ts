@@ -103,12 +103,11 @@ const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
       },
     };
   
-    try {
-      const response = await axios(options);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+    axios.request(options).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.error(error);
+      });
   };
 
 const generateRandom = async (length: number) => {

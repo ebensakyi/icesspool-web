@@ -86,31 +86,60 @@ const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
       let _amount = await amtConverter(amount + "");
       let random = await generateRandom(12);
   
-      let options = {
-        method: "POST",
-        url: "https://prod.theteller.net/v1.1/transaction/process",
-        headers: {
-          "content-type": "application/json",
-          "authorization": "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
-        },
-        data: {
-          account_number: momoNumber,
-          account_issuer: momoNetwork,
-          merchant_id: "TTM-00001079",
-          transaction_id: random,
-          processing_code: "404000",
-          "r-switch": "FLT",
-          desc: "iCesspool payment for an amount of " + amount,
-          pass_code: "952db7a88fa23f34bf7fcecbe453877e",
-          amount: _amount,
-        },
-      };
+    //   let options = {
+    //     method: "POST",
+    //     url: "https://prod.theteller.net/v1.1/transaction/process",
+    //     headers: {
+    //       "content-type": "application/json",
+    //       "authorization": "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
+    //     },
+    //     data: {
+    //       account_number: momoNumber,
+    //       account_issuer: momoNetwork,
+    //       merchant_id: "TTM-00001079",
+    //       transaction_id: random,
+    //       processing_code: "404000",
+    //       "r-switch": "FLT",
+    //       desc: "iCesspool payment for an amount of " + amount,
+    //       pass_code: "952db7a88fa23f34bf7fcecbe453877e",
+    //       amount: _amount,
+    //     },
+    //   };
   
-      console.log("OPTIONS====> ", options);
+    //   console.log("OPTIONS====> ", options);
   
-      const response = await axios(options);
-      console.log("Response data:", response.data);
-      return response.data;
+    //   const response = await axios(options);
+    //   console.log("Response data:", response.data);
+    //   return response.data;
+
+
+var options = {
+    method: 'POST',
+    url: 'https://prod.theteller.net/v1.1/transaction/process',
+    headers: {
+      cookie: 'PHPSESSID=at2bhph3gkbmtn56c7mnsl7ear',
+      'Content-Type': 'application/json',
+      'User-Agent': 'insomnia/9.1.1',
+      Authorization: 'Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ=='
+    },
+    data: {
+      account_number: '0543212322',
+      account_issuer: 'MTN',
+      merchant_id: 'TTM-00001079',
+      transaction_id: '123456789150',
+      processing_code: '404000',
+      'r-switch': 'FLT',
+      desc: 'iCesspool payment for an amount of ',
+      pass_code: '952db7a88fa23f34bf7fcecbe453877e',
+      amount: '000000000010'
+    }
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
     } catch (error) {
       console.error("Error:", error);
       throw error;

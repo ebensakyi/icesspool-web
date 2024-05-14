@@ -33,14 +33,17 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
 
             let data = {
                 id: Number(id),
-             
+
             };
 
 
 
 
-          const response = await axios.post("/api/finance/withdraw/service-provider/approve", data);
-            // toast.success(response.data.message);
+            const response = await axios.post("/api/finance/withdraw/service-provider/approve", data);
+            console.log(response);
+            
+
+            toast.success(response.data.message);
             // setId(null)
             // setName("")
             // setLongDesc("")
@@ -129,20 +132,21 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                                                     aria-labelledby="btnGroupDrop1"
                                                                 >
                                                                     <li>
+                                                                        {data?.status == 0 ?
+                                                                            <button
+                                                                                className="dropdown-item btn btn-sm "
+                                                                                onClick={async (e) => {
+                                                                                    e.preventDefault();
 
-                                                                        <button
-                                                                            className="dropdown-item btn btn-sm "
-                                                                            onClick={async(e)  => {
-                                                                                e.preventDefault();
+                                                                                    await approve(data.id)
 
-                                                                               await approve(data.id)
+                                                                                    // setIsEditing(true);
 
-                                                                                // setIsEditing(true);
-
-                                                                            }}
-                                                                        >
-                                                                            Approve
-                                                                        </button>
+                                                                                }}
+                                                                            >
+                                                                                Approve
+                                                                            </button>
+                                                                            : <></>}
                                                                     </li>
 
                                                                     <li>

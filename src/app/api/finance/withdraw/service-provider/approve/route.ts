@@ -44,28 +44,28 @@ export async function POST(request: Request) {
       withdraw?.ServiceProvider?.MomoAccount?.MomoNetwork?.abbrv;
     let amount = withdraw?.amount;
 
-    console.log(momoNumber, momoNetwork, amount);
 
-    // // Define the target time using moment
-    // const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
+    // Define the target time using moment
+    const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
 
-    // // Calculate the difference using moment
-    // const timeDifference = moment.duration(now.diff(targetTime));
+    // Calculate the difference using moment
+    const timeDifference = moment.duration(now.diff(targetTime));
 
-    // const hoursDifference = timeDifference.asHours();
-    // //Skip duplicate withdrawals
-    // if (hoursDifference < 1) {
-    //   return;
-    // }
+    const hoursDifference = timeDifference.asHours();
+    //Skip duplicate withdrawals
+    if (hoursDifference < 1) {
+        return NextResponse.json({message:"Cannot send duplicate requests"},{status:201});
+    }
 
     //SEND MOMO TO SP
 
     let momoRes = await sendMoMo(momoNumber, momoNetwork, amount);
     if (momoRes.code != "000") {
-      return NextResponse.json({}, { status: 201 });
+        return NextResponse.json({message:"Error occurred while teller was processing request"},{status:201});
     }
     //await sendMOMO()
 
+    //update status
     let x = await prisma.serviceProviderWithdrawal.update({
       data: {
         status: 1,
@@ -75,6 +75,15 @@ export async function POST(request: Request) {
       },
     });
 
+    // Reset balance to 0.0
+    await prisma.serviceProviderBalance.update({
+      data: {
+        balance: 0.0,
+      },
+      where: {
+        serviceProviderId: withdraw?.serviceProviderId,
+      },
+    });
     return NextResponse.json({});
   } catch (error) {
     console.log(error);

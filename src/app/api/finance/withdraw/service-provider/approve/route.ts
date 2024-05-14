@@ -60,8 +60,10 @@ export async function POST(request: Request) {
 
     //SEND MOMO TO SP
 
-    await sendMoMo(momoNumber, momoNetwork, amount);
-
+    let momoRes = await sendMoMo(momoNumber, momoNetwork, amount);
+    if (momoRes.status != "000") {
+      return NextResponse.json({}, { status: 201 });
+    }
     //await sendMOMO()
 
     let x = await prisma.serviceProviderWithdrawal.update({
@@ -142,8 +144,8 @@ const sendMoMo = async (momoNetwork: any, momoNumber: any, amount: any) => {
     //     console.error(error);
     //   });
     const response = await axios(options);
-    console.log("response===> " + response.data);
-    
+    // console.log("response===> " + response.data);
+
     return response.data;
   } catch (error) {
     console.error("Error:", error);

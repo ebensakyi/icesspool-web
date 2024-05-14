@@ -10,8 +10,6 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
-    
-
     // let userId = Number(res.userId);
     // let serviceProviderId = Number(res.serviceProviderId);
     let withdrawalId = Number(res.id);
@@ -42,10 +40,11 @@ export async function POST(request: Request) {
     });
 
     let momoNumber = withdraw?.ServiceProvider?.MomoAccount?.momoNumber;
-    let momoNetwork = withdraw?.ServiceProvider?.MomoAccount?.MomoNetwork?.abbrv;
+    let momoNetwork =
+      withdraw?.ServiceProvider?.MomoAccount?.MomoNetwork?.abbrv;
     let amount = withdraw?.amount;
 
-console.log(momoNumber,momoNetwork,amount);
+    console.log(momoNumber, momoNetwork, amount);
 
     // // Define the target time using moment
     // const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
@@ -82,33 +81,42 @@ console.log(momoNumber,momoNetwork,amount);
   }
 }
 
-const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
-    let options = {
-      method: "POST",
-      url: "https://prod.theteller.net/v1.1/transaction/process",
-      headers: {
-        "content-type": "application/json",
-        "authorization": "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
-      },
-      data: {
-        account_number: momoNumber,
-        account_issuer: momoNetwork,
-        merchant_id: "TTM-00001079",
-        transaction_id: await generateRandom(12),
-        processing_code: "404000",
-        "r-switch": "FLT",
-        desc: "iCesspool payment for an amount of " + amount,
-        pass_code: "952db7a88fa23f34bf7fcecbe453877e",
-        amount: await amtConverter(amount + ""),
-      },
-    };
-  
-    axios.request(options).then(function (response) {
-        console.log(response.data);
-      }).catch(function (error) {
-        console.error(error);
-      });
+const sendMoMo = async (momoNetwork: any, momoNumber: any, amount: any) => {
+  let _amount = await amtConverter(amount + "");
+  let random = await generateRandom(12);
+  let options = {
+    method: "POST",
+    url: "https://prod.theteller.net/v1.1/transaction/process",
+    headers: {
+      "content-type": "application/json",
+      authorization:
+        "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
+    },
+    data: {
+      account_number: momoNumber,
+      account_issuer: momoNetwork,
+      merchant_id: "TTM-00001079",
+      transaction_id: random,
+      processing_code: "404000",
+      "r-switch": "FLT",
+      desc: "iCesspool payment for an amount of " + amount,
+      pass_code: "952db7a88fa23f34bf7fcecbe453877e",
+      amount: _amount,
+    },
   };
+
+console.log("OPTIONS====> ",options);
+
+
+  axios
+    .request(options)
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+};
 
 const generateRandom = async (length: number) => {
   var result = "";

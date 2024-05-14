@@ -117,21 +117,19 @@ var options = {
     method: 'POST',
     url: 'https://prod.theteller.net/v1.1/transaction/process',
     headers: {
-      cookie: 'PHPSESSID=at2bhph3gkbmtn56c7mnsl7ear',
       'Content-Type': 'application/json',
-      'User-Agent': 'insomnia/9.1.1',
       Authorization: 'Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ=='
     },
     data: {
       account_number: '0543212322',
       account_issuer: 'MTN',
       merchant_id: 'TTM-00001079',
-      transaction_id: '123456781150',
+      transaction_id: random,
       processing_code: '404000',
       'r-switch': 'FLT',
-      desc: 'iCesspool payment for an amount of ',
+      desc: 'iCesspool payment for an amount of GHS '+ amount,
       pass_code: '952db7a88fa23f34bf7fcecbe453877e',
-      amount: '000000000010'
+      amount: _amount
     }
   };
   

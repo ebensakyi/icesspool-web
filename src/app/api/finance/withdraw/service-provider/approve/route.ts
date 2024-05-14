@@ -39,29 +39,44 @@ export async function POST(request: Request) {
       },
     });
 
+    if (!withdraw) {
+      return;
+    }
+
+    await prisma.serviceProviderWithdrawal.update({
+      data: {
+        status: 3, //in progress
+      },
+      where: {
+        id: withdraw?.id,
+      },
+    });
+
     let momoNumber = withdraw?.ServiceProvider?.MomoAccount?.momoNumber;
     let momoNetwork =
       withdraw?.ServiceProvider?.MomoAccount?.MomoNetwork?.abbrv;
     let amount = withdraw?.amount;
 
+    // // Define the target time using moment
+    // const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
 
-    // Define the target time using moment
-    const targetTime = moment(withdraw?.updatedAt, "YYYY-MM-DD HH:mm:ss.SSS");
+    // // Calculate the difference using moment
+    // const timeDifference = moment.duration(now.diff(targetTime));
 
-    // Calculate the difference using moment
-    const timeDifference = moment.duration(now.diff(targetTime));
-
-    const hoursDifference = timeDifference.asHours();
-    //Skip duplicate withdrawals
-    if (hoursDifference < 1) {
-        return NextResponse.json({message:"Cannot send duplicate requests"},{status:201});
-    }
+    // const hoursDifference = timeDifference.asHours();
+    // //Skip duplicate withdrawals
+    // if (hoursDifference < 1) {
+    //     return NextResponse.json({message:"Cannot send duplicate requests"},{status:201});
+    // }
 
     //SEND MOMO TO SP
 
     let momoRes = await sendMoMo(momoNumber, momoNetwork, amount);
     if (momoRes.code != "000") {
-        return NextResponse.json({message:"Error occurred while teller was processing request"},{status:201});
+      return NextResponse.json(
+        { message: "Error occurred while teller was processing request" },
+        { status: 201 }
+      );
     }
     //await sendMOMO()
 

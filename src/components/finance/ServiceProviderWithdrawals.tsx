@@ -109,7 +109,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                                     <td>  {moment(data?.createdAt).format(
                                                         "MMM Do YYYY, h:mm:ss a"
                                                     )}</td>
-                                                    <td>{data?.status == 1 ? <span className="badge bg-success">Disbursed</span> : <span className="badge bg-warning">Pending</span>}</td>
+                                                    <td>{data?.status == 1 ? <span className="badge bg-success">Disbursed</span>:data?.status == 3 ? <span className="badge bg-warning">Paying</span> : <span className="badge bg-warning">Pending</span>}</td>
 
                                                     <td>
                                                         <div

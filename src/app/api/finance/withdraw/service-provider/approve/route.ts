@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     //SEND MOMO TO SP
 
     let momoRes = await sendMoMo(momoNumber, momoNetwork, amount);
-    if (momoRes.status != "000") {
+    if (momoRes.code != "000") {
       return NextResponse.json({}, { status: 201 });
     }
     //await sendMOMO()

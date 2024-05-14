@@ -126,7 +126,7 @@ var options = {
       account_number: '0543212322',
       account_issuer: 'MTN',
       merchant_id: 'TTM-00001079',
-      transaction_id: '123456789150',
+      transaction_id: '123456781150',
       processing_code: '404000',
       'r-switch': 'FLT',
       desc: 'iCesspool payment for an amount of ',

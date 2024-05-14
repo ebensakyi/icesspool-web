@@ -81,11 +81,11 @@ export async function POST(request: Request) {
   }
 }
 
-const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
-    try {
-      let _amount = await amtConverter(amount + "");
-      let random = await generateRandom(12);
-  
+const sendMoMo = async (momoNetwork: any, momoNumber: any, amount: any) => {
+  try {
+    let _amount = await amtConverter(amount + "");
+    let random = await generateRandom(12);
+
     //   let options = {
     //     method: "POST",
     //     url: "https://prod.theteller.net/v1.1/transaction/process",
@@ -105,45 +105,51 @@ const sendMoMo = async (momoNetwork:any, momoNumber:any, amount:any) => {
     //       amount: _amount,
     //     },
     //   };
-  
+
     //   console.log("OPTIONS====> ", options);
-  
+
     //   const response = await axios(options);
     //   console.log("Response data:", response.data);
     //   return response.data;
 
+    var options = {
+      method: "POST",
+      url: "https://prod.theteller.net/v1.1/transaction/process",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ==",
+      },
+      data: {
+        account_number: "0543212322",
+        account_issuer: "MTN",
+        merchant_id: "TTM-00001079",
+        transaction_id: random,
+        processing_code: "404000",
+        "r-switch": "FLT",
+        desc: "iCesspool payment for an amount of GHS " + amount,
+        pass_code: "952db7a88fa23f34bf7fcecbe453877e",
+        amount: _amount,
+      },
+    };
 
-var options = {
-    method: 'POST',
-    url: 'https://prod.theteller.net/v1.1/transaction/process',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Basic aWNlc3Nwb29sNWRkN2E5M2QyNTgwZTpNR0kxT1dJNVltUTNZV1kzWkdFM1ptRTNOakUwTUdZMVpqa3hPV1ZrWkRFPQ=='
-    },
-    data: {
-      account_number: '0543212322',
-      account_issuer: 'MTN',
-      merchant_id: 'TTM-00001079',
-      transaction_id: random,
-      processing_code: '404000',
-      'r-switch': 'FLT',
-      desc: 'iCesspool payment for an amount of GHS '+ amount,
-      pass_code: '952db7a88fa23f34bf7fcecbe453877e',
-      amount: _amount
-    }
-  };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
-    } catch (error) {
-      console.error("Error:", error);
-      throw error;
-    }
-  };
-  
+    // axios
+    //   .request(options)
+    //   .then(function (response) {
+    //     console.log(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
+    const response = await axios(options);
+    console.log("response===> " + response.data);
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
 
 const generateRandom = async (length: number) => {
   var result = "";

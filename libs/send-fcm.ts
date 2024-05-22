@@ -36,6 +36,7 @@ export const sendFCToMultipleDevices = async (title:string, body:string,deviceTo
 
     const response = await admin.messaging().sendEachForMulticast(message);
     console.log('Successfully sent messages:', response);
+
     if (response.failureCount > 0) {
       const failedTokens: any[] = [];
       response.responses.forEach((resp, idx) => {
@@ -44,6 +45,8 @@ export const sendFCToMultipleDevices = async (title:string, body:string,deviceTo
         }
       });
       console.log('List of tokens that caused failures:', failedTokens);
+
+      return response
     }
   } catch (error) {
     console.error('Error sending FCM notification:', error);

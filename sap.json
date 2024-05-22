@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "unified-icesspool-app",
+  "private_key_id": "41092a01b7e83891c4cc2f3e0b61f4dfdedbccd9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9dkm+0RxmGQv5\nOw9DAcV2qfkZ7zoxB7LdDkcvRqqzedIWsBIbUJ38s8i4ZQx3Yr9MqivGv+rJGKXm\nLgjhc3Ip98qyZM8aLvdM45TwGkbRXGtybTiuQB5poBr11m5smIX67ARo5tLIrLFU\ngyUWfe6bpBscnlIHFkGAd+47DHitXw5lGykhlHTzS0Whrb9KJb+j9LJCjei+cXId\nKwKO1qlUqbARcnXue043zyCZ7XiyfGBNaxQi/n90lxqyWmPXniHgITSvXgqgEy13\nZns/YoBSnxjxSDZP18t75iW+UQb6sb20ic1zUa4Zm8dmr9FYs0H3vKpmtX1MKTLf\nWsoG+Wn9AgMBAAECggEABq9sVbvaNS4QEpjHZpVi6td/jy82TfGYGZ293EixkEit\npZhL40Pad0a+v+bs5C+LUYC1r7so5TSl8fPQ42en8Rwpvla5ShK7Li7fnANJWWzZ\n67034Uoo6JA6M0+AMPvGyn5Wf38Zk/QoA7Pm9J638yz8uetKOK7L2+Ufdlzvyyo+\nXMm3C9Qj/YEujjvmUSoKRgihWmBLivdYj2RWSvLVt6uZdsgC73OlcghS45MTso4S\nQghuDo6Iz9vC6omPLCEgOWY7jOhWaFkV1KzXtTu8yhw4OSby4qc9amFgyA2+h6M4\njshUf/iN/PaMDJY79olu0ohJV2tnXJupi42OjAkCrwKBgQD1nTw/qgas3PqMbGOr\n1qg6txA2Bjl7eNGeOoCEs+f6VGufrFpzImZWEgU0VKuAP05i+Fc5HRyOwWHlXQv8\ndyKD57HpGR3ob3BvRhRdlQatmLzEyS6JRxKaa0fSkPU8jGYlZYD8gNaoudEQu0xi\ng+qQ4bwd6XpGzhBO7lEfgAxbewKBgQDFeTU5HN4dz3JQqKWCwXDZxVOy3eJNI6ai\nCvkgHR5SnnT1LNwKmxZA+F7v/Yav0HjmkkZ9+pSvLQcuU21SbuWFOcEOBUw4ed3I\ndYy+822y+KbKA4yi8vKuz1OjVV/uz0xnUoizsDgM5mcGP/m00hVQR8A+lkc/kaIz\nPHhpwXs65wKBgQDUn39upaQNtWb4dUR7l+IeoidYfV75sofUcFSdjJi/rqFUowHS\nNe9dh1AWE048QZF8P/xSJw93zZUP19LuhbvNcKAlaGbptr8gtQwgT0hus5CG0pqE\noJBMOZ79fBuwhOJQcWSOMoKhoeqIj3v6tLQ1JBWT13DRJsYbblev60vHTQKBgQCO\nxcaUR2nUFcMpy/T2Z5OG76NHJCNU8Fyutc5OyJ6+zy/yf3+L73sUeD5zt1Jk1Q5E\nbienN7++M4kIlmro+aLaQtpwn6XvAzU1lL+w42FBz4MPdad9vLd3ahCne7eDer9b\nyJFrkRHFSePc4e5RLL8aLvYwighzToD+GE9a7veAqwKBgFY4hEoM1r3deu19KGab\nsg/n8thxTi5hW6IC4A4rtEYYqQvGG4ocZXRViZBjbjgw7CaFDpfHtfxobDoLFOQz\nNZONMbb+x4HdKnLCJAYuqnNltd/8Rsr8sajpJuzIRocAo3hMIV+JONdFZBRe97kL\nRIF3O+lN5CHNlDR3VMKq7MGc\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-30sf7@unified-icesspool-app.iam.gserviceaccount.com",
+  "client_id": "113948987952663905728",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-30sf7%40unified-icesspool-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

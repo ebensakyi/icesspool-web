@@ -25,7 +25,6 @@ export async function POST(request: Request) {
 
     const res = await request.json();
 
-
     const session: any = await getServerSession(authOptions);
 
     const requestDetails = res.requestDetails.map(
@@ -59,11 +58,11 @@ export async function POST(request: Request) {
       gpsAccuracy: Number(res?.accuracy).toFixed(),
       discountedCost: Number(res?.totalCost),
       totalCost: Number(res?.totalCost),
-      community:res?.community,
-      address:res?.address,
+      community: res?.community,
+      address: res?.address,
       placeLat: Number(res?.placeLat),
-      placeLng:Number(res?.placeLng),
-      placeId:res?.placeId,
+      placeLng: Number(res?.placeLng),
+      placeId: res?.placeId,
 
       // trips: Number(res[0]?.trips),
       serviceId: 3,
@@ -105,17 +104,17 @@ export async function POST(request: Request) {
       customerLng: Number(res?.customerLng),
       gpsAccuracy: Number(res?.accuracy).toFixed(),
 
-      address:res?.address,
-      placeLat:Number(res?.placeLat),
-      placeLng:Number(res?.placeLng),
-      placeId:res?.placeId,
+      address: res?.address,
+      placeLat: Number(res?.placeLat),
+      placeLng: Number(res?.placeLng),
+      placeId: res?.placeId,
 
       // trips: Number(res[0]?.trips),
       service: "Biodigester",
       serviceId: 3,
       biodigesterTxDetails: requestDetails1,
       serviceAreaId: Number(res?.serviceAreaId),
-      paymentStatus :0,
+      paymentStatus: 0,
 
       //clientId: tr,
       txStatusCode: 1,
@@ -136,7 +135,6 @@ export async function POST(request: Request) {
       createdDate: getCurrentDate() + " at " + getCurrentTime(),
       deleted: false,
     };
-
 
     await setDoc(
       doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
@@ -163,9 +161,9 @@ export async function POST(request: Request) {
       );
 
       await sendFCM(
+        serviceProviders[i].fcmId,
         "New Request",
-        `Hello ${serviceProviders[i].firstName} biodigester request is available`,
-        serviceProviders[i].fcmId
+        `Hello ${serviceProviders[i].firstName} biodigester request is available`
       );
     }
 
@@ -176,7 +174,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(response);
   } catch (error: any) {
-    console.log("Make request error=>",error);
+    console.log("Make request error=>", error);
 
     return NextResponse.json(error, { status: 500 });
   }

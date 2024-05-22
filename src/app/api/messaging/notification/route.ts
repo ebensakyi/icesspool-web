@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       });
       recipientCount = user?.length;
 
-      let x = await sendFCM(res.title, res.message, user?.fcmId);
+      let x = await sendFCM(user?.fcmId,res.title, res.message);
     }
 
    

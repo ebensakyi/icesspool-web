@@ -2,29 +2,30 @@ import admin from "../config/firebaseAdmin"; // Path to firebaseAdmin.js
 
 // Function to send FCM notification
 export const sendFCM = async (
+  deviceToken: any,
   title: string,
-  body: string,
-  deviceToken: any
+  body: string
 ) => {
-
-
-   try {
-     // Send FCM notification
-   let res = await admin.messaging().send({
+  try {
+    // Send FCM notification
+    let res = await admin.messaging().send({
       token: deviceToken,
       notification: {
         title: title,
         body: body,
       },
-    });    
+    });
     return res;
   } catch (error) {
     console.error("Error sending FCM notification:", error);
   }
 };
 
-
-export const sendFCToMultipleDevices = async (title:string, body:string,deviceTokens:any) => {
+export const sendFCToMultipleDevices = async (
+  deviceTokens: any,
+  title: string,
+  body: string
+) => {
   try {
     const message = {
       notification: {
@@ -35,7 +36,7 @@ export const sendFCToMultipleDevices = async (title:string, body:string,deviceTo
     };
 
     const response = await admin.messaging().sendEachForMulticast(message);
-    console.log('Successfully sent messages:', response);
+    console.log("Successfully sent messages:", response);
 
     if (response.failureCount > 0) {
       const failedTokens: any[] = [];
@@ -44,11 +45,11 @@ export const sendFCToMultipleDevices = async (title:string, body:string,deviceTo
           failedTokens.push(deviceTokens[idx]);
         }
       });
-      console.log('List of tokens that caused failures:', failedTokens);
+      console.log("List of tokens that caused failures:", failedTokens);
 
-      return response
+      return response;
     }
   } catch (error) {
-    console.error('Error sending FCM notification:', error);
+    console.error("Error sending FCM notification:", error);
   }
 };

@@ -84,10 +84,10 @@ export async function POST(request: Request) {
         `Hello ${client?.Customer?.firstName} your icesspool request has been accepted. Make payment now`
       );
 
-      await sendFCM(
+      await sendFCM(  client?.Customer?.fcmId,
         "Request Accepted",
-        `Hello ${ client?.Customer?.firstName} biodigester request is available`,
-        client?.Customer?.fcmId
+        `Hello ${ client?.Customer?.firstName} biodigester request is available`
+      
       );
     }
 

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       data: { fcmId: fcmId },
     });
 
-    return NextResponse.json({});
+    return NextResponse.json({userId,fcmId});
   } catch (error: any) {
     console.log(error);
     return NextResponse.json({ message: error.message });

@@ -3,6 +3,7 @@ import { prisma } from "@/prisma/db";
 import bcrypt from "bcryptjs";
 // import { destroySession, setSession } from "../../../../../utils/session-manager";
 import jwt from "jsonwebtoken";
+import ServiceProvider from "../../../../../../components/user/ServiceProvider";
 
 export async function POST(request: Request) {
   try {
@@ -23,8 +24,12 @@ export async function POST(request: Request) {
         },
       },
     });
+    // console.log("ux", user);
 
     if (!user) {
+      return NextResponse.json(null, { status: 404 });
+    }
+    if (user?.ServiceProvider == null) {
       return NextResponse.json(null, { status: 400 });
     }
 
@@ -35,9 +40,21 @@ export async function POST(request: Request) {
 
       // return NextResponse.json({ ...user, token, privileges });
 
-      let newUser = { ...user, serviceId: user.ServiceProvider.serviceId };
+      // let newUser = {
+      //   ...user, serviceId: user.ServiceProvider.serviceId };
 
-      
+      let newUser = {
+        userId: user?.id,
+        spId: user?.ServiceProvider?.id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        phoneNumber: user?.phoneNumber,
+        email: user?.email,
+        serviceAreaId: user?.serviceAreaId,
+        serviceId: user?.ServiceProvider?.serviceId,
+        company: user?.ServiceProvider?.company,
+
+      };
       return NextResponse.json(newUser);
     }
     return NextResponse.json(null, { status: 400 });

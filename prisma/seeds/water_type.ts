@@ -1,10 +1,10 @@
 export const waterTypes = [
     {
-      name: "Clean Water",
+      name: "Treated Water",
      
     },
     {
-      name: "Unclean Water",
+      name: "Untreated Water",
      
     },
    

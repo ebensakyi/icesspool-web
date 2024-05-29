@@ -17,6 +17,8 @@ export const TruckClassification = ({ data }: any) => {
     const [tankCapacity, setTankCapacity] = useState("");
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
+    const [description, setDescription] = useState("");
+
     const { data: session } = useSession({
         required: true,
         onUnauthenticated() {
@@ -39,14 +41,14 @@ export const TruckClassification = ({ data }: any) => {
 
             let data = {
                 name: name,
-                image:image,
+                image: image,
                 status: status,
                 serviceArea: serviceArea,
                 tankCapacity: tankCapacity,
+                description: description,
                 service: service,
             };
 
-            console.log(data);
 
             const response = await axios.post("/api/configure/truck-classification", data);
             toast.success(response.data.message);
@@ -55,6 +57,7 @@ export const TruckClassification = ({ data }: any) => {
             setServiceArea("")
             setTankCapacity("")
             setName("")
+            setDescription("")
 
 
             router.refresh()
@@ -77,11 +80,12 @@ export const TruckClassification = ({ data }: any) => {
             let data = {
                 id: Number(id),
                 name: name,
-                image:image,
+                image: image,
                 status: status,
                 serviceArea: serviceArea,
                 tankCapacity: tankCapacity,
                 service: service,
+                description: description,
             };
             const response = await axios.put("/api/configure/truck-classification", data);
             toast.success(response.data.message);
@@ -89,6 +93,7 @@ export const TruckClassification = ({ data }: any) => {
             setServiceArea("")
             setStatus("");
             setService("")
+            setDescription("")
 
             router.refresh()
 
@@ -146,6 +151,16 @@ export const TruckClassification = ({ data }: any) => {
                                 </div>
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                        Description *
+                                    </label>
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Enter description' onChange={(e: any) => {
+                                            setDescription(e.target.value);
+                                        }} value={description} />
+                                    </div>
+                                </div>
+                                <div className=" mb-3">
+                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                         Truck capacity *
                                     </label>
                                     <div className="col-sm-12">
@@ -157,10 +172,10 @@ export const TruckClassification = ({ data }: any) => {
 
                                 <div className=" mb-3">
                                     <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                       Image *
+                                        Image *
                                     </label>
                                     <div className="col-sm-12">
-                                        <input type="file" className="form-control"  onChange={(e: any) => {
+                                        <input type="file" className="form-control" onChange={(e: any) => {
                                             setImage(e.target.value);
                                         }} value={image} />
                                     </div>
@@ -274,6 +289,7 @@ export const TruckClassification = ({ data }: any) => {
                                         <tr>
                                             <th scope="col">Name</th>
                                             <th scope="col">Tank Capacity</th>
+                                            <th scope="col">Description</th>
 
                                             <th scope="col">Area</th>
                                             <th scope="col">Service</th>
@@ -291,7 +307,7 @@ export const TruckClassification = ({ data }: any) => {
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>
                                                     <td>{data?.tankCapacity}</td>
-
+                                                    <td>{data?.description}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
                                                     <td>{data?.Service?.name}</td>
 
@@ -331,7 +347,7 @@ export const TruckClassification = ({ data }: any) => {
                                                                                 setServiceArea(data.serviceAreaId)
                                                                                 setService(data.serviceId)
                                                                                 setStatus(data.status)
-
+                                                                                setDescription("")
 
                                                                                 // setIsEditing(true);
 

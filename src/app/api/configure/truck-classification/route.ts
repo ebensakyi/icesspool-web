@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
       tankCapacity: Number(res?.tankCapacity),
+      description: res?.description,
     };
 
     const response = await prisma.truckClassification.create({ data });
@@ -48,6 +49,8 @@ export async function PUT(request: Request) {
       serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
       tankCapacity: Number(res?.tankCapacity),
+      description: res?.description,
+
     };
     await prisma.truckClassification.update({
       where: {
@@ -68,7 +71,6 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    console.log(searchParams);
 
     let serviceId = Number(searchParams.get("serviceId"));
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
@@ -80,7 +82,6 @@ export async function GET(request: Request) {
         where: { deleted: 0, serviceId, serviceAreaId, status: 1 },
        
       });
-      console.log(response);
       
       return NextResponse.json(response);
     }

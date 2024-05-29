@@ -27,42 +27,22 @@ export async function POST(request: Request) {
     let serviceProviderId = res.userId;
     let transactionId = res.transactionId;
     let txStatusCode = Number(res.txStatusCode);
-    
+
     let currentStatus;
 
-    if (txStatusCode == 1) {
-      currentStatus = 2;
-    }
+    ////get service - water, toilet truck or biodigester
 
-    if (txStatusCode == 8) {
-      currentStatus = 10;
-    }
-   
-    let transaction = await prisma.transaction.update({
-      where: { id: transactionId },
-      data: {
-        serviceProviderId: Number(serviceProviderId),
-        currentStatus: currentStatus,
-      },
-    });
-
-///Get client info
-    let client:any = await prisma.transaction.findFirst({
+    let transaction: any = await prisma.transaction.findFirst({
       where: { id: transactionId },
       include: { Customer: true },
     });
-
-
     let sp = await prisma.user.findFirst({
       where: { id: serviceProviderId },
       include: { ServiceProvider: true },
     });
-
-    //Update firestore
-
-
     
-    if (transaction) {
+    //WATER TANKER - Skip payment
+    if (transaction.serviceId == 2) {
       const transactionRef = doc(
         db,
         `${process.env.PROD_TRANSACTION_COLLECTION}`,
@@ -71,25 +51,61 @@ export async function POST(request: Request) {
 
       await updateDoc(transactionRef, {
         txStatusCode: currentStatus,
-        spName: sp?.firstName + " " + sp?.lastName,
-        spCompany: sp?.ServiceProvider?.company,
-        spPhoneNumber: sp?.phoneNumber,
-        spImageUrl: sp?.passportPicture,
-        spId: serviceProviderId,
+        paymentStatus: 1,
+        paymentDone: true,
       });
-
-
-      await sendSMS(
-        client?.Customer?.phoneNumber,
-        `Hello ${client?.Customer?.firstName} your icesspool request has been accepted. Make payment now`
-      );
-
-      await sendFCM(  client?.Customer?.fcmId,
-        "Request Accepted",
-        `Hello ${ client?.Customer?.firstName} biodigester request is available`
-      
-      );
+      return NextResponse.json({});
+    }else{
+      if (txStatusCode == 1) {
+        currentStatus = 2;
+      }
+  
+      if (txStatusCode == 8) {
+        currentStatus = 10;
+      }
+      await prisma.transaction.update({
+        where: { id: transactionId },
+        data: {
+          serviceProviderId: Number(serviceProviderId),
+          currentStatus: currentStatus,
+        },
+      });
+  
+    
+  
+      //Update firestore
+  
+      if (transaction) {
+        const transactionRef = doc(
+          db,
+          `${process.env.PROD_TRANSACTION_COLLECTION}`,
+          transactionId
+        );
+  
+        await updateDoc(transactionRef, {
+          txStatusCode: currentStatus,
+          spName: sp?.firstName + " " + sp?.lastName,
+          spCompany: sp?.ServiceProvider?.company,
+          spPhoneNumber: sp?.phoneNumber,
+          spImageUrl: sp?.passportPicture,
+          spId: serviceProviderId,
+        });
+  
+        await sendSMS(
+          transaction?.Customer?.phoneNumber,
+          `Hello ${transaction?.Customer?.firstName} your icesspool request has been accepted. Make payment now`
+        );
+  
+        await sendFCM(
+          transaction?.Customer?.fcmId,
+          "Request Accepted",
+          `Hello ${transaction?.Customer?.firstName} biodigester request is available`
+        );
+      }
+      return NextResponse.json({});
     }
+
+    
 
     // runCronJob(transactionSchedule, async () => {
     //   const transactionRef = doc(
@@ -113,28 +129,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({});
   } catch (error: any) {
-    console.log("FirebaseError==> ",error);
+    console.log("FirebaseError==> ", error);
 
     return NextResponse.json(error, { status: 500 });
   }
 }
-
-function getNameById(arr: any[], id: any) {
-  const foundObject = arr.find((item: { id: any }) => item.id === id);
-  return foundObject ? foundObject.name : null;
-}
-
-// function deleteTransaction (){
-//   console.log("delete transaction after timeout")
-
-//   const transactionRef = doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId);
-
-//   await updateDoc(transactionRef, {
-//     txStatusCode: 2,
-//     spName: sp?.firstName + " " + sp?.lastName,
-//     spCompany: sp?.ServiceProvider?.company,
-//     spPhoneNumber: sp?.phoneNumber,
-//     spImageUrl: sp?.passportPicture,
-//     transactionSchedule: transactionSchedule
-//   });
-// }

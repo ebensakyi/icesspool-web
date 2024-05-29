@@ -15,9 +15,7 @@ export async function POST(request: Request) {
       serviceAreaId: Number(res?.serviceArea),
       serviceId: Number(res?.service),
       tankCapacity: Number(res?.tankCapacity),
-
     };
-
 
     const response = await prisma.truckClassification.create({ data });
 
@@ -25,9 +23,8 @@ export async function POST(request: Request) {
 
     return createSuccessResponse(response, "Data submitted succesfully");
   } catch (error: any) {
-
     console.log(error);
-    
+
     // let message = ""
     // if(error.code=="P2002"){
     //    message = "Service and Location combination already exist"
@@ -71,27 +68,39 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
+    console.log(searchParams);
+
     let serviceId = Number(searchParams.get("serviceId"));
+    let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
     const session: any = await getServerSession(authOptions);
 
+    if (serviceId && serviceAreaId) {
+      const response = await prisma.truckClassification.findMany({
+        where: { deleted: 0, serviceId, serviceAreaId, status: 1 },
+       
+      });
+      console.log(response);
+      
+      return NextResponse.json(response);
+    }
     // await logActivity("Visited data assignment page", session?.user?.id);
     if (serviceId) {
       const response = await prisma.truckClassification.findMany({
         where: { deleted: 0, serviceId: serviceId },
         include: {
           Service: true,
-          ServiceArea: true
+          ServiceArea: true,
         },
       });
       return NextResponse.json({ response });
     }
+
     const response = await prisma.truckClassification.findMany({
       where: { deleted: 0 },
       include: {
         Service: true,
-        ServiceArea: true
-
+        ServiceArea: true,
       },
     });
 

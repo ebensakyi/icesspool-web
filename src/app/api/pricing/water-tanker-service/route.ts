@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     // await logActivity(`Assigned data from ${res?.assignedFromUser} to ${res?.assignedToUser}`, userId);
 
     const data = {
-      status: Number(res?.status),
+      status: 0,
       insurance: Number(res?.insurance),
       repairCost: Number(res?.repairCost),
       roadWorthy: Number(res?.roadWorthy),
@@ -28,11 +28,10 @@ export async function POST(request: Request) {
       toolsCost: Number(res?.toolsCost),
       profitPercentage: Number(res?.profitPercentage),
       pumpDepreciation: Number(res?.pumpDepreciation),
-
+      waterUnitCost : Number(res?.waterUnitCost),
+      rawWaterCost: Number(res?.rawWaterCost),
       truckClassificationId: Number(res?.truckClassification),
-      fuelDistanceConst: Number(res?.fuelDistanceConst),
-
-      serviceId: 1,
+      serviceId: 2,
       regionId:Number(res?.region),
 
     };
@@ -40,7 +39,7 @@ export async function POST(request: Request) {
 
     
 
-    const response = await prisma.waterServicePricing.create({ data });
+    const response = await prisma.waterTankerServicePricing.create({ data });
 
     return NextResponse.json(response);
   } catch (error: any) {
@@ -79,7 +78,7 @@ export async function PUT(request: Request) {
       };
 
       
-    await prisma.waterServicePricing.update({
+    await prisma.waterTankerServicePricing.update({
       where: {
         id: Number(res?.id),
       },
@@ -104,10 +103,14 @@ export async function GET(request: Request) {
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 
-    const response = await prisma.waterServicePricing.findMany({
+    const response = await prisma.waterTankerServicePricing.findMany({
       where: { deleted: 0 },
       include:{
-        Region:true,
+        ServiceArea:{
+          include: {
+            Region: true
+          }
+        },
         TruckClassification:true
       }
     });

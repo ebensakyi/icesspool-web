@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const WaterPricing = ({ data }: any) => {
+console.log(data);
 
 
     const [id, setId] = useState("");
@@ -515,10 +516,10 @@ export const WaterPricing = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.emptyingPricings?.response.map((data: any) => {
+                                        {data?.waterPricings?.response.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
-                                                    <td>{data?.Region?.name}</td>
+                                                    <td>{data?.ServiceArea?.Region?.name}</td>
                                                     <td>{data?.TruckClassification?.name}</td>
 
                                                     <td>{data?.insurance}</td>
@@ -532,7 +533,7 @@ export const WaterPricing = ({ data }: any) => {
                                                     <td>{data?.toolsCost}</td>
                                                     <td>{data?.profitPercentage}</td>
                                                     <td>{data?.pumpDepreciation}</td>
-                                                    <td>{data?.fuelDistanceConst}</td>
+                                                    <td>{data?.waterUnitCost}</td>
 
                                                     <td>{data?.status == 1 ? <span className="badge bg-primary">Active</span> : <span className="badge bg-danger">Inactive</span>}</td>
                                                     <td>  {moment(data?.createdAt).format(

@@ -186,6 +186,19 @@ CREATE TABLE `BiodigesterType` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `WaterType` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `status` INTEGER NULL DEFAULT 0,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `WaterType_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `BiodigesterServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `biodigesterServiceId` INTEGER NOT NULL,
@@ -350,27 +363,31 @@ CREATE TABLE `ToiletTruckServicePricing` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `WaterServicePricing` (
+CREATE TABLE `WaterTankerServicePricing` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `fuelDistanceConst` DECIMAL(10, 2) NOT NULL,
     `insurance` DECIMAL(10, 2) NOT NULL,
     `repairCost` DECIMAL(10, 2) NOT NULL,
     `roadWorthy` DECIMAL(10, 2) NOT NULL,
     `unitFuelCost` DECIMAL(10, 2) NOT NULL,
+    `rawWaterCost` DECIMAL(10, 2) NOT NULL,
     `workingDays` INTEGER NOT NULL,
     `truckDepreciation` DECIMAL(10, 2) NOT NULL,
     `adminCost` DECIMAL(10, 2) NOT NULL,
     `overheadCost` DECIMAL(10, 2) NOT NULL,
     `toolsCost` DECIMAL(10, 2) NOT NULL,
     `profitPercentage` DECIMAL(10, 2) NOT NULL,
-    `pumpDepreciation` DECIMAL(10, 2) NOT NULL,
+    `pumpDepreciation` DECIMAL(10, 2) NULL,
+    `waterUnitCost` DECIMAL(10, 2) NULL,
+    `rawUnitCost` DECIMAL(10, 2) NULL,
     `truckClassificationId` INTEGER NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `regionId` INTEGER NOT NULL,
+    `elevy` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `regionId` INTEGER NULL,
     `serviceId` INTEGER NOT NULL,
     `serviceAreaId` INTEGER NULL,
+    `status` INTEGER NULL DEFAULT 0,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -558,6 +575,7 @@ CREATE TABLE `ServicePoint` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `serviceId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -617,7 +635,7 @@ CREATE TABLE `Transaction` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ToiletTankerTransaction` (
+CREATE TABLE `ToiletTruckTransaction` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -641,17 +659,6 @@ CREATE TABLE `WaterTankerTransaction` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `WaterType` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(50) NOT NULL,
-    `deleted` INTEGER NULL DEFAULT 0,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `BiodigesterTransaction` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `transactionId` VARCHAR(255) NOT NULL,
@@ -661,6 +668,19 @@ CREATE TABLE `BiodigesterTransaction` (
     `updatedAt` DATETIME(3) NOT NULL,
     `biodigesterTypeId` INTEGER NULL,
     `biodigesterServiceId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `WaterTransaction` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `transactionId` VARCHAR(255) NOT NULL,
+    `unitCost` DECIMAL(10, 2) NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `waterTypeId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -743,14 +763,13 @@ CREATE TABLE `ServiceProviderWithdrawal` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `serviceProviderId` VARCHAR(255) NOT NULL,
     `transactionId` VARCHAR(255) NULL,
-    `amount` INTEGER NULL,
+    `amount` DECIMAL(10, 2) NULL,
     `disbursementDate` DATETIME(3) NULL,
     `status` INTEGER NULL DEFAULT 0,
-    `approvedBy` INTEGER NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` INTEGER NULL DEFAULT 1,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -859,16 +878,16 @@ ALTER TABLE `ToiletTruckServicePricing` ADD CONSTRAINT `ToiletTruckServicePricin
 ALTER TABLE `ToiletTruckServicePricing` ADD CONSTRAINT `ToiletTruckServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `WaterTankerServicePricing` ADD CONSTRAINT `WaterTankerServicePricing_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `WaterTankerServicePricing` ADD CONSTRAINT `WaterTankerServicePricing_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `WaterTankerServicePricing` ADD CONSTRAINT `WaterTankerServicePricing_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `WaterServicePricing` ADD CONSTRAINT `WaterServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `WaterTankerServicePricing` ADD CONSTRAINT `WaterTankerServicePricing_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `PageAccess` ADD CONSTRAINT `PageAccess_pageId_fkey` FOREIGN KEY (`pageId`) REFERENCES `Page`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -910,6 +929,9 @@ ALTER TABLE `RatingBreakdown` ADD CONSTRAINT `RatingBreakdown_userId_fkey` FOREI
 ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `ServicePoint` ADD CONSTRAINT `ServicePoint_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `TruckEmptyingTransaction` ADD CONSTRAINT `TruckEmptyingTransaction_truckClassificationId_fkey` FOREIGN KEY (`truckClassificationId`) REFERENCES `TruckClassification`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -928,7 +950,7 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_serviceAreaId_fkey` FOREIG
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_currentStatus_fkey` FOREIGN KEY (`currentStatus`) REFERENCES `TxStatus`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ToiletTankerTransaction` ADD CONSTRAINT `ToiletTankerTransaction_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ToiletTruckTransaction` ADD CONSTRAINT `ToiletTruckTransaction_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `WaterTankerTransaction` ADD CONSTRAINT `WaterTankerTransaction_waterTypeId_fkey` FOREIGN KEY (`waterTypeId`) REFERENCES `WaterType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -944,6 +966,12 @@ ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_tran
 
 -- AddForeignKey
 ALTER TABLE `BiodigesterTransaction` ADD CONSTRAINT `BiodigesterTransaction_biodigesterTypeId_fkey` FOREIGN KEY (`biodigesterTypeId`) REFERENCES `BiodigesterType`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `WaterTransaction` ADD CONSTRAINT `WaterTransaction_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `WaterTransaction` ADD CONSTRAINT `WaterTransaction_waterTypeId_fkey` FOREIGN KEY (`waterTypeId`) REFERENCES `WaterType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServiceCharges` ADD CONSTRAINT `ServiceCharges_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -970,7 +998,7 @@ ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_truckClassificationId_fkey` FOREIG
 ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ServiceProviderWithdrawal` ADD CONSTRAINT `ServiceProviderWithdrawal_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceProviderWithdrawal` ADD CONSTRAINT `ServiceProviderWithdrawal_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServiceProviderWithdrawal` ADD CONSTRAINT `ServiceProviderWithdrawal_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

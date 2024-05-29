@@ -347,7 +347,7 @@ export const TruckClassification = ({ data }: any) => {
                                                                                 setServiceArea(data.serviceAreaId)
                                                                                 setService(data.serviceId)
                                                                                 setStatus(data.status)
-                                                                                setDescription("")
+                                                                                setDescription(data.description)
 
                                                                                 // setIsEditing(true);
 

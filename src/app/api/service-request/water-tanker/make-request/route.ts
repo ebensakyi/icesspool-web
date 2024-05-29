@@ -42,7 +42,6 @@ export async function POST(request: Request) {
       serviceAreaId: 1, //Number(res?.serviceAreaId),
       currentStatus: 1,
     };
-    console.log(data);
 
     const response = await prisma.transaction.create({ data });
 
@@ -69,7 +68,7 @@ export async function POST(request: Request) {
       serviceId: 3,
 
       serviceAreaId: Number(res?.serviceAreaId),
-      paymentStatus: 0,
+      paymentStatus: -1,
 
       //clientId: tr,
       txStatusCode: 1,

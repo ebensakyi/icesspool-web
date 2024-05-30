@@ -13,6 +13,7 @@ const XLSX = require("xlsx");
 import multer from "multer";
 import aws from "aws-sdk";
 import { getMergedDate } from "@/libs/date";
+import { serviceProvider } from "../../../../../prisma/seeds/service_provider";
 
 const s3 = new aws.S3({
   accessKeyId: process.env.MY_AWS_ACCESS_KEY,
@@ -178,130 +179,123 @@ export async function PUT(request: Request) {
   try {
     const _data = await request.formData();
 
-    
+    const passportPicture = _data.get("passportPicture") as File | null;
+    const userId = _data.get("userId") as string | null;
+    const spId = _data.get("spId") as string | null;
 
-    const passportPicture: File | null = _data.get(
-      "passportPicture"
-    ) as unknown as File;
-    const userId = _data?.get("userId");
-    const spId = _data?.get("spId");
+    const firstName = _data.get("firstName") as string | null;
+    const lastName = _data.get("lastName") as string | null;
+    const email = _data.get("email") as string | null;
+    const phoneNumber = _data.get("phoneNumber") as string | null;
+    const serviceAreaId = Number(_data.get("serviceArea"));
 
-    const firstName = _data?.get("firstName");
-    const lastName = _data?.get("lastName");
-    const email = _data?.get("email");
-    const phoneNumber: any = _data?.get("phoneNumber");
-    const serviceAreaId = Number(_data?.get("serviceArea"));
+    const company = _data.get("company") as string | null;
+    const ghanaPostGPS = _data.get("ghanaPostGPS") as string | null;
+    const officeLocation = _data.get("officeLocation") as string | null;
+    const licenseClassification = _data.get("licenseClassification") as
+      | string
+      | null;
+    const licenseNumber = _data.get("licenseNumber") as string | null;
+    const momoNetwork = _data.get("momoNetwork") as string | null;
+    const momoNumber = _data.get("momoNumber") as string | null;
+    const service = _data.get("service") as string | null;
 
-    const company: any = _data?.get("company");
-    const ghanaPostGPS = _data?.get("ghanaPostGPS");
-    const officeLocation = _data?.get("officeLocation");
-    const licenseClassification = _data?.get("licenseClassification");
-    const licenseNumber = _data?.get("licenseNumber");
-    const momoNetwork = _data?.get("momoNetwork");
-    const momoNumber = _data?.get("momoNumber");
-    const service = _data?.get("service");
-
-    // const res = await request.json();
-    // const session: any = await getServerSession(authOptions);
-
-    // // let loginUserLevel = session?.user?.userLevelId;
-    // // let fileUrl;
-
- 
-
-    const data: any = {
-      userTypeId: 3,
-      lastName: lastName,
-      firstName: firstName,
-      email: email,
-      phoneNumber: phoneNumber,
-      serviceAreaId: serviceAreaId,
-    };
-
-    const user: any = await prisma.user.update({
-      data,
-      where: { id: Number(userId) },
-    });
-
-   
-
-  
-    let operatorData: any = {
-      userId: user.id,
-      company: company,
-      officeLocation: officeLocation,
-      ghanaPostGPS: ghanaPostGPS,
-      licenseClassification: Number(licenseClassification),
-      licenseNumber: licenseNumber,
-      serviceId: Number(service),
-    };
-
-    let momoData: any = {
-      momoNetworkId: Number(momoNetwork),
-      momoNumber: momoNumber,
-      serviceProviderId: spId,
-    };
-
-    // let serviceProvider = await prisma.serviceProvider.update({
-    //   data: operatorData,
-    //   where: { id: spId },
-    // });
-
-    // let momoAccount = await prisma.serviceProvider.findFirst({})
-    // await prisma.momoAccount.update({
-    //   data: momoData,
-    //   where: { id: spId },
-    // });
-
-   
-    ////////////////////////////////////////////////////////////////
-
-    if(!passportPicture){
-      return
-    }
-    await upload.single("passportPicture");
-
-    if (!passportPicture) {
+    if (
+      !userId ||
+      !spId ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber ||
+      !serviceAreaId
+    ) {
       return NextResponse.json(
-        { error: "Please select an image file" },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const arrayBuffer = await passportPicture.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
-
-    let imageName = `${Date.now()}-${passportPicture.name}`;
-
-    const params: any = {
-      Bucket: process.env.AWS_BUCKET,
-      Key: `uploads/${imageName}`,
-      Body: buffer,
-      // Body: fs.createReadStream(passportPicture: File),
-      // ACL: 'public-read', // adjust access control as needed
+    const data = {
+      userTypeId: 3,
+      lastName,
+      firstName,
+      email,
+      phoneNumber,
+      serviceAreaId,
     };
 
-    const result = await s3.upload(params).promise();
-
-    const imageUrl = result.Location;
-
-    const updatedUser: any = await prisma.user.update({
-      where: { id: user.id },
-      data: { passportPicture: imageName },
+    const user = await prisma.user.update({
+      data,
+      where: { id: Number(userId) },
     });
 
-    //await  uploadFile(passportPicture);
+    // const serviceProvider = await prisma.serviceProvider.findFirst({
+    //   where: { id: Number(spId) },
+    // });
 
-    ////////////////////////////////////////////////////////////////
+    const momoAccount = await prisma.momoAccount.findFirst({
+      where: { serviceProviderId: spId },
+    });
 
-    return NextResponse.json(updatedUser);
+    const operatorData = {
+      userId: user.id,
+      company,
+      officeLocation,
+      ghanaPostGPS,
+      licenseClassification: Number(licenseClassification),
+      licenseNumber,
+      serviceId: Number(service),
+    };
+
+    const momoData = {
+      momoNetworkId: Number(momoNetwork),
+      momoNumber,
+      serviceProviderId: Number(spId),
+    };
+
+    if (spId)
+      await prisma.serviceProvider.update({
+        data: operatorData,
+        where: { id: spId },
+      });
+
+    if (momoAccount)
+      await prisma.momoAccount.update({
+        data: momoData,
+        where: { id: momoAccount.id },
+      });
+
+    if (!passportPicture) {
+      return NextResponse.json(
+        { message: "No passport picture provided" },
+        { status: 204 }
+      );
+    } else {
+      const arrayBuffer = await passportPicture.arrayBuffer();
+      const buffer = new Uint8Array(arrayBuffer);
+      const imageName = `${Date.now()}-${passportPicture.name}`;
+
+      const params = {
+        Bucket: process.env.AWS_BUCKET!,
+        Key: `uploads/${imageName}`,
+        Body: buffer,
+      };
+
+      const result = await s3.upload(params).promise();
+      const imageUrl = result.Location;
+
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { passportPicture: imageName },
+      });
+    }
+
+    return NextResponse.json({});
   } catch (error: any) {
     console.log(error);
-
-    return NextResponse.json(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
 export async function GET(request: Request) {
   try {
     // const session :any= await getServerSession(authOptions);
@@ -316,6 +310,7 @@ export async function GET(request: Request) {
         ServiceProvider: {
           include: {
             Service: true,
+            Vehicle: true,
 
             MomoAccount: {
               include: {

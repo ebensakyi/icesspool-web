@@ -18,9 +18,9 @@ model Otp {
 }
 
 model TruckClassification {
-  id    Int     @id @default(autoincrement())
-  name  String  @unique(map: "axleClass") @db.VarChar(255)
-  image String? @db.VarChar(255)
+  id          Int     @id @default(autoincrement())
+  name        String  @unique(map: "axleClass") @db.VarChar(255)
+  image       String? @db.VarChar(255)
   description String? @db.VarChar(255)
 
   serviceId                 Int
@@ -564,6 +564,8 @@ model ServiceProvider {
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
   ServiceProviderRating     ServiceProviderRating?
   serviceId                 Int
+  Vehicle                   Vehicle ?                    @relation(fields: [vehicleId], references: [id])
+  vehicleId                 Int?
 }
 
 model ServiceProviderEarning {
@@ -731,7 +733,7 @@ model Transaction {
   id             String   @id @db.VarChar(255)
   // unitCost               Decimal                  @db.Decimal(10, 2)
   discountedCost Decimal? @db.Decimal(10, 2)
-  totalCost      Decimal?  @db.Decimal(10, 2)
+  totalCost      Decimal? @db.Decimal(10, 2)
   community      String?  @db.VarChar(255)
 
   gpsAccuracy Decimal? @db.Decimal(10, 2)
@@ -914,7 +916,6 @@ model User {
   UserType UserType @relation(fields: [userTypeId], references: [id])
 
   ScannerUser     ScannerUser[]
-  Vehicle         Vehicle[]
   ServiceProvider ServiceProvider?
 
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
@@ -951,7 +952,7 @@ model Vehicle {
   updatedAt             DateTime            @updatedAt
   TruckClassification   TruckClassification @relation(fields: [truckClassificationId], references: [id])
   truckClassificationId Int
-  User                  User                @relation(fields: [userId], references: [id])
+  ServiceProvider       ServiceProvider[]
 }
 
 model ServiceProviderWithdrawal {

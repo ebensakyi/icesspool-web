@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { AWS_S3_URL, LOGIN_URL } from '@/config';
+import { truckClassification } from '../../../prisma/seeds/truck_classification';
 
 export default function ServiceProvider({ data }: any) {
     const searchParams = useSearchParams();
@@ -48,6 +49,8 @@ export default function ServiceProvider({ data }: any) {
     const [company, setCompany] = useState("");
     const [officeLocation, setOfficeLocation] = useState("");
     const [licenseClassification, setLicenseClassification] = useState("");
+    const [truckClassification, setTruckClassification] = useState("");
+
     const [passportPicture, setPassportImage] = useState(null);
     const [ghanaPostGPS, setGhanaPostGPS] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
@@ -237,6 +240,7 @@ export default function ServiceProvider({ data }: any) {
         formData.append('company', company);
         formData.append('licenseNumber', licenseNumber);
         formData.append('licenseClassification', licenseClassification);
+        formData.append('truckClassification', truckClassification);
         formData.append('momoNumber', momoNumber);
         formData.append('momoNetwork', momoNetwork);
 
@@ -314,9 +318,12 @@ export default function ServiceProvider({ data }: any) {
         setServiceArea("");
         setService("");
         setOfficeLocation("");
+        setTruckClassification("");
         setCompany("");
     }
-
+    const filteredTruckClassifications = data?.truckClassifications?.response.filter(
+        (tc: any) => tc.serviceId === Number(service)
+    );
     return (
         <main id="main" className="main">
             {/* <ToastContainer
@@ -436,31 +443,51 @@ export default function ServiceProvider({ data }: any) {
                                     </div>
 
                                     {service == "1" || service == "2" ?
-                                        <><div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select licence classification</label>
-                                            <div className="col-sm-12">
-                                                <select
-                                                    onChange={(e: any) => setLicenseClassification(e.target.value)}
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    value={licenseClassification}
-                                                >
+                                        <>
+                                            <div className="col-sm-3 mb-3">
+                                                <label className="col-sm-12 col-form-label">Truck classification</label>
+                                                <div className="col-sm-12">
+                                                    <select
+                                                        onChange={(e) => setTruckClassification(e.target.value)}
+                                                        className="form-select"
+                                                        aria-label="Default select example"
+                                                        value={truckClassification}
+                                                    >
+                                                        <option>Select truck class</option>
+                                                        {filteredTruckClassifications.map((tc: any) => (
+                                                            <option key={tc.id} value={tc.id}>
+                                                                {tc.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                                    <option >Select classification</option>
-                                                    <option value="1" >A</option>
-                                                    <option value="2" >B</option>
-                                                    <option value="3">C</option>
-                                                    <option value="4">D</option>
-                                                    <option value="5">E</option>
+                                            <div className="col-sm-3 mb-3">
+                                                <label className="col-sm-12 col-form-label">Select licence classification</label>
+                                                <div className="col-sm-12">
+                                                    <select
+                                                        onChange={(e: any) => setLicenseClassification(e.target.value)}
+                                                        className="form-select"
+                                                        aria-label="Default select example"
+                                                        value={licenseClassification}
+                                                    >
 
-                                                    {/* {data.userTypes.response.map((userType: any) => {
+                                                        <option >Select classification</option>
+                                                        <option value="1" >A</option>
+                                                        <option value="2" >B</option>
+                                                        <option value="3">C</option>
+                                                        <option value="4">D</option>
+                                                        <option value="5">E</option>
+
+                                                        {/* {data.userTypes.response.map((userType: any) => {
                                                         return (
                                                             <option key={userType.id} value={userType.id}>{userType.name}</option>
                                                         )
                                                     })} */}
-                                                </select>
-                                            </div>
-                                        </div>  <div className="col-sm-3  mb-3">
+                                                    </select>
+                                                </div>
+                                            </div>  <div className="col-sm-3  mb-3">
                                                 <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                     License Number                                            </label>
                                                 <div className="col-sm-12">
@@ -745,6 +772,7 @@ export default function ServiceProvider({ data }: any) {
                                                                         setOfficeLocation(user.ServiceProvider.officeLocation);
                                                                         setMomoNetwork(user?.ServiceProvider?.MomoAccount?.momoNetworkId);
                                                                         setMomoNumber(user?.ServiceProvider?.MomoAccount?.momoNumber);
+                                                                        setTruckClassification(user?.Vehicle?.T?.momoNumber);
 
                                                                         // await getDistrictsByRegion(user.regionId)
 

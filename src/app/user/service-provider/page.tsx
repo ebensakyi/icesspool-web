@@ -4,6 +4,7 @@ import { SERVER_BASE_URL } from "@/config";
 import ServiceProvider from "@/src/components/user/ServiceProvider";
 import { headers } from "next/headers";
 
+
    async function getServiceAreas(searchParams: any) {
   try {
      let response = await fetch(`${SERVER_BASE_URL}/api/configure/service-area`, {
@@ -72,6 +73,17 @@ import { headers } from "next/headers";
     return await response.json();
   
   }
+
+  async function getTruckClassifications() {
+  
+    let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/truck-classification`, { cache: 'no-store', headers: headers() });
+  
+    if (!response.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    return await response.json();
+  
+  }
 export default async function Page({ searchParams }: any) {
 
 
@@ -80,8 +92,9 @@ export default async function Page({ searchParams }: any) {
     const serviceAreas = await getServiceAreas(searchParams)
     const users = await getServiceProviders()
     const momoNetworks = await getMomoNetworks()
+    const truckClassifications = await getTruckClassifications()
 
-    let data = { services, userTypes,serviceAreas,users,momoNetworks }
+    let data = { services, userTypes,serviceAreas,users,momoNetworks,truckClassifications }
 
 
 

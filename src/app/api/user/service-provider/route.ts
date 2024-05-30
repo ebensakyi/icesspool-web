@@ -178,7 +178,6 @@ export async function PUT(request: Request) {
   try {
     const _data = await request.formData();
 
-    console.log("data==> ",_data);
     
 
     const passportPicture: File | null = _data.get(

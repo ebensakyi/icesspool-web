@@ -174,7 +174,9 @@ export default function ServiceProvider({ data }: any) {
                 body: formData,
             });
 
-
+            if (response.status === 201) {
+                return toast.error("User already exist. Check phone number and email and try again");
+            }
 
             if (response.ok) {
                 const data = await response.json();
@@ -194,7 +196,7 @@ export default function ServiceProvider({ data }: any) {
 
     const updateUser = async (e: any) => {
         e.preventDefault();
-      
+
         if (firstName == "") {
             return toast.error("Please enter first name");
         }
@@ -262,7 +264,7 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-    
+
     const handleSearch = () => {
         try {
             let _searchText: any = searchTextRef?.current?.value
@@ -297,7 +299,7 @@ export default function ServiceProvider({ data }: any) {
     };
 
     const handleCancel = async () => {
-      
+
         setIsEditing(false);
 
         setLastName("");
@@ -401,7 +403,7 @@ export default function ServiceProvider({ data }: any) {
                                         <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                             Office location *                                           </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder=' Office location'  onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
+                                            <input type="text" className="form-control" placeholder=' Office location' onChange={(e) => setOfficeLocation(e.target.value)} value={officeLocation} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -724,7 +726,7 @@ export default function ServiceProvider({ data }: any) {
                                                                     onClick={async (e) => {
                                                                         e.preventDefault();
 
-                                                                       await handleCancel()
+                                                                        await handleCancel()
                                                                         setIsEditing(true);
 
 

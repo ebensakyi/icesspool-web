@@ -52,7 +52,6 @@ export async function POST(request: Request) {
       await updateDoc(transactionRef, {
         txStatusCode: currentStatus,
         paymentStatus: 1,
-        paymentDone: true,
       });
       return NextResponse.json({});
     }else{

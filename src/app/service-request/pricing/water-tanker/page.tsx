@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import { WaterPricing } from '@/src/components/WaterPricing';
+import { WaterPricing } from '@/src/components/service-request/WaterPricing';
 import { headers } from 'next/headers';
 
 

@@ -14,6 +14,8 @@ import { LOGIN_URL } from "@/config";
 
 export default function UserProfile({ data }: any) {
 
+    
+
     const searchParams = useSearchParams()
 
     const message = searchParams.get("message")
@@ -32,8 +34,8 @@ export default function UserProfile({ data }: any) {
     const pathname = usePathname()
 
     const [userId, setUserId] = useState("")
-    const [lastName, setSurname] = useState("");
-    const [firstName, setOtherNames] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
@@ -41,8 +43,8 @@ export default function UserProfile({ data }: any) {
 
 
     useEffect(() => {
-        setSurname(data.userData.lastName);
-        setOtherNames(data.userData.firstName);
+        setFirstName(data.userData.lastName);
+        setLastName(data.userData.firstName);
         setEmail(data.userData.email);
         setPhoneNumber(data.userData.phoneNumber);
         setUserId(data.userData.userId);
@@ -123,8 +125,8 @@ export default function UserProfile({ data }: any) {
 
 
             const response = await axios.put("/api/auth/profile", data);
-            setSurname("");
-            setOtherNames("");
+            setFirstName("");
+            setLastName("");
             setEmail("");
             setPhoneNumber("");
             setCurrentPassword("");
@@ -186,7 +188,7 @@ export default function UserProfile({ data }: any) {
                                             Surname
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} value={lastName} />
+                                            <input type="text" className="form-control" placeholder='Surname' onChange={(e) => setFirstName(e.target.value)} value={lastName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
@@ -194,7 +196,7 @@ export default function UserProfile({ data }: any) {
                                             Other name(s)
                                         </label>
                                         <div className="col-sm-12">
-                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setOtherNames(e.target.value)} value={firstName} />
+                                            <input type="text" className="form-control" placeholder='Other names' onChange={(e) => setLastName(e.target.value)} value={firstName} />
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">

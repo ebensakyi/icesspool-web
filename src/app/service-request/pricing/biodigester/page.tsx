@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import { BiodigesterPricing } from '@/src/components/BiodigesterPricing';
+import { BiodigesterPricing } from '@/src/components/service-request/BiodigesterPricing';
 import { headers } from 'next/headers';
 
 

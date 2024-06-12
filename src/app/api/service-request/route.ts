@@ -6,9 +6,6 @@ import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
-
-
-
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);

@@ -1,17 +1,17 @@
 export const dynamic = "force-dynamic";
 
 import { SERVER_BASE_URL } from '@/config';
-import { BiodigesterOffer } from '@/src/components/BiodigesterOffer';
+import { WaterOffer } from '@/src/components/service-request/WaterOffer';
 import { headers } from 'next/headers';
 
 
-async function getBiodigesterOffers(searchParams: any) {
+async function getWaterOffers(searchParams: any) {
     let { searchText } = searchParams;
 
     let { page } = searchParams;
 
     const res = await fetch(
-        `${SERVER_BASE_URL}/api/service-request/biodigester/offers?page=${page}&searchText=${searchText}`,
+        `${SERVER_BASE_URL}/api/service-request/water-tanker/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
     
@@ -26,7 +26,7 @@ async function getBiodigesterOffers(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const biodigesterOffers = await getBiodigesterOffers(searchParams)
+    const biodigesterOffers = await getWaterOffers(searchParams)
    
 
 
@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: any) {
 
 
 
-    return <BiodigesterOffer data={data} />
+    return <WaterOffer data={data} />
 
 
 }

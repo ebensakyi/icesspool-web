@@ -314,20 +314,20 @@ export default function Header() {
                                     </Link>
                                 </li>
                                  <li>
-                                    <Link href="/service-request/biodigester/offers">
+                                    <Link href="/service-request/offers/biodigester">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digester</span>
                                     </Link>
                                 </li>
                                
                                 <li>
-                                    <Link href="/offers/emptying">
+                                    <Link href="/service-request/offers/toilet-truck">
                                         <i className="bi bi-circle" />
-                                        <span>Emptying</span>
+                                        <span>Toilet Truck</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/offers/water">
+                                    <Link href="/service-request/offers/water-tanker">
                                         <i className="bi bi-circle" />
                                         <span>Water</span>
                                     </Link>
@@ -475,20 +475,20 @@ export default function Header() {
                                 className="nav-content collapse "
                                 data-bs-parent="#pricing-nav"
                             > <li>
-                                    <Link href="/pricing/biodigester">
+                                    <Link href="/service-request/pricing/biodigester">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link href="/pricing/toilet-truck">
+                                    <Link href="/service-request/pricing/toilet-truck">
                                         <i className="bi bi-circle" />
                                         <span>Toilet Truck </span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/pricing/water-tanker">
+                                    <Link href="/service-request/pricing/water-tanker">
                                         <i className="bi bi-circle" />
                                         <span>Water Tanker</span>
                                     </Link>

@@ -168,7 +168,6 @@ export async function POST(request: Request) {
           await updateDoc(transactionRef, {
             txStatusCode: 3,
             paymentStatus: 1,
-            paymentDone:true,
             paymentTime: getCurrentDate() + " at " + getCurrentTime(),
           });
 

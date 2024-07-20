@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -21,6 +20,7 @@ import {
   WORK_COMPLETED_REQUEST,
   WORK_STARTED_REQUEST,
 } from "@/config";
+import { authOptions } from "@/src/app/api/auth/[...nextauth]/options";
 
 export async function POST(request: Request) {
   try {
@@ -30,48 +30,26 @@ export async function POST(request: Request) {
     const res = await request.json();
 
     let transactionId = res.transactionId;
-    let status = Number(res.status);
+    let txSubStatus = Number(res.txSubStatus);
 
     const session: any = await getServerSession(authOptions);
 
 
+
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
           transactionId: transactionId,
-          txStatusCode: Number(status),
+          txSubStatus: Number(txSubStatus),
         },
         { merge: true }
       );
-  
-
-    if (status == OFFER_CANCELLED_SP) {
-      await setDoc(
-        doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-        {
-          transactionId: transactionId,
-          txStatusCode: Number(status),
-          spId: "",
-          spCompany: "",
-          spImageUrl: "",
-          spName: "",
-          spPhoneNumber: "",
-        },
-        { merge: true }
-      );
-    }
-
-    const response = await prisma.transaction.update({
-      where: { id: transactionId },
-      data: {
-        currentStatus: status,
-      },
-    });
+   
 
     await prisma.transactionStatus.create({
       data: {
         transactionId: transactionId,
-        txStatusId: status,
+        txStatusId: txSubStatus,
         date: convertDateToISO8601(getCurrentDate()),
         time: convertTimeToISO8601(getCurrentTime()),
       },

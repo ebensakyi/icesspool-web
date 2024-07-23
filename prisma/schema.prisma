@@ -564,7 +564,7 @@ model ServiceProvider {
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
   ServiceProviderRating     ServiceProviderRating?
   serviceId                 Int
-  Vehicle                   Vehicle ?                    @relation(fields: [vehicleId], references: [id])
+  Vehicle                   Vehicle?                    @relation(fields: [vehicleId], references: [id])
   vehicleId                 Int?
 }
 
@@ -771,6 +771,7 @@ model Transaction {
 
   TxStatus               TxStatus                 @relation(fields: [currentStatus], references: [id])
   currentStatus          Int
+  txSubStatus            Int?
   TransactionRating      TransactionRating[]
   IcesspoolEarning       IcesspoolEarning[]
   ServiceProviderEarning ServiceProviderEarning[]

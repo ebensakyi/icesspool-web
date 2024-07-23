@@ -298,9 +298,11 @@ export async function PUT(request: Request) {
 }
 export async function GET(request: Request) {
   try {
-    // const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
+
+    console.log(searchParams);
+    
 
     const response = await prisma.user.findMany({
       where: { userTypeId: 3, deleted: 0 },

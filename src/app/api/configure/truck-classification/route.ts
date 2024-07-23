@@ -75,6 +75,8 @@ export async function GET(request: Request) {
     let serviceId = Number(searchParams.get("serviceId"));
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
+    
+
     const session: any = await getServerSession(authOptions);
 
     if (serviceId && serviceAreaId) {
@@ -82,7 +84,8 @@ export async function GET(request: Request) {
         where: { deleted: 0, serviceId, serviceAreaId, status: 1 },
        
       });
-      
+          console.log(response);
+
       return NextResponse.json(response);
     }
     // await logActivity("Visited data assignment page", session?.user?.id);

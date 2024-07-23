@@ -171,7 +171,7 @@ export const WaterOffer = ({ data }: any) => {
                 >
                     <div className="alert alert-outline-danger alert-p" role="alert">
                         <span className="alert-content">
-                            You are about to delete this report.<br /> Deleted report cannot be recovered.
+                            You are about to delete this transaction.<br /> Deleted transaction cannot be recovered.
                             Click OK to proceed to delete or Cancel to dismiss
                         </span>
                     </div>
@@ -335,7 +335,7 @@ export const WaterOffer = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.biodigesterOffers?.response?.map((data: any) => {
+                                        {data?.offers?.response?.map((data: any) => {
 
                                             return (
                                                 <tr key={data?.id}>
@@ -363,15 +363,17 @@ export const WaterOffer = ({ data }: any) => {
                                                         <span className="badge bg-dark">{data?.TxStatus?.name}</span>
                                                     ) : data?.currentStatus == 9 ? (
                                                         <span className="badge bg-dark">{data?.TxStatus?.name}</span>
-                                                    ) : data?.currentStatus == 10 ? (
+                                                    ) : data?.currentStatus == 20 ? (
                                                         <span className="badge bg-success">{data?.TxStatus?.name}</span>
-                                                    ) : data?.currentStatus == 40 ? (
+                                                    ) : data?.currentStatus == 21 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
-                                                    ) : data?.currentStatus == 41 ? (
+                                                    ) : data?.currentStatus == 22 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
-                                                    ) : data?.currentStatus == 50 ? (
+                                                    ) : data?.currentStatus == 30 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
-                                                    ) : data?.currentStatus == 51 ? (
+                                                    ) : data?.currentStatus == 31 ? (
+                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                    ) : data?.currentStatus == 32 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
                                                     ) : (
                                                         <span className="badge bg-secondary">{data?.TxStatus?.name}</span>

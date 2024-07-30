@@ -13,7 +13,7 @@ const XLSX = require("xlsx");
 import multer from "multer";
 import aws from "aws-sdk";
 import { getMergedDate } from "@/libs/date";
-import { serviceProvider } from "../../../../../prisma/seeds/service_provider";
+
 
 const s3 = new aws.S3({
   accessKeyId: process.env.MY_AWS_ACCESS_KEY,
@@ -298,11 +298,37 @@ export async function PUT(request: Request) {
 }
 export async function GET(request: Request) {
   try {
-
     const { searchParams } = new URL(request.url);
 
     console.log(searchParams);
+    const serviceAreaId = searchParams.get("serviceAreaId");
+    const serviceId = searchParams.get("serviceId");
+    const device = searchParams.get("device");
+
+    if (device == "MOBILE") {
+      const water_sp = await prisma.user.findMany({
+        where: { userTypeId: 3, deleted: 0},
+        include: { ServiceProvider: true },
+      });
+
+
     
+    const newm = water_sp
+  .filter(wsp => wsp.ServiceProvider?.serviceId === Number(serviceId))
+  .map(wsp => ({
+    id: wsp.id,
+    spName: wsp.firstName + " " + wsp.lastName,
+    companyName: wsp.ServiceProvider?.company,
+    serviceId: wsp.ServiceProvider?.serviceId
+  }));
+    console.log(newm);
+
+    
+    return NextResponse.json(
+      newm
+    );
+
+    }
 
     const response = await prisma.user.findMany({
       where: { userTypeId: 3, deleted: 0 },

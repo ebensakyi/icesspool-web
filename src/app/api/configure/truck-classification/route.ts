@@ -74,17 +74,20 @@ export async function GET(request: Request) {
 
     let serviceId = Number(searchParams.get("serviceId"));
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
+    let device = searchParams.get("device");
 
     
 
     const session: any = await getServerSession(authOptions);
 
-    if (serviceId && serviceAreaId) {
+    if (device == "MOBILE") {
       const response = await prisma.truckClassification.findMany({
         where: { deleted: 0, serviceId, serviceAreaId, status: 1 },
        
       });
-          console.log(response);
+
+      console.log(response);
+      
 
       return NextResponse.json(response);
     }

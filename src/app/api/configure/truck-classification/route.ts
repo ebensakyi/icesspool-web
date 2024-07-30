@@ -76,7 +76,8 @@ export async function GET(request: Request) {
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
     let device = searchParams.get("device");
 
-    
+    console.log("searchParams ",searchParams);
+
 
     const session: any = await getServerSession(authOptions);
 
@@ -86,7 +87,7 @@ export async function GET(request: Request) {
        
       });
 
-      console.log(response);
+      console.log("truckClassification ",response);
       
 
       return NextResponse.json(response);

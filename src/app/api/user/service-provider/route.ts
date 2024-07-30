@@ -319,7 +319,9 @@ export async function GET(request: Request) {
     id: wsp.id,
     spName: wsp.firstName + " " + wsp.lastName,
     companyName: wsp.ServiceProvider?.company,
-    serviceId: wsp.ServiceProvider?.serviceId
+    serviceId: wsp.ServiceProvider?.serviceId,
+    spPhoneNumber: wsp?.phoneNumber,
+    avatar: wsp.passportPicture,
   }));
     console.log(newm);
 

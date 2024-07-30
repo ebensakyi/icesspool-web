@@ -26,7 +26,20 @@ export const serviceAreas = [
    
     regionId: 2,
   },
+  {
+    name: "Ashanti",
+    lat1: 7.470280,
+    lng1:  -2.159379,
+    lat2:7.249640,
+    lng2:  -0.23951,
+    lat3:5.885394, 
+    lng3: -1.244767,
+    lat4:6.199495, 
+    lng4:-2.395585,
+   
+    regionId: 3,
+  },
 
-  
+
  
 ];

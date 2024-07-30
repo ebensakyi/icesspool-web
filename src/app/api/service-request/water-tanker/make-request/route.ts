@@ -27,6 +27,7 @@ export async function POST(request: Request) {
 
     const session: any = await getServerSession(authOptions);
 
+
     const data = {
       id: res.transactionId,
       customerId: Number(res?.userId),
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
       placeLng: Number(res?.placeLng),
       placeId: res?.placeId,
       serviceId: 2,
-      serviceAreaId: 1, //Number(res?.serviceAreaId),
+      serviceAreaId: Number(res?.serviceAreaId),
       currentStatus: 1,
     };
 
@@ -50,6 +51,18 @@ export async function POST(request: Request) {
     });
 
     let transactionId = res.transactionId;
+
+    await prisma.transactionSchedule.create({
+      data: {
+        transactionId: res.transactionId,
+        scheduledDate: new Date(res.scheduledDate),
+        timeFrameId: Number(res.timeFrame),
+      },
+    });
+
+    let timeFrame = await prisma.timeFrame.findFirst({
+      where: { id: Number(res.timeFrame) },
+    });
 
     let firestoreData = {
       transactionId: res.transactionId,
@@ -68,7 +81,7 @@ export async function POST(request: Request) {
       serviceId: 3,
 
       serviceAreaId: Number(res?.serviceAreaId),
-      paymentStatus: -1,
+      paymentStatus: 1,
 
       //clientId: tr,
       txStatusCode: 1,
@@ -77,9 +90,16 @@ export async function POST(request: Request) {
       customerName: user?.lastName + " " + user?.firstName,
       customerPhone: user?.phoneNumber,
       customerEmail: user?.email,
-
+      scheduledTime: timeFrame?.time_schedule,
+      scheduledDate: res.scheduledDate,
       createdDate: getCurrentDate() + " at " + getCurrentTime(),
       deleted: false,
+
+      spName: res?.spName,
+      spCompany: res?.spCompany,
+      spPhoneNumber: res?.spPhoneNumber,
+      spImageUrl: res?.spImageUrl,
+      spId: Number(res.spId),
     };
 
     await setDoc(
@@ -96,40 +116,56 @@ export async function POST(request: Request) {
       },
     });
 
-    let serviceProviders = await prisma.user.findMany({
-      where: {
-        deleted: 0,
-        userTypeId: 3,
-        serviceAreaId: 1,
-        ServiceProvider: {
-          serviceId: 2 
-        }
-      },
-      include: {
-        ServiceProvider: true
-      }
-    });
-    
-    console.log("======.", serviceProviders);
+    if (res.requestType == "DIRECT") {
+      //send fcm to only direct sp
+      let sp: any = await prisma.user.findMany({
+        where: {
+          deleted: 0,
+          id: Number(res.userId),
+        },
+      });
 
-    for (let i = 0; i < serviceProviders.length; i++) {
-      // await sendSMS(
-      //   serviceProviders[i].phoneNumber,
-      //   `Hello ${serviceProviders[i].firstName} water tanker request is available`
-      // );
-      if (serviceProviders[i].fcmId) {
-        await sendFCM(
-          serviceProviders[i].fcmId,
-          "New Request",
-          `Hello ${serviceProviders[i].firstName} water tanker request is available`
-        );
+      await prisma.transaction.update({
+        where: { id: transactionId },
+        data: {
+          serviceProviderId: Number(res.spId),
+          currentStatus: 3,
+        },
+      });
+
+      await sendFCM(
+        sp?.fcmId,
+        "New Request",
+        `Hello ${sp.firstName} water tanker request has been assigned to you`
+      );
+    } else {
+      let serviceProviders = await prisma.user.findMany({
+        where: {
+          deleted: 0,
+          userTypeId: 3,
+          serviceAreaId: 1,
+          ServiceProvider: {
+            serviceId: 2,
+          },
+        },
+        include: {
+          ServiceProvider: true,
+        },
+      });
+      for (let i = 0; i < serviceProviders.length; i++) {
+        // await sendSMS(
+        //   serviceProviders[i].phoneNumber,
+        //   `Hello ${serviceProviders[i].firstName} water tanker request is available`
+        // );
+        if (serviceProviders[i].fcmId) {
+          await sendFCM(
+            serviceProviders[i].fcmId,
+            "New Request",
+            `Hello ${serviceProviders[i].firstName} water tanker request is available`
+          );
+        }
       }
     }
-
-    // await db
-    // .collection(process.env.TRANSACTION_STORE)
-    // .doc(res.transactionId)
-    // .set(data);
 
     return NextResponse.json(response);
   } catch (error: any) {

@@ -11,21 +11,24 @@ export const AWS_S3_URL = 'https://icesspool-files.s3.amazonaws.com/uploads/'
 
 
 
-export const  OFFER_MADE = 1;
-export const  OFFER_ACCEPTED = 2;
-export const  PAYMENT_MADE = 3;
-export const  WORK_STARTED_REQUEST = 4; //SP
-export const  WORK_STARTED = 41; // CL
-export const  WORK_NOT_STARTED = 40; // CL
+export const OFFER_MADE = 1;
+export const OFFER_ACCEPTED = 2;
+export const OFFER_IN_PROGRESS = 3;
+export const OFFER_COMPLETED = 4;
+export const OFFER_CLOSED = 5;
 
-export const  WORK_COMPLETED_REQUEST = 5; //SP OR CL
+export const OFFER_RATED = 6; // CL
+export const OFFER_CANCELLED_SP = 7; //SP
+export const OFFER_CANCELLED_CL = 8; //CL
+export const OFFER_REASSIGNED = 9;
 
-export const  WORK_COMPLETED = 51; //ADMIN, CL
-export const  WORK_NOT_COMPLETED = 50; //ADMIN, CL
+//Requests and Approvals
+export const WORK_STARTED_REQUEST = 20; //SP
+export const WORK_STARTED = 21; // CL
+export const WORK_NOT_STARTED = 22; // CL
 
-export const  OFFER_CLOSED = 6; //ADMIN
-export const  OFFER_RATED = 7; // CL
-export const  OFFER_CANCELLED_SP = 8; //SP
-export const  OFFER_CANCELLED_CL = 9; //CL
-export const  OFFER_REASSIGNED = 10;
+export const WORK_COMPLETED_REQUEST = 30; //SP OR CL
+export const WORK_COMPLETED = 31; //ADMIN, CL
+export const WORK_NOT_COMPLETED = 32; //ADMIN, CL
+
 

@@ -16,11 +16,7 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
-import {
-  OFFER_CANCELLED_CL,
-  WORK_COMPLETED,
-  WORK_STARTED,
-} from "@/config";
+import { OFFER_CANCELLED_CL, WORK_COMPLETED, WORK_STARTED } from "@/config";
 
 export async function POST(request: Request) {
   try {
@@ -32,19 +28,26 @@ export async function POST(request: Request) {
     let transactionId = res.transactionId;
     let status = Number(res.status);
 
-
-    
-console.log(res);
-
+    if (status == OFFER_CANCELLED_CL) {
       await setDoc(
         doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
         {
           transactionId: transactionId,
           txStatusCode: Number(status),
+          deleted: true,
         },
         { merge: true }
       );
-    
+      return;
+    }
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        transactionId: transactionId,
+        txStatusCode: Number(status),
+      },
+      { merge: true }
+    );
 
     //  await prisma.transaction.update({
     //       where: { id: transactionId },

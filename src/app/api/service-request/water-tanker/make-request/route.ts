@@ -27,7 +27,6 @@ export async function POST(request: Request) {
 
     const session: any = await getServerSession(authOptions);
 
-
     const data = {
       id: res.transactionId,
       customerId: Number(res?.userId),
@@ -84,8 +83,8 @@ export async function POST(request: Request) {
       paymentStatus: 1,
 
       //clientId: tr,
-      txStatusCode: 1,
-      requestType: 1,
+      txStatusCode: res.requestType == "DIRECT" ? 3 : 1,
+      requestType: res.requestType,
       offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
       customerName: user?.lastName + " " + user?.firstName,
       customerPhone: user?.phoneNumber,
@@ -94,7 +93,7 @@ export async function POST(request: Request) {
       scheduledDate: res.scheduledDate,
       createdDate: getCurrentDate() + " at " + getCurrentTime(),
       deleted: false,
-
+      discountedTotalCost: 0,
       spName: res?.spName,
       spCompany: res?.spCompany,
       spPhoneNumber: res?.spPhoneNumber,
@@ -118,7 +117,7 @@ export async function POST(request: Request) {
 
     if (res.requestType == "DIRECT") {
       //send fcm to only direct sp
-      let sp: any = await prisma.user.findMany({
+      let sp: any = await prisma.user.findFirst({
         where: {
           deleted: 0,
           id: Number(res.userId),

@@ -49,49 +49,7 @@ export async function POST(request: Request) {
       { merge: true }
     );
 
-    //  await prisma.transaction.update({
-    //       where: { id: transactionId },
-    //       data: {
-    //         currentStatus: status,
-    //         deleted: 1,
-    //       },
-    //     });
-    // //work started request
-    // if (status == WORK_STARTED) {
-    //   await setDoc(
-    //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-    //     {
-    //       transactionId: transactionId,
-    //       txStatusCode: Number(status),
-    //     },
-    //     { merge: true }
-    //   );
-    // }
-    // // //work completed request
-
-    // if (status == WORK_COMPLETED) {
-    //   await setDoc(
-    //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-    //     {
-    //       transactionId: transactionId,
-    //       txStatusCode: Number(status),
-    //     },
-    //     { merge: true }
-    //   );
-    // }
-
-    // if (status == OFFER_CANCELLED_CL) {
-    //   await setDoc(
-    //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-    //     {
-    //       transactionId: transactionId,
-    //       txStatusCode: Number(status),
-    //     deleted: true,
-    //     },
-    //     { merge: true }
-    //   );
-    // }
-
+  
     const response = await prisma.transaction.update({
       where: { id: transactionId },
       data: {

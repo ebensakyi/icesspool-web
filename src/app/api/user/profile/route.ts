@@ -10,7 +10,6 @@ export async function GET(request: Request) {
   try {
     const session: any = await getServerSession(authOptions);
 
- console.log("Session ", session);
     let userId = session?.user?.id;
     let firstName = session?.user?.firstName;
     let lastName = session?.user?.lastName;

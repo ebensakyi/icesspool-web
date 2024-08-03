@@ -179,7 +179,7 @@ export async function PUT(request: Request) {
   try {
     const _data = await request.formData();
 
-    const passportPicture = _data.get("passportPicture") as File | null;
+    //const passportPicture = _data.get("passportPicture") as File | null;
     const userId = _data.get("userId") as string | null;
     const spId = _data.get("spId") as string | null;
 
@@ -265,30 +265,30 @@ export async function PUT(request: Request) {
         where: { id: momoAccount.id },
       });
 
-    if (!passportPicture) {
-      return NextResponse.json(
-        { message: "No passport picture provided" },
-        { status: 204 }
-      );
-    } else {
-      const arrayBuffer = await passportPicture.arrayBuffer();
-      const buffer = new Uint8Array(arrayBuffer);
-      const imageName = `${Date.now()}-${passportPicture.name}`;
+    // if (!passportPicture) {
+    //   return NextResponse.json(
+    //     { message: "No passport picture provided" },
+    //     { status: 204 }
+    //   );
+    // } else {
+    //   const arrayBuffer = await passportPicture.arrayBuffer();
+    //   const buffer = new Uint8Array(arrayBuffer);
+    //   const imageName = `${Date.now()}-${passportPicture.name}`;
 
-      const params = {
-        Bucket: process.env.AWS_BUCKET!,
-        Key: `uploads/${imageName}`,
-        Body: buffer,
-      };
+    //   const params = {
+    //     Bucket: process.env.AWS_BUCKET!,
+    //     Key: `uploads/${imageName}`,
+    //     Body: buffer,
+    //   };
 
-      const result = await s3.upload(params).promise();
-      const imageUrl = result.Location;
+    //   const result = await s3.upload(params).promise();
+    //   const imageUrl = result.Location;
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { passportPicture: imageName },
-      });
-    }
+    //   await prisma.user.update({
+    //     where: { id: user.id },
+    //     data: { passportPicture: imageName },
+    //   });
+    // }
 
     return NextResponse.json({});
   } catch (error: any) {

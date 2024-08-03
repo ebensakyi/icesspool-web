@@ -51,7 +51,7 @@ export default function ServiceProvider({ data }: any) {
     const [licenseClassification, setLicenseClassification] = useState("");
     const [truckClassification, setTruckClassification] = useState("");
 
-    const [passportPicture, setPassportImage] = useState(null);
+    const [passportPicture, setPassportPicture] = useState(null);
     const [ghanaPostGPS, setGhanaPostGPS] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
     const [momoNumber, setMomoNumber] = useState("");
@@ -121,7 +121,7 @@ export default function ServiceProvider({ data }: any) {
 
 
     const handleFileChange = (e: any) => {
-        setPassportImage(e.target.files[0]);
+        setPassportPicture(e.target.files[0]);
     };
 
 
@@ -252,15 +252,15 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-            if (response.ok) {
+            //if (response.ok) {
                 const data = await response.json();
                 // console.log('Image uploaded:', data.imageUrl);
                 // Handle success, e.g., update UI with the uploaded image URL
                 router.refresh()
                 return toast.success("User added successfully");
-            } else {
-                console.error('Failed to upload image');
-            }
+            // } else {
+            //     console.error('Failed to upload image');
+            // }
         } catch (error) {
             console.error('Error uploading image:', error);
         }
@@ -772,7 +772,8 @@ export default function ServiceProvider({ data }: any) {
                                                                         setOfficeLocation(user.ServiceProvider.officeLocation);
                                                                         setMomoNetwork(user?.ServiceProvider?.MomoAccount?.momoNetworkId);
                                                                         setMomoNumber(user?.ServiceProvider?.MomoAccount?.momoNumber);
-                                                                        setTruckClassification(user?.Vehicle?.T?.momoNumber);
+                                                                        setTruckClassification(user?.Vehicle?.truckClassification);
+                                                                       // setPassportPicture(user?.passportPicture)
 
                                                                         // await getDistrictsByRegion(user.regionId)
 

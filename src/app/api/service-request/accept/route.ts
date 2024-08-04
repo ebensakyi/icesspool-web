@@ -46,8 +46,8 @@ export async function POST(request: Request) {
       currentStatus = 2;
     }
 
-    if (txStatusCode == 8) {
-      currentStatus = 10;
+    if (txStatusCode == 7) {
+      currentStatus = 9;
     }
     //WATER TANKER - Skip payment
     if (transaction.serviceId == 2) {

@@ -16,23 +16,25 @@ async function getRegions(searchParams: any) {
 }
 
 async function getDashboardData(searchParams: any) {
-  // let { filterBy } = searchParams
-  // let { filterValue } = searchParams
-  // let { from } = searchParams
-  // let { to } = searchParams
+  let { filterBy } = searchParams
+  let { filterValue } = searchParams
+  let { from } = searchParams
+  let { to } = searchParams
 
 
+  const res = await fetch(`${SERVER_BASE_URL}/api/dashboard?filterBy=${filterBy}&filterValue=${filterValue}&from=${from}&to=${to}`, {
+    cache: 'no-store',
+    headers: headers()
+  })
+  // console.log(await res.json());
 
-  // const res = await fetch(`${SERVER_BASE_URL}/api/dashboard?filterBy=${filterBy}&filterValue=${filterValue}&from=${from}&to=${to}`, {
-  //   cache: 'no-store', method: "GET",
-  //   headers: headers()
-  // })
 
-  // if (!res.ok) {
-  //   throw new Error('Failed to fetch data')
-  // }
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
 
-  return {} //await res.json()
+
+ return await res.json()
 }
 
 
@@ -50,7 +52,7 @@ async function getDashboardData(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-  const session: any = await getServerSession(authOptions);  
+  const session: any = await getServerSession(authOptions);
 
   if (session?.user?.passwordChanged == 0) {
     redirect('/auth/profile?message=Change your default password')
@@ -65,8 +67,8 @@ export default async function Page({ searchParams }: any) {
 
 
 
-  let data = { session, dashboardData, regions }
+  let data = { dashboardData, regions }
 
 
-   return <Dashboard data={data} />
+  return <Dashboard data={data} />
 }

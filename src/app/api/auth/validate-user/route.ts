@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/db";
-// import { destroySession, setSession } from "../../../../../utils/session-manager";
 
 export async function POST(request: Request) {
   try {

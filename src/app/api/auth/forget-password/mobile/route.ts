@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json(0);
     }
 
-    let code: string = (await generateCode(6)) as string;
+    let code: string = (await generateCode(4)) as string;
     await prisma.otp.create({
       data: {
         code: code,

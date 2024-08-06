@@ -16,6 +16,7 @@ async function getWaterOffers(searchParams: any) {
     );
     
 
+
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
@@ -27,9 +28,6 @@ async function getWaterOffers(searchParams: any) {
 
 export default async function Page({ searchParams }: any) {
     const offers = await getWaterOffers(searchParams)
-   
-
-
 
 
 

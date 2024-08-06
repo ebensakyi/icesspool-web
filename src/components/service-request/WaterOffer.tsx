@@ -69,7 +69,7 @@ export const WaterOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/biodigester/close-transaction/admin", data);
+            const response = await axios.put("/api/service-request/water-tanker/close-transaction/admin", data);
 
 
             if (response.data.status) {
@@ -97,7 +97,7 @@ export const WaterOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/biodigester/delete-transaction/admin", data);
+            const response = await axios.put("/api/service-request/water-tanker/delete-transaction/admin", data);
 
 
             if (response.data.status) {

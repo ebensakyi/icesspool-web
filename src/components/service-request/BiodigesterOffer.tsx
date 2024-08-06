@@ -247,7 +247,7 @@ export const BiodigesterOffer = ({ data }: any) => {
             </div>
             {/* End Page Title */}
             <section className="section">
-                <div className="row">
+                <div className="row" >
                     {/* <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
@@ -312,11 +312,11 @@ export const BiodigesterOffer = ({ data }: any) => {
                             </div>
                         </div>
                     </div> */}
-                    <div className="col-lg-12">
+                    <div className="col-lg-12" >
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">List</h5>
-                                <table className="table table-bordered">
+                                <table className="table table-bordered" >
                                     <thead>
                                         <tr>
                                             <th scope="col">Tx.Id</th>
@@ -341,9 +341,9 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                 <tr key={data?.id}>
                                                     <td>{data?.id}</td>
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
-                                                    <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
+                                                    <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}{"\n"}{data?.ServiceProvider?.companyName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
-                                                    <td>GHS {data?.discountedCost} {data?.currentStatus}</td>
+                                                    <td>GHS {data?.discountedCost} </td>
 
                                                     <td>{data?.currentStatus == 1 ? (
                                                         <span className="badge bg-primary">{data?.TxStatus?.name}</span>

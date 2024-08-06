@@ -12,6 +12,8 @@ import { LOGIN_URL } from '@/config';
 
 export default function Admin({ data }: any) {
 
+    console.log(data);
+    
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session } = useSession({
@@ -503,9 +505,9 @@ export default function Admin({ data }: any) {
                                         <tr>
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
-                                            <th scope="col">E-mail</th>
+                                            <th scope="col">E-mail</th>                                            <th scope="col">Service Area</th>
+
                                             {/* <th scope="col">Level</th>
-                                            <th scope="col">Region</th>
                                             <th scope="col">District</th> */}
                                             <th scope="col">OTP</th>
 
@@ -521,13 +523,14 @@ export default function Admin({ data }: any) {
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
+                                                <td>{user?.ServiceArea?.name}</td>
                                                 {/* <td>{user?.UserLevel?.name}</td>
-                                                <td>{user?.Region?.name}</td>
+                                              
                                                 <td>{user?.District?.name}</td> */}
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
-                                                    }}>{!showOtp ? "****" : user?.tempPassword}</span></td>
+                                                    }}>{!showOtp ? "****" : user?.Otp?.code}</span></td>
 
                                                 <td>{user?.deleted == 1 ? <>
                                                     <span className="badge bg-danger"><i className="bi bi-check-circle me-1"></i> Inactive</span>

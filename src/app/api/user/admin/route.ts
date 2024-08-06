@@ -98,40 +98,44 @@ export async function GET(request: Request) {
 
     if (1) {
       const response = await prisma.user.findMany({
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             lastName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             firstName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : { districtId: Number(districtId), deleted: 0 },
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    lastName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    firstName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    phoneNumber: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
+                deleted: 0,
+                userTypeId:1
+              }
+            : {  deleted: 0,  
+                userTypeId:1 },
         include: {
           UserType: true,
+          ServiceArea: true,
+          Otp: true,
         },
         orderBy: {
           id: "desc",

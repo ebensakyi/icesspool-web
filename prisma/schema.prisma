@@ -13,8 +13,8 @@ model Otp {
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int
+  User      User?
+  userId    Int?
 }
 
 model TruckClassification {
@@ -922,10 +922,11 @@ model User {
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId             Int?
   // Transaction           Transaction[]
-  Otp                       Otp[]
+  Otp                       Otp?                         @relation(fields: [otpId], references: [id])
   Penalty                   Penalty[]
   RatingBreakdown           RatingBreakdown[]
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
+  otpId                     Int @unique
 }
 
 // model UserType {

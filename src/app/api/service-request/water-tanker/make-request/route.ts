@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       let sp: any = await prisma.user.findFirst({
         where: {
           deleted: 0,
-          id: Number(res.userId),
+          id: Number(res.spId),
         },
       });
 

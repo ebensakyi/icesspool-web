@@ -31,4 +31,7 @@ export const WORK_COMPLETED_REQUEST = 30; //SP OR CL
 export const WORK_COMPLETED = 31; //ADMIN, CL
 export const WORK_NOT_COMPLETED = 32; //ADMIN, CL
 
+export const  MOBILE_DEVICE = "MOBILE";
+
+
 

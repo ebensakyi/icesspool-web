@@ -128,15 +128,14 @@ export async function GET(request: Request) {
 
     
 
-    let price = await calculateDeludgingPrice(
+    let response = await calculateDeludgingPrice(
       pricingModel,
       userLocation,
       serviceArea,
       tripsNumber
     );
-console.log(price);
 
-    return NextResponse.json({ price });
+    return NextResponse.json(response);
   } catch (error) {
     console.log(error);
 

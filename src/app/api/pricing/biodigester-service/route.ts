@@ -3,6 +3,7 @@ import { prisma } from "@/prisma/db";
 import { logActivity } from "@/libs/log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { MOBILE_DEVICE } from "@/config";
 
 export async function POST(request: Request) {
   try {
@@ -69,10 +70,10 @@ export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
 
-    let serviceAreaId =1// Number(searchParams.get("serviceAreaId"));
+    let serviceAreaId =Number(searchParams.get("serviceAreaId"));
 
     let userId = Number(searchParams.get("userId"));
-    let platform = Number(searchParams.get("platform"));
+    let device = searchParams.get("device");
 
    
     const session: any = await getServerSession(authOptions);
@@ -91,7 +92,7 @@ export async function GET(request: Request) {
       },
     });
 
-    if (platform == 2) {
+    if (device == MOBILE_DEVICE) {
       const response = await prisma.biodigesterServicePricing.findMany({
         where: { deleted: 0, status: 1, serviceAreaId: Number(serviceAreaId) },
         include: {

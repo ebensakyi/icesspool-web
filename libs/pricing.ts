@@ -64,7 +64,7 @@ export const calculateDeludgingPrice = async (
     pricing.push({
       id: d.TruckClassification.id,
       name: d.TruckClassification.name,
-      image: d.TruckClassification.image,
+     // image: d.TruckClassification.image,
       tankVolume: d.TruckClassification.tankCapacity,
       price: cost,
     });
@@ -138,7 +138,7 @@ export const calculateWaterPrice = async (
     pricing.push({
       id: d.TruckClassification.id,
       name: d.TruckClassification.name,
-      image: d.TruckClassification.image,
+       image: d.TruckClassification.image,
       tankVolume: d.TruckClassification.tankCapacity,
       price: cost,
     });

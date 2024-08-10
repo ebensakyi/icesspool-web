@@ -99,7 +99,7 @@ export async function GET(request: Request) {
     let userLatitude = Number(searchParams.get("userLatitude"));
     let userLongitude = Number(searchParams.get("userLongitude"));
     let tripsNumber = Number(searchParams.get("tripsNumber"));
-    let serviceArea = Number(searchParams.get("serviceArea"));
+    let serviceArea = Number(searchParams.get("serviceAreaId"));
 
     let userLocation = [userLatitude, userLongitude];
 
@@ -134,6 +134,7 @@ export async function GET(request: Request) {
       serviceArea,
       tripsNumber
     );
+console.log(price);
 
     return NextResponse.json({ price });
   } catch (error) {

@@ -13,6 +13,7 @@ const XLSX = require("xlsx");
 import multer from "multer";
 import aws from "aws-sdk";
 import { getMergedDate } from "@/libs/date";
+import { MOBILE_DEVICE } from "@/config";
 
 
 const s3 = new aws.S3({
@@ -300,12 +301,11 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
 
-    console.log(searchParams);
     const serviceAreaId = searchParams.get("serviceAreaId");
     const serviceId = searchParams.get("serviceId");
     const device = searchParams.get("device");
 
-    if (device == "MOBILE") {
+    if (device == MOBILE_DEVICE) {
       const water_sp = await prisma.user.findMany({
         where: { userTypeId: 3, deleted: 0},
         include: { ServiceProvider: true },

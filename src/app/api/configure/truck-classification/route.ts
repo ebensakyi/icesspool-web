@@ -3,6 +3,7 @@ import { prisma } from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { createFailedResponse, createSuccessResponse } from "@/libs/response";
+import { MOBILE_DEVICE } from "@/config";
 
 export async function POST(request: Request) {
   try {
@@ -76,12 +77,11 @@ export async function GET(request: Request) {
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
     let device = searchParams.get("device");
 
-    console.log("searchParams ",searchParams);
 
 
     const session: any = await getServerSession(authOptions);
 
-    if (device == "MOBILE") {
+    if (device == MOBILE_DEVICE) {
       const response = await prisma.truckClassification.findMany({
         where: { deleted: 0, serviceId, serviceAreaId, status: 1 },
        

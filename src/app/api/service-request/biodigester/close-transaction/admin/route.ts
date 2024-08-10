@@ -154,17 +154,13 @@ const allocateFundsBiodigester = async (
   charges: any
 ) => {
 
-  console.log("discountedTotalCost===> ",discountedTotalCost);
 
   let icesspoolPercentage = charges.icesspoolCommission;
   let paymentChargesPercentage = charges.paymentCharges;
   let otherChargesPercentage = charges.otherCharges;
   const transactionAmount = discountedTotalCost;
 
-  console.log("icesspoolPercentage",icesspoolPercentage);
-  console.log("paymentChargesPercentage",paymentChargesPercentage);
-  console.log("otherChargesPercentage",otherChargesPercentage);
-  console.log("transactionAmount",transactionAmount);
+
 
   const icesspoolAmount = transactionAmount * icesspoolPercentage;
   const paymentCharges = transactionAmount * paymentChargesPercentage;
@@ -173,10 +169,6 @@ const allocateFundsBiodigester = async (
 
 
 
-  console.log("icesspoolAmount==>",icesspoolAmount);
-  console.log("paymentCharges==>",paymentCharges);
-  console.log("otherCharges==>",otherCharges);
-  console.log("platformCharges==>",platformCharges);
 
   const providerAmount =
     transactionAmount - (icesspoolAmount + platformCharges);

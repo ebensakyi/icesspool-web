@@ -5,13 +5,13 @@ import { ToiletTruckOffer } from '@/src/components/service-request/ToiletTruckOf
 import { headers } from 'next/headers';
 
 
-async function getBiodigesterOffers(searchParams: any) {
+async function getOffers(searchParams: any) {
     let { searchText } = searchParams;
 
     let { page } = searchParams;
 
     const res = await fetch(
-        `${SERVER_BASE_URL}/api/service-request/biodigester/offers?page=${page}&searchText=${searchText}`,
+        `${SERVER_BASE_URL}/api/service-request/toilet-truck/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
     
@@ -26,14 +26,14 @@ async function getBiodigesterOffers(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const biodigesterOffers = await getBiodigesterOffers(searchParams)
+    const offers = await getOffers(searchParams)
    
 
 
 
 
 
-    let data = { biodigesterOffers}
+    let data = { offers}
 
 
 

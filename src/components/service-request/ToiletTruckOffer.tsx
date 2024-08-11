@@ -4,11 +4,12 @@ import { LOGIN_URL } from '@/config';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
+import ReactPaginate from 'react-paginate';
 
 export const ToiletTruckOffer = ({ data }: any) => {
 
@@ -26,6 +27,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
     const router = useRouter();
     const pathname = usePathname()
+    const searchParams = useSearchParams();
 
 
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
@@ -46,6 +48,16 @@ export const ToiletTruckOffer = ({ data }: any) => {
         setDeleteTxModalIsOpen(false);
     }
 
+    const handlePagination = (page: any) => {
+        let searchText = searchParams.get('searchText')
+
+        page = page.selected == -1 ? 1 : page.selected + 1;
+
+        router.push(
+            `${pathname}?page=${page}&searchText=${searchText}`
+
+        );
+    };
 
     function openCloseTxModal(e: any) {
         e.preventDefault();
@@ -160,7 +172,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>BIODIGESTER OFFERS</h1>
+                <h1>TOILET TRUCK OFFERS</h1>
 
                 <Modal
                     isOpen={deleteTxModalIsOpen}
@@ -471,6 +483,26 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.biodigesterOffers?.curPage - 1}
+                                    pageCount={data?.biodigesterOffers?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

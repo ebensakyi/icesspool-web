@@ -4,11 +4,12 @@ import { LOGIN_URL } from '@/config';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { useRouter, usePathname, redirect, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
+import ReactPaginate from 'react-paginate';
 
 export const BiodigesterOffer = ({ data }: any) => {
 
@@ -26,6 +27,9 @@ export const BiodigesterOffer = ({ data }: any) => {
 
     const router = useRouter();
     const pathname = usePathname()
+    const searchParams = useSearchParams();
+
+    const page = searchParams.get('page');
 
 
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
@@ -46,7 +50,16 @@ export const BiodigesterOffer = ({ data }: any) => {
         setDeleteTxModalIsOpen(false);
     }
 
+    const handlePagination = (page: any) => {
+        let searchText = searchParams.get('searchText')
 
+        page = page.selected == -1 ? 1 : page.selected + 1;
+
+        router.push(
+            `${pathname}?page=${page}&searchText=${searchText}`
+
+        );
+    };
     function openCloseTxModal(e: any) {
         e.preventDefault();
         setCloseTxModalIsOpen(true);
@@ -471,6 +484,26 @@ export const BiodigesterOffer = ({ data }: any) => {
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.offers?.curPage - 1}
+                                    pageCount={data?.offers?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

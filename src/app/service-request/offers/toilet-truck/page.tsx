@@ -14,7 +14,7 @@ async function getOffers(searchParams: any) {
         `${SERVER_BASE_URL}/api/service-request/toilet-truck/offers?page=${page}&searchText=${searchText}`,
         { cache: "no-store", headers: headers() }
     );
-    
+
 
     if (!res.ok) {
         throw new Error("Failed to fetch data");
@@ -27,13 +27,13 @@ async function getOffers(searchParams: any) {
 
 export default async function Page({ searchParams }: any) {
     const offers = await getOffers(searchParams)
-   
 
 
 
 
 
-    let data = { offers}
+
+    let data = { offers }
 
 
 

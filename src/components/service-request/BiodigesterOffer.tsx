@@ -348,7 +348,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.biodigesterOffers?.response?.map((data: any) => {
+                                        {data?.offers?.response?.map((data: any) => {
 
                                             return (
                                                 <tr key={data?.id}>

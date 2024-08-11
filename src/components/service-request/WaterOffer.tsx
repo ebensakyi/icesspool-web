@@ -4,11 +4,12 @@ import { LOGIN_URL } from '@/config';
 import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
+import ReactPaginate from 'react-paginate';
 
 export const WaterOffer = ({ data }: any) => {
 
@@ -26,6 +27,7 @@ export const WaterOffer = ({ data }: any) => {
 
     const router = useRouter();
     const pathname = usePathname()
+    const searchParams = useSearchParams();
 
 
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
@@ -60,6 +62,17 @@ export const WaterOffer = ({ data }: any) => {
     function closeCloseTxModal() {
         setCloseTxModalIsOpen(false);
     }
+
+    const handlePagination = (page: any) => {
+        let searchText = searchParams.get('searchText')
+
+        page = page.selected == -1 ? 1 : page.selected + 1;
+
+        router.push(
+            `${pathname}?page=${page}&searchText=${searchText}`
+
+        );
+    };
 
     const handleCloseTx = async (e: any) => {
         e.preventDefault();
@@ -248,70 +261,7 @@ export const WaterOffer = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-                    {/* <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">Update</h5>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Name *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
-                                    </div>
-                                </div>
-                               
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Status *
-                                    </label>
-                                    <select
-                                        className="form-control"
-                                        aria-label="Default select example"
-                                        onChange={(e: any) => {
-                                            setStatus(e.target.value);
-                                        }}
-                                        value={status}
-                                    >
-                                        <option value={0}>Select status * </option>
-                                        <option value={1}>Active </option>
-                                        <option value={2}>Inactive </option>
-
-                                    </select>
-                                </div>
-
-
-
-
-                                <div className=" mb-3">
-                                    <div className="col-sm-10">
-
-
-                                        <div className=" mb-3">
-                                            <div className="col-sm-10">
-
-                                                <button
-                                                    className="btn btn-primary"
-                                                    onClick={async (e) => {
-                                                        if (id) {
-                                                            return update(e)
-                                                        }
-                                                        // add(e)
-
-                                                    }}
-
-                                                >
-                                                    Submit
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div> */}
+                   
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
@@ -473,6 +423,26 @@ export const WaterOffer = ({ data }: any) => {
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.offers?.curPage - 1}
+                                    pageCount={data?.offers?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

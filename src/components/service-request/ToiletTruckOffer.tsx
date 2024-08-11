@@ -347,7 +347,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.biodigesterOffers?.response?.map((data: any) => {
+                                        {data?.offers?.response?.map((data: any) => {
 
                                             return (
                                                 <tr key={data?.id}>
@@ -489,8 +489,8 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                     previousLabel={"Previous"}
                                     nextLabel={"Next"}
                                     breakLabel={"..."}
-                                    initialPage={data?.biodigesterOffers?.curPage - 1}
-                                    pageCount={data?.biodigesterOffers?.maxPage}
+                                    initialPage={data?.offers?.curPage - 1}
+                                    pageCount={data?.offers?.maxPage}
                                     onPageChange={handlePagination}
                                     breakClassName={"page-item"}
                                     breakLinkClassName={"page-link"}

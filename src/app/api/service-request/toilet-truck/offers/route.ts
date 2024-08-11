@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
 
     const response = await prisma.transaction.findMany({
-      where: { deleted: 0, serviceId: 2 },
+      where: { deleted: 0, serviceId: 1 },
       include: {
         ToiletTruckTransaction: true,
         Customer: true,
@@ -46,8 +46,9 @@ export async function GET(request: Request) {
     
 
    const count = await prisma.transaction.count({
-      where: { deleted: 0, serviceId: 2 },
+      where: { deleted: 0, serviceId: 1 },
     });
+
 
     return NextResponse.json({
       response,

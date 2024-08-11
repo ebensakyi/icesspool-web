@@ -26,14 +26,14 @@ async function getBiodigesterOffers(searchParams: any) {
 
 
 export default async function Page({ searchParams }: any) {
-    const biodigesterOffers = await getBiodigesterOffers(searchParams)
+    const offers = await getBiodigesterOffers(searchParams)
    
 
 
 
 
 
-    let data = { biodigesterOffers}
+    let data = { offers}
 
 
 

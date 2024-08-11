@@ -36,6 +36,11 @@ export async function GET(request: Request) {
         ServiceArea: true,
         TxStatus: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
+      skip: skip,
+      take: perPage,
     });
 
     

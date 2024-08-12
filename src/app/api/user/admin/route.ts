@@ -203,9 +203,10 @@ export async function PUT(request: Request) {
       firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
-      serviceAreaId: Number(res.serviceAreaId),
+      serviceAreaId: Number(res.serviceArea),
       userTypeId: 1,
     };
+
 
     await prisma.user.update({
       data: data,

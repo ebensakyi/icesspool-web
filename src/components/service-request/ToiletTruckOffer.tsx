@@ -15,7 +15,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
 
 
-    const [id, setId] = useState(null);
+    const [id, setId] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -93,7 +93,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
             if (response.data.status) {
                 toast.success("Transaction closed");
-                setId(null)
+                setId("")
 
 
             }
@@ -116,12 +116,12 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/toilet-truck/delete-transaction/admin", data);
+            const response = await axios.put("/api/service-request/toilet-truck/offers", data);
 
 
             if (response.data.status) {
                 toast.success("Transaction closed");
-                setId(null)
+                setId("")
 
 
             }
@@ -190,7 +190,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
                 >
                     <div className="alert alert-outline-danger alert-p" role="alert">
                         <span className="alert-content">
-                            You are about to delete this report.<br /> Deleted report cannot be recovered.
+                            You are about to delete this transaction.<br />Deleted transaction cannot be recovered.
                             Click OK to proceed to delete or Cancel to dismiss
                         </span>
                     </div>

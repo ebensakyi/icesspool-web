@@ -16,6 +16,7 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
+import { OFFER_CLOSED } from "@/config";
 
 export async function PUT(request: Request) {
   try {
@@ -45,7 +46,7 @@ export async function PUT(request: Request) {
     const response = await prisma.transaction.update({
       where: { id: transactionId },
       data: {
-        currentStatus: 6,
+        currentStatus: OFFER_CLOSED,
         deleted: 0,
       },
     });
@@ -53,7 +54,7 @@ export async function PUT(request: Request) {
     await prisma.transactionStatus.create({
       data: {
         transactionId: transactionId,
-        txStatusId: 6,
+        txStatusId: OFFER_CLOSED,
         date: convertDateToISO8601(getCurrentDate()),
         time: convertTimeToISO8601(getCurrentTime()),
       },

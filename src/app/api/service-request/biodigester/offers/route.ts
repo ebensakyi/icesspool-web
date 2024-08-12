@@ -4,6 +4,14 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore/lite";
+import { app } from "@/libs/firebase-config";
 
 export async function GET(request: Request) {
   try {
@@ -27,39 +35,39 @@ export async function GET(request: Request) {
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
     const response = await prisma.transaction.findMany({
-
       where:
-      searchText != ""
-        ? {
-            OR: [
-              {
-                id: {
-                  contains: searchText,
-                  mode: "insensitive",
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  id: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
                 },
-              },
-            
-              // {
-              //   Customer: {
-              //     firstName: { contains: searchText, mode: "insensitive" },
-              //   },
-              // },
-              // {
-              //   ServiceProvider: {
-              //       firstName: { contains: searchText, mode: "insensitive" },
-                  
-              //   },
-              // },
-              // {
-              //   ServiceArea: {
-              //       name: { contains: searchText, mode: "insensitive" },
-                  
-              //   },
-              // },
-            ],
-            deleted: 0, serviceId: 3
-          }
-      : { deleted: 0, serviceId: 3 },
+
+                // {
+                //   Customer: {
+                //     firstName: { contains: searchText, mode: "insensitive" },
+                //   },
+                // },
+                // {
+                //   ServiceProvider: {
+                //       firstName: { contains: searchText, mode: "insensitive" },
+
+                //   },
+                // },
+                // {
+                //   ServiceArea: {
+                //       name: { contains: searchText, mode: "insensitive" },
+
+                //   },
+                // },
+              ],
+              deleted: 0,
+              serviceId: 3,
+            }
+          : { deleted: 0, serviceId: 3 },
       include: {
         BiodigesterTransaction: true,
         Customer: true,
@@ -93,10 +101,9 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   try {
     const res = await request.json();
+    const db = getFirestore(app);
 
     let transactionId = res.id;
-    console.log(res);
-    
 
     await prisma.transaction.update({
       where: { id: transactionId },
@@ -104,6 +111,13 @@ export async function PUT(request: Request) {
         deleted: 1,
       },
     });
+
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        deleted: true,
+      }
+    );
 
     return NextResponse.json({});
   } catch (error) {

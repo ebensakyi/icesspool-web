@@ -15,7 +15,7 @@ export const BiodigesterOffer = ({ data }: any) => {
 
 
 
-    const [id, setId] = useState(null);
+    const [id, setId] = useState("");
 
     const { data: session } = useSession({
         required: true,
@@ -94,7 +94,7 @@ export const BiodigesterOffer = ({ data }: any) => {
 
             if (response.data.status) {
                 toast.success("Transaction closed");
-                setId(null)
+                setId("")
 
 
             }
@@ -117,12 +117,12 @@ export const BiodigesterOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/biodigester/delete-transaction/admin", data);
+            const response = await axios.put("/api/service-request/biodigester/offers", data);
 
 
             if (response.data.status) {
                 toast.success("Transaction deleted");
-                setId(null)
+                setId("")
 
             }
 
@@ -417,7 +417,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-
+                                                                                setId(data.id);
                                                                                 setDeleteTxModalIsOpen(true);
                                                                             }}
                                                                         >

@@ -4,7 +4,14 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
-
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore/lite";
+import { app } from "@/libs/firebase-config";
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
@@ -66,8 +73,9 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   try {
     const res = await request.json();
+    const db = getFirestore(app);
 
-    let transactionId = res.transactionId;
+    let transactionId = res.id;
 
     await prisma.transaction.update({
       where: { id: transactionId },
@@ -75,6 +83,13 @@ export async function PUT(request: Request) {
         deleted: 1,
       },
     });
+
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      {
+        deleted: true,
+      }
+    );
 
     return NextResponse.json({});
   } catch (error) {

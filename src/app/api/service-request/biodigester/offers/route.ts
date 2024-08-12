@@ -89,3 +89,24 @@ export async function GET(request: Request) {
     return NextResponse.json(error);
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const res = await request.json();
+
+    let transactionId = res.transactionId;
+
+    await prisma.transaction.update({
+      where: { id: transactionId },
+      data: {
+        deleted: 1,
+      },
+    });
+
+    return NextResponse.json({});
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(error);
+  }
+}

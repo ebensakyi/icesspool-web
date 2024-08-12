@@ -12,7 +12,6 @@ import { LOGIN_URL } from '@/config';
 
 export default function Admin({ data }: any) {
 
-    console.log(data);
     
     const searchParams = useSearchParams();
     const router = useRouter();

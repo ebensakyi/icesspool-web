@@ -27,7 +27,39 @@ export async function GET(request: Request) {
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
     const response = await prisma.transaction.findMany({
-      where: { deleted: 0, serviceId: 3 },
+
+      where:
+      searchText != ""
+        ? {
+            OR: [
+              {
+                id: {
+                  contains: searchText,
+                  mode: "insensitive",
+                },
+              },
+            
+              // {
+              //   Customer: {
+              //     firstName: { contains: searchText, mode: "insensitive" },
+              //   },
+              // },
+              // {
+              //   ServiceProvider: {
+              //       firstName: { contains: searchText, mode: "insensitive" },
+                  
+              //   },
+              // },
+              // {
+              //   ServiceArea: {
+              //       name: { contains: searchText, mode: "insensitive" },
+                  
+              //   },
+              // },
+            ],
+            deleted: 0, serviceId: 3
+          }
+      : { deleted: 0, serviceId: 3 },
       include: {
         BiodigesterTransaction: true,
         Customer: true,

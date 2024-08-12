@@ -34,6 +34,7 @@ export const BiodigesterOffer = ({ data }: any) => {
 
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
     const [closeTxModalIsOpen, setCloseTxModalIsOpen] = useState(false);
+    const [searchText, setSearchText] = useState("");
 
 
     function openDeleteTxModal(e: any) {
@@ -73,7 +74,11 @@ export const BiodigesterOffer = ({ data }: any) => {
     function closeCloseTxModal() {
         setCloseTxModalIsOpen(false);
     }
+    useEffect(() => {
+        const url = `${pathname}/?searchText=${searchText}&page=${page}`;
+        router.push(url);
 
+    }, [searchText]);
     const handleCloseTx = async (e: any) => {
         e.preventDefault();
         try {
@@ -261,74 +266,20 @@ export const BiodigesterOffer = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row" >
-                    {/* <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">Update</h5>
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Name *
-                                    </label>
-                                    <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder='Enter name' value={name} onChange={(e: any) => setName(e.target.value)} />
-                                    </div>
-                                </div>
-                               
-                                <div className=" mb-3">
-                                    <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                        Status *
-                                    </label>
-                                    <select
-                                        className="form-control"
-                                        aria-label="Default select example"
-                                        onChange={(e: any) => {
-                                            setStatus(e.target.value);
-                                        }}
-                                        value={status}
-                                    >
-                                        <option value={0}>Select status * </option>
-                                        <option value={1}>Active </option>
-                                        <option value={2}>Inactive </option>
 
-                                    </select>
-                                </div>
-
-
-
-
-                                <div className=" mb-3">
-                                    <div className="col-sm-10">
-
-
-                                        <div className=" mb-3">
-                                            <div className="col-sm-10">
-
-                                                <button
-                                                    className="btn btn-primary"
-                                                    onClick={async (e) => {
-                                                        if (id) {
-                                                            return update(e)
-                                                        }
-                                                        // add(e)
-
-                                                    }}
-
-                                                >
-                                                    Submit
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="col-lg-12" >
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">List</h5>
+                                <div className="col-sm-3  mb-3">
+
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Search here' value={searchText}
+                                            onChange={(e: any) => {
+                                                setSearchText(e.target.value);
+                                            }} />
+                                    </div>
+                                </div>
                                 <table className="table table-bordered" >
                                     <thead>
                                         <tr>

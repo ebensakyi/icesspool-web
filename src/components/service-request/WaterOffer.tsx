@@ -27,13 +27,20 @@ export const WaterOffer = ({ data }: any) => {
 
     const router = useRouter();
     const pathname = usePathname()
+
     const searchParams = useSearchParams();
 
-
+    const page = searchParams.get('page');
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
     const [closeTxModalIsOpen, setCloseTxModalIsOpen] = useState(false);
+    const [searchText, setSearchText] = useState("");
 
 
+    useEffect(() => {
+        const url = `${pathname}/?searchText=${searchText}&page=${page}`;
+        router.push(url);
+
+    }, [searchText]);
     function openDeleteTxModal(e: any) {
         e.preventDefault();
         setDeleteTxModalIsOpen(true);
@@ -261,11 +268,21 @@ export const WaterOffer = ({ data }: any) => {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-                   
+
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">List</h5>
+                                <div className="col-sm-3  mb-3">
+
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder='Search here' value={searchText}
+                                            onChange={(e: any) => {
+                                                setSearchText(e.target.value);
+                                            }} />
+                                    </div>
+                                </div>
+
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>

@@ -11,7 +11,6 @@ import ReactPaginate from 'react-paginate';
 
 export default function Scanner({ data }: any) {
 
-    console.log(data);
     
 
     const searchParams = useSearchParams();

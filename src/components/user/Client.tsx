@@ -15,7 +15,6 @@ export default function Client({ data }: any) {
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    console.log(data);
     
 
 

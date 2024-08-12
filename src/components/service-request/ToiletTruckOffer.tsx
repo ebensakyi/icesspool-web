@@ -309,7 +309,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                                     <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
-                                                    <td>GHS {data?.discountedCost} {data?.currentStatus}</td>
+                                                    <td>GHS {data?.discountedCost} </td>
 
                                                     <td>{data?.currentStatus == 1 ? (
                                                         <span className="badge bg-primary">{data?.TxStatus?.name}</span>
@@ -418,7 +418,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                                                             className="dropdown-item btn btn-sm "
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
-
+                                                                                setId(data.id);
                                                                                 setDeleteTxModalIsOpen(true);
                                                                             }}
                                                                         >

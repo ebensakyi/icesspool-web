@@ -90,11 +90,13 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
-    let transactionId = res.transactionId;
+    let transactionId = res.id;
+    console.log(res);
+    
 
     await prisma.transaction.update({
       where: { id: transactionId },

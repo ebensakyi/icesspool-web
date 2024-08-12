@@ -79,6 +79,8 @@ export const BiodigesterOffer = ({ data }: any) => {
         router.push(url);
 
     }, [searchText]);
+
+
     const handleCloseTx = async (e: any) => {
         e.preventDefault();
         try {
@@ -119,9 +121,8 @@ export const BiodigesterOffer = ({ data }: any) => {
 
 
             if (response.data.status) {
-                toast.success("Transaction closed");
+                toast.success("Transaction deleted");
                 setId(null)
-
 
             }
 
@@ -189,7 +190,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                 >
                     <div className="alert alert-outline-danger alert-p" role="alert">
                         <span className="alert-content">
-                            You are about to delete this report.<br /> Deleted report cannot be recovered.
+                            You are about to delete this report.<br />Deleted report cannot be recovered.
                             Click OK to proceed to delete or Cancel to dismiss
                         </span>
                     </div>

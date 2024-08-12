@@ -213,6 +213,9 @@ export async function PUT(request: Request) {
           id: userId,
         },
       });
+
+      return NextResponse.json({});
+
     }
 
     const data = {

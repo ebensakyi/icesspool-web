@@ -113,7 +113,7 @@ export async function POST(request: Request) {
     let momoData: any = {
       momoNetworkId: Number(momoNetwork),
       momoNumber: momoNumber,
-      serviceProviderId: spId,
+      userId: user.id,
     };
 
     let serviceProvider = await prisma.serviceProvider.create({
@@ -179,9 +179,36 @@ export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
+    
+
     let userId = res.userId;
 
-    //const passportPicture = _data.get("passportPicture") as File | null;
+
+
+
+    let changeStatus = res.changeStatus;
+
+    if (changeStatus) {
+      const user: any = await prisma.user.findFirst({
+        where: { id: userId },
+        select: { activated: true },
+      });
+
+      const newActivatedValue = Math.abs(user?.activated - 1);
+
+      await prisma.user.update({
+        data: {
+          activated: newActivatedValue,
+        },
+        where: {
+          id: userId,
+        },
+      });
+
+      return NextResponse.json({});
+
+    }
+
     const spId = res.spId;
 
     const firstName = res.firstName;
@@ -205,7 +232,7 @@ export async function PUT(request: Request) {
       firstName,
       email,
       phoneNumber,
-      serviceAreaId,
+      serviceAreaId:Number(serviceAreaId),
     };
 
     const user = await prisma.user.update({
@@ -234,7 +261,7 @@ export async function PUT(request: Request) {
     const momoData = {
       momoNetworkId: Number(momoNetwork),
       momoNumber,
-      serviceProviderId: Number(spId),
+      userId: Number(userId),
     };
 
     if (spId)
@@ -344,7 +371,9 @@ export async function DELETE(request: Request) {
   try {
     const res = await request.json();
 
-    let userId = res.userId;
+    
+
+    let userId = res;
 
     let user: any = await prisma.user.findFirst({
       where: { id: Number(userId) },

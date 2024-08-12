@@ -12,15 +12,16 @@ import { LOGIN_URL } from '@/config';
 
 export default function Admin({ data }: any) {
 
-    
+console.log(data);
+
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session } = useSession({
         required: true,
         onUnauthenticated() {
-          redirect(LOGIN_URL);
+            redirect(LOGIN_URL);
         }
-      })
+    })
 
 
 
@@ -123,7 +124,7 @@ export default function Admin({ data }: any) {
             // if (designation == "") {
             //     return toast.error("Designation cannot be empty");
             // }
-          
+
 
 
             let data = {
@@ -136,7 +137,7 @@ export default function Admin({ data }: any) {
                 serviceArea: Number(serviceArea),
             };
 
-            
+
 
 
             const response = await axios.post("/api/user/admin", data);
@@ -189,13 +190,19 @@ export default function Admin({ data }: any) {
                 return toast.error("User role cannot be empty");
             }
 
-            let data = {}
+            let data = {
+                userId,
+                lastName,
+                firstName,
+                email,
+                phoneNumber,
+                designation,
+                serviceArea: Number(serviceArea),
+            };
 
 
 
-
-
-            const response = await axios.put("/api/user", data);
+            const response = await axios.put("/api/user/admin", data);
             if (response.status == 200) {
                 setFirstName("");
                 setLastName("");
@@ -572,7 +579,7 @@ export default function Admin({ data }: any) {
                                                                         setDesignation(user.designation);
                                                                         setUserType(user.userTypeId);
                                                                         setUserId(user.id);
-                                                                        setServiceArea(user.districtId);
+                                                                        setServiceArea(user.serviceAreaId);
 
                                                                         // await getDistrictsByRegion(user.regionId)
 
@@ -591,7 +598,7 @@ export default function Admin({ data }: any) {
                                                                             e.preventDefault();
                                                                             let id = user.id;
                                                                             const response = await axios.delete(
-                                                                                `/api/user`,
+                                                                                `/api/user/admin`,
                                                                                 {
                                                                                     data: { id },
                                                                                 }
@@ -673,7 +680,7 @@ export default function Admin({ data }: any) {
 
                                     </tbody>
                                 </table>
-                                {/* <ReactPaginate
+                                <ReactPaginate
                                     marginPagesDisplayed={2}
                                     pageRangeDisplayed={5}
                                     previousLabel={"Previous"}
@@ -692,7 +699,7 @@ export default function Admin({ data }: any) {
                                     nextClassName={"page-item"}
                                     nextLinkClassName={"page-link"}
                                     activeClassName={"active"}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

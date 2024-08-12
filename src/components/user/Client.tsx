@@ -185,9 +185,6 @@ export default function Client({ data }: any) {
     }
 
 
-    const handleDelete = async (userId:any) => {
-       
-    };
 
     const customStyles = {
         content: {

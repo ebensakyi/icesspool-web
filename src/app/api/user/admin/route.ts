@@ -41,9 +41,7 @@ export async function POST(request: Request) {
       email: res.email,
       phoneNumber: res.phoneNumber,
       password: hashedPassword,
-     
     };
-    
 
     let count = await prisma.user.count({
       where: {
@@ -96,194 +94,91 @@ export async function GET(request: Request) {
     // let district = loggedInUserData?.districtId;
     // let users;
 
-    if (1) {
-      const response = await prisma.user.findMany({
-        where:
-          searchText != ""
-            ? {
-                OR: [
-                  {
-                    lastName: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    firstName: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    phoneNumber: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchText,
-                      mode: "insensitive",
-                    },
-                  },
-                ],
-                deleted: 0,
-                userTypeId:1
-              }
-            : {  deleted: 0,  
-                userTypeId:1 },
-        include: {
-          UserType: true,
-          ServiceArea: true,
-          Otp: true,
-        },
-        orderBy: {
-          id: "desc",
-        },
-      });
-
-      const count = await prisma.user.count({
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             lastName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             firstName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : {deleted: 0 },
-      });
-
-      if (exportFile) {
-        let url = await export2Excel(response);
-
-        return NextResponse.json(url);
-      }
-
-      return NextResponse.json({
-        response,
-        curPage: curPage,
-        maxPage: Math.ceil(count / perPage),
-      });
-    }
-
     const response = await prisma.user.findMany({
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             lastName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             firstName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             District: {
-      //               name: { contains: searchText, mode: "insensitive" },
-      //             },
-      //           },
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 1,
+            }
+          : { deleted: 0, userTypeId: 1 },
       include: {
-      
         UserType: true,
+        ServiceArea: true,
+        Otp: true,
       },
       orderBy: {
         id: "desc",
       },
-      skip: skip,
-      take: perPage,
     });
 
     const count = await prisma.user.count({
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             lastName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             firstName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-              
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
-
-      orderBy: {
-        id: "desc",
-      },
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 1,
+            }
+          : { deleted: 0, userTypeId: 1 },
     });
 
-    if (exportFile) {
-      let url = await export2Excel(response);
+    // if (exportFile) {
+    //   let url = await export2Excel(response);
 
-      return NextResponse.json(url);
-    }
+    //   return NextResponse.json(url);
+    // }
 
     return NextResponse.json({
       response,
@@ -291,7 +186,9 @@ export async function GET(request: Request) {
       maxPage: Math.ceil(count / perPage),
     });
   } catch (error) {
-    return NextResponse.json(error);
+    console.log(error);
+
+    return NextResponse.json([]);
   }
 }
 
@@ -299,28 +196,15 @@ export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
-    let regionId = res.region;
-
-    // if (regionId == null) {
-    //   const district = await prisma.district.findFirst({
-    //     where: { id: Number(res.district) },
-    //   });
-
-    //   regionId = district?.regionId;
-    // }
-
     let id = res.userId;
 
     const data = {
-      userRoleId: res.userRoleId,
-      userLevelId: res.userLevelId,
       lastName: res.lastName,
       firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
-      designation: res.designation,
-      regionId: regionId,
-      districtId: res.district,
+      serviceAreaId: Number(res.serviceAreaId),
+      userTypeId: 1,
     };
 
     await prisma.user.update({
@@ -348,7 +232,7 @@ export async function DELETE(request: Request) {
       where: { id: Number(userId) },
     });
 
-    let updatedPhoneNumber = user?.phoneNumber+"-deleted-" + uuidv4();
+    let updatedPhoneNumber = user?.phoneNumber + "-deleted-" + uuidv4();
     await prisma.user.update({
       where: { id: Number(userId) },
       data: {

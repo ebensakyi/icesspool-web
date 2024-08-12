@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { AWS_S3_URL, LOGIN_URL } from '@/config';
+import Modal from "react-modal";
 
 export default function ServiceProvider({ data }: any) {
     const searchParams = useSearchParams();
@@ -57,6 +58,8 @@ export default function ServiceProvider({ data }: any) {
     const [momoNetwork, setMomoNetwork] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const [showOtp, setShowOtp] = useState(false);
@@ -268,8 +271,7 @@ export default function ServiceProvider({ data }: any) {
 
 
             if (response.status === 200) {
-                // console.log('Image uploaded:', data.imageUrl);
-                // Handle success, e.g., update UI with the uploaded image URL
+               handleCancel()
                 router.refresh()
                 return toast.success("User details updated successfully");
             }
@@ -332,23 +334,116 @@ export default function ServiceProvider({ data }: any) {
         setOfficeLocation("");
         setTruckClassification("");
         setCompany("");
+        setGhanaPostGPS("");
     }
     const filteredTruckClassifications = data?.truckClassifications?.response.filter(
         (tc: any) => tc.serviceId === Number(service)
     );
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+    function openModal() {
+        setIsOpen(true);
+    }
+
+
+
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+        },
+    };
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = "#f00";
+    }
     return (
         <main id="main" className="main">
-            {/* <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            /> */}
+          <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Report info"
+            >
+
+                <div className="row">
+
+
+                    <div className="col-lg-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title"> Alert </h5>
+                                <div className=" mb-3">
+
+                                    <div className="col-sm-12">
+                                        <p>Are you sure you want to delete the selected user?<br />Deleted user cannot be restored</p>
+
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-danger btn-label waves-effect right waves-light"
+                                            onClick={async (e)=>{
+                                                e.preventDefault();
+                                                try {                                        
+                                                    setLoading(true);
+                                                    const response = await axios.delete(`/api/user/service-provider`, {
+                                                        data: userId,
+                                                    });
+                                                    setLoading(false)
+                                                    setIsOpen(false);
+                                                    if (response.status == 200) {
+                                                        toast.success("User deleted");
+                                                        router.refresh()
+                                                        return
+                                                    }
+                                                } catch (error) {
+                                                    console.log(error);
+                                                    setLoading(false)
+                                        
+                                                }
+                                            }}
+                                        >
+                                            <i className="bi bi-trash label-icon align-middle rounded-pill fs-16 ms-2"></i>{" "}
+                                            Yes
+                                        </button>
+                                    </div>
+                                    <div className="col">
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-primary btn-label waves-effect right waves-light"
+                                            onClick={() => {
+                                                setIsOpen(false)
+                                            }}
+                                        >
+                                            <i className="bi bi-cancel label-icon align-middle rounded-pill fs-16 ms-2"></i>{" "}
+                                            No Cancel
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </Modal>
             <div className="pagetitle">
                 <h1>SERVICE PROVIDERS</h1>
                 {/* <nav>
@@ -729,11 +824,11 @@ export default function ServiceProvider({ data }: any) {
                                                 <td>{user?.ServiceProvider?.Service?.name}</td>
 
                                                 <td>{user?.ServiceArea?.name}</td>
-                                                {/* <td><span style={{ "cursor": "pointer" }}
+                                                <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
-                                                    }}>{!showOtp ? "****" : user?.Otp?.code}</span></td> */}
-                                                <td>{user?.Otp?.length > 0 ? user?.Otp[user?.Otp?.length - 1]?.code : '-'}</td>
+                                                    }}>{!showOtp ? "****" : user?.Otp?.code}</span></td>
+                                                {/* <td>{user?.Otp?.length > 0 ? user?.Otp?.code : '-'}</td> */}
                                                 <td>{user?.activated != 1 ? <>
                                                     <span className="badge bg-danger"><i className="bi bi-check-circle me-1"></i> Inactive</span>
                                                 </> : <>              <span className="badge bg-success"><i className="bi bi-check-circle me-1"></i> Active</span>
@@ -805,10 +900,11 @@ export default function ServiceProvider({ data }: any) {
                                                                         try {
                                                                             e.preventDefault();
                                                                             let userId = user.id;
-                                                                            const response = await axios.delete(
-                                                                                `/api/user`,
+                                                                            const response = await axios.put(
+                                                                                `/api/user/service-provider`,
                                                                                 {
-                                                                                    data: { userId, changeStatus: true },
+                                                                                    changeStatus: true,
+                                                                                    userId,
                                                                                 }
                                                                             );
                                                                             if (response.status == 200) {
@@ -826,7 +922,7 @@ export default function ServiceProvider({ data }: any) {
                                                                     }}
 
                                                                 >
-                                                                    Change Status
+                                                                    {user?.activated ? "Deactivate User" : "Activate User"}
                                                                 </button>
 
                                                             </li>
@@ -855,23 +951,18 @@ export default function ServiceProvider({ data }: any) {
 
                                                             </li>
                                                             <li>
-                                                                <button
+                                                            <button
                                                                     className="dropdown-item btn btn-sm "
                                                                     onClick={async (e) => {
                                                                         try {
                                                                             e.preventDefault();
-                                                                            let userId = user.id;
-                                                                            const response = await axios.delete(
-                                                                                `/api/user`, {
-                                                                                data: { userId },
-                                                                            }
-                                                                            );
-                                                                            router.refresh()
-                                                                            return toast.success("User deleted");
-
+                                                                           setIsOpen(true);
+                                                                            setUserId(user.id)
                                                                         } catch (error) {
+                                                                            return toast.error("An error occurred");
 
                                                                         }
+
 
                                                                     }}
                                                                 >

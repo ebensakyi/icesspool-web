@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { AWS_S3_URL, LOGIN_URL } from '@/config';
-import { truckClassification } from '../../../prisma/seeds/truck_classification';
 
 export default function ServiceProvider({ data }: any) {
     const searchParams = useSearchParams();
@@ -225,44 +224,57 @@ export default function ServiceProvider({ data }: any) {
             return toast.error("Please select momo network");
         }
 
-        const formData = new FormData();
-        formData.append("userId", userId);
-        formData.append("spId", spId);
-        // formData.append('passportPicture', passportPicture);
-        formData.append('lastName', lastName);
-        formData.append('firstName', firstName);
-        formData.append('email', email);
-        formData.append('phoneNumber', phoneNumber);
-        formData.append('serviceArea', serviceArea);
-        formData.append('service', service + "");
-        formData.append('ghanaPostGPS', ghanaPostGPS);
-        formData.append('officeLocation', officeLocation);
-        formData.append('company', company);
-        formData.append('licenseNumber', licenseNumber);
-        formData.append('licenseClassification', licenseClassification);
-        formData.append('truckClassification', truckClassification);
-        formData.append('momoNumber', momoNumber);
-        formData.append('momoNetwork', momoNetwork);
+        // const formData = new FormData();
+        // formData.append("userId", userId);
+        // formData.append("spId", spId);
+        // // formData.append('passportPicture', passportPicture);
+        // formData.append('lastName', lastName);
+        // formData.append('firstName', firstName);
+        // formData.append('email', email);
+        // formData.append('phoneNumber', phoneNumber);
+        // formData.append('serviceArea', serviceArea);
+        // formData.append('service', service + "");
+        // formData.append('ghanaPostGPS', ghanaPostGPS);
+        // formData.append('officeLocation', officeLocation);
+        // formData.append('company', company);
+        // formData.append('licenseNumber', licenseNumber);
+        // formData.append('licenseClassification', licenseClassification);
+        // formData.append('truckClassification', truckClassification);
+        // formData.append('momoNumber', momoNumber);
+        // formData.append('momoNetwork', momoNetwork);
+
+        const data = {
+            userId,
+            spId,
+            lastName,
+            firstName,
+            email,
+            phoneNumber,
+            serviceArea,
+            service,
+            ghanaPostGPS,
+            officeLocation,
+            company,
+            licenseNumber,
+            licenseClassification,
+            truckClassification,
+            momoNumber,
+            momoNetwork
+        }
 
         try {
-            const response = await fetch('/api/user/service-provider', {
-                method: 'PUT',
-                body: formData,
-            });
+            const response = await axios.put('/api/user/service-provider', data);
 
 
 
-            //if (response.ok) {
-                const data = await response.json();
+            if (response.status === 200) {
                 // console.log('Image uploaded:', data.imageUrl);
                 // Handle success, e.g., update UI with the uploaded image URL
                 router.refresh()
-                return toast.success("User added successfully");
-            // } else {
-            //     console.error('Failed to upload image');
-            // }
+                return toast.success("User details updated successfully");
+            }
         } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error('Error while updating user details');
         }
     };
 
@@ -709,7 +721,7 @@ export default function ServiceProvider({ data }: any) {
 
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
-                                                <td>{user?.ServiceProvider?.MomoAccount?.momoNumber}</td>
+                                                <td>{user?.MomoAccount?.momoNumber}</td>
 
                                                 <td>{user?.email}</td>
                                                 <td>{user?.ServiceProvider?.company}</td>
@@ -770,12 +782,14 @@ export default function ServiceProvider({ data }: any) {
                                                                         setService(user.ServiceProvider?.serviceId);
                                                                         setCompany(user.ServiceProvider.company);
                                                                         setOfficeLocation(user.ServiceProvider.officeLocation);
-                                                                        setMomoNetwork(user?.ServiceProvider?.MomoAccount?.momoNetworkId);
-                                                                        setMomoNumber(user?.ServiceProvider?.MomoAccount?.momoNumber);
+                                                                        setMomoNetwork(user?.MomoAccount?.momoNetworkId);
+                                                                        setMomoNumber(user?.MomoAccount?.momoNumber);
                                                                         setTruckClassification(user?.Vehicle?.truckClassification);
-                                                                       // setPassportPicture(user?.passportPicture)
+                                                                        // setPassportPicture(user?.passportPicture)
 
                                                                         // await getDistrictsByRegion(user.regionId)
+                                                                        // <td>{user?.ServiceProvider?.MomoAccount?.MomoNetwork?.name}</td> 
+                                                                        // <td>{user?.ServiceProvider?.Service?.name}</td>
 
 
 

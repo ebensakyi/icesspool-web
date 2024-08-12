@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
   binaryTargets   = ["native", "darwin-arm64"]
 }
@@ -15,8 +15,8 @@ model Otp {
   deleted   Int?     @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User  @relation(fields: [userId], references: [id])
-  userId                    Int                         @unique
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
 }
 
 model TruckClassification {
@@ -344,14 +344,16 @@ model Notification {
 
 model MomoAccount {
   id                Int             @id @default(autoincrement())
-  serviceProviderId String          @unique(map: "serviceProviderId") @db.VarChar(255)
+  // serviceProviderId String          @unique(map: "serviceProviderId") @db.VarChar(255)
   momoNumber        String          @db.VarChar(10)
   deleted           Int?            @default(0)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
-  ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  // ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  User              User            @relation(fields: [userId], references: [id])
   MomoNetwork       MomoNetwork     @relation(fields: [momoNetworkId], references: [id])
   momoNetworkId     Int
+  userId            Int @unique
 }
 
 model TransactionSchedule {
@@ -560,7 +562,6 @@ model ServiceProvider {
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
   User                      User                        @relation(fields: [userId], references: [id])
-  MomoAccount               MomoAccount?
   ServiceProviderEarning    ServiceProviderEarning[]
   ServiceProviderBalance    ServiceProviderBalance?
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
@@ -924,10 +925,11 @@ model User {
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
   serviceAreaId             Int?
   // Transaction           Transaction[]
-  Otp                       Otp?                   
+  Otp                       Otp?
   Penalty                   Penalty[]
   RatingBreakdown           RatingBreakdown[]
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
+  MomoAccount               MomoAccount?
 }
 
 // model UserType {

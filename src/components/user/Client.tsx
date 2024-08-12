@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ReactPaginate from 'react-paginate';
+import Modal from "react-modal";
 
 export default function Client({ data }: any) {
 
@@ -15,22 +16,19 @@ export default function Client({ data }: any) {
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    
+
 
 
 
     const pathname = usePathname()
 
 
-    const searchTextRef: any = useRef("");
-    const filterRef: any = useRef(null);
 
-    const searchText = searchParams.get('searchText');
     const page = searchParams.get('page');
 
 
     const [userType, setUserType] = useState("");
-    const [userId, setUserId] = useState();
+    const [userId, setUserId] = useState("");
     const [serviceArea, setServiceArea] = useState("");
 
     const [lastName, setSurname] = useState("");
@@ -38,16 +36,21 @@ export default function Client({ data }: any) {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
-    // const [region, setRegion] = useState("");
+    const [searchText, setSearchText] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const [showOtp, setShowOtp] = useState(false);
 
-    // const [searchText, setSearchText] = useState();
 
+    useEffect(() => {
+        const url = `${pathname}/?searchText=${searchText}&page=${page}`;
+        router.push(url);
 
+    }, [searchText]);
 
 
 
@@ -96,69 +99,7 @@ export default function Client({ data }: any) {
         );
     };
 
-    const addUser = async (e: any) => {
-        try {
-            e.preventDefault();
 
-
-
-            if (lastName == "") {
-                return toast.error("Surname cannot be empty");
-            }
-            if (firstName == "") {
-                return toast.error("Other Names cannot be empty");
-            }
-            if (email == "") {
-                return toast.error("Email cannot be empty");
-            }
-            if (phoneNumber == "") {
-                return toast.error("PhoneNumber cannot be empty");
-            }
-            // if (designation == "") {
-            //     return toast.error("Designation cannot be empty");
-            // }
-          
-
-
-            let data = {
-                lastName,
-                firstName,
-                email,
-                phoneNumber,
-                designation,
-                // region: Number(region),
-                serviceArea: Number(serviceArea),
-            };
-
-            
-
-
-            const response = await axios.post("/api/user/admin", data);
-
-            if (response.status == 201) {
-                return toast.error("User's phone number already used.\nChange number and try again");
-
-            }
-
-            if (response.status == 200) {
-                setSurname("");
-                setOtherNames("");
-                setEmail("");
-                setPhoneNumber("");
-                setDesignation("");
-                setUserType("");
-                // setRegion("");
-
-                router.refresh()
-                return toast.success("User added successfully");
-
-            }
-
-
-        } catch (error: any) {
-            return toast.error("An error occurred");
-        }
-    };
 
     const updateUser = async (e: any) => {
         try {
@@ -176,14 +117,17 @@ export default function Client({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-            if (designation == "") {
-                return toast.error("Designation cannot be empty");
-            }
-            if (userType == "") {
-                return toast.error("User role cannot be empty");
-            }
 
-            let data = {}
+
+            let data = {
+                userId,
+                lastName,
+                firstName,
+                email,
+                phoneNumber,
+
+            };
+
 
 
 
@@ -191,13 +135,12 @@ export default function Client({ data }: any) {
 
             const response = await axios.put("/api/user", data);
             if (response.status == 200) {
+                setUserId("");
                 setSurname("");
                 setOtherNames("");
                 setEmail("");
                 setPhoneNumber("");
-                setServiceArea("");
-                setUserType("");
-                // setRegion("");
+
                 setIsEditing(false);
 
                 router.refresh()
@@ -214,20 +157,7 @@ export default function Client({ data }: any) {
     };
 
 
-    const handleSearch = () => {
-        try {
-            let _searchText: any = searchTextRef?.current?.value
 
-
-            router.push(
-                `${pathname}?searchText=${_searchText}&page=${page}`
-
-            );
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const handleExportAll = async () => {
         try {
@@ -247,20 +177,113 @@ export default function Client({ data }: any) {
         }
     };
 
+    function closeModal() {
+        setIsOpen(false);
+    }
+    function openModal() {
+        setIsOpen(true);
+    }
 
+
+    const handleDelete = async (userId:any) => {
+       
+    };
+
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+        },
+    };
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = "#f00";
+    }
     return (
         <main id="main" className="main">
-            {/* <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            /> */}
+            <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Report info"
+            >
+
+                <div className="row">
+
+
+                    <div className="col-lg-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title"> Alert </h5>
+                                <div className=" mb-3">
+
+                                    <div className="col-sm-12">
+                                        <p>Are you sure you want to delete the selected user?<br /> Deleted user cannot be restored</p>
+
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-danger btn-label waves-effect right waves-light"
+                                            onClick={async (e)=>{
+                                                e.preventDefault();
+                                                try {                                        
+                                                    setLoading(true);
+                                                    const response = await axios.delete(`/api/user/client`, {
+                                                        data: userId,
+                                                    });
+                                                    setLoading(false)
+                                                    setIsOpen(false);
+                                                    if (response.status == 200) {
+                                                        toast.success("User deleted");
+                                                        router.refresh()
+                                                        return
+                                                    }
+                                                } catch (error) {
+                                                    console.log(error);
+                                                    setLoading(false)
+                                        
+                                                }
+                                            }}
+                                        >
+                                            <i className="bi bi-trash label-icon align-middle rounded-pill fs-16 ms-2"></i>{" "}
+                                            Yes
+                                        </button>
+                                    </div>
+                                    <div className="col">
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-primary btn-label waves-effect right waves-light"
+                                            onClick={() => {
+                                                setIsOpen(false)
+                                            }}
+                                        >
+                                            <i className="bi bi-cancel label-icon align-middle rounded-pill fs-16 ms-2"></i>{" "}
+                                            No Cancel
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </Modal>
             <div className="pagetitle">
                 <h1>CLIENT USERS</h1>
                 {/* <nav>
@@ -276,7 +299,7 @@ export default function Client({ data }: any) {
             {/* End Page Title */}
             <section className="section">
                 <div className="row">
-
+                {isEditing ?
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
@@ -323,72 +346,6 @@ export default function Client({ data }: any) {
                                     </div>
 
                                     <div className="row">
-                                        {/* <div className="col-sm-3  mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Designation/Role
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
-                                            </div>
-                                        </div> */}
-                                        {/* <div className="col-sm-3 mb-3">
-                                            <label className="col-sm-12 col-form-label">Select user type</label>
-                                            <div className="col-sm-12">
-                                                <select
-                                                    onChange={(e: any) => setUserType(e.target.value)}
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    value={userType}
-                                                >
-
-                                                    <option >Select user type</option>
-                                                    {data.userTypes.response.map((userType: any) => {
-                                                        return (
-                                                            <option key={userType.id} value={userType.id}>{userType.name}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </div> */}
-                                        {/* <div className="col-sm-3  mb-3">
-                                            <label className="col-sm-12 col-form-label">Select service area</label>
-
-                                            <div className="col-sm-12">
-                                                <select
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    onChange={(e: any) => {
-                                                        setServiceArea(e.target.value)
-                                                    }}
-                                                    value={serviceArea}
-                                                >
-                                                    <option >Select area</option>
-
-                                                    {data.serviceAreas.response.map((ul: any) => {
-                                                        return (
-                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </div> */}
-
-                                        {/* {selectedUserLevel == "3" ?
-                                    <div className=" mb-3">
-                                        <div className="col-sm-12">
-                                            <select
-                                                className="form-select"
-                                                aria-label="Default select example"
-                                            >
-                                                <option >Select district</option>
-                                                {data.districts.map((d: any) => {
-                                                    return (
-                                                        <option key={d.id} value={d.id}>{d.name}</option>
-                                                    )
-                                                })}
-                                            </select>
-                                        </div>
-                                    </div>:<></>} */}
 
                                         {/* <div className="col-sm-3  mb-3">
                                                         <label className="col-sm-12 col-form-label">Select region</label>
@@ -421,8 +378,7 @@ export default function Client({ data }: any) {
 
                                     <div className=" mb-3">
                                         <div className="col-sm-10">
-                                            {isEditing ? (
-                                                <>
+                                     
                                                     <button
                                                         className="btn btn-danger"
                                                         onClick={(e) => {
@@ -450,20 +406,14 @@ export default function Client({ data }: any) {
                                                     >
                                                         Update
                                                     </button>
-                                                </>
-                                            ) : (
-                                                <button type="submit" className="btn btn-primary" onClick={(e) => addUser(e)}>
-                                                    Add
-                                                </button>
-                                            )}
-
+                                             
                                         </div>
                                     </div>
                                 </form>
                                 {/* End General Form Elements */}
                             </div>
                         </div>
-                    </div>
+                    </div>:<></>}
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body table-responsive">
@@ -471,10 +421,12 @@ export default function Client({ data }: any) {
                                 <div className="row">
                                     <div className="col-md-4">
                                         <div className="input-group mb-3">
-                                            <input type="text" className="form-control" placeholder='Enter search term' ref={searchTextRef}
+                                            <input type="text" className="form-control" placeholder='Enter search term'
                                                 id="searchText"
-                                                name="searchText" />
-                                            <span className="input-group-text" id="basic-addon2">  <button type="button" onClick={handleSearch} className="btn btn-sm btn-primary btn-label waves-effect right waves-light form-control"><i className="bi bi-search"></i></button></span>
+                                                value={searchText}
+                                                onChange={(e: any) => {
+                                                    setSearchText(e.target.value);
+                                                }} />
                                         </div>
 
                                     </div>
@@ -511,7 +463,7 @@ export default function Client({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.users?.response.map((user: any) => (
+                                        {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
@@ -522,9 +474,9 @@ export default function Client({ data }: any) {
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
-                                                    }}>{!showOtp ? "****" : user?.tempPassword}</span></td>
+                                                    }}>{!showOtp ? "****" : user?.Otp?.code}</span></td>
 
-                                                <td>{user?.deleted == 1 ? <>
+                                                <td>{user?.activated == 0 ? <>
                                                     <span className="badge bg-danger"><i className="bi bi-check-circle me-1"></i> Inactive</span>
                                                 </> : <>              <span className="badge bg-success"><i className="bi bi-check-circle me-1"></i> Active</span>
                                                 </>}</td>
@@ -562,10 +514,7 @@ export default function Client({ data }: any) {
                                                                         setOtherNames(user.firstName);
                                                                         setEmail(user.email);
                                                                         setPhoneNumber(user.phoneNumber);
-                                                                        setDesignation(user.designation);
-                                                                        setUserType(user.userTypeId);
                                                                         setUserId(user.id);
-                                                                        setServiceArea(user.districtId);
 
                                                                         // await getDistrictsByRegion(user.regionId)
 
@@ -582,11 +531,12 @@ export default function Client({ data }: any) {
                                                                     onClick={async (e) => {
                                                                         try {
                                                                             e.preventDefault();
-                                                                            let id = user.id;
-                                                                            const response = await axios.delete(
-                                                                                `/api/user`,
+                                                                            let userId = user.id;
+                                                                            const response = await axios.put(
+                                                                                `/api/user/client`,
                                                                                 {
-                                                                                    data: { id },
+                                                                                    changeStatus: true,
+                                                                                    userId,
                                                                                 }
                                                                             );
                                                                             if (response.status == 200) {
@@ -604,7 +554,7 @@ export default function Client({ data }: any) {
                                                                     }}
 
                                                                 >
-                                                                    Change Status
+                                                                    {user?.activated ? "Deactivate User" : "Activate User"}
                                                                 </button>
 
                                                             </li>
@@ -638,18 +588,13 @@ export default function Client({ data }: any) {
                                                                     onClick={async (e) => {
                                                                         try {
                                                                             e.preventDefault();
-                                                                            let userId = user.id;
-                                                                            const response = await axios.delete(
-                                                                                `/api/user`, {
-                                                                                data: { userId },
-                                                                            }
-                                                                            );
-                                                                            router.refresh()
-                                                                            return toast.success("User deleted");
-
+                                                                           setIsOpen(true);
+                                                                            setUserId(user.id)
                                                                         } catch (error) {
+                                                                            return toast.error("An error occurred");
 
                                                                         }
+
 
                                                                     }}
                                                                 >
@@ -666,14 +611,14 @@ export default function Client({ data }: any) {
 
                                     </tbody>
                                 </table>
-                                {/* <ReactPaginate
+                                <ReactPaginate
                                     marginPagesDisplayed={2}
                                     pageRangeDisplayed={5}
                                     previousLabel={"Previous"}
                                     nextLabel={"Next"}
                                     breakLabel={"..."}
-                                    initialPage={data.users.curPage - 1}
-                                    pageCount={data.users.maxPage}
+                                    initialPage={data?.users?.curPage - 1}
+                                    pageCount={data?.users?.maxPage}
                                     onPageChange={handlePagination}
                                     breakClassName={"page-item"}
                                     breakLinkClassName={"page-link"}
@@ -685,7 +630,7 @@ export default function Client({ data }: any) {
                                     nextClassName={"page-item"}
                                     nextLinkClassName={"page-link"}
                                     activeClassName={"active"}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,6 @@ import { sendSMS } from "@/libs/send-hubtel-sms";
 import AWS from "aws-sdk";
 import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import Scanner from '../../../../components/user/Scanner';
 
 const XLSX = require("xlsx");
 export async function POST(request: Request) {
@@ -42,9 +41,7 @@ export async function POST(request: Request) {
       email: res.email,
       phoneNumber: res.phoneNumber,
       password: hashedPassword,
-     
     };
-    
 
     let count = await prisma.user.count({
       where: {
@@ -74,15 +71,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    // const session :any= await getServerSession(authOptions);
+    const session: any = await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
+
     const searchText =
-      searchParams.get("searchText")?.toString() == undefined
+      searchParams.get("searchText")?.toString() == "undefined"
         ? ""
         : searchParams.get("searchText")?.toString();
-    const districtId = searchParams.get("districtId") || undefined;
-    let exportFile = searchParams.get("exportFile");
 
     let curPage = Number.isNaN(Number(searchParams.get("page")))
       ? 1
@@ -97,194 +93,92 @@ export async function GET(request: Request) {
     // let district = loggedInUserData?.districtId;
     // let users;
 
-    if (1) {
-      const response = await prisma.user.findMany({
-        where:{
-          userTypeId:2
-        },
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             lastName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             firstName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : { districtId: Number(districtId), deleted: 0 },
-        include: {
-          UserType: true,
-         // Scanner:true
-        },
-        orderBy: {
-          id: "desc",
-        },
-      });
-
-      const count = await prisma.user.count({
-        // where:
-        //   searchText != ""
-        //     ? {
-        //         OR: [
-        //           {
-        //             lastName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             firstName: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             phoneNumber: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //           {
-        //             email: {
-        //               contains: searchText,
-        //               mode: "insensitive",
-        //             },
-        //           },
-        //         ],
-        //         deleted: 0,
-        //       }
-        //     : {deleted: 0 },
-      });
-
-      if (exportFile) {
-        let url = await export2Excel(response);
-
-        return NextResponse.json(url);
-      }
-
-      return NextResponse.json({
-        response,
-        curPage: curPage,
-        maxPage: Math.ceil(count / perPage),
-      });
-    }
-
     const response = await prisma.user.findMany({
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             lastName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             firstName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             District: {
-      //               name: { contains: searchText, mode: "insensitive" },
-      //             },
-      //           },
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+              userTypeId: 4,
+              deleted: 0,
+            }
+          : { userTypeId: 4, deleted: 0 },
       include: {
-      
         UserType: true,
+        Otp: true,
       },
       orderBy: {
-        id: "desc",
+        updatedAt: "desc",
       },
       skip: skip,
       take: perPage,
     });
 
     const count = await prisma.user.count({
-      // where:
-      //   searchText != ""
-      //     ? {
-      //         OR: [
-      //           {
-      //             lastName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             firstName: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             phoneNumber: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-      //           {
-      //             email: {
-      //               contains: searchText,
-      //               mode: "insensitive",
-      //             },
-      //           },
-              
-      //         ],
-      //         deleted: 0,
-      //       }
-      //     : { deleted: 0 },
-
-      orderBy: {
-        id: "desc",
-      },
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 4,
+            }
+          : { userTypeId: 4, deleted: 0 },
     });
 
-    if (exportFile) {
-      let url = await export2Excel(response);
+    // if (exportFile) {
+    //   let url = await export2Excel(response);
 
-      return NextResponse.json(url);
-    }
+    //   return NextResponse.json(url);
+    // }
 
     return NextResponse.json({
       response,
@@ -300,34 +194,38 @@ export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
-    let regionId = res.region;
+    let userId = res.userId;
+    let changeStatus = res.changeStatus;
 
-    // if (regionId == null) {
-    //   const district = await prisma.district.findFirst({
-    //     where: { id: Number(res.district) },
-    //   });
+    if (changeStatus) {
+      const user: any = await prisma.user.findFirst({
+        where: { id: userId },
+        select: { activated: true },
+      });
 
-    //   regionId = district?.regionId;
-    // }
+      const newActivatedValue = Math.abs(user?.activated - 1);
 
-    let id = res.userId;
+      await prisma.user.update({
+        data: {
+          activated: newActivatedValue,
+        },
+        where: {
+          id: userId,
+        },
+      });
+    }
 
     const data = {
-      userRoleId: res.userRoleId,
-      userLevelId: res.userLevelId,
       lastName: res.lastName,
       firstName: res.firstName,
       email: res.email,
       phoneNumber: res.phoneNumber,
-      designation: res.designation,
-      regionId: regionId,
-      districtId: res.district,
     };
 
     await prisma.user.update({
       data: data,
       where: {
-        id: id,
+        id: userId,
       },
     });
 
@@ -343,13 +241,15 @@ export async function DELETE(request: Request) {
   try {
     const res = await request.json();
 
-    let userId = res.userId;
+    
+
+    let userId = res;
 
     let user: any = await prisma.user.findFirst({
       where: { id: Number(userId) },
     });
 
-    let updatedPhoneNumber = user?.phoneNumber+"-deleted-" + uuidv4();
+    let updatedPhoneNumber = user?.phoneNumber + "-deleted-" + uuidv4();
     await prisma.user.update({
       where: { id: Number(userId) },
       data: {

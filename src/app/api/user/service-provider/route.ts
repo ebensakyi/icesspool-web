@@ -15,7 +15,6 @@ import aws from "aws-sdk";
 import { getMergedDate } from "@/libs/date";
 import { MOBILE_DEVICE } from "@/config";
 
-
 const s3 = new aws.S3({
   accessKeyId: process.env.MY_AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -178,43 +177,27 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const _data = await request.formData();
+    const res = await request.json();
+
+    let userId = res.userId;
 
     //const passportPicture = _data.get("passportPicture") as File | null;
-    const userId = _data.get("userId") as string | null;
-    const spId = _data.get("spId") as string | null;
+    const spId = res.spId;
 
-    const firstName = _data.get("firstName") as string | null;
-    const lastName = _data.get("lastName") as string | null;
-    const email = _data.get("email") as string | null;
-    const phoneNumber = _data.get("phoneNumber") as string | null;
-    const serviceAreaId = Number(_data.get("serviceArea"));
+    const firstName = res.firstName;
+    const lastName = res.lastName;
+    const email = res.email;
+    const phoneNumber = res.phoneNumber;
+    const serviceAreaId = res.serviceArea;
 
-    const company = _data.get("company") as string | null;
-    const ghanaPostGPS = _data.get("ghanaPostGPS") as string | null;
-    const officeLocation = _data.get("officeLocation") as string | null;
-    const licenseClassification = _data.get("licenseClassification") as
-      | string
-      | null;
-    const licenseNumber = _data.get("licenseNumber") as string | null;
-    const momoNetwork = _data.get("momoNetwork") as string | null;
-    const momoNumber = _data.get("momoNumber") as string | null;
-    const service = _data.get("service") as string | null;
-
-    if (
-      !userId ||
-      !spId ||
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phoneNumber ||
-      !serviceAreaId
-    ) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const company = res.company;
+    const ghanaPostGPS = res.ghanaPostGPS;
+    const officeLocation = res.officeLocation;
+    const licenseClassification = res.licenseClassification;
+    const licenseNumber = res.licenseNumber;
+    const momoNetwork = res.momoNetwork;
+    const momoNumber = res.momoNumber;
+    const service = res.service;
 
     const data = {
       userTypeId: 3,
@@ -235,11 +218,11 @@ export async function PUT(request: Request) {
     // });
 
     const momoAccount = await prisma.momoAccount.findFirst({
-      where: { serviceProviderId: spId },
+      where: { userId: userId },
     });
 
     const operatorData = {
-      userId: user.id,
+      userId,
       company,
       officeLocation,
       ghanaPostGPS,
@@ -263,7 +246,7 @@ export async function PUT(request: Request) {
     if (momoAccount)
       await prisma.momoAccount.update({
         data: momoData,
-        where: { id: momoAccount.id },
+        where: { userId },
       });
 
     // if (!passportPicture) {
@@ -307,29 +290,23 @@ export async function GET(request: Request) {
 
     if (device == MOBILE_DEVICE) {
       const water_sp = await prisma.user.findMany({
-        where: { userTypeId: 3, deleted: 0},
+        where: { userTypeId: 3, deleted: 0 },
         include: { ServiceProvider: true },
       });
 
+      const newm = water_sp
+        .filter((wsp) => wsp.ServiceProvider?.serviceId === Number(serviceId))
+        .map((wsp) => ({
+          id: wsp.id,
+          spName: wsp.firstName + " " + wsp.lastName,
+          companyName: wsp.ServiceProvider?.company,
+          serviceId: wsp.ServiceProvider?.serviceId,
+          spPhoneNumber: wsp?.phoneNumber,
+          avatar: wsp.passportPicture,
+        }));
+      console.log(newm);
 
-    
-    const newm = water_sp
-  .filter(wsp => wsp.ServiceProvider?.serviceId === Number(serviceId))
-  .map(wsp => ({
-    id: wsp.id,
-    spName: wsp.firstName + " " + wsp.lastName,
-    companyName: wsp.ServiceProvider?.company,
-    serviceId: wsp.ServiceProvider?.serviceId,
-    spPhoneNumber: wsp?.phoneNumber,
-    avatar: wsp.passportPicture,
-  }));
-    console.log(newm);
-
-    
-    return NextResponse.json(
-      newm
-    );
-
+      return NextResponse.json(newm);
     }
 
     const response = await prisma.user.findMany({
@@ -337,16 +314,15 @@ export async function GET(request: Request) {
       include: {
         UserType: true,
         ServiceArea: true,
+        MomoAccount: {
+          include: {
+            MomoNetwork: true,
+          },
+        },
         ServiceProvider: {
           include: {
             Service: true,
             Vehicle: true,
-
-            MomoAccount: {
-              include: {
-                MomoNetwork: true,
-              },
-            },
           },
         },
         Otp: true,

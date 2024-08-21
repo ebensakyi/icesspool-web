@@ -174,7 +174,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/make-request/wate-tanker">
+                                    <Link href="/make-request/water-tanker">
                                         <i className="bi bi-circle" />
                                         <span>Water </span>
                                     </Link>
@@ -582,12 +582,12 @@ export default function Header() {
                                         <span>iCesspool</span>
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link href="/finance/earnings/system-charges">
                                         <i className="bi bi-circle" />
                                         <span>System Charges</span>
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Link href="/finance/earnings/service-provider">
                                         <i className="bi bi-circle" />
@@ -631,7 +631,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/withdrawals/mmda">
+                                    <Link href="#">
                                         <i className="bi bi-circle" />
                                         <span>MMDA</span>
                                     </Link>
@@ -673,7 +673,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/finance/balances/mmda">
+                                    <Link href="#">
                                         <i className="bi bi-circle" />
                                         <span>MMDA</span>
                                     </Link>

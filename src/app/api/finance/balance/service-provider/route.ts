@@ -31,7 +31,11 @@ export async function GET(request: Request) {
 
     //from web
     const response = await prisma.serviceProviderBalance.findMany({
-      where: { deleted: 0 },
+      where: { deleted: 0 ,  ServiceProvider: {
+        User: {
+          deleted: 0,
+        },
+      },},
       include:{ServiceProvider:{
         include:{User:true}
       }}

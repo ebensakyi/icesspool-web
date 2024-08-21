@@ -6,10 +6,14 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   try {
     let { searchParams } = new URL(request.url);
-
     let response = await prisma.serviceProviderWithdrawal.findMany({
       where: {
         deleted: 0,
+        ServiceProvider: {
+          User: {
+            deleted: 0,
+          },
+        },
       },
       include: {
         ServiceProvider: {
@@ -20,6 +24,7 @@ export async function GET(request: Request) {
       },
       orderBy: { status: "asc" },
     });
+    ;
 
     return NextResponse.json(response);
   } catch (error) {

@@ -12,7 +12,7 @@ export default function Header() {
     const [showDrawer, setShowDrawer] = useState(false)
 
 
-    const { data: session } = useSession()
+    const { data: session } :any = useSession()
 
 
     return (
@@ -76,7 +76,7 @@ export default function Header() {
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                     <li className="dropdown-header">
-                                        <h5>  {session?.user?.firstName} {session?.user?.lastName}</h5>
+                                        <h5>  {session?.user?.firstName } {session?.user?.lastName}</h5>
                                         {/* <h6>  {session?.user?.Region?.name}</h6>
                                         <h6>  {session?.user?.District?.name}</h6> */}
 

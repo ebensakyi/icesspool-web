@@ -133,6 +133,8 @@ export async function GET(request: Request) {
         ServiceArea: true,
         Otp: true,
       },
+      skip: skip,
+      take: perPage,
       orderBy: {
         id: "desc",
       },

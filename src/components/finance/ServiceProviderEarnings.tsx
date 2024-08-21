@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ export const ServiceProviderEarnings = ({ data }: any) => {
     const router = useRouter();
     const pathname = usePathname()
 
+    const [searchText, setSearchText] = useState("");
 
     const handleDelete = async (id:any) => {
         try {
@@ -34,10 +36,6 @@ export const ServiceProviderEarnings = ({ data }: any) => {
     
     
           const response = await axios.put("/api/finance/earnings/service-provider", data);
-    
-    
-       
-    
     
           if (response.status == 200) {
             router.refresh()
@@ -54,6 +52,15 @@ export const ServiceProviderEarnings = ({ data }: any) => {
         }
       };
 
+      const handlePagination = (page: any) => {
+  
+          page = page.selected == -1 ? 1 : page.selected + 1;
+  
+          router.push(
+              `${pathname}?page=${page}&searchText=${searchText}`
+  
+          );
+      };
 
 
     return (
@@ -168,6 +175,26 @@ export const ServiceProviderEarnings = ({ data }: any) => {
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.earnings?.curPage - 1}
+                                    pageCount={data?.earnings?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

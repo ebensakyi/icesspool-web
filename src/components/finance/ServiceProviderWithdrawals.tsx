@@ -6,11 +6,13 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ServiceProviderWithdrawals = ({ data }: any) => {
 
+console.log();
 
 
     const { data: session } = useSession({
@@ -24,6 +26,18 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
     const router = useRouter();
     const pathname = usePathname()
 
+
+    const [searchText, setSearchText] = useState("");
+
+    const handlePagination = (page: any) => {
+
+        page = page.selected == -1 ? 1 : page.selected + 1;
+
+        router.push(
+            `${pathname}?page=${page}&searchText=${searchText}`
+
+        );
+    };
 
     const approve = async (id: any) => {
         try {
@@ -99,7 +113,7 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.withdrawals?.map((data: any) => {
+                                        {data?.withdrawals?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.ServiceProvider?.User?.firstName} {data?.ServiceProvider?.User?.lastName}</td>
@@ -173,6 +187,26 @@ export const ServiceProviderWithdrawals = ({ data }: any) => {
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.withdrawals?.curPage - 1}
+                                    pageCount={data?.withdrawals?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

@@ -6,12 +6,12 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const IcesspoolEarnings  = ({ data }: any) => {
    
-console.log(data);
 
     const { data: session } = useSession({
         required: true,
@@ -24,14 +24,23 @@ console.log(data);
     const router = useRouter();
     const pathname = usePathname()
 
+    const [searchText, setSearchText] = useState("");
 
+    const handlePagination = (page: any) => {
 
+        page = page.selected == -1 ? 1 : page.selected + 1;
+
+        router.push(
+            `${pathname}?page=${page}&searchText=${searchText}`
+
+        );
+    };
 
 
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>ICESSPOOL BALANCE</h1>
+                <h1>ICESSPOOL EARNINGS</h1>
                 {/* <nav>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
@@ -140,6 +149,26 @@ console.log(data);
 
                                     </tbody>
                                 </table>
+                                <ReactPaginate
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    previousLabel={"Previous"}
+                                    nextLabel={"Next"}
+                                    breakLabel={"..."}
+                                    initialPage={data?.earnings?.curPage - 1}
+                                    pageCount={data?.earnings?.maxPage}
+                                    onPageChange={handlePagination}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-link"}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    previousLinkClassName={"page-link"}
+                                    nextClassName={"page-item"}
+                                    nextLinkClassName={"page-link"}
+                                    activeClassName={"active"}
+                                />
                             </div>
                         </div>
                     </div>

@@ -18,6 +18,8 @@ export async function GET(request: Request) {
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
+    let txId = searchParams.get("txId");
+
 
     const session: any = await getServerSession(authOptions);
 
@@ -33,6 +35,25 @@ export async function GET(request: Request) {
     let perPage = 10;
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
+
+
+      if(txId){
+        
+        const response = await prisma.transactionStatus.findMany({
+          where: {
+            transactionId: txId,
+          },
+          include: {
+            TxStatus:true
+          }
+        })
+        console.log(response);
+        
+        return NextResponse.json({
+          response,
+         
+        });
+      }
 
     const response = await prisma.transaction.findMany({
       where:

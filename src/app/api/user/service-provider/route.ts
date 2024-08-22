@@ -331,7 +331,6 @@ export async function GET(request: Request) {
           spPhoneNumber: wsp?.phoneNumber,
           avatar: wsp.passportPicture,
         }));
-      console.log(newm);
 
       return NextResponse.json(newm);
     }

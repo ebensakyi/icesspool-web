@@ -5,6 +5,9 @@ const getServiceAreaBoundaries = async () => {
     where: {
       deleted: 0,
       status: 1,
+      id: {
+        not: 1,
+      },
     },
     select: {id: true,
       regionId: true,

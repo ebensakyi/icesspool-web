@@ -35,7 +35,9 @@ export const BiodigesterOffer = ({ data }: any) => {
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
     const [closeTxModalIsOpen, setCloseTxModalIsOpen] = useState(false);
     const [searchText, setSearchText] = useState("");
+    const [txStatusesModalIsOpen, setTxStatusesModalIsOpen] = useState(false);
 
+    const [txStatuses, setTxStatuses] = useState([]);
 
     function openDeleteTxModal(e: any) {
         e.preventDefault();
@@ -47,7 +49,7 @@ export const BiodigesterOffer = ({ data }: any) => {
         // subtitle.style.color = "#f00";
     }
 
-    function closeDeleteModal() {
+    function closeModal() {
         setDeleteTxModalIsOpen(false);
     }
 
@@ -161,8 +163,18 @@ export const BiodigesterOffer = ({ data }: any) => {
     //         }
     //     }
     // };
-    const viewTx = async () => {
-        throw new Error('Function not implemented.');
+    const viewTx = async (id:any) => {
+        try {
+            const response = await axios.get(
+                `/api/service-request/biodigester/offers?txId=${id}`
+            );
+            setTxStatuses(response?.data?.response);   
+                 setTxStatusesModalIsOpen(true);
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const customStyles = {
@@ -182,9 +194,69 @@ export const BiodigesterOffer = ({ data }: any) => {
                 <h1>BIODIGESTER OFFERS</h1>
 
                 <Modal
+                    isOpen={txStatusesModalIsOpen}
+                    onAfterOpen={afterOpenDeleteModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Confirm deletion"
+                >
+                    <div className="alert alert-outline-danger alert-p" role="alert">
+                        <span className="alert-content">
+                        <table className="table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                          
+                                            <th scope="col"> Status</th>
+
+                                            <th scope="col">Created Date</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {txStatuses?.map((data: any) => {
+
+                                            return (
+                                                <tr key={data?.id}>
+                                                    
+                                                    <td>{data?.TxStatus?.name}</td>
+
+                                                 
+
+                                                    <td>  {moment(data?.createdAt).format(
+                                                        "MMM Do YYYY, h:mm:ss a"
+                                                    )}</td>
+                                                  
+                                                </tr>
+                                            );
+                                        })}
+
+                                    </tbody>
+                                </table>
+                        </span>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button
+                                    onClick={(e: any) => {
+                                        setTxStatusesModalIsOpen(false)
+                                    }}
+                                    className="btn btn-success"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </Modal>
+
+
+                <Modal
                     isOpen={deleteTxModalIsOpen}
                     onAfterOpen={afterOpenDeleteModal}
-                    onRequestClose={closeDeleteModal}
+                    onRequestClose={closeModal}
                     style={customStyles}
                     contentLabel="Confirm deletion"
                 >
@@ -195,12 +267,12 @@ export const BiodigesterOffer = ({ data }: any) => {
                         </span>
                     </div>
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <div className="d-grid">
                                 <button
                                     onClick={(e: any) => {
                                         handleDeleteTx(e);
-                                        closeDeleteModal();
+                                        closeModal();
                                     }}
                                     className="btn btn-success"
                                 >
@@ -208,13 +280,13 @@ export const BiodigesterOffer = ({ data }: any) => {
                                 </button>
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                             <div className="d-grid">
-                                <button onClick={closeDeleteModal} className="btn btn-danger">
+                                <button onClick={closeModal} className="btn btn-danger">
                                     Cancel
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </Modal>
 
@@ -375,7 +447,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
 
-                                                                                viewTx()
+                                                                                viewTx(data.id)
                                                                             }}
                                                                         >
                                                                             View Tx
@@ -396,22 +468,22 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             Close Tx
                                                                         </button>
                                                                     </li>:<></>} */}
+                                                                    {data.currentStatus == 3 || data.currentStatus == 4 ?
+                                                                        <li>
 
-                                                                    <li>
+                                                                            <button
+                                                                                className="dropdown-item btn btn-sm "
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    setId(data.id);
+                                                                                    setCloseTxModalIsOpen(true);
+                                                                                    // closeTx()
 
-                                                                        <button
-                                                                            className="dropdown-item btn btn-sm "
-                                                                            onClick={(e) => {
-                                                                                e.preventDefault();
-                                                                                setId(data.id);
-                                                                                setCloseTxModalIsOpen(true);
-                                                                                // closeTx()
-
-                                                                            }}
-                                                                        >
-                                                                            Close Tx
-                                                                        </button>
-                                                                    </li>
+                                                                                }}
+                                                                            >
+                                                                                Close Tx
+                                                                            </button>
+                                                                        </li> : <></>}
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

@@ -103,17 +103,7 @@ export async function GET(request: Request) {
 
     let userLocation = [userLatitude, userLongitude];
 
-    
 
-    // let userArea = await getUserArea([userLatitude, userLongitude]);
-
-    // console.log("userArea==> " + userArea);
-    
-
-    // let serviceArea = Number(userArea?.serviceAreaId)
-    // if (!userArea) {
-    //   return NextResponse.json({message: "Not in service area"});
-    // }
 
     const pricingModel = await prisma.toiletTruckServicePricing.findMany({
       where: {
@@ -126,6 +116,7 @@ export async function GET(request: Request) {
       },
     });
 
+    
     
 
     let response = await calculateDeludgingPrice(

@@ -382,7 +382,7 @@ export default function Admin({ data }: any) {
                                                 >
                                                     <option >Select area</option>
 
-                                                    {data.serviceAreas.response.map((ul: any) => {
+                                                    {data?.serviceAreas?.response?.map((ul: any) => {
                                                         return (
                                                             <option key={ul.id} value={ul.id}>{ul.name}</option>
                                                         )
@@ -532,7 +532,7 @@ export default function Admin({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.users?.response.map((user: any) => (
+                                        {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>

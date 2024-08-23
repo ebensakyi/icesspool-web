@@ -7,6 +7,7 @@ CREATE TABLE `Otp` (
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Otp_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -131,7 +132,7 @@ CREATE TABLE `ServiceArea` (
     `lng3` DECIMAL(10, 6) NOT NULL,
     `lat4` DECIMAL(10, 6) NOT NULL,
     `lng4` DECIMAL(10, 6) NOT NULL,
-    `regionId` INTEGER NOT NULL,
+    `regionId` INTEGER NULL,
     `status` INTEGER NULL DEFAULT 0,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -284,14 +285,14 @@ CREATE TABLE `Notification` (
 -- CreateTable
 CREATE TABLE `MomoAccount` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `serviceProviderId` VARCHAR(255) NOT NULL,
     `momoNumber` VARCHAR(10) NOT NULL,
     `deleted` INTEGER NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `momoNetworkId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `serviceProviderId`(`serviceProviderId`),
+    UNIQUE INDEX `MomoAccount_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -814,6 +815,20 @@ CREATE TABLE `TimeFrame` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `PricingCriteria` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `showPricing` INTEGER NOT NULL,
+    `enablePayment` INTEGER NOT NULL,
+    `deleted` INTEGER NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `serviceId` INTEGER NOT NULL,
+    `serviceAreaId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Otp` ADD CONSTRAINT `Otp_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -827,7 +842,7 @@ ALTER TABLE `TruckClassification` ADD CONSTRAINT `TruckClassification_serviceAre
 ALTER TABLE `ServiceProviderBalance` ADD CONSTRAINT `ServiceProviderBalance_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ServiceArea` ADD CONSTRAINT `ServiceArea_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ServiceArea` ADD CONSTRAINT `ServiceArea_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ServicesInArea` ADD CONSTRAINT `ServicesInArea_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -854,7 +869,7 @@ ALTER TABLE `District` ADD CONSTRAINT `District_regionId_fkey` FOREIGN KEY (`reg
 ALTER TABLE `DistrictCoordinates` ADD CONSTRAINT `DistrictCoordinates_districtId_fkey` FOREIGN KEY (`districtId`) REFERENCES `District`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_serviceProviderId_fkey` FOREIGN KEY (`serviceProviderId`) REFERENCES `ServiceProvider`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `MomoAccount` ADD CONSTRAINT `MomoAccount_momoNetworkId_fkey` FOREIGN KEY (`momoNetworkId`) REFERENCES `MomoNetwork`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1014,3 +1029,9 @@ ALTER TABLE `ScannerUser` ADD CONSTRAINT `ScannerUser_userId_fkey` FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE `Penalty` ADD CONSTRAINT `Penalty_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `PricingCriteria` ADD CONSTRAINT `PricingCriteria_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `PricingCriteria` ADD CONSTRAINT `PricingCriteria_serviceAreaId_fkey` FOREIGN KEY (`serviceAreaId`) REFERENCES `ServiceArea`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

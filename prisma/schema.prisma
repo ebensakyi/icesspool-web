@@ -153,7 +153,7 @@ model ServiceArea {
   lat4 Decimal @db.Decimal(10, 6)
   lng4 Decimal @db.Decimal(10, 6)
 
-  regionId Int
+  regionId Int?
   status   Int? @default(0)
 
   deleted                   Int?                        @default(0)
@@ -163,7 +163,7 @@ model ServiceArea {
   WaterTankerServicePricing WaterTankerServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ToiletTruckServicePricing ToiletTruckServicePricing[]
-  Region                    Region                      @relation(fields: [regionId], references: [id])
+  Region                    Region?                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
   User                      User[]

@@ -75,7 +75,8 @@ export async function PUT(request: Request) {
   
         serviceId: 1,
         regionId:Number(res?.region),
-  
+        serviceAreaId:Number(res?.serviceArea),
+
       };
 
       

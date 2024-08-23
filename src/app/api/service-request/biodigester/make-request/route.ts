@@ -27,24 +27,26 @@ export async function POST(request: Request) {
 
     const session: any = await getServerSession(authOptions);
 
-    const requestDetails = res.requestDetails.map(
-      (item: { id: any; unitCost: any; name: any }) => ({
-        biodigesterServiceId: item.id,
-        unitCost: item.unitCost,
-        // name: item.name,
-        transactionId: res.transactionId,
-      })
-    );
+    // console.log(res);
+    
 
-    let biodigesterServices = await prisma.biodigesterService.findMany({});
+    // const requestDetails = res.requestDetails.map(
+    //   (item: { id: any; unitCost: any; name: any }) => ({
+    //     biodigesterServiceId: item.id,
+    //     unitCost: item.unitCost,
+    //     transactionId: res.transactionId,
+    //   })
+    // );
 
-    const requestDetails1 = res.requestDetails.map(
-      (item: { id: any; unitCost: any; name: any }) => ({
-        name: getNameById(biodigesterServices, item.id),
-        cost: item.unitCost,
-      })
-      // item.name + " : " + item.unitCost
-    );
+    // let biodigesterServices = await prisma.biodigesterService.findMany({});
+
+    // const requestDetails1 = res.requestDetails.map(
+    //   (item: { id: any; unitCost: any; name: any }) => ({
+    //     name: getNameById(biodigesterServices, item.id),
+    //     cost: item.unitCost,
+    //   })
+    //   // item.name + " : " + item.unitCost
+    // );
 
     // const userId = session?.user?.id;
 
@@ -64,17 +66,21 @@ export async function POST(request: Request) {
       placeLng: Number(res?.placeLng),
       placeId: res?.placeId,
 
-      // trips: Number(res[0]?.trips),
       serviceId: 3,
-      serviceAreaId: 1, //Number(res?.serviceAreaId),
+      serviceAreaId: Number(res?.serviceAreaId),
       currentStatus: 1,
 
       // unitCost: Number(res[0]?.unitCost),
     };
 
     const response = await prisma.transaction.create({ data });
+    // console.log(res.requestDetails[0].id);
+    
 
-    await prisma.biodigesterTransaction.createMany({ data: requestDetails });
+    await prisma.biodigesterTransaction.create({ data: {
+      biodigesterServiceId:  Number(res.requestDetails[0].biodigesterService),
+      unitCost: res.requestDetails[0].unitCost,
+      transactionId: res.transactionId,} });
     await prisma.transactionSchedule.create({
       data: {
         transactionId: res.transactionId,
@@ -112,13 +118,12 @@ export async function POST(request: Request) {
       // trips: Number(res[0]?.trips),
       service: "Biodigester",
       serviceId: 3,
-      biodigesterTxDetails: requestDetails1,
+      biodigesterTxDetails: res.requestDetails[0].name,
       serviceAreaId: Number(res?.serviceAreaId),
       paymentStatus: 0,
-
+      requestType: "BROADCAST",
       //clientId: tr,
       txStatusCode: 1,
-      requestType: 1,
       offerMadeTime: getCurrentDate() + " at " + getCurrentTime(),
       customerName: user?.lastName + " " + user?.firstName,
       customerPhone: user?.phoneNumber,
@@ -132,6 +137,11 @@ export async function POST(request: Request) {
       scheduledTime: timeFrame?.time_schedule,
       scheduledDate: res.scheduledDate,
 
+      spName: "",
+      spCompany:"",
+      spPhoneNumber:"",
+      spImageUrl:"",
+      spId:"",
       createdDate: getCurrentDate() + " at " + getCurrentTime(),
       deleted: false,
     };

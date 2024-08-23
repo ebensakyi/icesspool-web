@@ -54,6 +54,7 @@ export const ToiletTruckPricing = ({ data }: any) => {
             // }
 
             let data = {
+            
                 insurance,
                 repairCost: Number(repairCost),
                 roadWorthy: Number(roadWorthy),
@@ -505,7 +506,7 @@ export const ToiletTruckPricing = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.emptyingPricings?.response.map((data: any) => {
+                                        {data?.emptyingPricings?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.ServiceArea?.name}</td>

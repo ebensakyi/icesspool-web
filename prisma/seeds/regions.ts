@@ -1,5 +1,9 @@
 export const regions = [
     {
+      name: "The Whole Ghana",
+      latitude:  5.736477,
+      longitude: -0.104436,
+    }, {
       name: "Greater Accra",
       latitude:  5.736477,
       longitude: -0.104436,

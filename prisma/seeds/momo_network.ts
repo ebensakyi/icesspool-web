@@ -4,7 +4,7 @@ export const momoNetworks = [
     abbrv:"MTN"
   },
   {
-    name: "Telcel",
+    name: "Telecel",
     abbrv:"VDF"
 
   },

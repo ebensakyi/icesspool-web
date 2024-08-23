@@ -88,7 +88,7 @@ export const ToiletTruckOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/toilet-truck/close-transaction/admin", data);
+            const response = await axios.put("/api/service-request/close-transaction/admin", data);
 
 
             if (response.data.status) {
@@ -406,7 +406,6 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
                                                                                 setCloseTxModalIsOpen(true);
-                                                                                // closeTx()
 
                                                                             }}
                                                                         >

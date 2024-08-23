@@ -91,7 +91,7 @@ export const BiodigesterOffer = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/biodigester/close-transaction/admin", data);
+            const response = await axios.put("/api/service-request/close-transaction/admin", data);
 
 
             if (response.data.status) {

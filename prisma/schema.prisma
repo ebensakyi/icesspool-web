@@ -57,6 +57,7 @@ model Service {
   BiodigesterService        BiodigesterService[]
   ServiceCharges            ServiceCharges[]
   ServiceProvider           ServiceProvider[]
+  PricingCriteria           PricingCriteria[]
 }
 
 model ServiceProviderBalance {
@@ -168,6 +169,7 @@ model ServiceArea {
   User                      User[]
   ServiceCharges            ServiceCharges[]
   ServicePoint              ServicePoint[]
+  PricingCriteria           PricingCriteria[]
 }
 
 model ServicesInArea {
@@ -343,17 +345,17 @@ model Notification {
 }
 
 model MomoAccount {
-  id                Int             @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   // serviceProviderId String          @unique(map: "serviceProviderId") @db.VarChar(255)
-  momoNumber        String          @db.VarChar(10)
-  deleted           Int?            @default(0)
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  momoNumber    String      @db.VarChar(10)
+  deleted       Int?        @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   // ServiceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
-  User              User            @relation(fields: [userId], references: [id])
-  MomoNetwork       MomoNetwork     @relation(fields: [momoNetworkId], references: [id])
-  momoNetworkId     Int
-  userId            Int @unique
+  User          User        @relation(fields: [userId], references: [id])
+  MomoNetwork   MomoNetwork @relation(fields: [momoNetworkId], references: [id])
+  momoNetworkId Int
+  userId        Int         @unique
 }
 
 model TransactionSchedule {
@@ -365,9 +367,10 @@ model TransactionSchedule {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  Transaction   Transaction @relation(fields: [transactionId], references: [id])
-  transactionId String      @db.VarChar(255)
-  timeFrameId   Int
+  Transaction       Transaction      @relation(fields: [transactionId], references: [id])
+  transactionId     String           @db.VarChar(255)
+  timeFrameId       Int
+
 }
 
 model MomoNetwork {
@@ -1005,4 +1008,18 @@ model TimeFrame {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   TransactionSchedule TransactionSchedule[]
+}
+
+model PricingCriteria {
+  id                  Int                   @id @default(autoincrement())
+  Service             Service               @relation(fields: [serviceId], references: [id])
+  ServiceArea         ServiceArea           @relation(fields: [serviceAreaId], references: [id])
+  showPricing Int
+  enablePayment Int
+ 
+  deleted             Int?                  @default(0)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  serviceId           Int
+  serviceAreaId       Int
 }

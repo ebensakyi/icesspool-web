@@ -15,8 +15,8 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
-import { authOptions } from "../../../auth/[...nextauth]/options";
 import { OFFER_CLOSED } from "@/config";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function PUT(request: Request) {
   try {

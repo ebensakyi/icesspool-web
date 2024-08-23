@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -17,6 +16,7 @@ import {
   getCurrentTime,
 } from "@/libs/date";
 import { OFFER_CLOSED } from "@/config";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 
 export async function PUT(request: Request) {
   try {
@@ -79,8 +79,8 @@ export async function PUT(request: Request) {
 
     if (serviceId == 1) {
     }
-    if (serviceId == 2) {
-    }
+    // if (serviceId == 2) {
+    // }
 
     if (serviceId == 3) {
 

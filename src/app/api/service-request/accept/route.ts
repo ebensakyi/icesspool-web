@@ -19,96 +19,23 @@ import { sendFCM } from "@/libs/send-fcm";
 export async function POST(request: Request) {
   try {
     // const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const firestoreDb = getFirestore(app);
+
+    await acceptBiodigesterRequest(request, firestoreDb);
 
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    let serviceProviderId = res.userId;
-    let transactionId = res.transactionId;
-    let txStatusCode = Number(res.txStatusCode);
-
-    let currentStatus = Number(res.txStatusCode);
-
-    ////get service - water, toilet truck or biodigester
-
-    let transaction: any = await prisma.transaction.findFirst({
-      where: { id: transactionId },
-      include: { Customer: true },
-    });
-
-    let sp = await prisma.user.findFirst({
-      where: { id: serviceProviderId },
-      include: { ServiceProvider: true },
-    });
-
-    if (txStatusCode == 1) {
-      currentStatus = 2;
+    let serviceId = res.serviceId;
+    if (serviceId == 1) {
+      await acceptToiletTruckRequest(request, firestoreDb);
     }
-
-    if (txStatusCode == 7) {
-      currentStatus = 9;
+    if (serviceId == 2) {
+      await acceptWaterTankerRequest(request, firestoreDb);
     }
-    //WATER TANKER - Skip payment
-    if (transaction.serviceId == 2) {
-
-      if (txStatusCode == 1) {
-        currentStatus = 3;
-      }
-  
-      const transactionRef = doc(
-        db,
-        `${process.env.PROD_TRANSACTION_COLLECTION}`,
-        transactionId
-      );
-
-      await updateDoc(transactionRef, {
-        txStatusCode: currentStatus,
-        paymentStatus: 1,
-      });
-      return NextResponse.json({});
-    } else {
-     
-      await prisma.transaction.update({
-        where: { id: transactionId },
-        data: {
-          serviceProviderId: Number(serviceProviderId),
-          currentStatus: currentStatus,
-        },
-      });
-
-      //Update firestore
-
-      if (transaction) {
-        const transactionRef = doc(
-          db,
-          `${process.env.PROD_TRANSACTION_COLLECTION}`,
-          transactionId
-        );
-
-        await updateDoc(transactionRef, {
-          txStatusCode: currentStatus,
-          spName: sp?.firstName + " " + sp?.lastName,
-          spCompany: sp?.ServiceProvider?.company,
-          spPhoneNumber: sp?.phoneNumber,
-          spImageUrl: sp?.passportPicture,
-          spId: serviceProviderId,
-        });
-
-        await sendSMS(
-          transaction?.Customer?.phoneNumber,
-          `Hello ${transaction?.Customer?.firstName} your icesspool request has been accepted. Make payment now`
-        );
-
-        await sendFCM(
-          transaction?.Customer?.fcmId,
-          "Request Accepted",
-          `Hello ${transaction?.Customer?.firstName} biodigester request is available`
-        );
-      }
-      return NextResponse.json({});
+    if (serviceId == 3) {
+      await acceptBiodigesterRequest(request, firestoreDb);
     }
-
     // runCronJob(transactionSchedule, async () => {
     //   const transactionRef = doc(
     //     db,
@@ -136,3 +63,215 @@ export async function POST(request: Request) {
     return NextResponse.json(error, { status: 500 });
   }
 }
+
+const acceptBiodigesterRequest = async (request: Request, firestoreDb: any) => {
+  const res = await request.json();
+  const session: any = await getServerSession(authOptions);
+
+  let serviceProviderId = res.userId;
+  let transactionId = res.transactionId;
+  let currentStatus = Number(res.txStatusCode);
+
+  let transaction: any = await prisma.transaction.findFirst({
+    where: { id: transactionId },
+    include: { Customer: true },
+  });
+
+  let sp = await prisma.user.findFirst({
+    where: { id: serviceProviderId },
+    include: { ServiceProvider: true },
+  });
+
+  currentStatus =
+    currentStatus === 1 ? 2 : currentStatus === 7 ? 9 : currentStatus;
+
+  await prisma.transaction.update({
+    where: { id: transactionId },
+    data: {
+      serviceProviderId: Number(serviceProviderId),
+      currentStatus: currentStatus,
+    },
+  });
+
+  //Update firestore
+  const transactionRef = doc(
+    firestoreDb,
+    `${process.env.PROD_TRANSACTION_COLLECTION}`,
+    transactionId
+  );
+
+  await updateDoc(transactionRef, {
+    txStatusCode: currentStatus,
+    spName: sp?.firstName + " " + sp?.lastName,
+    spCompany: sp?.ServiceProvider?.company,
+    spPhoneNumber: sp?.phoneNumber,
+    spImageUrl: sp?.passportPicture,
+    spId: serviceProviderId,
+  });
+
+  await sendSMS(
+    transaction?.Customer?.phoneNumber,
+    `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted. Make payment now`
+  );
+
+  await sendFCM(
+    transaction?.Customer?.fcmId,
+    "Request Accepted",
+    `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted. Make payment now`
+  );
+
+  return NextResponse.json({});
+};
+const acceptWaterTankerRequest = async (request: Request, firestoreDb: any) => {
+  const res = await request.json();
+  const session: any = await getServerSession(authOptions);
+
+  let serviceProviderId = res.userId;
+  let transactionId = res.transactionId;
+  let currentStatus = Number(res.txStatusCode);
+
+  let service = Number(res.serviceId);
+  let serviceArea = Number(res.serviceAreId);
+
+  ////LATER CHECK PRICING CRITERIA AND SHOW PRICING,PAYMENT OR SKIP
+  let pricingCriteria: any = await prisma.pricingCriteria.findFirst({
+    where: { serviceAreaId: serviceArea, serviceId: service, deleted: 0 },
+  });
+
+  let enablePayment = 0; //  pricingCriteria?.enablePayment
+
+  let notificationMsg = "";
+  ///////////////////////////////
+  let transaction: any = await prisma.transaction.findFirst({
+    where: { id: transactionId },
+    include: { Customer: true },
+  });
+
+  let sp = await prisma.user.findFirst({
+    where: { id: serviceProviderId },
+    include: { ServiceProvider: true },
+  });
+
+  //// HARD CODED PRICING CRITERIA
+
+  if (enablePayment) {
+    currentStatus =
+      currentStatus === 1 ? 2 : currentStatus === 7 ? 9 : currentStatus;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted. Make payment now`;
+  } else {
+    currentStatus =
+      currentStatus === 1 ? 3 : currentStatus === 7 ? 3 : currentStatus;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted.`;
+  }
+
+  await prisma.transaction.update({
+    where: { id: transactionId },
+    data: {
+      serviceProviderId: Number(serviceProviderId),
+      currentStatus: currentStatus,
+    },
+  });
+
+  //Update firestore
+  const transactionRef = doc(
+    firestoreDb,
+    `${process.env.PROD_TRANSACTION_COLLECTION}`,
+    transactionId
+  );
+
+  await updateDoc(transactionRef, {
+    txStatusCode: currentStatus,
+    spName: sp?.firstName + " " + sp?.lastName,
+    spCompany: sp?.ServiceProvider?.company,
+    spPhoneNumber: sp?.phoneNumber,
+    spImageUrl: sp?.passportPicture,
+    spId: serviceProviderId,
+  });
+
+  await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
+
+  await sendFCM(
+    transaction?.Customer?.fcmId,
+    "Request Accepted",
+    notificationMsg
+  );
+
+  return NextResponse.json({});
+};
+
+const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
+  const res = await request.json();
+  const session: any = await getServerSession(authOptions);
+
+  let serviceProviderId = res.userId;
+  let transactionId = res.transactionId;
+  let currentStatus = Number(res.txStatusCode);
+
+  let service = Number(res.serviceId);
+  let serviceArea = Number(res.serviceAreId);
+
+  ////LATER CHECK PRICING CRITERIA AND SHOW PRICING,PAYMENT OR SKIP
+  let pricingCriteria: any = await prisma.pricingCriteria.findFirst({
+    where: { serviceAreaId: serviceArea, serviceId: service, deleted: 0 },
+  });
+
+  let enablePayment = 0; //  pricingCriteria?.enablePayment
+
+  let notificationMsg = "";
+  ///////////////////////////////
+  let transaction: any = await prisma.transaction.findFirst({
+    where: { id: transactionId },
+    include: { Customer: true },
+  });
+
+  let sp = await prisma.user.findFirst({
+    where: { id: serviceProviderId },
+    include: { ServiceProvider: true },
+  });
+
+  //// HARD CODED PRICING CRITERIA
+
+  if (enablePayment) {
+    currentStatus =
+      currentStatus === 1 ? 2 : currentStatus === 7 ? 9 : currentStatus;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted. Make payment now`;
+  } else {
+    currentStatus =
+      currentStatus === 1 ? 3 : currentStatus === 7 ? 3 : currentStatus;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted.`;
+  }
+
+  await prisma.transaction.update({
+    where: { id: transactionId },
+    data: {
+      serviceProviderId: Number(serviceProviderId),
+      currentStatus: currentStatus,
+    },
+  });
+
+  //Update firestore
+  const transactionRef = doc(
+    firestoreDb,
+    `${process.env.PROD_TRANSACTION_COLLECTION}`,
+    transactionId
+  );
+
+  await updateDoc(transactionRef, {
+    txStatusCode: currentStatus,
+    spName: sp?.firstName + " " + sp?.lastName,
+    spCompany: sp?.ServiceProvider?.company,
+    spPhoneNumber: sp?.phoneNumber,
+    spImageUrl: sp?.passportPicture,
+    spId: serviceProviderId,
+  });
+
+  await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
+
+  await sendFCM(
+    transaction?.Customer?.fcmId,
+    "Request Accepted",
+    notificationMsg
+  );
+
+  return NextResponse.json({});
+};

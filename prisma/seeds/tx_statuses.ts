@@ -59,7 +59,13 @@ export const txStatuses = [
     name: "Work not completed", //by client
   },
 
- 
+  {
+    id: 40,
+    name: "Offer close request client", //by client
+  }, {
+    id: 41,
+    name: "Offer close request sp", //by sp
+  },
  
 
 ];

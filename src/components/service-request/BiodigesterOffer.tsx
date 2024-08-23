@@ -405,7 +405,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                     ) : data?.currentStatus == 40 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
                                                     ) : data?.currentStatus == 41 ? (
-                                                        <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
+                                                        <span className="badge bg-danger">{data?.TxStatus?.name}</span>
                                                     ) : data?.currentStatus == 50 ? (
                                                         <span className="badge bg-white text-dark">{data?.TxStatus?.name}</span>
                                                     ) : data?.currentStatus == 51 ? (

@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../auth/[...nextauth]/options";
 import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
@@ -16,6 +15,7 @@ import {
   getCurrentDate,
   getCurrentTime,
 } from "@/libs/date";
+import { authOptions } from "../../../auth/[...nextauth]/options";
 
 export async function POST(request: Request) {
   // try {
@@ -28,53 +28,13 @@ export async function POST(request: Request) {
   let transactionId = res.transactionId;
   let status = Number(res.status);
 
-  const session: any = await getServerSession(authOptions);
-  // //cancel unpaid request
-  // if (status == 11) {
-  //   const response = await prisma.transaction.update({
-  //     where: { id: transactionId },
-  //     data: {
-  //       currentStatus: status,
-  //       deleted: 1,
-  //     },
-  //   });
-
-  //   await setDoc(
-  //     doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-  //     {
-  //       transactionId: transactionId,
-  //       txStatusCode: Number(status),
-  //     },
-  //     { merge: true }
-  //   );
-  // }
-  // //cancel paid request
-
-  // if (status == 12) {
-  //   const response = await prisma.transaction.update({
-  //     where: { id: transactionId },
-  //     data: {
-  //       currentStatus: status,
-  //       deleted: 1,
-  //     },
-  //   });
-  //}
-
-
-    await setDoc(
-      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
-      {
-        transactionId: transactionId,
-        txStatusCode: Number(status),
-        spId:"",
-        spCompany:"",
-        spImageUrl:"",
-        spName:"",
-        spPhoneNumber:""
-      },
-      { merge: true }
-    );
+  console.log(res);
   
+
+  const session: any = await getServerSession(authOptions);
+  
+
+   
   const response = await prisma.transaction.update({
     where: { id: transactionId },
     data: {

@@ -18,7 +18,7 @@ import {
 import { OFFER_CLOSED } from "@/config";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
   try {
     const session: any = await getServerSession(authOptions);
 

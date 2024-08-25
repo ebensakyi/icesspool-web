@@ -268,17 +268,7 @@ export default function Admin({ data }: any) {
 
     return (
         <main id="main" className="main">
-            {/* <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            /> */}
+           
             <div className="pagetitle">
                 <h1>ADMIN USERS</h1>
                 {/* <nav>

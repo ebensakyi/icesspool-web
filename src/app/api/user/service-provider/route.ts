@@ -14,6 +14,7 @@ import multer from "multer";
 import aws from "aws-sdk";
 import { getMergedDate } from "@/libs/date";
 import { MOBILE_DEVICE } from "@/config";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 const s3 = new aws.S3({
   accessKeyId: process.env.MY_AWS_ACCESS_KEY,
@@ -179,12 +180,7 @@ export async function PUT(request: Request) {
   try {
     const res = await request.json();
 
-    
-
     let userId = res.userId;
-
-
-
 
     let changeStatus = res.changeStatus;
 
@@ -206,7 +202,6 @@ export async function PUT(request: Request) {
       });
 
       return NextResponse.json({});
-
     }
 
     const spId = res.spId;
@@ -232,7 +227,7 @@ export async function PUT(request: Request) {
       firstName,
       email,
       phoneNumber,
-      serviceAreaId:Number(serviceAreaId),
+      serviceAreaId: Number(serviceAreaId),
     };
 
     const user = await prisma.user.update({
@@ -309,11 +304,28 @@ export async function PUT(request: Request) {
 }
 export async function GET(request: Request) {
   try {
+    const session: any = await getServerSession(authOptions);
+    let userServiceArea = Number(session?.user?.serviceAreaId);
+
     const { searchParams } = new URL(request.url);
 
     const serviceAreaId = searchParams.get("serviceAreaId");
     const serviceId = searchParams.get("serviceId");
     const device = searchParams.get("device");
+
+    const searchText =
+      searchParams.get("searchText")?.toString() == "undefined"
+        ? ""
+        : searchParams.get("searchText")?.toString();
+
+    let curPage = Number.isNaN(Number(searchParams.get("page")))
+      ? 1
+      : Number(searchParams.get("page"));
+console.log("currrpage=====> " + curPage);
+
+    let perPage = 10;
+    let skip =
+      Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
     if (device == MOBILE_DEVICE) {
       const water_sp = await prisma.user.findMany({
@@ -334,9 +346,76 @@ export async function GET(request: Request) {
 
       return NextResponse.json(newm);
     }
+    if (userServiceArea == 1) {
+      const response = await prisma.user.findMany({
+        where: { userTypeId: 3, deleted: 0 },
+        include: {
+          UserType: true,
+          ServiceArea: true,
+          MomoAccount: {
+            include: {
+              MomoNetwork: true,
+            },
+          },
+          ServiceProvider: {
+            include: {
+              Service: true,
+              Vehicle: true,
+            },
+          },
+          Otp: true,
+        },
+        orderBy: {
+          id: "desc",
+        },
+        skip: skip,
+        take: perPage,
+      });
+
+      const count = await prisma.user.count({
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    lastName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    firstName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    phoneNumber: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
+                deleted: 0,
+                userTypeId: 4,
+              }
+            : { userTypeId: 4, deleted: 0 },
+      });
+      return NextResponse.json({
+        response,
+        curPage: curPage,
+        maxPage: Math.ceil(count / perPage),
+      });
+    }
 
     const response = await prisma.user.findMany({
-      where: { userTypeId: 3, deleted: 0 },
+      where: { userTypeId: 3, deleted: 0, serviceAreaId: userServiceArea },
       include: {
         UserType: true,
         ServiceArea: true,
@@ -357,9 +436,47 @@ export async function GET(request: Request) {
         id: "desc",
       },
     });
+    const count = await prisma.user.count({
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 3,
+               serviceAreaId: userServiceArea
+            }
+          : { userTypeId: 3, deleted: 0 , serviceAreaId: userServiceArea},
+    });
 
     return NextResponse.json({
       response,
+      curPage: curPage,
+      maxPage: Math.ceil(count / perPage),
     });
   } catch (error) {
     return NextResponse.json(error);
@@ -369,8 +486,6 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-
-    
 
     let userId = res;
 

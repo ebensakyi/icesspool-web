@@ -9,6 +9,7 @@ import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigati
 import { useSession } from 'next-auth/react';
 import { AWS_S3_URL, LOGIN_URL } from '@/config';
 import Modal from "react-modal";
+import ReactPaginate from 'react-paginate';
 
 export default function ServiceProvider({ data }: any) {
     const searchParams = useSearchParams();
@@ -809,7 +810,7 @@ export default function ServiceProvider({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.users?.response?.map((user: any) => (
+                                    {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td> <Image src={AWS_S3_URL + user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
                                                 <td>{user?.ServiceProvider?.id}</td>
@@ -979,7 +980,7 @@ export default function ServiceProvider({ data }: any) {
 
                                     </tbody>
                                 </table>
-                                {/* <ReactPaginate
+                                <ReactPaginate
                                     marginPagesDisplayed={2}
                                     pageRangeDisplayed={5}
                                     previousLabel={"Previous"}
@@ -998,7 +999,7 @@ export default function ServiceProvider({ data }: any) {
                                     nextClassName={"page-item"}
                                     nextLinkClassName={"page-link"}
                                     activeClassName={"active"}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

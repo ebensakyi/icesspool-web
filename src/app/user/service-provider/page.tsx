@@ -52,9 +52,11 @@ import { headers } from "next/headers";
 
   
   
-   async function getServiceProviders() {
-  
-    let response = await fetch(`${SERVER_BASE_URL}/api/user/service-provider`, { cache: 'no-store', headers: headers() });
+   async function getServiceProviders(searchParams: any) {
+    let { searchText } = searchParams;
+
+  let { page } = searchParams;
+    let response = await fetch(`${SERVER_BASE_URL}/api/user/service-provider?page=${page}&searchText=${searchText}`, { cache: 'no-store', headers: headers() });
   
     if (!response.ok) {
         throw new Error('Failed to fetch data')
@@ -90,7 +92,7 @@ export default async function Page({ searchParams }: any) {
     const services = await getServices()
     const userTypes = await getUserTypes()
     const serviceAreas = await getServiceAreas(searchParams)
-    const users = await getServiceProviders()
+    const users = await getServiceProviders(searchParams)
     const momoNetworks = await getMomoNetworks()
     const truckClassifications = await getTruckClassifications()
 

@@ -34,21 +34,12 @@ async function getUserTypes() {
 }
 
 
-async function getPages() {
 
-    let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/pages`, { cache: 'no-store', headers: headers() });
+async function getAdmins(searchParams: any) {
+    let { searchText } = searchParams;
 
-    if (!response.ok) {
-        throw new Error('Failed to fetch data')
-    }
-    return await response.json();
-
-}
-
-
-async function getAdmins() {
-
-    let response = await fetch(`${SERVER_BASE_URL}/api/user/admin`, { cache: 'no-store', headers: headers() });
+    let { page } = searchParams;
+    let response = await fetch(`${SERVER_BASE_URL}/api/user/admin?page=${page}&searchText=${searchText}`, { cache: 'no-store', headers: headers() });
 
     if (!response.ok) {
         throw new Error('Failed to fetch data')
@@ -61,12 +52,11 @@ async function getAdmins() {
 export default async function Page({ searchParams }: any) {
 
 
-    const pages = await getPages()
     const userTypes = await getUserTypes()
     const serviceAreas = await getServiceAreas(searchParams)
-    const users = await getAdmins()
+    const users = await getAdmins(searchParams)
 
-    let data = { pages, userTypes, serviceAreas, users }
+    let data = {  userTypes, serviceAreas, users }
 
 
 

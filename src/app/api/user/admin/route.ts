@@ -22,9 +22,7 @@ export async function GET(request: Request) {
       searchParams.get("searchText")?.toString() == undefined
         ? ""
         : searchParams.get("searchText")?.toString();
-    const districtId = searchParams.get("districtId") || undefined;
-    let exportFile = searchParams.get("exportFile");
-
+   
     let curPage = Number.isNaN(Number(searchParams.get("page")))
       ? 1
       : Number(searchParams.get("page"));
@@ -33,10 +31,7 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
-    // let userLevel = loggedInUserData?.userLevelId;
-    // let region = loggedInUserData?.regionId;
-    // let district = loggedInUserData?.districtId;
-    // let users;
+console.log("searchText==> ",searchText);
 
     const response = await prisma.user.findMany({
       where:
@@ -46,25 +41,25 @@ export async function GET(request: Request) {
                 {
                   lastName: {
                     contains: searchText,
-                    mode: "insensitive",
+                    //mode: "insensitive",
                   },
                 },
                 {
                   firstName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   phoneNumber: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   email: {
                     contains: searchText,
-                    mode: "insensitive",
+                    //mode: "insensitive",
                   },
                 },
               ],
@@ -92,25 +87,25 @@ export async function GET(request: Request) {
                 {
                   lastName: {
                     contains: searchText,
-                    mode: "insensitive",
+                    //mode: "insensitive",
                   },
                 },
                 {
                   firstName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   phoneNumber: {
                     contains: searchText,
-                    mode: "insensitive",
+                    //mode: "insensitive",
                   },
                 },
                 {
                   email: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
               ],

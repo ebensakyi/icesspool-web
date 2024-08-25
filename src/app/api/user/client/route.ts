@@ -72,6 +72,7 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const session: any = await getServerSession(authOptions);
+    let userServiceArea = session?.user?.serviceAreaId;
 
     const { searchParams } = new URL(request.url);
 
@@ -88,11 +89,94 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
-    // let userLevel = loggedInUserData?.userLevelId;
-    // let region = loggedInUserData?.regionId;
-    // let district = loggedInUserData?.districtId;
-    // let users;
+    if (userServiceArea == 1) {
+      const response = await prisma.user.findMany({
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    lastName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    firstName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    phoneNumber: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
+                userTypeId: 4,
+                deleted: 0,
+              }
+            : { userTypeId: 4, deleted: 0 },
+        include: {
+          UserType: true,
+          Otp: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        skip: skip,
+        take: perPage,
+      });
 
+      const count = await prisma.user.count({
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    lastName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    firstName: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    phoneNumber: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
+                deleted: 0,
+                userTypeId: 4,
+              }
+            : { userTypeId: 4, deleted: 0 },
+      });
+
+      return NextResponse.json({
+        response,
+        curPage: curPage,
+        maxPage: Math.ceil(count / perPage),
+      });
+    }
     const response = await prisma.user.findMany({
       where:
         searchText != ""
@@ -125,8 +209,9 @@ export async function GET(request: Request) {
               ],
               userTypeId: 4,
               deleted: 0,
+              serviceAreaId: userServiceArea,
             }
-          : { userTypeId: 4, deleted: 0 },
+          : { userTypeId: 4, deleted: 0, serviceAreaId: userServiceArea },
       include: {
         UserType: true,
         Otp: true,
@@ -170,15 +255,12 @@ export async function GET(request: Request) {
               ],
               deleted: 0,
               userTypeId: 4,
+              serviceAreaId: userServiceArea,
             }
-          : { userTypeId: 4, deleted: 0 },
+          : { userTypeId: 4,
+             deleted: 0, 
+             serviceAreaId: userServiceArea },
     });
-
-    // if (exportFile) {
-    //   let url = await export2Excel(response);
-
-    //   return NextResponse.json(url);
-    // }
 
     return NextResponse.json({
       response,
@@ -215,7 +297,6 @@ export async function PUT(request: Request) {
       });
 
       return NextResponse.json({});
-
     }
 
     const data = {
@@ -243,8 +324,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const res = await request.json();
-
-    
 
     let userId = res;
 

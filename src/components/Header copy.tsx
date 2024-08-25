@@ -12,18 +12,29 @@ export default function Header() {
     const [showDrawer, setShowDrawer] = useState(false)
 
 
-    const { data: session }: any = useSession()
-    let userServiceArea = session?.user?.serviceAreaId
+    const { data: session } :any = useSession()
+
 
     return (
 
         <>
             {session?.user ?
                 <header id="header" className="header fixed-top d-flex align-items-center" >
+                    {/* <button onClick={()=>{
+                        if(!showDrawer){
+                            document.body.classList.add("toggle-sidebar")
+                            setShowDrawer(true)
+                        }else{
+                            document.body.classList.remove("toggle-sidebar")
+                            setShowDrawer(false)
+                        }
+                        
 
+                    }}>Open</button> */}
                     <div className="d-flex align-items-center justify-content-between">
                         <Link href="/" className="logo d-flex align-items-center">
                             <Image src="/assets/img/logo.png" alt="" width={300} height={300} />
+                            {/* <span className="d-none d-lg-block">ESICApps</span> */}
                         </Link>
                         <i className="bi bi-list toggle-sidebar-btn" onClick={() => {
                             if (!showDrawer) {
@@ -65,7 +76,7 @@ export default function Header() {
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                     <li className="dropdown-header">
-                                        <h5>  {session?.user?.firstName} {session?.user?.lastName}</h5>
+                                        <h5>  {session?.user?.firstName } {session?.user?.lastName}</h5>
                                         {/* <h6>  {session?.user?.Region?.name}</h6>
                                         <h6>  {session?.user?.District?.name}</h6> */}
 
@@ -106,7 +117,7 @@ export default function Header() {
                         </ul>
                     </nav>
                 </header> : <></>}
-            {session?.user && userServiceArea == 1 ?
+            {session?.user ?
                 <aside id="sidebar" className="sidebar">
                     <ul className="sidebar-nav" id="sidebar-nav">
                         <li className="nav-heading">Main Menu</li>
@@ -122,7 +133,18 @@ export default function Header() {
                                 <span>Dashboard</span>
                             </Link>
                         </li>
+                        {/* <li className="nav-item">
 
+                            <Link className={
+                                pathname == "/"
+                                    ? "nav-link"
+                                    : "nav-link collapsed"
+                            } href="/">
+                                <i className="bi bi-arrow-up-right-square
+" />
+                                <span>Make Request</span>
+                            </Link>
+                        </li> */}
                         <li className="nav-item">
 
                             <Link
@@ -171,6 +193,96 @@ export default function Header() {
 
 
 
+                        {/* <li className="nav-item">
+
+                            <Link
+                                className={
+                                    pathname == "/services/biodigester/close-request"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }
+                                data-bs-target="#closed-offers-nav"
+                                data-bs-toggle="collapse"
+                                href="#"
+                            >
+                                <i className="bi bi-card-list
+" />
+                                <span>Close requests</span>
+                                <i className="bi bi-chevron-down ms-auto" />
+                            </Link>
+                            <ul
+                                id="closed-offers-nav"
+                                className="nav-content collapse "
+                                data-bs-parent="#closed-offers-nav"
+                            > <li>
+                                    <Link href="/services/biodigester/close-request">
+                                        <i className="bi bi-circle" />
+                                        <span> Bio-digester</span>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link href="/services/biodigester/close-request">
+                                        <i className="bi bi-circle" />
+                                        <span>Emptying</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/offers/water">
+                                        <i className="bi bi-circle" />
+                                        <span>Water</span>
+                                    </Link>
+                                </li>
+
+
+
+                            </ul>
+                        </li> */}
+                        {/* <li className="nav-item">
+
+                            <Link
+                                className={
+                                    pathname == "/esicapps1/general"
+                                        ? "nav-link"
+                                        : "nav-link collapsed"
+                                }
+                                data-bs-target="#mq-nav"
+                                data-bs-toggle="collapse"
+                                href="#"
+                            >
+                                <i className="bi bi-arrow-up-right-square
+" />
+                                <span>Make Request</span>
+                                <i className="bi bi-chevron-down ms-auto" />
+                            </Link>
+                            <ul
+                                id="mq-nav"
+                                className="nav-content collapse "
+                                data-bs-parent="#mq-nav"
+                            >
+                                <li>
+                                    <Link href="/make-request/emptying">
+                                        <i className="bi bi-circle" />
+                                        <span>Emptying toilet </span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/make-request/water">
+                                        <i className="bi bi-circle" />
+                                        <span>Water </span>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link href="/make-request/bio-digester">
+                                        <i className="bi bi-circle" />
+                                        <span>Bio-digester</span>
+                                    </Link>
+                                </li>
+
+                            </ul>
+                        </li> */}
+
 
 
 
@@ -201,13 +313,13 @@ export default function Header() {
                                         <span>Change Price</span>
                                     </Link>
                                 </li>
-                                <li>
+                                 <li>
                                     <Link href="/service-request/offers/biodigester">
                                         <i className="bi bi-circle" />
                                         <span> Bio-digester</span>
                                     </Link>
                                 </li>
-
+                               
                                 <li>
                                     <Link href="/service-request/offers/toilet-truck">
                                         <i className="bi bi-circle" />
@@ -570,306 +682,7 @@ export default function Header() {
                             </ul>
                         </li>
                     </ul>
-                </aside> :
-                session?.user && userServiceArea != 1 ?
-                    <aside id="sidebar" className="sidebar">
-                        <ul className="sidebar-nav" id="sidebar-nav">
-                            <li className="nav-heading">Main Menu</li>
-
-                            <li className="nav-item">
-
-                                <Link className={
-                                    pathname == "/"
-                                        ? "nav-link"
-                                        : "nav-link collapsed"
-                                } href="/">
-                                    <i className="bi bi-grid" />
-                                    <span>Dashboard</span>
-                                </Link>
-                            </li>
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/make-request"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#mq-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-arrow-up-right-square
-" />
-                                    <span>Make Request</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="mq-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#mq-nav"
-                                >
-                                    <li>
-                                        <Link href="/make-request/toilet-truck">
-                                            <i className="bi bi-circle" />
-                                            <span>Toilet Truck </span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/make-request/water-tanker">
-                                            <i className="bi bi-circle" />
-                                            <span>Water </span>
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link href="/make-request/biodigester">
-                                            <i className="bi bi-circle" />
-                                            <span>Bio-digester</span>
-                                        </Link>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-
-
-
-
-
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/esicapps1/general"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#offers-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-card-list
-" />
-                                    <span>Offers</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="offers-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#offers-nav"
-                                > 
-                                    <li>
-                                        <Link href="/service-request/offers/biodigester">
-                                            <i className="bi bi-circle" />
-                                            <span> Bio-digester</span>
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link href="/service-request/offers/toilet-truck">
-                                            <i className="bi bi-circle" />
-                                            <span>Toilet Truck</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/service-request/offers/water-tanker">
-                                            <i className="bi bi-circle" />
-                                            <span>Water</span>
-                                        </Link>
-                                    </li>
-
-
-
-                                </ul>
-                            </li>
-
-
-
-                            <li className="nav-heading">SETTINGS</li>
-
-                        
-
-                          
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/esicapps1/general"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#account-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-people
-" />
-                                    <span>Account</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="account-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#account-nav"
-                                >
-
-                                    {/* <li>
-                                        <Link href="/user/admin">
-                                            <i className="bi bi-circle" />
-                                            <span> Admin</span>
-                                        </Link>
-                                    </li> */}
-                                    <li>
-                                        <Link href="/user/scanner">
-                                            <i className="bi bi-circle" />
-                                            <span> Scanner</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/user/service-provider">
-                                            <i className="bi bi-circle" />
-                                            <span> Service Provider</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/user/client">
-                                            <i className="bi bi-circle" />
-                                            <span> Client</span>
-                                        </Link>
-                                    </li>
-
-
-                                </ul>
-                            </li>
-
-                            <li className="nav-heading">FINANCE</li>
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/esicapps1/general"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#earnings-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-currency-dollar
-
-" />
-                                    <span>Earnings</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="earnings-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#earnings-nav"
-                                >
-
-                                   
-                                  
-                                    <li>
-                                        <Link href="/finance/earnings/service-provider">
-                                            <i className="bi bi-circle" />
-                                            <span>Service Provider</span>
-                                        </Link>
-                                    </li>
-
-
-                                </ul>
-                            </li>
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/esicapps1/general"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#withdrawals-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-currency-dollar
-
-" />
-                                    <span>Withdrawals</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="withdrawals-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#withdrawals-nav"
-                                >
-
-
-                                    <li>
-                                        <Link href="/finance/withdrawals/service-provider">
-                                            <i className="bi bi-circle" />
-                                            <span>Service provider</span>
-                                        </Link>
-                                    </li>
-                                    {/* <li>
-                                        <Link href="#">
-                                            <i className="bi bi-circle" />
-                                            <span>MMDA</span>
-                                        </Link>
-                                    </li> */}
-
-                                </ul>
-                            </li>
-
-
-                            <li className="nav-item">
-
-                                <Link
-                                    className={
-                                        pathname == "/esicapps1/general"
-                                            ? "nav-link"
-                                            : "nav-link collapsed"
-                                    }
-                                    data-bs-target="#balances-nav"
-                                    data-bs-toggle="collapse"
-                                    href="#"
-                                >
-                                    <i className="bi bi-currency-dollar
-
-" />
-                                    <span>Balances</span>
-                                    <i className="bi bi-chevron-down ms-auto" />
-                                </Link>
-                                <ul
-                                    id="balances-nav"
-                                    className="nav-content collapse "
-                                    data-bs-parent="#balances-nav"
-                                >
-
-
-                                    <li>
-                                        <Link href="/finance/balances/service-provider">
-                                            <i className="bi bi-circle" />
-                                            <span>Service provider</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="#">
-                                            <i className="bi bi-circle" />
-                                            <span>MMDA</span>
-                                        </Link>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        </ul>
-                    </aside>
-                    : <></>}
+                </aside> : <></>}
         </>
 
     )

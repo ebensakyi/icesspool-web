@@ -36,9 +36,9 @@ async function getUserTypes() {
 
 
 async function getAdmins(searchParams: any) {
-    let { searchText } = searchParams;
+    let { searchText } = searchParams??"";
 
-    let { page } = searchParams;
+    let { page } = searchParams??1;
     let response = await fetch(`${SERVER_BASE_URL}/api/user/admin?page=${page}&searchText=${searchText}`, { cache: 'no-store', headers: headers() });
 
     if (!response.ok) {

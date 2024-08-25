@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
@@ -28,10 +28,7 @@ export default function ServiceProvider({ data }: any) {
     const pathname = usePathname()
 
 
-    const searchTextRef: any = useRef("");
-    const filterRef: any = useRef(null);
 
-    const searchText = searchParams.get('searchText');
     const page = searchParams.get('page');
 
 
@@ -64,51 +61,23 @@ export default function ServiceProvider({ data }: any) {
 
 
     const [showOtp, setShowOtp] = useState(false);
-
-
-
-
-    // const [searchText, setSearchText] = useState();
+    const [searchText, setSearchText] = useState("");
 
 
 
 
 
-    // const handleExportAll = async () => {
-    //     try {
 
-    //       const response = await axios.post(
-    //         `/api/v1/submitted-data/data-to-excel`,
-    //         {
-    //           inspectionFormId: Number(formId),
-    //           fileName: handleExcelName(),
-    //           published,
-    //           exportType: 1,
-    //         }
-    //       );
-    //       if (response.status == 200) {
-    //         router.push(response.data);
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    const handleExportFiltered = async () => {
-        try {
-            const response = await axios.post(
-                `/api/v1/submitted-data/data-to-excel`,
-                {
-                    searchText: searchText,
-                    exportType: 2,
-                }
-            );
-            if (response.status == 200) {
-                router.push(response.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+
+    useEffect(() => {
+
+
+        const url = `${pathname}/?searchText=${searchText}&page=${page}`;
+        router.push(url);
+
+    }, [searchText]);
+
+   
     const handlePagination = (page: any) => {
 
         page = page.selected == -1 ? 1 : page.selected + 1;
@@ -284,20 +253,7 @@ export default function ServiceProvider({ data }: any) {
 
 
 
-    const handleSearch = () => {
-        try {
-            let _searchText: any = searchTextRef?.current?.value
-
-
-            router.push(
-                `${pathname}?searchText=${_searchText}&page=${page}`
-
-            );
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
+   
 
     const handleExportAll = async () => {
         try {
@@ -762,10 +718,13 @@ export default function ServiceProvider({ data }: any) {
                                 <div className="row">
                                     <div className="col-md-4">
                                         <div className="input-group mb-3">
-                                            <input type="text" className="form-control" placeholder='Enter search term' ref={searchTextRef}
+                                        <input type="text" className="form-control" placeholder='Enter search term'
                                                 id="searchText"
-                                                name="searchText" />
-                                            <span className="input-group-text" id="basic-addon2">  <button type="button" onClick={handleSearch} className="btn btn-sm btn-primary btn-label waves-effect right waves-light form-control"><i className="bi bi-search"></i></button></span>
+                                                value={searchText}
+                                                onChange={(e: any) => {
+
+                                                    setSearchText(e.target.value);
+                                                }} />
                                         </div>
 
                                     </div>

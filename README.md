@@ -26,5 +26,5 @@ change charges to service-charges
 4. test creating of sp and login
 5. test creating of admin
 6. limit tamale admin and test creating of sp and viewing of tml txs
-7. work on search box
+7. work on search box for 
 8. work on sending request from web

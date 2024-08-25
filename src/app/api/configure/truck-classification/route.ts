@@ -87,7 +87,6 @@ export async function GET(request: Request) {
        
       });
 
-      console.log("truckClassification ",response);
       
 
       return NextResponse.json(response);

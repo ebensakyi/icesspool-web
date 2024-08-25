@@ -12,62 +12,6 @@ import fs from "fs";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
 const XLSX = require("xlsx");
-export async function POST(request: Request) {
-  try {
-    const res = await request.json();
-    const session: any = await getServerSession(authOptions);
-
-    // let loginUserLevel = session?.user?.userLevelId;
-    // let fileUrl;
-
-    let password: string = (await generateCode(4)) as string;
-    const salt = bcrypt.genSaltSync(10);
-    let hashedPassword = bcrypt.hashSync(password, salt);
-
-    // let regionId = res.region;
-
-    // if (regionId == null) {
-    //   const district = await prisma.district.findFirst({
-    //     where: { id: Number(res.district) },
-    //   });
-
-    //   regionId = district?.regionId;
-    // }
-
-    const data = {
-      userTypeId: 1,
-      lastName: res.lastName,
-      firstName: res.firstName,
-      email: res.email,
-      phoneNumber: res.phoneNumber,
-      password: hashedPassword,
-    };
-
-    let count = await prisma.user.count({
-      where: {
-        phoneNumber: res.phoneNumber,
-      },
-    });
-    if (count != 0) {
-      return NextResponse.json(
-        { message: "Phone number already used" },
-        { status: 201 }
-      );
-    }
-
-    const user: any = await prisma.user.create({ data });
-
-    await sendSMS(
-      res.phoneNumber,
-      `The temporal password for iCesspool App is ${password}`
-    );
-    return NextResponse.json(user);
-  } catch (error: any) {
-    console.log(error);
-
-    return NextResponse.json(error);
-  }
-}
 
 export async function GET(request: Request) {
   try {
@@ -194,6 +138,68 @@ export async function GET(request: Request) {
   }
 }
 
+export async function POST(request: Request) {
+  try {
+    const res = await request.json();
+    const session: any = await getServerSession(authOptions);
+
+    // let loginUserLevel = session?.user?.userLevelId;
+    // let fileUrl;
+
+    let password: string = (await generateCode(4)) as string;
+    const salt = bcrypt.genSaltSync(10);
+    let hashedPassword = bcrypt.hashSync(password, salt);
+
+    // let regionId = res.region;
+
+    // if (regionId == null) {
+    //   const district = await prisma.district.findFirst({
+    //     where: { id: Number(res.district) },
+    //   });
+
+    //   regionId = district?.regionId;
+    // }
+
+    const data = {
+      userTypeId: 1,
+      lastName: res.lastName,
+      firstName: res.firstName,
+      email: res.email,
+      phoneNumber: res.phoneNumber,
+      password: hashedPassword,
+      serviceAreaId: res.serviceArea,
+    };
+
+    let count = await prisma.user.count({
+      where: {
+        phoneNumber: res.phoneNumber,
+      },
+    });
+    if (count != 0) {
+      return NextResponse.json(
+        { message: "Phone number already used" },
+        { status: 201 }
+      );
+    }
+
+    const user: any = await prisma.user.create({ data });
+
+    await prisma.otp.create({
+      data: { userId: user.id, code: password },
+    });
+
+    await sendSMS(
+      res.phoneNumber,
+      `The temporal password for iCesspool App is ${password}`
+    );
+    return NextResponse.json(user);
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json(error);
+  }
+}
+
 export async function PUT(request: Request) {
   try {
     const res = await request.json();
@@ -208,7 +214,6 @@ export async function PUT(request: Request) {
       serviceAreaId: Number(res.serviceArea),
       userTypeId: 1,
     };
-
 
     await prisma.user.update({
       data: data,

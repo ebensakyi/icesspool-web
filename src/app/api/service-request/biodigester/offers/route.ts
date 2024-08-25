@@ -6,22 +6,23 @@ import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import {
   getFirestore,
-  collection,
-  getDocs,
   doc,
   setDoc,
 } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
 
 export async function GET(request: Request) {
-  try {
+  try {   
+     const session: any = await getServerSession(authOptions);
+
+     let userServiceArea = session?.user?.serviceAreaId     
+
+
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
     let txId = searchParams.get("txId");
 
-
-    const session: any = await getServerSession(authOptions);
 
     const searchText =
       searchParams.get("searchText")?.toString() == "undefined"
@@ -36,24 +37,83 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
+    if (txId) {
+      const response = await prisma.transactionStatus.findMany({
+        where: {
+          transactionId: txId,
+        },
+        include: {
+          TxStatus: true,
+        },
+      });
 
-      if(txId){
-        
-        const response = await prisma.transactionStatus.findMany({
-          where: {
-            transactionId: txId,
-          },
-          include: {
-            TxStatus:true
-          }
-        })
-        console.log(response);
-        
-        return NextResponse.json({
-          response,
-         
-        });
-      }
+      return NextResponse.json({
+        response,
+      });
+    }
+
+
+
+
+    if (userServiceArea == 1) {
+      const response = await prisma.transaction.findMany({
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    id: {
+                      contains: searchText,
+                      mode: "insensitive",
+                    },
+                  },
+
+                  // {
+                  //   Customer: {
+                  //     firstName: { contains: searchText, mode: "insensitive" },
+                  //   },
+                  // },
+                  // {
+                  //   ServiceProvider: {
+                  //       firstName: { contains: searchText, mode: "insensitive" },
+
+                  //   },
+                  // },
+                  // {
+                  //   ServiceArea: {
+                  //       name: { contains: searchText, mode: "insensitive" },
+
+                  //   },
+                  // },
+                ],
+                deleted: 0,
+                serviceId: 3,
+              }
+            : { deleted: 0, serviceId: 3 },
+        include: {
+          BiodigesterTransaction: true,
+          Customer: true,
+          ServiceProvider: true,
+          ServiceArea: true,
+          TxStatus: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        skip: skip,
+        take: perPage,
+      });
+
+      const count = await prisma.transaction.count({
+        where: { deleted: 0, serviceId: 3 },
+      });
+
+      return NextResponse.json({
+        response,
+        curPage: curPage,
+        maxPage: Math.ceil(count / perPage),
+      });
+    }
 
     const response = await prisma.transaction.findMany({
       where:
@@ -87,8 +147,9 @@ export async function GET(request: Request) {
               ],
               deleted: 0,
               serviceId: 3,
+              serviceAreaId: userServiceArea,
             }
-          : { deleted: 0, serviceId: 3 },
+          : { deleted: 0, serviceId: 3, serviceAreaId: userServiceArea},
       include: {
         BiodigesterTransaction: true,
         Customer: true,
@@ -104,7 +165,7 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.transaction.count({
-      where: { deleted: 0, serviceId: 3 },
+      where: { deleted: 0, serviceId: 3, serviceAreaId: userServiceArea },
     });
 
     return NextResponse.json({

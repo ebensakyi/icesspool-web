@@ -28,7 +28,7 @@ export default function Admin({ data }: any) {
     const pathname = usePathname()
 
 
-  
+
 
     // const searchText = searchParams.get('searchText');
     const page = searchParams.get('page');
@@ -55,7 +55,7 @@ export default function Admin({ data }: any) {
 
 
     useEffect(() => {
-       
+
 
         const url = `${pathname}/?searchText=${searchText}&page=${page}`;
         router.push(url);
@@ -126,9 +126,9 @@ export default function Admin({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-            // if (designation == "") {
-            //     return toast.error("Designation cannot be empty");
-            // }
+            if (serviceArea == "") {
+                return toast.error("Service area cannot be empty");
+            }
 
 
 
@@ -335,7 +335,7 @@ export default function Admin({ data }: any) {
                                                 Phone Number
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} />
+                                                <input type="number" className="form-control" placeholder='Phone number' minLength={10} maxLength={10} onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} />
                                             </div>
                                         </div>
                                     </div>
@@ -489,11 +489,11 @@ export default function Admin({ data }: any) {
                                 <div className="row">
                                     <div className="col-md-4">
                                         <div className="input-group mb-3">
-                                        <input type="text" className="form-control" placeholder='Enter search term'
+                                            <input type="text" className="form-control" placeholder='Enter search term'
                                                 id="searchText"
                                                 value={searchText}
                                                 onChange={(e: any) => {
-                                                    
+
                                                     setSearchText(e.target.value);
                                                 }} />
                                         </div>

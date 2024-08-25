@@ -14,28 +14,56 @@ import {
 import { app } from "@/libs/firebase-config";
 export async function GET(request: Request) {
   try {
+    const session: any = await getServerSession(authOptions);
+    let userServiceArea = session?.user?.serviceAreaId;
+
     let { searchParams } = new URL(request.url);
 
     let userId = Number(searchParams.get("userId"));
 
-    const session: any = await getServerSession(authOptions);
-
     const searchText =
-    searchParams.get("searchText")?.toString() == "undefined"
-      ? ""
-      : searchParams.get("searchText")?.toString();
+      searchParams.get("searchText")?.toString() == "undefined"
+        ? ""
+        : searchParams.get("searchText")?.toString();
 
-  let curPage = Number.isNaN(Number(searchParams.get("page")))
-    ? 1
-    : Number(searchParams.get("page"));
+    let curPage = Number.isNaN(Number(searchParams.get("page")))
+      ? 1
+      : Number(searchParams.get("page"));
 
-  let perPage = 10;
-  let skip =
-    Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
+    let perPage = 10;
+    let skip =
+      Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
+    if (userServiceArea == 1) {
+      const response = await prisma.transaction.findMany({
+        where: { deleted: 0, serviceId: 1 },
+        include: {
+          ToiletTruckTransaction: true,
+          Customer: true,
+          ServiceProvider: true,
+          ServiceArea: true,
+          TxStatus: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        skip: skip,
+        take: perPage,
+      });
+
+      const count = await prisma.transaction.count({
+        where: { deleted: 0, serviceId: 1 },
+      });
+
+      return NextResponse.json({
+        response,
+        curPage: curPage,
+        maxPage: Math.ceil(count / perPage),
+      });
+    }
 
     const response = await prisma.transaction.findMany({
-      where: { deleted: 0, serviceId: 1 },
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
       include: {
         ToiletTruckTransaction: true,
         Customer: true,
@@ -50,12 +78,9 @@ export async function GET(request: Request) {
       take: perPage,
     });
 
-    
-
-   const count = await prisma.transaction.count({
-      where: { deleted: 0, serviceId: 1 },
+    const count = await prisma.transaction.count({
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
     });
-
 
     return NextResponse.json({
       response,
@@ -68,7 +93,6 @@ export async function GET(request: Request) {
     return NextResponse.json(error);
   }
 }
-
 
 export async function PUT(request: Request) {
   try {

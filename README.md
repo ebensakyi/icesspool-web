@@ -20,4 +20,11 @@ change charges to service-charges
 
 
 
-1.
+1. delete from firestore when deleted at backend
+2. close from firestore when closed at backend
+3. Add notification to every update
+4. test creating of sp and login
+5. test creating of admin
+6. limit tamale admin and test creating of sp and viewing of tml txs
+7. work on search box
+8. work on sending request from web

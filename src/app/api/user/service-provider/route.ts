@@ -321,7 +321,6 @@ export async function GET(request: Request) {
     let curPage = Number.isNaN(Number(searchParams.get("page")))
       ? 1
       : Number(searchParams.get("page"));
-console.log("currrpage=====> " + curPage);
 
     let perPage = 10;
     let skip =
@@ -348,29 +347,53 @@ console.log("currrpage=====> " + curPage);
     }
     if (userServiceArea == 1) {
       const response = await prisma.user.findMany({
-        where: { userTypeId: 3, deleted: 0 },
+        where:
+          searchText != ""
+            ? {
+                OR: [
+                  {
+                    lastName: {
+                      contains: searchText,
+                      //mode: "insensitive",
+                    },
+                  },
+                  {
+                    firstName: {
+                      contains: searchText,
+                     // mode: "insensitive",
+                    },
+                  },
+                  {
+                    phoneNumber: {
+                      contains: searchText,
+                     // mode: "insensitive",
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchText,
+                      //mode: "insensitive",
+                    },
+                  },
+                ],
+                deleted: 0,
+                userTypeId: 3,
+              }
+            : { deleted: 0, userTypeId: 3 },
         include: {
           UserType: true,
           ServiceArea: true,
-          MomoAccount: {
-            include: {
-              MomoNetwork: true,
-            },
-          },
-          ServiceProvider: {
-            include: {
-              Service: true,
-              Vehicle: true,
-            },
-          },
           Otp: true,
-        },
-        orderBy: {
-          id: "desc",
         },
         skip: skip,
         take: perPage,
+        orderBy: {
+          id: "desc",
+        },
       });
+  
+
+     
 
       const count = await prisma.user.count({
         where:
@@ -380,32 +403,32 @@ console.log("currrpage=====> " + curPage);
                   {
                     lastName: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     firstName: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     phoneNumber: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     email: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                 ],
                 deleted: 0,
-                userTypeId: 4,
+                userTypeId: 3,
               }
-            : { userTypeId: 4, deleted: 0 },
+            : { userTypeId: 3, deleted: 0 },
       });
       return NextResponse.json({
         response,
@@ -414,28 +437,54 @@ console.log("currrpage=====> " + curPage);
       });
     }
 
+
     const response = await prisma.user.findMany({
-      where: { userTypeId: 3, deleted: 0, serviceAreaId: userServiceArea },
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                    //mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                    //mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 3, serviceAreaId: userServiceArea 
+            }
+          : { deleted: 0, userTypeId: 3 , serviceAreaId: userServiceArea },
       include: {
         UserType: true,
         ServiceArea: true,
-        MomoAccount: {
-          include: {
-            MomoNetwork: true,
-          },
-        },
-        ServiceProvider: {
-          include: {
-            Service: true,
-            Vehicle: true,
-          },
-        },
         Otp: true,
       },
+      skip: skip,
+      take: perPage,
       orderBy: {
         id: "desc",
       },
     });
+
+   
     const count = await prisma.user.count({
       where:
         searchText != ""
@@ -444,25 +493,25 @@ console.log("currrpage=====> " + curPage);
                 {
                   lastName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   firstName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   phoneNumber: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   email: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
               ],

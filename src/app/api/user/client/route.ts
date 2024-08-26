@@ -98,25 +98,25 @@ export async function GET(request: Request) {
                   {
                     lastName: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     firstName: {
                       contains: searchText,
-                      mode: "insensitive",
+                      //mode: "insensitive",
                     },
                   },
                   {
                     phoneNumber: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     email: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                 ],
@@ -143,25 +143,25 @@ export async function GET(request: Request) {
                   {
                     lastName: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     firstName: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                   {
                     phoneNumber: {
                       contains: searchText,
-                      mode: "insensitive",
+                      //mode: "insensitive",
                     },
                   },
                   {
                     email: {
                       contains: searchText,
-                      mode: "insensitive",
+                     // mode: "insensitive",
                     },
                   },
                 ],
@@ -185,25 +185,25 @@ export async function GET(request: Request) {
                 {
                   lastName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   firstName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   phoneNumber: {
                     contains: searchText,
-                    mode: "insensitive",
+                    //mode: "insensitive",
                   },
                 },
                 {
                   email: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
               ],
@@ -231,25 +231,25 @@ export async function GET(request: Request) {
                 {
                   lastName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   firstName: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   phoneNumber: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
                 {
                   email: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
               ],

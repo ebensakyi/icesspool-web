@@ -31,7 +31,6 @@ export async function GET(request: Request) {
     let skip =
       Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
 
-console.log("searchText==> ",searchText);
 
     const response = await prisma.user.findMany({
       where:

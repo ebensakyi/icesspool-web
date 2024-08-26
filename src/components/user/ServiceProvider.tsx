@@ -771,7 +771,7 @@ export default function ServiceProvider({ data }: any) {
                                     <tbody>
                                     {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
-                                                <td> <Image src={AWS_S3_URL + user?.passportPicture} alt="Selected Image" width={64} height={64} /></td>
+                                                <td> <Image src={AWS_S3_URL + user?.passportPicture} alt="avi" width={64} height={64} /></td>
                                                 <td>{user?.ServiceProvider?.id}</td>
 
                                                 <td>{user?.firstName} {user?.lastName}</td>

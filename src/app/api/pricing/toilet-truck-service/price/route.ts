@@ -98,11 +98,12 @@ export async function GET(request: Request) {
     let userId = Number(searchParams.get("userId"));
     let userLatitude = Number(searchParams.get("userLatitude"));
     let userLongitude = Number(searchParams.get("userLongitude"));
-    let tripsNumber = Number(searchParams.get("tripsNumber"));
-    let serviceArea = Number(searchParams.get("serviceAreaId"));
+    let tripsNumber = Number(searchParams.get("tripsNumber"))||1;
+    let serviceArea = Number(searchParams.get("serviceArea"));
 
     let userLocation = [userLatitude, userLongitude];
 
+    
 
 
     const pricingModel = await prisma.toiletTruckServicePricing.findMany({

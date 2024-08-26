@@ -918,6 +918,7 @@ model User {
   // client   Transaction[] @relation("client", fields: [clientId], references: [id])
   // UserType        UserType?     @relation(fields: [userTypeId], references: [id])
   userTypeId      Int
+  isOffline       Int           @default(0)
 
   // UserType UserType @relation(fields: [userTypeId], references: [id])
   UserType UserType @relation(fields: [userTypeId], references: [id])

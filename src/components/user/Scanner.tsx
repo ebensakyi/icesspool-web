@@ -61,8 +61,6 @@ export default function Scanner({ data }: any) {
         try {
             e.preventDefault();
 
-
-
             if (lastName == "") {
                 return toast.error("Surname cannot be empty");
             }
@@ -76,22 +74,18 @@ export default function Scanner({ data }: any) {
                 return toast.error("PhoneNumber cannot be empty");
             }
 
-
-
             let data = {
                 lastName,
                 firstName,
                 email,
                 phoneNumber,
                 designation,
-                // region: Number(region),
                 serviceArea: Number(serviceArea),
                 servicePoint: Number(servicePoint),
                 service: Number(service),
 
             };
 
-            console.log(data);
 
 
 

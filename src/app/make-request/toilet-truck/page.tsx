@@ -1,6 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
-import { ToiletTruckRequest } from '@/src/components/MakeDesludgingRequest';
+import { MakeToiletTruckRequest } from '@/src/components/MakeToiletTruckRequest';
 import { headers } from 'next/headers';
 
 async function getServices(searchParams: any) {
@@ -19,7 +19,23 @@ async function getServices(searchParams: any) {
   
     return res.json();
   }
-
+  async function getServiceAreas(searchParams: any) {
+    try {
+      let response = await fetch(`${SERVER_BASE_URL}/api/configure/service-area`, {
+        cache: "no-store",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("getServiceAreas==>", error);
+  
+    }
+  
+  
+  }
 
  async function getServicePoints(searchParams: any) {
     let { searchText } = searchParams;
@@ -43,13 +59,14 @@ export default async function Page({ searchParams }: any) {
     const servicePoints = await getServicePoints(searchParams)
     const services = await getServices(searchParams)
 
+    const serviceAreas = await getServiceAreas(searchParams)
 
 
-    let data = { servicePoints, services }
+    let data = { servicePoints, services,serviceAreas }
 
 
 
-    return <ToiletTruckRequest data={data} />
+    return <MakeToiletTruckRequest data={data} />
 
 
 }

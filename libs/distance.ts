@@ -8,6 +8,7 @@ export const getShortestDistanceBtnUserServicePoint = async (
 ) => {
 
   
+  
   let servicePoints = await prisma.servicePoint.findMany({
     where: {
       serviceId: serviceId,
@@ -63,7 +64,6 @@ export const getShortestDistanceBtnUserServicePoint = async (
   response.data.rows.map((d: any) => {
     let e = d.elements;
 
-    // console.log(e[0].status);
     
 
     if (e[0].status != "OK") {

@@ -9,7 +9,8 @@ const getServiceAreaBoundaries = async () => {
         not: 1,
       },
     },
-    select: {id: true,
+    select: {
+      id: true,
       regionId: true,
       lat1: true,
       lat2: true,
@@ -22,13 +23,13 @@ const getServiceAreaBoundaries = async () => {
     },
   });
 
-
   const regions = boundaries.map((entry) => {
-    const {id, regionId, lat1, lat2, lat3, lat4, lng1, lng2, lng3, lng4 } = entry;
+    const { id, regionId, lat1, lat2, lat3, lat4, lng1, lng2, lng3, lng4 } =
+      entry;
 
     return {
       regionId,
-      serviceAreaId:id,
+      serviceAreaId: id,
       points: [
         { lat: Number(lat1), lng: Number(lng1) },
         { lat: Number(lat2), lng: Number(lng2) },
@@ -63,7 +64,7 @@ const getServiceAreaBoundaries = async () => {
 export const getUserArea = async (userPoint: any) => {
   let polygons = await getServiceAreaBoundaries();
   //let whereIsUser = await isPointInsidePolygon(userPoint, polygons);
-//  console.log("whereIsUseruserPointx==> ", userPoint);
+  //  console.log("whereIsUseruserPointx==> ", userPoint);
 
   const foundRegion = polygons.find((region) =>
     isPointInsidePolygon(userPoint, region.points)
@@ -73,10 +74,10 @@ export const getUserArea = async (userPoint: any) => {
     // console.log(
     //   `The point is inside the region with regionId: ${foundRegion.regionId}`
     // );
-    return foundRegion
+    return foundRegion;
   } else {
     //console.log("The point is not inside any region");
-     return null
+    return null;
   }
 };
 
@@ -90,7 +91,6 @@ const isPointInsidePolygon = (userPoint: any, polygon: any) => {
     const yi = polygon[i].lng;
     const xj = polygon[j].lat;
     const yj = polygon[j].lng;
-
 
     const intersect =
       yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;

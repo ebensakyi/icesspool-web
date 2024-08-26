@@ -7,7 +7,7 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export const ToiletTruckRequest = ({ data }: any) => {
+export const MakeToiletTruckRequest = ({ data }: any) => {
 
 
     const [id, setId] = useState("");
@@ -18,13 +18,15 @@ export const ToiletTruckRequest = ({ data }: any) => {
     const [customerLng, setCustomerLng] = useState("");
     const [truck, setTruck] = useState("");
     const [price, setPrice] = useState("");
+    const [location, setLocation] = useState("");
 
     const [pricing, setPricing] = useState([]);
 
-    const [tripsNumber, setTripsNumber] = useState("");
+    const [tripsNumber, setTripsNumber] = useState("1");
 
+    const [serviceArea, setServiceArea] = useState("");
 
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("Get Prices");
 
     const { data: session } = useSession({
         required: true,
@@ -38,16 +40,28 @@ export const ToiletTruckRequest = ({ data }: any) => {
     const pathname = usePathname()
 
     const getPricing = async () => {
+        try {
+            
+            setStatus("Getting prices...");
+            const response = await axios.get(`/api/pricing/toilet-truck-service/price?userLatitude=${customerLat}&userLongitude=${customerLng}&tripsNumber=${tripsNumber}&serviceArea=${serviceArea}`);
+            setStatus("Get Prices");
+          
+            
 
-        const response = await axios.get(`/api/pricing/emptying/calculate?latitude=${customerLat}&longitude=${customerLng}&tripsNumber=${tripsNumber}`);
+            setPricing(response.data) 
+            
+             if (response.data.length!=0) {
+              return  toast.success("Pricing available");
+            }return toast.error("An error occurred while getting prices.\nTry again")
 
-        setPricing(response.data.price)
-
-        console.log(response);
+        } catch (error) {
+            setStatus("Get Prices");
+            return toast.error("An error occurred while getting prices.\nTry again")
+        }
 
     }
 
-    const add = async (e: any) => {
+    const sendRequest = async (e: any) => {
         try {
             e.preventDefault();
             // if (name == "" || status == "") {
@@ -60,12 +74,13 @@ export const ToiletTruckRequest = ({ data }: any) => {
                 customerLng: Number(customerLng),
                 truck: Number(truck),
                 price: Number(price),
-                phoneNumber: phoneNumber
-
+                phoneNumber: phoneNumber,
+                serviceArea: serviceArea,
+                location: location,
             };
 
 
-            const response = await axios.post("/api/pricing/water", data);
+            const response = await axios.post("/api/service-request/toilet-truck/make-request/web-request", data);
             toast.success(response.data.message);
             setId("")
             setCustomerLat("");
@@ -74,6 +89,7 @@ export const ToiletTruckRequest = ({ data }: any) => {
             setPhoneNumber("");
             setTruck("");
             setPrice("");
+
 
             router.refresh()
 
@@ -172,6 +188,16 @@ export const ToiletTruckRequest = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="col-lg-3">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Location *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="text" className="form-control" value={location} onChange={(e: any) => setLocation(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="col-lg-3 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -192,7 +218,7 @@ export const ToiletTruckRequest = ({ data }: any) => {
                                                 Enter latitude *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Eg. 7.8745446' value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -202,13 +228,43 @@ export const ToiletTruckRequest = ({ data }: any) => {
                                                 Enter longitude *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" value={customerLng} onChange={(e: any) => {
-                                                    setCustomerLng(e.target.value)
-                                                    if (customerLat != "" && customerLng != "") {
-                                                        getPricing()
-                                                    }
-                                                }} />
+                                                <input type="number" className="form-control" placeholder='Eg. -6.0489082' value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area</label>
+
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option >Select service area</option>
+
+                                                    {data?.serviceAreas?.response?.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                            </div>
+                                    <div className="col-lg-3 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                .
+                                            </label>
+                                            <button type="button" className="form-control btn btn-outline-success" onClick={async (e: any) => {
+                                                if (customerLat != "" && customerLng != "") {
+                                                 return await  getPricing()
+                                                }
+                                                return toast.error("Enter lat and lng of customer first")
+                                            }}>  {status}</button>
                                         </div>
                                     </div>
                                     <div className="col-lg-3">
@@ -243,10 +299,10 @@ export const ToiletTruckRequest = ({ data }: any) => {
                                     <button
                                         className="btn btn-primary"
                                         onClick={async (e) => {
-                                            if (id) {
-                                                return update(e)
-                                            }
-                                            add(e)
+                                            // if (id) {
+                                            //     return update(e)
+                                            // }
+                                            sendRequest(e)
 
                                         }}
 

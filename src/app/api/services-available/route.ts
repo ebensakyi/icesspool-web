@@ -14,7 +14,6 @@ export async function GET(request: Request) {
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
 
     
-console.log("serviceAreaId ", serviceAreaId);
 
     // await logActivity("Visited data assignment page", session?.user?.id);
 

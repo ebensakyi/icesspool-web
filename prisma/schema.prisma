@@ -58,6 +58,7 @@ model Service {
   ServiceCharges            ServiceCharges[]
   ServiceProvider           ServiceProvider[]
   PricingCriteria           PricingCriteria[]
+  ScannerUser               ScannerUser[]
 }
 
 model ServiceProviderBalance {
@@ -163,7 +164,7 @@ model ServiceArea {
   WaterTankerServicePricing WaterTankerServicePricing[]
   BiodigesterServicePricing BiodigesterServicePricing[]
   ToiletTruckServicePricing ToiletTruckServicePricing[]
-  Region                    Region                   @relation(fields: [regionId], references: [id])
+  Region                    Region                      @relation(fields: [regionId], references: [id])
   ServicesInArea            ServicesInArea[]
   Transaction               Transaction[]
   User                      User[]
@@ -367,10 +368,9 @@ model TransactionSchedule {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  Transaction       Transaction      @relation(fields: [transactionId], references: [id])
-  transactionId     String           @db.VarChar(255)
-  timeFrameId       Int
-
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId String      @db.VarChar(255)
+  timeFrameId   Int
 }
 
 model MomoNetwork {
@@ -922,7 +922,7 @@ model User {
   // UserType UserType @relation(fields: [userTypeId], references: [id])
   UserType UserType @relation(fields: [userTypeId], references: [id])
 
-  ScannerUser     ScannerUser[]
+  ScannerUser     ScannerUser?
   ServiceProvider ServiceProvider?
 
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
@@ -934,11 +934,10 @@ model User {
   ServiceProviderWithdrawal ServiceProviderWithdrawal[]
   MomoAccount               MomoAccount?
 
-    @@fulltext([firstName])
-    @@fulltext([lastName])
-    @@fulltext([phoneNumber])
-    @@fulltext([email])
-
+  @@fulltext([firstName])
+  @@fulltext([lastName])
+  @@fulltext([phoneNumber])
+  @@fulltext([email])
 }
 
 // model UserType {
@@ -992,7 +991,9 @@ model ScannerUser {
   updatedAt      DateTime     @updatedAt
   servicePointId Int
   User           User         @relation(fields: [userId], references: [id])
-  userId         Int
+  userId         Int          @unique
+  Service        Service      @relation(fields: [serviceId], references: [id])
+  serviceId      Int
 }
 
 model Penalty {
@@ -1017,15 +1018,15 @@ model TimeFrame {
 }
 
 model PricingCriteria {
-  id                  Int                   @id @default(autoincrement())
-  Service             Service               @relation(fields: [serviceId], references: [id])
-  ServiceArea         ServiceArea           @relation(fields: [serviceAreaId], references: [id])
-  showPricing Int
+  id            Int         @id @default(autoincrement())
+  Service       Service     @relation(fields: [serviceId], references: [id])
+  ServiceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  showPricing   Int
   enablePayment Int
- 
-  deleted             Int?                  @default(0)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  serviceId           Int
-  serviceAreaId       Int
+
+  deleted       Int?     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  serviceId     Int
+  serviceAreaId Int
 }

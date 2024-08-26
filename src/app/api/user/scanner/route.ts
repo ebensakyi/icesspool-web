@@ -17,12 +17,12 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    // let loginUserLevel = session?.user?.userLevelId;
     // let fileUrl;
 
     let password: string = (await generateCode(4)) as string;
     const salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
+  //let userId = session?.user?.id;
 
     // let regionId = res.region;
 
@@ -41,6 +41,7 @@ export async function POST(request: Request) {
       email: res.email,
       phoneNumber: res.phoneNumber,
       password: hashedPassword,
+      serviceAreaId: Number(res.serviceArea)
     };
 
 
@@ -61,7 +62,8 @@ export async function POST(request: Request) {
     await prisma.scannerUser.create({
       data: {
         servicePointId: Number(res.servicePoint),
-        userId: user.Id,
+        serviceId: Number(res.service),
+        userId: user.id,
       },
     });
 
@@ -79,23 +81,84 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    // const session :any= await getServerSession(authOptions);
+     const session :any= await getServerSession(authOptions);
 
     const { searchParams } = new URL(request.url);
 
-    const response = await prisma.scannerUser.findMany({
+
+    const searchText =
+    searchParams.get("searchText")?.toString() == "undefined"
+      ? ""
+      : searchParams.get("searchText")?.toString();
+
+  let curPage = Number.isNaN(Number(searchParams.get("page")))
+    ? 1
+    : Number(searchParams.get("page"));
+
+  let perPage = 10;
+  let skip =
+    Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
+
+
+
+    const response = await prisma.user.findMany({
       where: {
-        // userTypeId: 2,
+        userTypeId: 2,
       },
       include: {
-        User: true,
+        ScannerUser: {
+          include: {
+            ServicePoint:true
+
+          }
+        },
+        ServiceArea: true,
       },
     });
 
-
+    const count = await prisma.user.count({
+      where:
+        searchText != ""
+          ? {
+              OR: [
+                {
+                  lastName: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+                {
+                  firstName: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+                {
+                  phoneNumber: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+                {
+                  email: {
+                    contains: searchText,
+                   // mode: "insensitive",
+                  },
+                },
+              ],
+              deleted: 0,
+              userTypeId: 2,
+            }
+          : { userTypeId: 2, deleted: 0 },
+    });
     return NextResponse.json({
       response,
+      curPage: curPage,
+      maxPage: Math.ceil(count / perPage),
     });
+   
+
+
   } catch (error) {
     return NextResponse.json(error);
   }

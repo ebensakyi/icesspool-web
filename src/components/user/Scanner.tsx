@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { useRef, useState } from 'react';
 
 import axios from 'axios';
@@ -11,23 +10,20 @@ import ReactPaginate from 'react-paginate';
 
 export default function Scanner({ data }: any) {
 
-    
+
 
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session }: any = useSession()
 
-    
+
 
 
 
     const pathname = usePathname()
 
 
-    const searchTextRef: any = useRef("");
-    const filterRef: any = useRef(null);
 
-    const searchText = searchParams.get('searchText');
     const page = searchParams.get('page');
 
 
@@ -41,54 +37,16 @@ export default function Scanner({ data }: any) {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [designation, setDesignation] = useState("");
-     const [servicePoint, setServicePoint] = useState("");
+    const [servicePoint, setServicePoint] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
 
     const [showOtp, setShowOtp] = useState(false);
 
-    // const [searchText, setSearchText] = useState();
+    const [searchText, setSearchText] = useState();
 
 
-
-
-
-    // const handleExportAll = async () => {
-    //     try {
-
-    //       const response = await axios.post(
-    //         `/api/v1/submitted-data/data-to-excel`,
-    //         {
-    //           inspectionFormId: Number(formId),
-    //           fileName: handleExcelName(),
-    //           published,
-    //           exportType: 1,
-    //         }
-    //       );
-    //       if (response.status == 200) {
-    //         router.push(response.data);
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    const handleExportFiltered = async () => {
-        try {
-            const response = await axios.post(
-                `/api/v1/submitted-data/data-to-excel`,
-                {
-                    searchText: searchText,
-                    exportType: 2,
-                }
-            );
-            if (response.status == 200) {
-                router.push(response.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
     const handlePagination = (page: any) => {
 
         page = page.selected == -1 ? 1 : page.selected + 1;
@@ -117,7 +75,7 @@ export default function Scanner({ data }: any) {
             if (phoneNumber == "") {
                 return toast.error("PhoneNumber cannot be empty");
             }
-          
+
 
 
             let data = {
@@ -127,12 +85,14 @@ export default function Scanner({ data }: any) {
                 phoneNumber,
                 designation,
                 // region: Number(region),
-                // serviceArea: Number(serviceArea),
-                servicePoint:  Number(servicePoint),
+                serviceArea: Number(serviceArea),
+                servicePoint: Number(servicePoint),
+                service: Number(service),
+
             };
 
             console.log(data);
-            
+
 
 
             const response = await axios.post("/api/user/scanner", data);
@@ -215,21 +175,6 @@ export default function Scanner({ data }: any) {
         }
     };
 
-
-    const handleSearch = () => {
-        try {
-            let _searchText: any = searchTextRef?.current?.value
-
-
-            router.push(
-                `${pathname}?searchText=${_searchText}&page=${page}`
-
-            );
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const handleExportAll = async () => {
         try {
@@ -333,7 +278,29 @@ export default function Scanner({ data }: any) {
                                                 <input type="text" className="form-control" placeholder='Designation/Position' onChange={(e) => setDesignation(e.target.value)} value={designation} />
                                             </div>
                                         </div> */}
-                                       <div className="col-sm-3  mb-3">
+                                        <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area</label>
+
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option >Select service area</option>
+
+                                                    {data?.serviceAreas?.response?.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-3  mb-3">
                                             <label className="col-sm-12 col-form-label">Select service</label>
 
                                             <div className="col-sm-12">
@@ -476,10 +443,12 @@ export default function Scanner({ data }: any) {
                                 <div className="row">
                                     <div className="col-md-4">
                                         <div className="input-group mb-3">
-                                            <input type="text" className="form-control" placeholder='Enter search term' ref={searchTextRef}
+                                            <input type="text" className="form-control" placeholder='Enter search term'
                                                 id="searchText"
-                                                name="searchText" />
-                                            <span className="input-group-text" id="basic-addon2">  <button type="button" onClick={handleSearch} className="btn btn-sm btn-primary btn-label waves-effect right waves-light form-control"><i className="bi bi-search"></i></button></span>
+                                                onChange={(e: any) => {
+
+                                                    setSearchText(e.target.value);
+                                                }} />
                                         </div>
 
                                     </div>
@@ -520,8 +489,8 @@ export default function Scanner({ data }: any) {
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>
                                                 <td>{user?.email}</td>
-                                                <td>{user?.ScannerUser?.ServiceArea?.name}</td>
-                                                <td>{user?.ServicePoint?.name}</td>
+                                                <td>{user?.ServiceArea?.name}</td>
+                                                <td>{user?.ScannerUser?.ServicePoint?.name}</td>
                                                 <td><span style={{ "cursor": "pointer" }}
                                                     onClick={() => {
                                                         setShowOtp(!showOtp)
@@ -669,14 +638,14 @@ export default function Scanner({ data }: any) {
 
                                     </tbody>
                                 </table>
-                                {/* <ReactPaginate
+                                <ReactPaginate
                                     marginPagesDisplayed={2}
                                     pageRangeDisplayed={5}
                                     previousLabel={"Previous"}
                                     nextLabel={"Next"}
                                     breakLabel={"..."}
-                                    initialPage={data.users.curPage - 1}
-                                    pageCount={data.users.maxPage}
+                                    initialPage={data?.users?.curPage - 1}
+                                    pageCount={data?.users?.maxPage}
                                     onPageChange={handlePagination}
                                     breakClassName={"page-item"}
                                     breakLinkClassName={"page-link"}
@@ -688,7 +657,7 @@ export default function Scanner({ data }: any) {
                                     nextClassName={"page-item"}
                                     nextLinkClassName={"page-link"}
                                     activeClassName={"active"}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

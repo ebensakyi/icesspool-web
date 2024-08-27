@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     } = res;
 
     const requestType = "BROADCAST";
-    const transactionId = await generateTransactionCode(serviceArea, "1");
+    const transactionId = await generateTransactionCode(serviceArea, "2");
     const transactionData = {
       id: transactionId,
       lat: Number(customerLat),
@@ -55,13 +55,15 @@ export async function POST(request: Request) {
       placeLat: Number(customerLat),
       placeLng: Number(customerLng),
       placeId: "",
-      serviceId: 1,
+      serviceId: 2,
       serviceAreaId: Number(serviceArea),
       currentStatus: 1,
       discountedCost: Number(price),
       totalCost: Number(price),
       customerId: 3,
       txSource: 2,
+      customerName,
+      customerPhoneNumber: phoneNumber,
     };
 
     const response = await prisma.transaction.create({ data: transactionData });
@@ -75,13 +77,13 @@ export async function POST(request: Request) {
       customerId: Number(userId),
       customerLat: Number(customerLat),
       customerLng: Number(customerLng),
-      placeLat: Number(placeLat),
-      placeLng: Number(placeLng),
-      gpsAccuracy: Number(accuracy).toFixed(),
+      placeLat: Number(customerLat),
+      placeLng: Number(customerLng),
+      gpsAccuracy: 1,
       address: location,
 
       placeId: "",
-      service: "Toilet Truck",
+      service: "Water Tanker",
       serviceId: 1,
       serviceAreaId: Number(serviceArea),
       paymentStatus: 1,
@@ -102,7 +104,6 @@ export async function POST(request: Request) {
       // spId: Number(spId),
     };
 
-    console.log(firestoreData);
 
     await setDoc(
       doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
@@ -131,7 +132,7 @@ export async function POST(request: Request) {
         where: {
           deleted: 0,
           userTypeId: 3,
-          serviceAreaId: 1,
+          serviceAreaId: Number(serviceArea),
           ServiceProvider: { serviceId: 2 },
         },
         include: { ServiceProvider: true },
@@ -191,7 +192,7 @@ export async function GET(request: Request) {
 
     if (userServiceArea == 1) {
       const response = await prisma.transaction.findMany({
-        where: { deleted: 0, serviceId: 1, txSource: 2 },
+        where: { deleted: 0, serviceId: 2, txSource: 2 },
         include: {
           ToiletTruckTransaction: true,
           Customer: true,
@@ -207,7 +208,7 @@ export async function GET(request: Request) {
       });
 
       const count = await prisma.transaction.count({
-        where: { deleted: 0, serviceId: 1 },
+        where: { deleted: 0, serviceId: 2, txSource:2 },
       });
 
       return NextResponse.json({
@@ -218,7 +219,7 @@ export async function GET(request: Request) {
     }
 
     const response = await prisma.transaction.findMany({
-      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+      where: { deleted: 0, serviceId: 2, serviceAreaId: userServiceArea,txSource: 2 },
       include: {
         ToiletTruckTransaction: true,
         Customer: true,
@@ -234,7 +235,7 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.transaction.count({
-      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+      where: { deleted: 0, serviceId: 2, serviceAreaId: userServiceArea ,txSource:2 },
     });
 
 

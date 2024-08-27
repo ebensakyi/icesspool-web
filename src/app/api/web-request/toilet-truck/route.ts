@@ -132,8 +132,8 @@ export async function POST(request: Request) {
         where: {
           deleted: 0,
           userTypeId: 3,
-          serviceAreaId: 1,
-          ServiceProvider: { serviceId: 2 },
+          serviceAreaId: Number(serviceArea),
+          ServiceProvider: { serviceId: 1},
         },
         include: { ServiceProvider: true },
       });
@@ -208,7 +208,7 @@ export async function GET(request: Request) {
       });
 
       const count = await prisma.transaction.count({
-        where: { deleted: 0, serviceId: 1 },
+        where: { deleted: 0, serviceId: 1,txSource: 2 },
       });
 
       return NextResponse.json({
@@ -219,7 +219,7 @@ export async function GET(request: Request) {
     }
 
     const response = await prisma.transaction.findMany({
-      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea,txSource: 2 },
       include: {
         ToiletTruckTransaction: true,
         Customer: true,
@@ -235,7 +235,7 @@ export async function GET(request: Request) {
     });
 
     const count = await prisma.transaction.count({
-      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea,txSource:2 },
     });
 
     return NextResponse.json({

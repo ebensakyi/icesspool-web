@@ -96,7 +96,7 @@ export default function Log({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.logs.response.map((log: any) => {
+                                        {data?.logs?.response?.map((log: any) => {
                                             return (
                                                 <tr key={log.id}>
                                                     <td>{log.User.firstName} {log.User.lastName}</td>

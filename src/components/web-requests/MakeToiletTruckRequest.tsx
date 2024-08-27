@@ -29,7 +29,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const [deleteTxModalIsOpen, setDeleteTxModalIsOpen] = useState(false);
     const [closeTxModalIsOpen, setCloseTxModalIsOpen] = useState(false);
     const [searchText, setSearchText] = useState("");
-    
+
 
     const [id, setId] = useState("");
 
@@ -51,7 +51,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const [status, setStatus] = useState("Get Prices");
 
 
-    
+
     const handlePagination = (page: any) => {
         let searchText = searchParams.get('searchText')
 
@@ -69,13 +69,43 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     }
     const getPricing = async () => {
         try {
+            if (customerLat == "") {
+                return toast.error("Please enter the customer's latitude.");
+            }
 
+            if (customerLng == "") {
+                return toast.error("Please enter the customer's longitude.");
+            }
+
+            if (customerName == "") {
+                return toast.error("Please enter the customer's name.");
+            }
+
+            if (location == "") {
+                return toast.error("Please enter the location.");
+            }
+
+            if (phoneNumber == "") {
+                return toast.error("Please enter the customer's phone number.");
+            }
+
+            if (serviceArea == "") {
+                return toast.error("Please select a service area.");
+            }
+
+
+            if (scheduleDate == "") {
+                return toast.error("Please select a date.");
+            }
+
+            if (timeFrame == "") {
+                return toast.error("Please select a time frame.");
+            }
             setPricing([])
             setStatus("Getting prices...");
             const response = await axios.get(`/api/pricing/toilet-truck-service/price?userLatitude=${customerLat}&userLongitude=${customerLng}&tripsNumber=${tripsNumber}&serviceArea=${serviceArea}`);
             setStatus("Get Prices");
 
-            console.log(response.data);
 
 
 
@@ -151,7 +181,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
             console.log(data);
 
 
-            const response = await axios.post("/api/service-request/toilet-truck/make-request/web-request", data);
+            const response = await axios.post("/api/web-request/toilet-truck", data);
             toast.success(response.data.message);
             // setId("")
             setCustomerLat("");
@@ -216,7 +246,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
         // subtitle.style.color = "#f00";
     }
 
- 
+
     const handleDeleteTx = async (e: any) => {
         e.preventDefault();
         try {
@@ -225,7 +255,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
 
             };
 
-            const response = await axios.put("/api/service-request/toilet-truck/offers", data);
+            const response = await axios.put("/api/web-request/toilet-truck", data);
 
 
             if (response.data.status) {
@@ -258,7 +288,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     return (
         <main id="main" className="main">
             <div className="pagetitle">
-                <h1>MAKE REQUEST</h1>
+                <h1>TOILET TRUCK REQUEST</h1>
                 <Modal
                     isOpen={deleteTxModalIsOpen}
                     onAfterOpen={afterOpenDeleteModal}
@@ -402,8 +432,8 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    <div className="row">
+                                </div>
+                                <div className="row">
 
                                     <div className="col-lg-3  mb-3">
                                         <label className="col-sm-12 col-form-label">Select schedule date</label>
@@ -428,7 +458,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                         </div>
                                     </div>
 
-                               
+
                                     <div className="col-lg-3">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -517,7 +547,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="col-lg-12">
                         <div className="card">
                             <div className="card-body">
@@ -626,13 +656,13 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                                                 e.preventDefault();
                                                                                 setId(data.id);
 
-                                                                               // viewTx()
+                                                                                // viewTx()
                                                                             }}
                                                                         >
                                                                             View Tx
                                                                         </button>
                                                                     </li>
-                                                                   
+
 
                                                                     {data.currentStatus == 3 || data.currentStatus == 4 ?
                                                                         <li>

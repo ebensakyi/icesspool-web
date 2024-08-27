@@ -817,7 +817,7 @@ export default function User({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.users.response.map((user: any) => (
+                                        {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td>{user?.firstName} {user?.lastName}</td>
                                                 <td>{user?.phoneNumber}</td>

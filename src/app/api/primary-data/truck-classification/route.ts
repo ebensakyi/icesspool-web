@@ -6,27 +6,42 @@ import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-    try {
-      let { searchParams } = new URL(request.url);
-  
-      let userId = Number(searchParams.get("userId"));
-      let serviceId = Number(searchParams.get("serviceId"));
+  try {
+    let { searchParams } = new URL(request.url);
+    const session: any = await getServerSession(authOptions);
 
-      const session: any = await getServerSession(authOptions);
-  
-      // await logActivity("Visited data assignment page", session?.user?.id);
-  
+    let userId = Number(searchParams.get("userId"));
+    let serviceId = Number(searchParams.get("serviceId"));
+
+    let userServiceArea = Number(session?.user?.serviceAreaId);
+
+    console.log(session);
+    
+    console.log("userServiceArea",userServiceArea);
+    console.log("serviceId",serviceId);
+
+    if (userServiceArea == 1) {
       const response = await prisma.truckClassification.findMany({
-        where: { deleted: 0 },
-     
+        where: { deleted: 0,serviceId},
       });
-      
 
       return NextResponse.json({ response });
-    } catch (error) {
-      console.log(error);
-  
-      return NextResponse.json(error);
     }
+
+    // await logActivity("Visited data assignment page", session?.user?.id);
+
+    const response = await prisma.truckClassification.findMany({
+      where: {
+        deleted: 0,
+        serviceAreaId: userServiceArea,
+        serviceId: serviceId,
+      },
+    });
+
+    return NextResponse.json({ response });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(error);
   }
-  
+}

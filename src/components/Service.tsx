@@ -183,7 +183,7 @@ export const Service = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.services?.response.map((data: any) => {
+                                        {data?.services?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>

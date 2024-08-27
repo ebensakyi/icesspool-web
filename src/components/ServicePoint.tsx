@@ -286,7 +286,7 @@ export const ServicePoint = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.servicePoints?.response.map((data: any) => {
+                                        {data?.servicePoints?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>

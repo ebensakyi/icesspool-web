@@ -302,7 +302,7 @@ export const TruckClassification = ({ data }: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.truckClassifications?.response.map((data: any) => {
+                                        {data?.truckClassifications?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.name}</td>

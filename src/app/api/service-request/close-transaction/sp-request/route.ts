@@ -28,7 +28,6 @@ export async function POST(request: Request) {
   let transactionId = res.transactionId;
   let status = Number(res.status);
 
-  console.log(res);
   
 
   const session: any = await getServerSession(authOptions);

@@ -64,7 +64,7 @@ export async function GET(request: Request) {
                   {
                     id: {
                       contains: searchText,
-                      mode: "insensitive",
+                    //  mode: "insensitive",
                     },
                   },
 
@@ -123,7 +123,7 @@ export async function GET(request: Request) {
                 {
                   id: {
                     contains: searchText,
-                    mode: "insensitive",
+                   // mode: "insensitive",
                   },
                 },
 

@@ -21,7 +21,7 @@ model Otp {
 
 model TruckClassification {
   id          Int     @id @default(autoincrement())
-  name        String  @unique(map: "axleClass") @db.VarChar(255)
+  name        String  @db.VarChar(255)
   image       String? @db.VarChar(255)
   description String? @db.VarChar(255)
 
@@ -38,6 +38,8 @@ model TruckClassification {
   WaterTankerServicePricing WaterTankerServicePricing[]
   ServiceArea               ServiceArea?                @relation(fields: [serviceAreaId], references: [id])
   TruckEmptyingTransaction  TruckEmptyingTransaction[]
+
+  @@unique([name, serviceAreaId,serviceId])
 }
 
 model Service {

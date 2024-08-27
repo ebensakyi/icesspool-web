@@ -1,6 +1,6 @@
 // import { getServicePoints, getServices } from '@/src/app/api-services';
 import { SERVER_BASE_URL } from '@/config';
-import { MakeToiletTruckRequest } from '@/src/components/web-requests/MakeToiletTruckRequest';
+import { MakeWaterTankerRequest } from '@/src/components/web-requests/MakeWaterTankerRequest';
 import { headers } from 'next/headers';
 
 
@@ -57,6 +57,22 @@ async function getServices(searchParams: any) {
   
   }
 
+  async function getTruckClassifications(searchParams: any) {
+    try {
+      let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/truck-classification?serviceId=2`, { cache: "no-store", headers: headers() });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("getServiceAreas==>", error);
+  
+    }
+  
+  
+  }
+
  async function getServicePoints(searchParams: any) {
     let { searchText } = searchParams;
   
@@ -98,13 +114,14 @@ export default async function Page({ searchParams }: any) {
     const serviceAreas = await getServiceAreas(searchParams)
     const timeFrames = await getTimeFrames(searchParams)
     const offers = await getOffers(searchParams)
+    const truckClassifications = await getTruckClassifications(searchParams)
 
 
-    let data = { servicePoints, services,serviceAreas,timeFrames,offers }
+    let data = { servicePoints, services,serviceAreas,timeFrames,offers ,truckClassifications}
 
 
 
-    return <MakeToiletTruckRequest data={data} />
+    return <MakeWaterTankerRequest data={data} />
 
 
 }

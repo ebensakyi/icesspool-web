@@ -497,7 +497,7 @@ export default function ServiceProvider({ data }: any) {
                                                 <option >Select service</option>
 
 
-                                                {data.services.response.map((mn: any) => {
+                                                {data?.services?.response?.map((mn: any) => {
                                                     return (
                                                         <option key={mn.id} value={mn.id}>{mn.name}</option>
                                                     )

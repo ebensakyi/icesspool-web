@@ -516,7 +516,7 @@ console.log(data);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.waterPricings?.response.map((data: any) => {
+                                        {data?.waterPricings?.response?.map((data: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.ServiceArea?.Region?.name}</td>

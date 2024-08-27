@@ -54,7 +54,6 @@ console.log();
 
 
             const response = await axios.post("/api/finance/withdraw/service-provider/approve", data);
-            console.log(response);
             
 
             toast.success(response.data.message);

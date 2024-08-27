@@ -44,8 +44,8 @@ export async function POST(request: Request) {
       spId,
     } = res;
 
-    const requestType = "BROADCAST"
-    const transactionId = await generateTransactionCode(serviceArea,"1");
+    const requestType = "BROADCAST";
+    const transactionId = await generateTransactionCode(serviceArea, "1");
     const transactionData = {
       id: transactionId,
       lat: Number(customerLat),
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       discountedCost: Number(price),
       totalCost: Number(price),
       customerId: 3,
-
+      txSource: 2,
     };
 
     const response = await prisma.transaction.create({ data: transactionData });
@@ -70,9 +70,6 @@ export async function POST(request: Request) {
     const timeFrameData = await prisma.timeFrame.findFirst({
       where: { id: Number(timeFrame) },
     });
-
-    console.log(timeFrameData);
-    
 
     const firestoreData = {
       transactionId,
@@ -107,7 +104,6 @@ export async function POST(request: Request) {
     };
 
     console.log(firestoreData);
-    
 
     await setDoc(
       doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
@@ -132,7 +128,6 @@ export async function POST(request: Request) {
     });
 
     if (requestType === "BROADCAST") {
-
       const serviceProviders = await prisma.user.findMany({
         where: {
           deleted: 0,
@@ -154,10 +149,8 @@ export async function POST(request: Request) {
           }
         })
       );
-
-    
     } else {
-       const sp = await prisma.user.findFirst({
+      const sp = await prisma.user.findFirst({
         where: { deleted: 0, id: Number(spId) },
       });
 
@@ -172,5 +165,90 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error("Make request error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const session: any = await getServerSession(authOptions);
+    let userServiceArea = session?.user?.serviceAreaId;
+
+    let { searchParams } = new URL(request.url);
+
+    let userId = Number(searchParams.get("userId"));
+
+    const searchText =
+      searchParams.get("searchText")?.toString() == "undefined"
+        ? ""
+        : searchParams.get("searchText")?.toString();
+
+    let curPage = Number.isNaN(Number(searchParams.get("page")))
+      ? 1
+      : Number(searchParams.get("page"));
+
+    let perPage = 10;
+    let skip =
+      Number((curPage - 1) * perPage) < 0 ? 0 : Number((curPage - 1) * perPage);
+
+    if (userServiceArea == 1) {
+      const response = await prisma.transaction.findMany({
+        where: { deleted: 0, serviceId: 1, txSource: 2 },
+        include: {
+          ToiletTruckTransaction: true,
+          Customer: true,
+          ServiceProvider: true,
+          ServiceArea: true,
+          TxStatus: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        skip: skip,
+        take: perPage,
+      });
+
+      const count = await prisma.transaction.count({
+        where: { deleted: 0, serviceId: 1 },
+      });
+
+      return NextResponse.json({
+        response,
+        curPage: curPage,
+        maxPage: Math.ceil(count / perPage),
+      });
+    }
+
+    const response = await prisma.transaction.findMany({
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+      include: {
+        ToiletTruckTransaction: true,
+        Customer: true,
+        ServiceProvider: true,
+        ServiceArea: true,
+        TxStatus: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+      skip: skip,
+      take: perPage,
+    });
+
+    const count = await prisma.transaction.count({
+      where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
+    });
+
+
+    console.log(response);
+    
+    return NextResponse.json({
+      response,
+      curPage: curPage,
+      maxPage: Math.ceil(count / perPage),
+    });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(error);
   }
 }

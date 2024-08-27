@@ -398,20 +398,22 @@ export const ToiletTruckOffer = ({ data }: any) => {
                                                                         </button>
                                                                     </li>:<></>} */}
 
-                                                                    <li>
+{data.currentStatus == 3 || data.currentStatus == 4 ?
+                                                                        <li>
 
-                                                                        <button
-                                                                            className="dropdown-item btn btn-sm "
-                                                                            onClick={(e) => {
-                                                                                e.preventDefault();
-                                                                                setId(data.id);
-                                                                                setCloseTxModalIsOpen(true);
+                                                                            <button
+                                                                                className="dropdown-item btn btn-sm "
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    setId(data.id);
+                                                                                    setCloseTxModalIsOpen(true);
+                                                                                    // closeTx()
 
-                                                                            }}
-                                                                        >
-                                                                            Close Tx
-                                                                        </button>
-                                                                    </li>
+                                                                                }}
+                                                                            >
+                                                                                Close Tx
+                                                                            </button>
+                                                                        </li> : <></>}
                                                                     <li>
                                                                         <button
                                                                             className="dropdown-item btn btn-sm "

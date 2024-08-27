@@ -778,6 +778,7 @@ model Transaction {
   TxStatus               TxStatus                 @relation(fields: [currentStatus], references: [id])
   currentStatus          Int
   txSubStatus            Int?
+  txSource               Int                      @default(1)
   TransactionRating      TransactionRating[]
   IcesspoolEarning       IcesspoolEarning[]
   ServiceProviderEarning ServiceProviderEarning[]

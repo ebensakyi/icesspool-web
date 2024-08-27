@@ -21,19 +21,20 @@ export async function POST(request: Request) {
     // const app = initializeApp(firebaseConfig);
     const firestoreDb = getFirestore(app);
 
-
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
 
-    let serviceId = res.serviceId;
+    console.log("RSEE", res);
+
+    let serviceId = Number(res.serviceId);
     if (serviceId == 1) {
-      await acceptToiletTruckRequest(request, firestoreDb);
+      await acceptToiletTruckRequest(res, firestoreDb);
     }
     if (serviceId == 2) {
-      await acceptWaterTankerRequest(request, firestoreDb);
+      await acceptWaterTankerRequest(res, firestoreDb);
     }
     if (serviceId == 3) {
-      await acceptBiodigesterRequest(request, firestoreDb);
+      await acceptBiodigesterRequest(res, firestoreDb);
     }
     // runCronJob(transactionSchedule, async () => {
     //   const transactionRef = doc(
@@ -63,10 +64,7 @@ export async function POST(request: Request) {
   }
 }
 
-const acceptBiodigesterRequest = async (request: Request, firestoreDb: any) => {
-  const res = await request.json();
-  const session: any = await getServerSession(authOptions);
-
+const acceptBiodigesterRequest = async (res: any, firestoreDb: any) => {
   let serviceProviderId = res.userId;
   let transactionId = res.transactionId;
   let currentStatus = Number(res.txStatusCode);
@@ -121,10 +119,7 @@ const acceptBiodigesterRequest = async (request: Request, firestoreDb: any) => {
 
   return NextResponse.json({});
 };
-const acceptWaterTankerRequest = async (request: Request, firestoreDb: any) => {
-  const res = await request.json();
-  const session: any = await getServerSession(authOptions);
-
+const acceptWaterTankerRequest = async (res: any, firestoreDb: any) => {
   let serviceProviderId = res.userId;
   let transactionId = res.transactionId;
   let currentStatus = Number(res.txStatusCode);
@@ -198,8 +193,8 @@ const acceptWaterTankerRequest = async (request: Request, firestoreDb: any) => {
   return NextResponse.json({});
 };
 
-const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
-  const res = await request.json();
+const acceptToiletTruckRequest = async (res: any, firestoreDb: any) => {
+  
 
   let serviceProviderId = res.userId;
   let transactionId = res.transactionId;
@@ -209,9 +204,9 @@ const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
   let serviceArea = Number(res.serviceAreId);
 
   ////LATER CHECK PRICING CRITERIA AND SHOW PRICING,PAYMENT OR SKIP
-  let pricingCriteria: any = await prisma.pricingCriteria.findFirst({
-    where: { serviceAreaId: serviceArea, serviceId: service, deleted: 0 },
-  });
+  // let pricingCriteria: any = await prisma.pricingCriteria.findFirst({
+  //   where: { serviceAreaId: serviceArea, serviceId: service, deleted: 0 },
+  // });
 
   let enablePayment = 0; //  pricingCriteria?.enablePayment
 
@@ -229,14 +224,14 @@ const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
 
   //// HARD CODED PRICING CRITERIA
 
-  if (enablePayment) {
+  if (enablePayment == 1) {
     currentStatus =
       currentStatus === 1 ? 2 : currentStatus === 7 ? 9 : currentStatus;
-    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted. Make payment now`;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted.\nMake payment now`;
   } else {
     currentStatus =
       currentStatus === 1 ? 3 : currentStatus === 7 ? 3 : currentStatus;
-    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted.`;
+    notificationMsg = `Hello ${transaction?.Customer?.firstName} your biodigester request has been accepted.\nService Provider will be on his way `;
   }
 
   await prisma.transaction.update({
@@ -263,9 +258,9 @@ const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
     spId: serviceProviderId,
   });
 
-await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
+  await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
 
- let fcmSent = await sendFCM(
+  let fcmSent = await sendFCM(
     transaction?.Customer?.fcmId,
     "Request Accepted",
     notificationMsg

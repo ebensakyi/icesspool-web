@@ -3,6 +3,26 @@ import { SERVER_BASE_URL } from '@/config';
 import { MakeToiletTruckRequest } from '@/src/components/MakeToiletTruckRequest';
 import { headers } from 'next/headers';
 
+
+
+async function getOffers(searchParams: any) {
+  let { searchText } = searchParams;
+
+  let { page } = searchParams;
+
+  const res = await fetch(
+      `${SERVER_BASE_URL}/api/service-request/toilet-truck/make-request/web-request?page=${page}&searchText=${searchText}`,
+      { cache: "no-store", headers: headers() }
+  );
+
+
+  if (!res.ok) {
+      throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
 async function getServices(searchParams: any) {
     let { searchText } = searchParams;
   
@@ -77,9 +97,10 @@ export default async function Page({ searchParams }: any) {
 
     const serviceAreas = await getServiceAreas(searchParams)
     const timeFrames = await getTimeFrames(searchParams)
+    const offers = await getOffers(searchParams)
 
 
-    let data = { servicePoints, services,serviceAreas,timeFrames }
+    let data = { servicePoints, services,serviceAreas,timeFrames,offers }
 
 
 

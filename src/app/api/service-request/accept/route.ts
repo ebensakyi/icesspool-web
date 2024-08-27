@@ -21,7 +21,6 @@ export async function POST(request: Request) {
     // const app = initializeApp(firebaseConfig);
     const firestoreDb = getFirestore(app);
 
-    await acceptBiodigesterRequest(request, firestoreDb);
 
     const res = await request.json();
     const session: any = await getServerSession(authOptions);
@@ -201,7 +200,6 @@ const acceptWaterTankerRequest = async (request: Request, firestoreDb: any) => {
 
 const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
   const res = await request.json();
-  const session: any = await getServerSession(authOptions);
 
   let serviceProviderId = res.userId;
   let transactionId = res.transactionId;
@@ -265,9 +263,9 @@ const acceptToiletTruckRequest = async (request: Request, firestoreDb: any) => {
     spId: serviceProviderId,
   });
 
-  await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
+await sendSMS(transaction?.Customer?.phoneNumber, notificationMsg);
 
-  await sendFCM(
+ let fcmSent = await sendFCM(
     transaction?.Customer?.fcmId,
     "Request Accepted",
     notificationMsg

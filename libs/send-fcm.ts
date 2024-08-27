@@ -7,6 +7,12 @@ export const sendFCM = async (
   body: string
 ) => {
   try {
+    console.log("FCME ", deviceToken);
+
+    if(deviceToken==null || deviceToken==""|| deviceToken.length==0) {
+      return;
+    }
+    
     // Send FCM notification
     let res = await admin.messaging().send({
       token: deviceToken,
@@ -18,10 +24,11 @@ export const sendFCM = async (
     return res;
   } catch (error) {
     console.error("Error sending FCM notification:", error);
+    return 0
   }
 };
 
-export const sendFCToMultipleDevices = async (
+export const sendFCMToMultipleDevices = async (
   deviceTokens: any,
   title: string,
   body: string
@@ -51,5 +58,6 @@ export const sendFCToMultipleDevices = async (
     }
   } catch (error) {
     console.error("Error sending FCM notification:", error);
+    return 0
   }
 };

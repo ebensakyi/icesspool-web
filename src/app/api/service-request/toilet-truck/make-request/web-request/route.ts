@@ -3,10 +3,16 @@ import { prisma } from "@/prisma/db";
 import { NextResponse } from "next/server";
 import { getFirestore, doc, setDoc } from "firebase/firestore/lite";
 import { app } from "@/libs/firebase-config";
-import { convertDateToISO8601, convertTimeToISO8601, getCurrentDate, getCurrentTime } from "@/libs/date";
+import {
+  convertDateToISO8601,
+  convertTimeToISO8601,
+  getCurrentDate,
+  getCurrentTime,
+} from "@/libs/date";
 import { sendSMS } from "@/libs/send-hubtel-sms";
 import { sendFCM } from "@/libs/send-fcm";
 import { authOptions } from "@/src/app/api/auth/[...nextauth]/options";
+import { generateTransactionCode } from "@/libs/generate-code";
 
 export async function POST(request: Request) {
   try {
@@ -15,72 +21,98 @@ export async function POST(request: Request) {
     const session = await getServerSession(authOptions);
 
     console.log(res);
-    
 
     const {
-      transactionId, userId, customerLat, customerLng, accuracy,
-      community, address, placeLat, placeLng, placeId,
-      serviceArea, totalCost, scheduledDate, timeFrame, requestType,
-      spName, spCompany, spPhoneNumber, spImageUrl, spId
+      userId,
+      customerLat,
+      customerLng,
+      accuracy,
+      location,
+      customerName,
+      placeLat,
+      placeLng,
+      phoneNumber,
+      serviceArea,
+      totalCost,
+      scheduledDate,
+      timeFrame,
+      price,
+      spName,
+      spCompany,
+      spPhoneNumber,
+      spImageUrl,
+      spId,
     } = res;
 
+    const requestType = "BROADCAST"
+    const transactionId = await generateTransactionCode(serviceArea,"1");
     const transactionData = {
       id: transactionId,
-      customerId: Number(userId),
       lat: Number(customerLat),
       lng: Number(customerLng),
-      gpsAccuracy: Number(accuracy).toFixed(),
-      community,
-      address,
-      placeLat: Number(placeLat),
-      placeLng: Number(placeLng),
-      placeId,
+      gpsAccuracy: 1,
+      community: location,
+      address: location,
+      placeLat: Number(customerLat),
+      placeLng: Number(customerLng),
+      placeId: "",
       serviceId: 1,
       serviceAreaId: Number(serviceArea),
-      currentStatus: requestType === "DIRECT" ? 3 : 1,
-      discountedCost: Number(totalCost),
-      totalCost: Number(totalCost),
-      serviceProviderId: requestType === "DIRECT" ? Number(spId) : null,
+      currentStatus: 1,
+      discountedCost: Number(price),
+      totalCost: Number(price),
+      customerId: 3,
+
     };
 
     const response = await prisma.transaction.create({ data: transactionData });
 
-    const user = await prisma.user.findFirst({ where: { id: Number(userId) } });
-    const timeFrameData = await prisma.timeFrame.findFirst({ where: { id: Number(timeFrame) } });
+    const timeFrameData = await prisma.timeFrame.findFirst({
+      where: { id: Number(timeFrame) },
+    });
+
+    console.log(timeFrameData);
+    
 
     const firestoreData = {
       transactionId,
       customerId: Number(userId),
       customerLat: Number(customerLat),
       customerLng: Number(customerLng),
-      gpsAccuracy: Number(accuracy).toFixed(),
-      address,
       placeLat: Number(placeLat),
       placeLng: Number(placeLng),
-      placeId,
+      gpsAccuracy: Number(accuracy).toFixed(),
+      address: location,
+
+      placeId: "",
       service: "Toilet Truck",
       serviceId: 1,
       serviceAreaId: Number(serviceArea),
       paymentStatus: 1,
-      txStatusCode: requestType === "DIRECT" ? 3 : 1,
+      txStatusCode: 1,
       requestType,
       offerMadeTime: `${getCurrentDate()} at ${getCurrentTime()}`,
-      customerName: `${user?.lastName} ${user?.firstName}`,
-      customerPhone: user?.phoneNumber,
-      customerEmail: user?.email,
+      customerName: customerName,
+      customerPhone: phoneNumber,
       scheduledTime: timeFrameData?.time_schedule,
       scheduledDate,
       createdDate: `${getCurrentDate()} at ${getCurrentTime()}`,
       deleted: false,
-      discountedTotalCost: Number(totalCost),
-      spName,
-      spCompany,
-      spPhoneNumber,
-      spImageUrl,
-      spId: Number(spId),
+      discountedTotalCost: Number(price),
+      // spName,
+      // spCompany,
+      // spPhoneNumber,
+      // spImageUrl,
+      // spId: Number(spId),
     };
 
-    await setDoc(doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId), firestoreData);
+    console.log(firestoreData);
+    
+
+    await setDoc(
+      doc(db, `${process.env.PROD_TRANSACTION_COLLECTION}`, transactionId),
+      firestoreData
+    );
 
     await prisma.transactionSchedule.create({
       data: {
@@ -99,11 +131,8 @@ export async function POST(request: Request) {
       },
     });
 
-    if (requestType === "DIRECT") {
-      const sp = await prisma.user.findFirst({ where: { deleted: 0, id: Number(spId) } });
+    if (requestType === "BROADCAST") {
 
-      await sendFCM(sp?.fcmId, "New Request", `Hello ${sp?.firstName}, a water tanker request has been assigned to you.`);
-    } else {
       const serviceProviders = await prisma.user.findMany({
         where: {
           deleted: 0,
@@ -114,11 +143,29 @@ export async function POST(request: Request) {
         include: { ServiceProvider: true },
       });
 
-      await Promise.all(serviceProviders.map(async (provider) => {
-        if (provider.fcmId) {
-          await sendFCM(provider.fcmId, "New Request", `Hello ${provider.firstName}, a water tanker request is available.`);
-        }
-      }));
+      await Promise.all(
+        serviceProviders.map(async (provider) => {
+          if (provider.fcmId) {
+            await sendFCM(
+              provider.fcmId,
+              "New Request",
+              `Hello ${provider.firstName}, a water tanker request is available.`
+            );
+          }
+        })
+      );
+
+    
+    } else {
+       const sp = await prisma.user.findFirst({
+        where: { deleted: 0, id: Number(spId) },
+      });
+
+      await sendFCM(
+        sp?.fcmId,
+        "New Request",
+        `Hello ${sp?.firstName}, a water tanker request has been assigned to you.`
+      );
     }
 
     return NextResponse.json(response);

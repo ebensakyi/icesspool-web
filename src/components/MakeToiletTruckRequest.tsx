@@ -21,8 +21,9 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const [location, setLocation] = useState("");
 
     const [pricing, setPricing] = useState([]);
-
+    const [scheduleDate, setScheduleDate] = useState("");
     const [tripsNumber, setTripsNumber] = useState("1");
+    const [timeFrame, setTimeFrame] = useState("");
 
     const [serviceArea, setServiceArea] = useState("");
 
@@ -75,29 +76,36 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
             if (customerLat == "") {
                 return toast.error("Please enter the customer's latitude.");
             }
-            
+
             if (customerLng == "") {
                 return toast.error("Please enter the customer's longitude.");
             }
-            
+
             if (customerName == "") {
                 return toast.error("Please enter the customer's name.");
             }
-            
+
             if (location == "") {
                 return toast.error("Please enter the location.");
             }
-            
+
             if (phoneNumber == "") {
                 return toast.error("Please enter the customer's phone number.");
             }
-            
+
             if (serviceArea == "") {
                 return toast.error("Please select a service area.");
             }
-            
-          
-              if (pricing.length == 0) {
+
+
+            if (scheduleDate == "") {
+                return toast.error("Please select a date.");
+            }
+
+            if (timeFrame == "") {
+                return toast.error("Please select a time frame.");
+            }
+            if (pricing.length == 0) {
                 return toast.error("Please select a pricing option.");
             }
 
@@ -110,12 +118,15 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 phoneNumber: phoneNumber,
                 serviceArea: serviceArea,
                 location: location,
+                timeFrame: timeFrame,
+                scheduledDate: scheduleDate,
             };
+            console.log(data);
 
 
             const response = await axios.post("/api/service-request/toilet-truck/make-request/web-request", data);
             toast.success(response.data.message);
-            setId("")
+            // setId("")
             setCustomerLat("");
             setCustomerLng("");
             setCustomerName("");
@@ -244,28 +255,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
 
                                 </div>
                                 <div className="row">
-
-                                    <div className="col-lg-3">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Enter latitude *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Eg. 9.442' value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-3 col-md-6">
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Enter longitude *
-                                            </label>
-                                            <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Eg. -0.7489082' value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-3  mb-3">
+                                    <div className="col-lg-3  mb-3">
                                         <label className="col-sm-12 col-form-label">Select service area</label>
 
                                         <div className="col-sm-12">
@@ -287,7 +277,64 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                             </select>
                                         </div>
                                     </div>
+                                    <div className="col-lg-3">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Enter latitude *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Eg. 9.442' value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="col-lg-3 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Enter longitude *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="number" className="form-control" placeholder='Eg. -0.7489082' value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 col-md-6">
+                                        <div className=" mb-3">
+                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                Select schedule date *
+                                            </label>
+                                            <div className="col-sm-12">
+                                                <input type="date" className="form-control" placeholder='Eg. -0.7489082' value={scheduleDate} onChange={(e: any) => setScheduleDate(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div className="row">
+
+                                    <div className="col-lg-3  mb-3">
+                                        <label className="col-sm-12 col-form-label">Select schedule date</label>
+
+                                        <div className="col-sm-12">
+                                            <select
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setTimeFrame(e.target.value)
+                                                }}
+                                                value={timeFrame}
+                                            >
+                                                <option >Select schedule</option>
+
+                                                {data?.timeFrames?.map((tf: any) => {
+                                                    return (
+                                                        <option key={tf.id} value={tf.id}>{tf.time_schedule}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                               
+                                    <div className="col-lg-3">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                 .
@@ -303,7 +350,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                     {pricing.length > 0 ?
                                         <div className="col-lg-3">
 
-                                            <div className=" mb-3">
+                                            <div className="mb-3">
                                                 <label htmlFor="inputText" className="col-sm-12 col-form-label">
                                                     Select Truck/Pricing *
                                                 </label>
@@ -311,19 +358,22 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                     className="form-control"
                                                     aria-label="Default select example"
                                                     onChange={(e: any) => {
-                                                        setTruck(e.target.value);
+                                                        const [price, id] = e.target.value.split("-");
+                                                        setPrice(price);
+                                                        setTruck(id);
                                                     }}
-                                                    value={truck}
+                                                    value={`${truck ? `${price}-${truck}` : ''}`}
                                                 >
-                                                    <option value={""}>Select truck * </option>
+                                                    <option value={""}>Select truck *</option>
 
                                                     {pricing?.map((data: any) => (
-                                                        <option key={data.id} value={data.id}>
+                                                        <option key={data.id} value={`${data.price}-${data.id}`}>
                                                             {data.name}{" - GHS "}{data.price}
                                                         </option>
                                                     ))}
                                                 </select>
                                             </div>
+
                                         </div> : <></>}
                                 </div>
 

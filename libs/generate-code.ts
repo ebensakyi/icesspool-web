@@ -10,3 +10,22 @@ export const generateCode = async (length: number) => {
     console.log(error);
   }
 };
+
+
+  export const generateTransactionCode = async (serviceArea:string,service:string) => {
+
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString('en-GB').split('/').reverse().join('').slice(0, 6);
+
+  let code = '';
+  
+  // Ensure the first digit is not 0
+  code += Math.floor(Math.random() * 9) + 1;
+
+  // Generate the remaining 4 digits
+  for (let i = 0; i < 4; i++) {
+    code += Math.floor(Math.random() * 10);
+  }
+
+  return serviceArea + service+ formattedDate + code;
+}

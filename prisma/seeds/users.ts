@@ -22,8 +22,8 @@ export const users = [
   },
 
   {
-    lastName: "Asante",
-    firstName: "Kojo",
+    lastName: "Web",
+    firstName: "Customer",
     email: "",
     phoneNumber: "0541111111",
     userTypeId: 4,

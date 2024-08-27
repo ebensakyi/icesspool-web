@@ -28,3 +28,5 @@ change charges to service-charges
 6. limit tamale admin and test creating of sp and viewing of tml txs
 7. work on search box for 
 8. work on sending request from web
+9. work on audit trail for each activity especially web requests and closing of txs
+10. Enable unclosing of tx by national admins

@@ -127,6 +127,8 @@ export async function GET(request: Request) {
       tripsNumber
     );
 
+    
+
     return NextResponse.json(response);
   } catch (error) {
     console.log(error);

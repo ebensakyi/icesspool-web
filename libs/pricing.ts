@@ -14,6 +14,7 @@ export const calculateDeludgingPrice = async (
   );
 
 
+
   let pricing: any = [];
 
   pricingModel.map((d: any) => {

@@ -53,6 +53,7 @@ export async function GET(request: Request) {
       serviceArea,
       tripsNumber
     );
+    
 
     return NextResponse.json({ price });
   } catch (error) {

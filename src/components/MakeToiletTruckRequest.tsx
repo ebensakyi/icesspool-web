@@ -41,18 +41,26 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
 
     const getPricing = async () => {
         try {
-            
+
+            setPricing([])
             setStatus("Getting prices...");
             const response = await axios.get(`/api/pricing/toilet-truck-service/price?userLatitude=${customerLat}&userLongitude=${customerLng}&tripsNumber=${tripsNumber}&serviceArea=${serviceArea}`);
             setStatus("Get Prices");
-          
-            
 
-            setPricing(response.data) 
-            
-             if (response.data.length!=0) {
-              return  toast.success("Pricing available");
-            }return toast.error("An error occurred while getting prices.\nTry again")
+            console.log(response.data);
+
+
+
+            if (response.data.length != 0) {
+                if (response.data[0].price == "Infinity") {
+                    return toast.error("The distance from the tip off point to the request is too far.\nPlease check lat/lng and service area")
+                }
+                setPricing(response.data)
+                return toast.success("Pricing available");
+
+
+            }
+            return toast.error("An error occurred while getting prices.\nTry again")
 
         } catch (error) {
             setStatus("Get Prices");
@@ -64,9 +72,34 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const sendRequest = async (e: any) => {
         try {
             e.preventDefault();
-            // if (name == "" || status == "") {
-            //     return toast.error("Please fill form");
-            // }
+            if (customerLat == "") {
+                return toast.error("Please enter the customer's latitude.");
+            }
+            
+            if (customerLng == "") {
+                return toast.error("Please enter the customer's longitude.");
+            }
+            
+            if (customerName == "") {
+                return toast.error("Please enter the customer's name.");
+            }
+            
+            if (location == "") {
+                return toast.error("Please enter the location.");
+            }
+            
+            if (phoneNumber == "") {
+                return toast.error("Please enter the customer's phone number.");
+            }
+            
+            if (serviceArea == "") {
+                return toast.error("Please select a service area.");
+            }
+            
+          
+              if (pricing.length == 0) {
+                return toast.error("Please select a pricing option.");
+            }
 
             let data = {
                 customerName: customerName,
@@ -204,7 +237,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                 Number of trips *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder=' Enter number of trips' value={tripsNumber} onChange={(e: any) => setTripsNumber(e.target.value)} />
+                                                <input type="number" disabled className="form-control" placeholder=' Enter number of trips' value={tripsNumber} onChange={(e: any) => setTripsNumber(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -218,7 +251,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                 Enter latitude *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Eg. 7.8745446' value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Eg. 9.442' value={customerLat} onChange={(e: any) => setCustomerLat(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -228,32 +261,32 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                 Enter longitude *
                                             </label>
                                             <div className="col-sm-12">
-                                                <input type="number" className="form-control" placeholder='Eg. -6.0489082' value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
+                                                <input type="number" className="form-control" placeholder='Eg. -0.7489082' value={customerLng} onChange={(e: any) => setCustomerLng(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-3  mb-3">
-                                            <label className="col-sm-12 col-form-label">Select service area</label>
+                                        <label className="col-sm-12 col-form-label">Select service area</label>
 
-                                            <div className="col-sm-12">
-                                                <select
-                                                    className="form-select"
-                                                    aria-label="Default select example"
-                                                    onChange={(e: any) => {
-                                                        setServiceArea(e.target.value)
-                                                    }}
-                                                    value={serviceArea}
-                                                >
-                                                    <option >Select service area</option>
+                                        <div className="col-sm-12">
+                                            <select
+                                                className="form-select"
+                                                aria-label="Default select example"
+                                                onChange={(e: any) => {
+                                                    setServiceArea(e.target.value)
+                                                }}
+                                                value={serviceArea}
+                                            >
+                                                <option >Select service area</option>
 
-                                                    {data?.serviceAreas?.response?.map((ul: any) => {
-                                                        return (
-                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
-                                            </div>
+                                                {data?.serviceAreas?.response?.map((ul: any) => {
+                                                    return (
+                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div className="col-lg-3 col-md-6">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -261,36 +294,37 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                             </label>
                                             <button type="button" className="form-control btn btn-outline-success" onClick={async (e: any) => {
                                                 if (customerLat != "" && customerLng != "") {
-                                                 return await  getPricing()
+                                                    return await getPricing()
                                                 }
                                                 return toast.error("Enter lat and lng of customer first")
                                             }}>  {status}</button>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3">
+                                    {pricing.length > 0 ?
+                                        <div className="col-lg-3">
 
-                                        <div className=" mb-3">
-                                            <label htmlFor="inputText" className="col-sm-12 col-form-label">
-                                                Truck *
-                                            </label>
-                                            <select
-                                                className="form-control"
-                                                aria-label="Default select example"
-                                                onChange={(e: any) => {
-                                                    setTruck(e.target.value);
-                                                }}
-                                                value={truck}
-                                            >
-                                                <option value={""}>Select truck * </option>
+                                            <div className=" mb-3">
+                                                <label htmlFor="inputText" className="col-sm-12 col-form-label">
+                                                    Select Truck/Pricing *
+                                                </label>
+                                                <select
+                                                    className="form-control"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setTruck(e.target.value);
+                                                    }}
+                                                    value={truck}
+                                                >
+                                                    <option value={""}>Select truck * </option>
 
-                                                {pricing?.map((data: any) => (
-                                                    <option key={data.id} value={data.id}>
-                                                        {data.name}{" - GHS "}{data.price}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
+                                                    {pricing?.map((data: any) => (
+                                                        <option key={data.id} value={data.id}>
+                                                            {data.name}{" - GHS "}{data.price}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div> : <></>}
                                 </div>
 
                                 <div className="text-right">

@@ -118,6 +118,8 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
   //   });
 
+  
+
   return Math.min.apply(null, distances);
 };
 

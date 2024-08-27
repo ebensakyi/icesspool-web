@@ -20,7 +20,6 @@ export async function POST(request: Request) {
     const res = await request.json();
     const session = await getServerSession(authOptions);
 
-
     const {
       userId,
       customerLat,
@@ -60,6 +59,8 @@ export async function POST(request: Request) {
       currentStatus: 1,
       discountedCost: Number(price),
       totalCost: Number(price),
+      customerName,
+      customerPhoneNumber: phoneNumber,
       customerId: 3,
       txSource: 2,
     };
@@ -237,8 +238,6 @@ export async function GET(request: Request) {
       where: { deleted: 0, serviceId: 1, serviceAreaId: userServiceArea },
     });
 
-
-    
     return NextResponse.json({
       response,
       curPage: curPage,

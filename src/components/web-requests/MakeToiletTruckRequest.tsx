@@ -49,6 +49,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const [serviceArea, setServiceArea] = useState("");
 
     const [status, setStatus] = useState("Get Prices");
+    const [submitText, setSubmitText] = useState("Submit");
 
 
 
@@ -166,6 +167,8 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 return toast.error("Please select a pricing option.");
             }
 
+            setSubmitText("Submitting")
+
             let data = {
                 customerName: customerName,
                 customerLat: Number(customerLat),
@@ -178,11 +181,9 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 timeFrame: timeFrame,
                 scheduledDate: scheduleDate,
             };
-            console.log(data);
 
 
             const response = await axios.post("/api/web-request/toilet-truck", data);
-            toast.success(response.data.message);
             // setId("")
             setCustomerLat("");
             setCustomerLng("");
@@ -190,11 +191,18 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
             setPhoneNumber("");
             setTruck("");
             setPrice("");
+            setLocation("");
+            setServiceArea("");
+            setPricing([])
 
+            toast.success("Request sent successfully");
+            setSubmitText("Submit")
 
             router.refresh()
 
         } catch (error: any) {
+            setSubmitText("Submit")
+
             if (error.response.status == 401) {
                 toast.error(error.response.data.message);
             }
@@ -508,15 +516,13 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                     <button
                                         className="btn btn-primary"
                                         onClick={async (e) => {
-                                            // if (id) {
-                                            //     return update(e)
-                                            // }
+                                          
                                             sendRequest(e)
 
                                         }}
 
                                     >
-                                        Submit
+                                        {submitText}
                                     </button>
 
                                     {" "}
@@ -567,6 +573,8 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                         <tr>
                                             <th scope="col">Tx.Id</th>
                                             <th scope="col">Customer Name</th>
+                                            <th scope="col">Customer Phone</th>
+
                                             <th scope="col">Provider Name</th>
                                             <th scope="col">Area</th>
                                             <th scope="col">Cost</th>
@@ -586,7 +594,9 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                             return (
                                                 <tr key={data?.id}>
                                                     <td>{data?.id}</td>
-                                                    <td>{data?.Customer?.firstName} {data?.Customer?.lastName}</td>
+                                                    <td>{data?.customerName}</td>
+                                                    <td>{data?.customerPhoneNumber}</td>
+
                                                     <td>{data?.ServiceProvider?.firstName} {data?.ServiceProvider?.lastName}</td>
                                                     <td>{data?.ServiceArea?.name}</td>
                                                     <td>GHS {data?.discountedCost} </td>

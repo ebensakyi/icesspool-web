@@ -468,7 +468,7 @@ export const BiodigesterOffer = ({ data }: any) => {
                                                                             Close Tx
                                                                         </button>
                                                                     </li>:<></>} */}
-                                                                    {data.currentStatus == 3 || data.currentStatus == 4 ?
+                                                                    {data.currentStatus == 3 || data.currentStatus == 4 || data.currentStatus == 41?
                                                                         <li>
 
                                                                             <button

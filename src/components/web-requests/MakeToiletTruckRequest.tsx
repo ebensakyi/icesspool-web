@@ -54,6 +54,8 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const [status, setStatus] = useState("Get Prices");
     const [submitText, setSubmitText] = useState("Submit");
 
+    const [txStatusesModalIsOpen, setTxStatusesModalIsOpen] = useState(false);
+    const [txStatuses, setTxStatuses] = useState([]);
 
 
     const handlePagination = (page: any) => {
@@ -297,7 +299,10 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
             }
         }
     };
-
+    function afterOpenCloseTxModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = "#f00";
+    }
     const customStyles = {
         content: {
             top: "50%",
@@ -308,22 +313,101 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
             transform: "translate(-50%, -50%)",
         },
     };
+    function closeModal() {
+        setDeleteTxModalIsOpen(false);
+    }
 
+
+    const handleCloseTx = async (e: any) => {
+        e.preventDefault();
+        try {
+            let data = {
+                id: id,
+
+            };
+
+            const response = await axios.put("/api/service-request/close-transaction/admin", data);
+
+
+            if (response.data.status) {
+                toast.success("Transaction closed");
+                setId("")
+
+
+            }
+
+            router.refresh()
+
+        } catch (error: any) {
+            if (error.response.status == 401) {
+                toast.error(error.response.data.message);
+            }
+        }
+    };
+
+    function closeCloseTxModal() {
+        setCloseTxModalIsOpen(false);
+    }
+
+    const viewTx = async (id:any) => {
+        try {
+            const response = await axios.get(
+                `/api/web-request/toilet-truck?txId=${id}`
+            );
+            setTxStatuses(response?.data?.response);   
+                 setTxStatusesModalIsOpen(true);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     return (
         <main id="main" className="main">
             <div className="pagetitle">
                 <h1>TOILET TRUCK REQUEST</h1>
+
+              
                 <Modal
-                    isOpen={deleteTxModalIsOpen}
+                    isOpen={txStatusesModalIsOpen}
                     onAfterOpen={afterOpenDeleteModal}
-                    onRequestClose={closeDeleteModal}
+                    onRequestClose={closeModal}
                     style={customStyles}
                     contentLabel="Confirm deletion"
                 >
                     <div className="alert alert-outline-danger alert-p" role="alert">
                         <span className="alert-content">
-                            You are about to delete this transaction.<br />Deleted transaction cannot be recovered.
-                            Click OK to proceed to delete or Cancel to dismiss
+                        <table className="table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                          
+                                            <th scope="col"> Status</th>
+
+                                            <th scope="col">Created Date</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {txStatuses?.map((data: any) => {
+
+                                            return (
+                                                <tr key={data?.id}>
+                                                    
+                                                    <td>{data?.TxStatus?.name}</td>
+
+                                                 
+
+                                                    <td>  {moment(data?.createdAt).format(
+                                                        "MMM Do YYYY, h:mm:ss a"
+                                                    )}</td>
+                                                  
+                                                </tr>
+                                            );
+                                        })}
+
+                                    </tbody>
+                                </table>
                         </span>
                     </div>
                     <div className="row">
@@ -331,8 +415,76 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                             <div className="d-grid">
                                 <button
                                     onClick={(e: any) => {
+                                        setTxStatusesModalIsOpen(false)
+                                    }}
+                                    className="btn btn-success"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </Modal>
+
+
+                <Modal
+                    isOpen={deleteTxModalIsOpen}
+                    onAfterOpen={afterOpenDeleteModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Confirm deletion"
+                >
+                    <div className="alert alert-outline-danger alert-p" role="alert">
+                        <span className="alert-content">
+                            You are about to delete this report.<br />Deleted report cannot be recovered.
+                            Click OK to proceed to delete or Cancel to dismiss
+                        </span>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="d-grid">
+                                <button
+                                    onClick={(e: any) => {
                                         handleDeleteTx(e);
-                                        closeDeleteModal();
+                                        closeModal();
+                                    }}
+                                    className="btn btn-success"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                        {/* <div className="col-md-6">
+                            <div className="d-grid">
+                                <button onClick={closeModal} className="btn btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div> */}
+                    </div>
+                </Modal>
+
+                <Modal
+                    isOpen={closeTxModalIsOpen}
+                    onAfterOpen={afterOpenCloseTxModal}
+                    onRequestClose={closeCloseTxModal}
+                    style={customStyles}
+                    contentLabel="Confirm deletion"
+                >
+                    <div className="alert alert-outline-danger alert-p" role="alert">
+                        <span className="alert-content">
+                            You are about to close this offer.<br />Closed offer cannot be recovered.
+                            Click OK to close or Cancel to dismiss
+                        </span>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="d-grid">
+                                <button
+                                    onClick={(e: any) => {
+                                        handleCloseTx(e);
+                                        closeCloseTxModal();
                                     }}
                                     className="btn btn-success"
                                 >
@@ -342,14 +494,13 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                         </div>
                         <div className="col-md-6">
                             <div className="d-grid">
-                                <button onClick={closeDeleteModal} className="btn btn-danger">
+                                <button onClick={closeCloseTxModal} className="btn btn-danger">
                                     Cancel
                                 </button>
                             </div>
                         </div>
                     </div>
                 </Modal>
-
             </div>
             {/* End Page Title */}
             <section className="section">
@@ -689,7 +840,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                                     </li>
 
 
-                                                                    {data.currentStatus == 3 || data.currentStatus == 4 ?
+                                                                    {data.currentStatus == 3 || data.currentStatus == 4 || data.currentStatus == 41?
                                                                         <li>
 
                                                                             <button
@@ -698,7 +849,6 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                                                                     e.preventDefault();
                                                                                     setId(data.id);
                                                                                     setCloseTxModalIsOpen(true);
-                                                                                    // closeTx()
 
                                                                                 }}
                                                                             >

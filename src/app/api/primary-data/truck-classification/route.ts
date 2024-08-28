@@ -15,10 +15,10 @@ export async function GET(request: Request) {
 
     let userServiceArea = Number(session?.user?.serviceAreaId);
 
-    console.log(session);
+    // console.log(session);
     
-    console.log("userServiceArea",userServiceArea);
-    console.log("serviceId",serviceId);
+    // console.log("userServiceArea",userServiceArea);
+    // console.log("serviceId",serviceId);
 
     if (userServiceArea == 1) {
       const response = await prisma.truckClassification.findMany({

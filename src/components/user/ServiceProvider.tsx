@@ -12,18 +12,20 @@ import Modal from "react-modal";
 import ReactPaginate from 'react-paginate';
 
 export default function ServiceProvider({ data }: any) {
-    const searchParams = useSearchParams();
-    const router = useRouter();
 
-    const { data: session } = useSession({
+
+    const { data: session }:any = useSession({
         required: true,
         onUnauthenticated() {
             redirect(LOGIN_URL);
         }
     })
 
+    let userServiceArea: any = session?.user?.serviceAreaId
 
 
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
     const pathname = usePathname()
 
@@ -62,6 +64,9 @@ export default function ServiceProvider({ data }: any) {
 
     const [showOtp, setShowOtp] = useState(false);
     const [searchText, setSearchText] = useState("");
+    const [truckClassifications, setTruckClassifications] = useState([]);
+
+
 
 
 
@@ -77,7 +82,7 @@ export default function ServiceProvider({ data }: any) {
 
     }, [searchText]);
 
-   
+
     const handlePagination = (page: any) => {
 
         page = page.selected == -1 ? 1 : page.selected + 1;
@@ -99,9 +104,8 @@ export default function ServiceProvider({ data }: any) {
 
     const addUser = async (e: any) => {
         e.preventDefault();
-        if (!passportPicture) {
-            return toast.error("Please select an image file");
-        }
+        let _serviceArea = serviceArea === "" ? userServiceArea : serviceArea;
+
         if (firstName == "") {
             return toast.error("Please enter first name");
         }
@@ -111,20 +115,25 @@ export default function ServiceProvider({ data }: any) {
         if (phoneNumber == "") {
             return toast.error("Please enter phone number");
         }
-        if (serviceArea == "") {
-            return toast.error("Please select service area");
+        if (company == "") {
+            return toast.error("Please enter company name");
         }
         if (officeLocation == "") {
             return toast.error("Please enter office location");
+        } if (service == "") {
+            return toast.error("Please select service");
         }
-        if (company == "") {
-            return toast.error("Please enter company name");
+        if (_serviceArea == "") {
+            return toast.error("Please select service area");
         }
         if (momoNumber == "") {
             return toast.error("Please enter momo number");
         }
         if (momoNetwork == "") {
             return toast.error("Please select momo network");
+        }
+        if (!passportPicture) {
+            return toast.error("Please select an image file.");
         }
 
         const formData = new FormData();
@@ -133,7 +142,7 @@ export default function ServiceProvider({ data }: any) {
         formData.append('firstName', firstName);
         formData.append('email', email);
         formData.append('phoneNumber', phoneNumber);
-        formData.append('serviceArea', serviceArea);
+        formData.append('serviceArea',  _serviceArea)        
         formData.append('service', service + "");
         formData.append('ghanaPostGPS', ghanaPostGPS);
         formData.append('officeLocation', officeLocation);
@@ -223,7 +232,7 @@ export default function ServiceProvider({ data }: any) {
             firstName,
             email,
             phoneNumber,
-            serviceArea,
+            serviceArea:serviceArea=="" ? userServiceArea : serviceArea,
             service,
             ghanaPostGPS,
             officeLocation,
@@ -241,7 +250,7 @@ export default function ServiceProvider({ data }: any) {
 
 
             if (response.status === 200) {
-               handleCancel()
+                handleCancel()
                 router.refresh()
                 return toast.success("User details updated successfully");
             }
@@ -252,8 +261,21 @@ export default function ServiceProvider({ data }: any) {
 
 
 
+    const getTruckClassifications = async (serviceId: string) => {
+        try {
+            const response = await axios.get(`/api/primary-data/truck-classification?serviceId=${serviceId}`);
 
-   
+            if (response.status == 200) {
+
+                setTruckClassifications(response.data.response)
+
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
 
     const handleExportAll = async () => {
         try {
@@ -293,9 +315,13 @@ export default function ServiceProvider({ data }: any) {
         setCompany("");
         setGhanaPostGPS("");
     }
-    const filteredTruckClassifications = data?.truckClassifications?.response.filter(
-        (tc: any) => tc.serviceId === Number(service)
-    );
+
+
+    // console.log(data);
+
+    // const filteredTruckClassifications = data?.truckClassifications?.response.filter(
+    //     (tc: any) => tc.serviceId === Number(service)
+    // );
 
     function closeModal() {
         setIsOpen(false);
@@ -323,7 +349,7 @@ export default function ServiceProvider({ data }: any) {
     }
     return (
         <main id="main" className="main">
-          <Modal
+            <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
@@ -350,9 +376,9 @@ export default function ServiceProvider({ data }: any) {
                                         <button
                                             type="button"
                                             className="btn btn-sm btn-danger btn-label waves-effect right waves-light"
-                                            onClick={async (e)=>{
+                                            onClick={async (e) => {
                                                 e.preventDefault();
-                                                try {                                        
+                                                try {
                                                     setLoading(true);
                                                     const response = await axios.delete(`/api/user/service-provider`, {
                                                         data: userId,
@@ -367,7 +393,7 @@ export default function ServiceProvider({ data }: any) {
                                                 } catch (error) {
                                                     console.log(error);
                                                     setLoading(false)
-                                        
+
                                                 }
                                             }}
                                         >
@@ -488,7 +514,10 @@ export default function ServiceProvider({ data }: any) {
                                         <label className="col-sm-12 col-form-label">Select service **</label>
                                         <div className="col-sm-12">
                                             <select
-                                                onChange={(e: any) => setService(e.target.value)}
+                                                onChange={async (e: any) => {
+                                                    setService(e.target.value)
+                                                    await getTruckClassifications(e.target.value)
+                                                }}
                                                 className="form-select"
                                                 aria-label="Default select example"
                                                 value={service}
@@ -518,7 +547,7 @@ export default function ServiceProvider({ data }: any) {
                                                         value={truckClassification}
                                                     >
                                                         <option>Select truck class</option>
-                                                        {filteredTruckClassifications.map((tc: any) => (
+                                                        {truckClassifications?.map((tc: any) => (
                                                             <option key={tc.id} value={tc.id}>
                                                                 {tc.name}
                                                             </option>
@@ -605,6 +634,8 @@ export default function ServiceProvider({ data }: any) {
                                                 <input type="file" className="form-control" placeholder='Drivers license ' onChange={(e) => setDriversLicence(e.target.value)} value={driversLicence} />
                                             </div>
                                         </div> */}
+
+                                        {userServiceArea==1?
                                     <div className="col-sm-3  mb-3">
                                         <label className="col-sm-12 col-form-label">Select service area *</label>
 
@@ -617,7 +648,7 @@ export default function ServiceProvider({ data }: any) {
                                                 }}
                                                 value={serviceArea}
                                             >
-                                                <option >Select area</option>
+                                                <option value={""} >Select area</option>
 
                                                 {data?.serviceAreas?.response?.map((ul: any) => {
                                                     return (
@@ -626,7 +657,7 @@ export default function ServiceProvider({ data }: any) {
                                                 })}
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>:<></>}
 
                                     {/* {selectedUserLevel == "3" ?
                                     <div className=" mb-3">
@@ -718,7 +749,7 @@ export default function ServiceProvider({ data }: any) {
                                 <div className="row">
                                     <div className="col-md-4">
                                         <div className="input-group mb-3">
-                                        <input type="text" className="form-control" placeholder='Enter search term'
+                                            <input type="text" className="form-control" placeholder='Enter search term'
                                                 id="searchText"
                                                 value={searchText}
                                                 onChange={(e: any) => {
@@ -769,7 +800,7 @@ export default function ServiceProvider({ data }: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {data?.users?.response?.map((user: any) => (
+                                        {data?.users?.response?.map((user: any) => (
                                             <tr key={user.id}>
                                                 <td> <Image src={AWS_S3_URL + user?.passportPicture} alt="avi" width={64} height={64} /></td>
                                                 <td>{user?.ServiceProvider?.id}</td>
@@ -911,12 +942,12 @@ export default function ServiceProvider({ data }: any) {
 
                                                             </li>
                                                             <li>
-                                                            <button
+                                                                <button
                                                                     className="dropdown-item btn btn-sm "
                                                                     onClick={async (e) => {
                                                                         try {
                                                                             e.preventDefault();
-                                                                           setIsOpen(true);
+                                                                            setIsOpen(true);
                                                                             setUserId(user.id)
                                                                         } catch (error) {
                                                                             return toast.error("An error occurred");

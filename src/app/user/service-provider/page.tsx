@@ -3,6 +3,8 @@ export const dynamic = "force-dynamic";
 import { SERVER_BASE_URL } from "@/config";
 import ServiceProvider from "@/src/components/user/ServiceProvider";
 import { headers } from "next/headers";
+import { Suspense } from "react";
+import Loading from "../../loading";
 
 
 async function getServiceAreas(searchParams: any) {
@@ -76,16 +78,16 @@ async function getMomoNetworks() {
 
 }
 
-async function getTruckClassifications() {
+// async function getTruckClassifications() {
 
-  let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/truck-classification`, { cache: 'no-store', headers: headers() });
+//   let response = await fetch(`${SERVER_BASE_URL}/api/primary-data/truck-classification`, { cache: 'no-store', headers: headers() });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  return await response.json();
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data')
+//   }
+//   return await response.json();
 
-}
+// }
 export default async function Page({ searchParams }: any) {
 
 
@@ -94,13 +96,13 @@ export default async function Page({ searchParams }: any) {
   const serviceAreas = await getServiceAreas(searchParams)
   const users = await getServiceProviders(searchParams)
   const momoNetworks = await getMomoNetworks()
-  const truckClassifications = await getTruckClassifications()
+  // const truckClassifications = await getTruckClassifications()
 
-  let data = { services, userTypes, serviceAreas, users, momoNetworks, truckClassifications }
+  let data = { services, userTypes, serviceAreas, users, momoNetworks }
 
 
 
-  return <ServiceProvider data={data} />
+  return <Suspense fallback={<Loading/>}><ServiceProvider data={data} /></Suspense> 
 
 
 }

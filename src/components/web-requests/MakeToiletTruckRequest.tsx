@@ -14,12 +14,15 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
 
 
 
-    const { data: session } = useSession({
+    const { data: session }: any = useSession({
         required: true,
         onUnauthenticated() {
             redirect(LOGIN_URL);
         }
     })
+
+    let userServiceArea: any = session?.user?.serviceAreaId
+
     const router = useRouter();
     const pathname = usePathname()
     const searchParams = useSearchParams();
@@ -70,6 +73,13 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     }
     const getPricing = async () => {
         try {
+
+            console.log("serviceArea ",serviceArea);
+            console.log("userServiceArea ",userServiceArea);
+
+            let _serviceArea = serviceArea === "" ? userServiceArea : serviceArea;
+            console.log("_serviceArea ",_serviceArea);
+
             if (customerLat == "") {
                 return toast.error("Please enter the customer's latitude.");
             }
@@ -78,33 +88,33 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 return toast.error("Please enter the customer's longitude.");
             }
 
-            if (customerName == "") {
-                return toast.error("Please enter the customer's name.");
-            }
+            // if (customerName == "") {
+            //     return toast.error("Please enter the customer's name.");
+            // }
 
-            if (location == "") {
-                return toast.error("Please enter the location.");
-            }
+            // if (location == "") {
+            //     return toast.error("Please enter the location.");
+            // }
 
-            if (phoneNumber == "") {
-                return toast.error("Please enter the customer's phone number.");
-            }
+            // if (phoneNumber == "") {
+            //     return toast.error("Please enter the customer's phone number.");
+            // }
 
-            if (serviceArea == "") {
+            if (_serviceArea == "") {
                 return toast.error("Please select a service area.");
             }
 
 
-            if (scheduleDate == "") {
-                return toast.error("Please select a date.");
-            }
+            // if (scheduleDate == "") {
+            //     return toast.error("Please select a date.");
+            // }
 
-            if (timeFrame == "") {
-                return toast.error("Please select a time frame.");
-            }
+            // if (timeFrame == "") {
+            //     return toast.error("Please select a time frame.");
+            // }
             setPricing([])
             setStatus("Getting prices...");
-            const response = await axios.get(`/api/pricing/toilet-truck-service/price?userLatitude=${customerLat}&userLongitude=${customerLng}&tripsNumber=${tripsNumber}&serviceArea=${serviceArea}`);
+            const response = await axios.get(`/api/pricing/toilet-truck-service/price?userLatitude=${customerLat}&userLongitude=${customerLng}&tripsNumber=${tripsNumber}&serviceArea=${_serviceArea}`);
             setStatus("Get Prices");
 
 
@@ -131,6 +141,12 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
     const sendRequest = async (e: any) => {
         try {
             e.preventDefault();
+            console.log("serviceArea ",serviceArea);
+            console.log("userServiceArea ",userServiceArea);
+
+            let _serviceArea = serviceArea === "" ? userServiceArea : serviceArea;
+            console.log("_serviceArea ",_serviceArea);
+
             if (customerLat == "") {
                 return toast.error("Please enter the customer's latitude.");
             }
@@ -151,7 +167,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 return toast.error("Please enter the customer's phone number.");
             }
 
-            if (serviceArea == "") {
+            if (_serviceArea == "") {
                 return toast.error("Please select a service area.");
             }
 
@@ -176,7 +192,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                 truck: Number(truck),
                 price: Number(price),
                 phoneNumber: phoneNumber,
-                serviceArea: serviceArea,
+                serviceArea: _serviceArea,
                 location: location,
                 timeFrame: timeFrame,
                 scheduledDate: scheduleDate,
@@ -388,28 +404,29 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
 
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-3  mb-3">
-                                        <label className="col-sm-12 col-form-label">Select service area</label>
+                                    {userServiceArea == 1 ?
+                                        <div className="col-lg-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area</label>
 
-                                        <div className="col-sm-12">
-                                            <select
-                                                className="form-select"
-                                                aria-label="Default select example"
-                                                onChange={(e: any) => {
-                                                    setServiceArea(e.target.value)
-                                                }}
-                                                value={serviceArea}
-                                            >
-                                                <option >Select service area</option>
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option value={""}>Select service area</option>
 
-                                                {data?.serviceAreas?.response?.map((ul: any) => {
-                                                    return (
-                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                    )
-                                                })}
-                                            </select>
-                                        </div>
-                                    </div>
+                                                    {data?.serviceAreas?.response?.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div> : <></>}
                                     <div className="col-lg-3">
                                         <div className=" mb-3">
                                             <label htmlFor="inputText" className="col-sm-12 col-form-label">
@@ -440,11 +457,9 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-
+                                
                                     <div className="col-lg-3  mb-3">
-                                        <label className="col-sm-12 col-form-label">Select schedule date</label>
+                                        <label className="col-sm-12 col-form-label">Select schedule time</label>
 
                                         <div className="col-sm-12">
                                             <select
@@ -516,7 +531,7 @@ export const MakeToiletTruckRequest = ({ data }: any) => {
                                     <button
                                         className="btn btn-primary"
                                         onClick={async (e) => {
-                                          
+
                                             sendRequest(e)
 
                                         }}

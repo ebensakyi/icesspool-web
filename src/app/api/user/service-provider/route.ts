@@ -345,6 +345,9 @@ export async function GET(request: Request) {
 
       return NextResponse.json(newm);
     }
+
+
+
     if (userServiceArea == 1) {
       const response = await prisma.user.findMany({
         where:
@@ -383,6 +386,8 @@ export async function GET(request: Request) {
         include: {
           UserType: true,
           ServiceArea: true,
+          ServiceProvider: true,
+          MomoAccount: true,
           Otp: true,
         },
         skip: skip,
@@ -475,6 +480,8 @@ export async function GET(request: Request) {
       include: {
         UserType: true,
         ServiceArea: true,
+        ServiceProvider: true,
+MomoAccount: true,
         Otp: true,
       },
       skip: skip,

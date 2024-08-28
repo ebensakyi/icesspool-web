@@ -158,12 +158,12 @@ export default function Header() {
                                     </Link>
                                 </li>
 
-                                <li>
+                                {/* <li>
                                     <Link href="/make-request/biodigester">
                                         <i className="bi bi-circle" />
                                         <span>Bio-digester</span>
                                     </Link>
-                                </li>
+                                </li> */}
 
                             </ul>
                         </li>
@@ -623,12 +623,12 @@ export default function Header() {
                                         </Link>
                                     </li>
 
-                                    <li>
+                                    {/* <li>
                                         <Link href="/make-request/biodigester">
                                             <i className="bi bi-circle" />
                                             <span>Bio-digester</span>
                                         </Link>
-                                    </li>
+                                    </li> */}
 
                                 </ul>
                             </li>

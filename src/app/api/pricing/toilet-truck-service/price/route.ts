@@ -99,11 +99,10 @@ export async function GET(request: Request) {
     let userLatitude = Number(searchParams.get("userLatitude"));
     let userLongitude = Number(searchParams.get("userLongitude"));
     let tripsNumber = Number(searchParams.get("tripsNumber"))||1;
-    let serviceArea = Number(searchParams.get("serviceArea"));
+    let serviceArea = Number(searchParams.get("serviceAreaId"));
 
     let userLocation = [userLatitude, userLongitude];
 
-    
 
 
     const pricingModel = await prisma.toiletTruckServicePricing.findMany({
@@ -117,7 +116,7 @@ export async function GET(request: Request) {
       },
     });
 
-    
+
     
 
     let response = await calculateDeludgingPrice(

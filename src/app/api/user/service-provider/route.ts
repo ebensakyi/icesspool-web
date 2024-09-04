@@ -386,7 +386,11 @@ export async function GET(request: Request) {
         include: {
           UserType: true,
           ServiceArea: true,
-          ServiceProvider: true,
+          ServiceProvider: {
+           include: {
+            Service:true,
+           }
+          },
           MomoAccount: true,
           Otp: true,
         },

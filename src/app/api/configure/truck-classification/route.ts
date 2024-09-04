@@ -77,7 +77,7 @@ export async function GET(request: Request) {
     let serviceAreaId = Number(searchParams.get("serviceAreaId"));
     let device = searchParams.get("device");
 
-
+    
 
     const session: any = await getServerSession(authOptions);
 
@@ -112,6 +112,28 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json({ response });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(error);
+  }
+}
+
+
+export async function DELETE(request: Request) {
+  try {
+    const res = await request.json();
+
+
+    await prisma.truckClassification.update({
+      where: { id: Number(res) },
+      data: {
+        deleted:1,
+        status:0
+      },
+    });
+
+    return NextResponse.json({});
   } catch (error) {
     console.log(error);
 

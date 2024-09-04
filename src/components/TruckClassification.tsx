@@ -104,6 +104,26 @@ export const TruckClassification = ({ data }: any) => {
         }
     };
 
+    const _delete = async (id : any) => {
+        try {
+           
+
+            
+            const response = await axios.delete(`/api/configure/truck-classification`, {
+                data: id
+            })
+            toast.success(response.data.message);
+            setId("")
+          
+            router.refresh()
+
+        } catch (error: any) {
+            if (error.response.status == 401) {
+                toast.error(error.response.data.message);
+            }
+        }
+    };
+
 
 
 
@@ -363,7 +383,7 @@ export const TruckClassification = ({ data }: any) => {
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
 
-                                                                                // _delete(data.id);
+                                                                                _delete(data.id);
                                                                             }}
                                                                         >
                                                                             Delete

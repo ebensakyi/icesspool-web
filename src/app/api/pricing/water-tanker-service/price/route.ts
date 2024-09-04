@@ -14,6 +14,8 @@ export async function GET(request: Request) {
     let tripsNumber = Number(searchParams.get("tripsNumber"));
     let serviceArea = Number(searchParams.get("serviceArea"));
 
+    
+
     if (serviceArea == 2) {
       const response = await prisma.truckClassification.findMany({
         where: { deleted: 0, serviceAreaId: 2, serviceId: 2, status: 1 },

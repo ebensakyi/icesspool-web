@@ -28,7 +28,6 @@ export async function POST(request: Request) {
     let isValid = await bcrypt.compare(password, user.password);
 
     if (isValid) { 
-      console.log(user);
       
        if (user?.activated == 0) {
       return NextResponse.json(user, { status: 201 });

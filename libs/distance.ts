@@ -6,9 +6,11 @@ export const getShortestDistanceBtnUserServicePoint = async (
   serviceId: number,
   serviceAreaId: number
 ) => {
+  try {
+    console.log("userLocation ", userLocation);
+  console.log("serviceId ", serviceId);
+  console.log("serviceAreaId ", serviceAreaId);
 
-  
-  
   let servicePoints = await prisma.servicePoint.findMany({
     where: {
       serviceId: serviceId,
@@ -29,9 +31,6 @@ export const getShortestDistanceBtnUserServicePoint = async (
       key: process.env.GOOGLE_API_KEY,
     },
   };
-
-  
-  
 
   //   axios
   //     .request(options)
@@ -57,14 +56,13 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
 
   const response = await axios.request(options);
+  console.log("RESPONSE ROWS", response.data.rows)
 
-
+  console.log("RESPONSE", response)
 
   let distances: any = [];
   response.data.rows.map((d: any) => {
     let e = d.elements;
-
-    
 
     if (e[0].status != "OK") {
       return;
@@ -118,9 +116,13 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
   //   });
 
-  
-
   return Math.min.apply(null, distances);
+  } catch (error) {
+    console.log("getShortestDistanceBtnUserServicePoint ",error);
+    
+    return Infinity
+  }
+  
 };
 
 const convertToString = async (servicePoints: any) => {

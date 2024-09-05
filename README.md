@@ -32,3 +32,4 @@ change charges to service-charges
 10. Enable unclosing of tx by national admins
 11. Show dashboard based on login user
 12. prevent crediting acc of tml users after closing of tx and prevent withdrawal requests
+13. don't allow user to proceed when distance is infinity. and show alert

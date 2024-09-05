@@ -21,6 +21,8 @@ import {
   WORK_COMPLETED_REQUEST,
   WORK_STARTED_REQUEST,
 } from "@/config";
+import { sendSMS } from "@/libs/send-hubtel-sms";
+import { sendFCM } from "@/libs/send-fcm";
 
 export async function POST(request: Request) {
   try {
@@ -59,6 +61,22 @@ export async function POST(request: Request) {
         },
         { merge: true }
       );
+
+      let transaction: any = await prisma.transaction.findFirst({
+        where: { id: transactionId },
+        include: { Customer: true },
+      });
+    
+        await sendSMS(
+          transaction?.Customer?.phoneNumber,
+          `Hello ${transaction?.Customer?.firstName} your request has been cancelled. We are locating new Service Provider`
+        );
+      
+        await sendFCM(
+          transaction?.Customer?.fcmId,
+          "Request Rebroacast",
+          `Hello ${transaction?.Customer?.firstName} your request has been cancelled. We are locating new Service Provider`
+        );
     }
 
     const response = await prisma.transaction.update({
@@ -76,6 +94,9 @@ export async function POST(request: Request) {
         time: convertTimeToISO8601(getCurrentTime()),
       },
     });
+
+
+
 
     // await db
     // .collection(process.env.TRANSACTION_STORE)

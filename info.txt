@@ -1,4 +1,4 @@
-sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org && sudo npm i --f && sudo npx prisma generate && sudo npm run build && sudo chmod -R 777 /var/www/html/dashboard.esicapps.org && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+sudo rm -f -r  /var/www/html/app.icesspool.net/* && cd ~/ && sudo rm -f -r  icesspool-web && git clone https://github.com/ebensakyi/icesspool-web.git && cd ~/icesspool-web  && sudo cp -r * /var/www/html/app.icesspool.net && cd  /var/www/html/app.icesspool.net && sudo npm i --f && sudo npx prisma generate && sudo npm run build && sudo chmod -R 777 /var/www/html/app.icesspool.net && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop app.icesspool.net && pm2 delete app.icesspool.net && pm2 start npm --name app.icesspool.net -- run start
 
 CREATE TABLE "SanitationReport" (
     "id" SERIAL PRIMARY KEY,
@@ -42,12 +42,12 @@ CREATE TABLE "SanitationReportUser" (
 cd ~/
 git clone https://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@github.com/ebensakyi/esicapps-web.git
 cd ~/esicapps-web
-sudo cp * /var/www/html/dashboard.esicapps.org
+sudo cp * /var/www/html/app.icesspool.net
 sudo npm i
 npx prisma generate
 sudo npm run build
-pm2 delete dashboard.esicapps.org
-pm2 start npm --name dashboard.esicapps.org -- run start
+pm2 delete app.icesspool.net
+pm2 start npm --name app.icesspool.net -- run start
 
 
 
@@ -60,7 +60,7 @@ Kofi@2318.com
 
 
 
-sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+sudo rm -f -r  /var/www/html/app.icesspool.net/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/app.icesspool.net && cd  /var/www/html/app.icesspool.net  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop app.icesspool.net && pm2 delete app.icesspool.net && pm2 start npm --name app.icesspool.net -- run start
 
 
 
@@ -81,12 +81,12 @@ sudo rm -f -r  /var/www/html/esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps.
 cd ~/
 git clone https://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@github.com/ebensakyi/esicapps-web.git
 cd ~/esicapps-web
-sudo cp * /var/www/html/dashboard.esicapps.org
+sudo cp * /var/www/html/app.icesspool.net
 sudo npm i
 npx prisma generate
 sudo npm run build
-pm2 delete dashboard.esicapps.org
-pm2 start npm --name dashboard.esicapps.org -- run start
+pm2 delete app.icesspool.net
+pm2 start npm --name app.icesspool.net -- run start
 
 
 
@@ -98,7 +98,7 @@ pm2 start npm --name dashboard.esicapps.org -- run start
 
 
 
-sudo rm -f -r  /var/www/html/dashboard.esicapps.org/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/dashboard.esicapps.org && cd  /var/www/html/dashboard.esicapps.org  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop dashboard.esicapps.org && pm2 delete dashboard.esicapps.org && pm2 start npm --name dashboard.esicapps.org -- run start
+sudo rm -f -r  /var/www/html/app.icesspool.net/* && cd ~/ && sudo rm -f -r  esicapps-web && git clone https://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@github.com/ebensakyi/esicapps-web.git && cd ~/esicapps-web  && sudo cp -r * /var/www/html/app.icesspool.net && cd  /var/www/html/app.icesspool.net  && sudo chmod 777 -R * && sudo npm i --f  && sudo npx prisma generate && sudo npm run build && sudo chmod 777 -R * && sudo kill -9 $(sudo lsof -t -i:3000) && pm2 stop app.icesspool.net && pm2 delete app.icesspool.net && pm2 start npm --name app.icesspool.net -- run start
 
 
 

@@ -1,9 +1,9 @@
 'use client'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams, useRouter, usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -14,7 +14,7 @@ import ReactPaginate from 'react-paginate';
 export default function ServiceProvider({ data }: any) {
 
 
-    const { data: session }:any = useSession({
+    const { data: session }: any = useSession({
         required: true,
         onUnauthenticated() {
             redirect(LOGIN_URL);
@@ -142,7 +142,7 @@ export default function ServiceProvider({ data }: any) {
         formData.append('firstName', firstName);
         formData.append('email', email);
         formData.append('phoneNumber', phoneNumber);
-        formData.append('serviceArea',  _serviceArea)        
+        formData.append('serviceArea', _serviceArea)
         formData.append('service', service + "");
         formData.append('ghanaPostGPS', ghanaPostGPS);
         formData.append('officeLocation', officeLocation);
@@ -232,7 +232,7 @@ export default function ServiceProvider({ data }: any) {
             firstName,
             email,
             phoneNumber,
-            serviceArea:serviceArea=="" ? userServiceArea : serviceArea,
+            serviceArea: serviceArea == "" ? userServiceArea : serviceArea,
             service,
             ghanaPostGPS,
             officeLocation,
@@ -635,29 +635,29 @@ export default function ServiceProvider({ data }: any) {
                                             </div>
                                         </div> */}
 
-                                        {userServiceArea==1?
-                                    <div className="col-sm-3  mb-3">
-                                        <label className="col-sm-12 col-form-label">Select service area *</label>
+                                    {userServiceArea == 1 ?
+                                        <div className="col-sm-3  mb-3">
+                                            <label className="col-sm-12 col-form-label">Select service area *</label>
 
-                                        <div className="col-sm-12">
-                                            <select
-                                                className="form-select"
-                                                aria-label="Default select example"
-                                                onChange={(e: any) => {
-                                                    setServiceArea(e.target.value)
-                                                }}
-                                                value={serviceArea}
-                                            >
-                                                <option value={""} >Select area</option>
+                                            <div className="col-sm-12">
+                                                <select
+                                                    className="form-select"
+                                                    aria-label="Default select example"
+                                                    onChange={(e: any) => {
+                                                        setServiceArea(e.target.value)
+                                                    }}
+                                                    value={serviceArea}
+                                                >
+                                                    <option value={""} >Select area</option>
 
-                                                {data?.serviceAreas?.response?.map((ul: any) => {
-                                                    return (
-                                                        <option key={ul.id} value={ul.id}>{ul.name}</option>
-                                                    )
-                                                })}
-                                            </select>
-                                        </div>
-                                    </div>:<></>}
+                                                    {data?.serviceAreas?.response?.map((ul: any) => {
+                                                        return (
+                                                            <option key={ul.id} value={ul.id}>{ul.name}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div> : <></>}
 
                                     {/* {selectedUserLevel == "3" ?
                                     <div className=" mb-3">

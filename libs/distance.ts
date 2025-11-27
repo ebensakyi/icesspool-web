@@ -7,9 +7,6 @@ export const getShortestDistanceBtnUserServicePoint = async (
   serviceAreaId: number
 ) => {
   try {
-    console.log("userLocation ", userLocation);
-  console.log("serviceId ", serviceId);
-  console.log("serviceAreaId ", serviceAreaId);
 
   let servicePoints = await prisma.servicePoint.findMany({
     where: {
@@ -56,9 +53,7 @@ export const getShortestDistanceBtnUserServicePoint = async (
   //     });
 
   const response = await axios.request(options);
-  console.log("RESPONSE ROWS", response.data.rows)
 
-  console.log("RESPONSE", response)
 
   let distances: any = [];
   response.data.rows.map((d: any) => {

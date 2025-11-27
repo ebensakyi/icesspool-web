@@ -1,10 +1,9 @@
 'use client'
 import Image from "next/image";
 
-import { LOGIN_URL } from '@/config';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link'
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react'
 
 export default function Header() {
@@ -660,7 +659,7 @@ export default function Header() {
                                     id="offers-nav"
                                     className="nav-content collapse "
                                     data-bs-parent="#offers-nav"
-                                > 
+                                >
                                     <li>
                                         <Link href="/service-request/offers/biodigester">
                                             <i className="bi bi-circle" />
@@ -690,9 +689,9 @@ export default function Header() {
 
                             <li className="nav-heading">SETTINGS</li>
 
-                        
 
-                          
+
+
 
                             <li className="nav-item">
 
@@ -772,8 +771,8 @@ export default function Header() {
                                     data-bs-parent="#earnings-nav"
                                 >
 
-                                   
-                                  
+
+
                                     <li>
                                         <Link href="/finance/earnings/service-provider">
                                             <i className="bi bi-circle" />
